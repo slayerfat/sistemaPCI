@@ -1,7 +1,16 @@
 {
+  "name": "sistemaPCI",
+  "version": "0.0.0",
+  "description": "sistemaPCI",
+  "main": "gulpfile.js",
   "private": true,
   "devDependencies": {
-    "gulp": "^3.8.8"
+    "gulp": "^3.8.8",
+    "gulp-bump": "^0.2.2",
+    "gulp-filter": "^2.0.2",
+    "gulp-git": "^1.1.0",
+    "gulp-tag-version": "^1.2.1",
+    "gulp-notify": "^2.0.0"
   },
   "dependencies": {
     "laravel-elixir": "^3.0.0",
