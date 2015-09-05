@@ -26,11 +26,38 @@ class UserDetail extends Model
         'phone',
     ];
 
+    // -------------------------------------------------------------------------
+    // Relaciones
+    // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+    // Has one
+    // -------------------------------------------------------------------------
+
     /**
      * @return User
      */
     public function user()
     {
         return $this->hasOne(User::class);
+    }
+
+    // -------------------------------------------------------------------------
+    // Belongs to
+    // -------------------------------------------------------------------------
+
+    /**
+     * @return Nationality
+     */
+    public function nationality()
+    {
+        return $this->BelongsTo(Nationality::class);
+    }
+
+    /**
+     * @return Nationality
+     */
+    public function gender()
+    {
+        return $this->BelongsTo(Gender::class);
     }
 }

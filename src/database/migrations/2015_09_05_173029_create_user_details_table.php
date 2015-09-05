@@ -19,6 +19,14 @@ class CreateUserDetailsTable extends Migration
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade');
+            $table->integer('nationality_id')->unsigned();
+            $table->foreign('nationality_id')
+                ->references('id')
+                ->on('nationalities');
+            $table->integer('gender_id')->unsigned();
+            $table->foreign('gender_id')
+                ->references('id')
+                ->on('genders');
             $table->integer('ci')->unsigned()->unique()->index();
             $table->string('first_name', 20);
             $table->string('last_name', 20)->nullable();
@@ -30,6 +38,7 @@ class CreateUserDetailsTable extends Migration
              * Venezuela es 0058
              */
             $table->string('phone', 15)->nullable();
+            $table->string('cellphone', 15)->nullable();
             $table->timestamps();
             $table->integer('created_by')->unsigned();
             $table->foreign('created_by')->references('id')->on('users');
