@@ -30,7 +30,7 @@ return [
     ],
 
     'stripe' => [
-        'model'  => PCI\User::class,
+        'model'  => PCI\Models\User::class,
         'key'    => env('STRIPE_KEY'),
         'secret' => env('STRIPE_SECRET'),
     ],

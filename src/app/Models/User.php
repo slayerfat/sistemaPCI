@@ -1,6 +1,6 @@
 <?php
 
-namespace PCI;
+namespace PCI\Models;
 
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;

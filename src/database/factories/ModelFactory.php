@@ -11,7 +11,7 @@
 |
 */
 
-$factory->define(PCI\User::class, function (Faker\Generator $faker) {
+$factory->define(PCI\Models\User::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->name,
         'email' => $faker->email,

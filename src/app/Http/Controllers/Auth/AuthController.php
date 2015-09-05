@@ -2,7 +2,7 @@
 
 namespace PCI\Http\Controllers\Auth;
 
-use PCI\User;
+use PCI\Models\User;
 use Validator;
 use PCI\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
@@ -25,8 +25,6 @@ class AuthController extends Controller
 
     /**
      * Create a new authentication controller instance.
-     *
-     * @return void
      */
     public function __construct()
     {
