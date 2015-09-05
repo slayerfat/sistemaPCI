@@ -31,7 +31,7 @@ function inc(importance) {
         // save it back to filesystem
         .pipe(gulp.dest('./'))
         // commit the changed version number
-        //.pipe(git.commit('bumps package version'))
+        .pipe(git.commit('bumps package version'))
 
         // read only one file to get the version number
         .pipe(filter('package.json'))
