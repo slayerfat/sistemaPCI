@@ -27,6 +27,7 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\User whereRememberToken($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\User whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\User whereUpdatedAt($value)
+ * @property-read UserDetail $details
  */
 class User extends Model implements
     AuthenticatableContract,
@@ -47,7 +48,7 @@ class User extends Model implements
      *
      * @var array
      */
-    protected $fillable = ['name', 'email', 'password'];
+    protected $fillable = ['name', 'email', 'password', 'status'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -55,4 +56,12 @@ class User extends Model implements
      * @var array
      */
     protected $hidden = ['password', 'remember_token'];
+
+    /**
+     * @return UserDetail
+     */
+    public function details()
+    {
+        return $this->hasOne(UserDetail::class);
+    }
 }
