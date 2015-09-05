@@ -31,6 +31,7 @@
     },
     "scripts": {
         "post-install-cmd": [
+            "php replace.php",
             "php src/artisan clear-compiled",
             "php src/artisan optimize"
         ],
@@ -38,6 +39,7 @@
             "php src/artisan clear-compiled"
         ],
         "post-update-cmd": [
+            "php replace.php",
             "php src/artisan optimize"
         ],
         "post-root-package-install": [
