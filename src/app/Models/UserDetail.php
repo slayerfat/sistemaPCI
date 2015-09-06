@@ -41,6 +41,14 @@ class UserDetail extends Model
         return $this->hasOne(User::class);
     }
 
+    /**
+     * @return WorkDetail
+     */
+    public function workDetails()
+    {
+        return $this->hasOne(WorkDetail::class);
+    }
+
     // -------------------------------------------------------------------------
     // Belongs to 1..* -> 1
     // -------------------------------------------------------------------------
