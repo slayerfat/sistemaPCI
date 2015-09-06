@@ -16,9 +16,9 @@ class CreateMovementTypesTable extends Migration
             $table->increments('id');
             $table->string('desc', 30);
             $table->timestamps();
-            $table->integer('created_by')->unsigned();
+            $table->unsignedInteger('created_by');
             $table->foreign('created_by')->references('id')->on('users');
-            $table->integer('updated_by')->unsigned();
+            $table->unsignedInteger('updated_by');
             $table->foreign('updated_by')->references('id')->on('users');
         });
     }

@@ -14,24 +14,24 @@ class CreateUserDetailsTable extends Migration
     {
         Schema::create('user_details', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id')->unsigned();
+            $table->unsignedInteger('user_id');
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade');
-            $table->integer('address_id')->unsigned();
+            $table->unsignedInteger('address_id');
             $table->foreign('address_id')
                 ->references('id')
                 ->on('addresses');
-            $table->integer('nationality_id')->unsigned();
+            $table->unsignedInteger('nationality_id');
             $table->foreign('nationality_id')
                 ->references('id')
                 ->on('nationalities');
-            $table->integer('gender_id')->unsigned();
+            $table->unsignedInteger('gender_id');
             $table->foreign('gender_id')
                 ->references('id')
                 ->on('genders');
-            $table->integer('ci')->unsigned()->unique()->index();
+            $table->unsignedInteger('ci')->unique()->index();
             $table->string('first_name', 20);
             $table->string('last_name', 20)->nullable();
             $table->string('first_surname', 20);
@@ -44,9 +44,9 @@ class CreateUserDetailsTable extends Migration
             $table->string('phone', 15)->nullable();
             $table->string('cellphone', 15)->nullable();
             $table->timestamps();
-            $table->integer('created_by')->unsigned();
+            $table->unsignedInteger('created_by');
             $table->foreign('created_by')->references('id')->on('users');
-            $table->integer('updated_by')->unsigned();
+            $table->unsignedInteger('updated_by');
             $table->foreign('updated_by')->references('id')->on('users');
         });
     }

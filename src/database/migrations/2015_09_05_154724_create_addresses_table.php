@@ -14,7 +14,7 @@ class CreateAddressesTable extends Migration
     {
         Schema::create('addresses', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('parish_id')->unsigned();
+            $table->unsignedInteger('parish_id');
             $table->foreign('parish_id')
                 ->references('id')
                 ->on('parishes');
@@ -22,9 +22,9 @@ class CreateAddressesTable extends Migration
             $table->string('street')->nullable();
             $table->string('av')->nullable();
             $table->timestamps();
-            $table->integer('created_by')->unsigned();
+            $table->unsignedInteger('created_by');
             $table->foreign('created_by')->references('id')->on('users');
-            $table->integer('updated_by')->unsigned();
+            $table->unsignedInteger('updated_by');
             $table->foreign('updated_by')->references('id')->on('users');
         });
     }
