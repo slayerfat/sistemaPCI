@@ -27,7 +27,7 @@ class Town extends Model
      */
     public function state()
     {
-        return $this->BelongsTo(State::class);
+        return $this->belongsTo(State::class);
     }
 
     // -------------------------------------------------------------------------

@@ -12,8 +12,5 @@
 */
 
 Route::get('/', ['as' => 'welcome', function () {
-    $a = \PCI\Models\User::whereId(1);
-
-    $a->details;
     return view('welcome');
 }]);

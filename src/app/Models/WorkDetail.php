@@ -37,7 +37,7 @@ class WorkDetail extends Model
      */
     public function position()
     {
-        return $this->BelongsTo(Position::class);
+        return $this->belongsTo(Position::class);
     }
 
     /**
@@ -45,6 +45,6 @@ class WorkDetail extends Model
      */
     public function department()
     {
-        return $this->BelongsTo(Department::class);
+        return $this->belongsTo(Department::class);
     }
 }

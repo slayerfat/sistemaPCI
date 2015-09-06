@@ -21,13 +21,9 @@
             "database"
         ],
         "psr-4": {
-            "PCI\\": "app/"
+            "PCI\\": "app/",
+            "Tests\\": "tests/"
         }
-    },
-    "autoload-dev": {
-        "classmap": [
-            "tests/TestCase.php"
-        ]
     },
     "scripts": {
         "post-install-cmd": [

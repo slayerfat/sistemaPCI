@@ -58,7 +58,7 @@ class UserDetail extends Model
      */
     public function nationality()
     {
-        return $this->BelongsTo(Nationality::class);
+        return $this->belongsTo(Nationality::class);
     }
 
     /**
@@ -66,7 +66,7 @@ class UserDetail extends Model
      */
     public function gender()
     {
-        return $this->BelongsTo(Gender::class);
+        return $this->belongsTo(Gender::class);
     }
 
     /**
@@ -74,6 +74,6 @@ class UserDetail extends Model
      */
     public function address()
     {
-        return $this->BelongsTo(Address::class);
+        return $this->belongsTo(Address::class);
     }
 }

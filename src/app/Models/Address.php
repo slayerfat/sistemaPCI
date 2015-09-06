@@ -31,7 +31,7 @@ class Address extends Model
      */
     public function parish()
     {
-        return $this->BelongsTo(Parish::class);
+        return $this->belongsTo(Parish::class);
     }
 
     // -------------------------------------------------------------------------

@@ -27,7 +27,7 @@ class Parish extends Model
      */
     public function town()
     {
-        return $this->BelongsTo(Town::class);
+        return $this->belongsTo(Town::class);
     }
 
     // -------------------------------------------------------------------------
