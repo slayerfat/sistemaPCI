@@ -24,7 +24,7 @@ class Nationality extends Model
     /**
      * @return Collection
      */
-    public function userDetails()
+    public function employee()
     {
         return $this->hasMany(Employee::class);
     }

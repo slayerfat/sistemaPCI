@@ -23,7 +23,7 @@ class WorkDetail extends Model
     /**
      * @return Employee
      */
-    public function userDetails()
+    public function employee()
     {
         return $this->hasOne(Employee::class);
     }

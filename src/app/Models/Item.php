@@ -59,6 +59,15 @@ class Item extends Model
     /**
      * @return Collection
      */
+    public function depots()
+    {
+        return $this->belongsToMany(Depot::class);
+    }
+
+    /**
+     * Relacion unaria.
+     * @return Collection
+     */
     public function dependsOn()
     {
         return $this->belongsToMany(Item::class);

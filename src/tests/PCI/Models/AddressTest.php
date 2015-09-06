@@ -31,6 +31,6 @@ class AddressTest extends AbstractPhpUnitTestCase
             ->with(Employee::class)
             ->andReturn('mocked');
 
-        $this->assertEquals('mocked', $model->userDetails());
+        $this->assertEquals('mocked', $model->employee());
     }
 }

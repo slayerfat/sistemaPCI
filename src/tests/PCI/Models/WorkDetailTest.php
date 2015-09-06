@@ -2,12 +2,26 @@
 
 use Mockery;
 use PCI\Models\Department;
+use PCI\Models\Employee;
 use PCI\Models\Position;
 use PCI\Models\WorkDetail;
 use Tests\AbstractPhpUnitTestCase;
 
 class WorkDetailTest extends AbstractPhpUnitTestCase
 {
+
+    public function testEmployee()
+    {
+        $model = Mockery::mock(WorkDetail::class)
+            ->makePartial();
+
+        $model->shouldReceive('hasOne')
+            ->once()
+            ->with(Employee::class)
+            ->andReturn('mocked');
+
+        $this->assertEquals('mocked', $model->employee());
+    }
 
     public function testPosition()
     {

@@ -2,6 +2,7 @@
 
 namespace PCI\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 class Depot extends Model
@@ -25,27 +26,11 @@ class Depot extends Model
     // -------------------------------------------------------------------------
 
     /**
-     * @return SubCategory
+     * @return Employee
      */
-    public function subCategory()
+    public function owner()
     {
         return $this->belongsTo(Employee::class);
-    }
-
-    /**
-     * @return Maker
-     */
-    public function maker()
-    {
-        return $this->belongsTo(Maker::class);
-    }
-
-    /**
-     * @return ItemType
-     */
-    public function type()
-    {
-        return $this->belongsTo(ItemType::class);
     }
 
     // -------------------------------------------------------------------------
@@ -55,7 +40,7 @@ class Depot extends Model
     /**
      * @return Collection
      */
-    public function dependsOn()
+    public function items()
     {
         return $this->belongsToMany(Item::class);
     }
