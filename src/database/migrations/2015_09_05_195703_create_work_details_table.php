@@ -22,10 +22,10 @@ class CreateWorkDetailsTable extends Migration
             $table->foreign('position_id')
                 ->references('id')
                 ->on('positions');
-            $table->integer('user_detail_id')->unsigned();
-            $table->foreign('user_detail_id')
+            $table->integer('employee_id')->unsigned();
+            $table->foreign('employee_id')
                 ->references('id')
-                ->on('user_details');
+                ->on('employees');
             $table->date('join_date')->nullable();
             $table->date('departure_date')->nullable();
             $table->timestamps();

@@ -26,6 +26,6 @@ class Nationality extends Model
      */
     public function userDetails()
     {
-        return $this->hasMany(UserDetail::class);
+        return $this->hasMany(Employee::class);
     }
 }

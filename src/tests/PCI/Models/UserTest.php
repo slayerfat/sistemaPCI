@@ -2,7 +2,7 @@
 
 use Mockery;
 use PCI\Models\User;
-use PCI\Models\UserDetail;
+use PCI\Models\Employee;
 use Tests\AbstractPhpUnitTestCase;
 
 class UserTest extends AbstractPhpUnitTestCase
@@ -15,7 +15,7 @@ class UserTest extends AbstractPhpUnitTestCase
 
         $model->shouldReceive('hasOne')
             ->once()
-            ->with(UserDetail::class)
+            ->with(Employee::class)
             ->andReturn('mocked');
 
         $this->assertEquals('mocked', $model->details());

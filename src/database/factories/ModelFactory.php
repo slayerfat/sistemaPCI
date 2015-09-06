@@ -42,7 +42,7 @@ $factory->define(PCI\Models\User::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->define(PCI\Models\UserDetail::class, function (Faker\Generator $faker) {
+$factory->define(PCI\Models\Employee::class, function (Faker\Generator $faker) {
     return [
         'ci'            => rand(999999, 99999999),
         'first_name'    => $faker->firstName,

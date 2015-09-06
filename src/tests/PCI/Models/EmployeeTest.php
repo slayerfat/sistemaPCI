@@ -5,16 +5,16 @@ use PCI\Models\Address;
 use PCI\Models\Gender;
 use PCI\Models\Nationality;
 use PCI\Models\User;
-use PCI\Models\UserDetail;
+use PCI\Models\Employee;
 use PCI\Models\WorkDetail;
 use Tests\AbstractPhpUnitTestCase;
 
-class UserDetailTest extends AbstractPhpUnitTestCase
+class EmployeeTest extends AbstractPhpUnitTestCase
 {
 
     public function testUser()
     {
-        $model = Mockery::mock(UserDetail::class)
+        $model = Mockery::mock(Employee::class)
             ->makePartial();
 
         $model->shouldReceive('hasOne')
@@ -27,7 +27,7 @@ class UserDetailTest extends AbstractPhpUnitTestCase
 
     public function testWorkDetails()
     {
-        $model = Mockery::mock(UserDetail::class)
+        $model = Mockery::mock(Employee::class)
             ->makePartial();
 
         $model->shouldReceive('hasOne')
@@ -40,7 +40,7 @@ class UserDetailTest extends AbstractPhpUnitTestCase
 
     public function testNationality()
     {
-        $model = Mockery::mock(UserDetail::class)
+        $model = Mockery::mock(Employee::class)
             ->makePartial();
 
         $model->shouldReceive('belongsTo')
@@ -53,7 +53,7 @@ class UserDetailTest extends AbstractPhpUnitTestCase
 
     public function testGender()
     {
-        $model = Mockery::mock(UserDetail::class)
+        $model = Mockery::mock(Employee::class)
             ->makePartial();
 
         $model->shouldReceive('belongsTo')
@@ -66,7 +66,7 @@ class UserDetailTest extends AbstractPhpUnitTestCase
 
     public function testAddress()
     {
-        $model = Mockery::mock(UserDetail::class)
+        $model = Mockery::mock(Employee::class)
             ->makePartial();
 
         $model->shouldReceive('belongsTo')

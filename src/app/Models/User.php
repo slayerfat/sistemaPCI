@@ -12,7 +12,7 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
 /**
  * PCI\Models\User
- *
+
  * @property integer $id
  * @property string $name
  * @property string $email
@@ -27,7 +27,7 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\User whereRememberToken($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\User whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\User whereUpdatedAt($value)
- * @property-read UserDetail $details
+ * @property-read Employee $details
  */
 class User extends Model implements
     AuthenticatableContract,
@@ -65,10 +65,10 @@ class User extends Model implements
     // -------------------------------------------------------------------------
 
     /**
-     * @return UserDetail
+     * @return Employee
      */
     public function details()
     {
-        return $this->hasOne(UserDetail::class);
+        return $this->hasOne(Employee::class);
     }
 }

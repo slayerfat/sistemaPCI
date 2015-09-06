@@ -21,11 +21,11 @@ class WorkDetail extends Model
     // -------------------------------------------------------------------------
 
     /**
-     * @return UserDetail
+     * @return Employee
      */
     public function userDetails()
     {
-        return $this->hasOne(UserDetail::class);
+        return $this->hasOne(Employee::class);
     }
 
     // -------------------------------------------------------------------------

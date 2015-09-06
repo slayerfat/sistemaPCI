@@ -2,7 +2,7 @@
 
 use Mockery;
 use PCI\Models\Gender;
-use PCI\Models\UserDetail;
+use PCI\Models\Employee;
 use Tests\AbstractPhpUnitTestCase;
 
 class GenderTest extends AbstractPhpUnitTestCase
@@ -15,7 +15,7 @@ class GenderTest extends AbstractPhpUnitTestCase
 
         $model->shouldReceive('hasMany')
             ->once()
-            ->with(UserDetail::class)
+            ->with(Employee::class)
             ->andReturn('mocked');
 
         $this->assertEquals('mocked', $model->userDetails());

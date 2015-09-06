@@ -5,11 +5,11 @@ namespace PCI\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * PCI\Models\UserDetail
+ * PCI\Models\Employee
  *
  * @property-read User $user
  */
-class UserDetail extends Model
+class Employee extends Model
 {
 
     /**

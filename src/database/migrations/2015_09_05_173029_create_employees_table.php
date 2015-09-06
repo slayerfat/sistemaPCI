@@ -12,7 +12,7 @@ class CreateUserDetailsTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_details', function (Blueprint $table) {
+        Schema::create('employees', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('user_id');
             $table->foreign('user_id')
@@ -58,6 +58,6 @@ class CreateUserDetailsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('user_details');
+        Schema::drop('employees');
     }
 }
