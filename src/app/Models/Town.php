@@ -5,8 +5,9 @@ namespace PCI\Models;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
-class Gender extends Model
+class Town extends Model
 {
+
     /**
      * The attributes that are mass assignable.
      *
@@ -18,14 +19,26 @@ class Gender extends Model
     // Relaciones
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
+    // Belongs To 1..* -> 1
+    // -------------------------------------------------------------------------
+
+    /**
+     * @return State
+     */
+    public function state()
+    {
+        return $this->BelongsTo(State::class);
+    }
+
+    // -------------------------------------------------------------------------
     // Has Many 1 -> 1..*
     // -------------------------------------------------------------------------
 
     /**
      * @return Collection
      */
-    public function userDetails()
+    public function parishes()
     {
-        return $this->hasMany(UserDetail::class);
+        return $this->hasMany(Parish::class);
     }
 }

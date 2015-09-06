@@ -2,14 +2,10 @@
 
 namespace PCI\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
-/**
- * PCI\Models\UserDetail
- *
- * @property-read User $user
- */
-class UserDetail extends Model
+class Address extends Model
 {
 
     /**
@@ -18,54 +14,35 @@ class UserDetail extends Model
      * @var array
      */
     protected $fillable = [
-        'ci',
-        'first_name',
-        'last_name',
-        'first_surname',
-        'last_surname',
-        'phone',
+        'building',
+        'street',
+        'av',
     ];
 
     // -------------------------------------------------------------------------
     // Relaciones
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
-    // Has one 1 -> 1
+    // Belongs To 1..* -> 1
     // -------------------------------------------------------------------------
 
     /**
-     * @return User
+     * @return Parish
      */
-    public function user()
+    public function parish()
     {
-        return $this->hasOne(User::class);
+        return $this->BelongsTo(Parish::class);
     }
 
     // -------------------------------------------------------------------------
-    // Belongs to 1..* -> 1
+    // Has Many 1 -> 1..*
     // -------------------------------------------------------------------------
 
     /**
-     * @return Nationality
+     * @return Collection
      */
-    public function nationality()
+    public function userDetails()
     {
-        return $this->BelongsTo(Nationality::class);
-    }
-
-    /**
-     * @return Gender
-     */
-    public function gender()
-    {
-        return $this->BelongsTo(Gender::class);
-    }
-
-    /**
-     * @return Address
-     */
-    public function address()
-    {
-        return $this->BelongsTo(Address::class);
+        return $this->hasMany(UserDetail::class);
     }
 }

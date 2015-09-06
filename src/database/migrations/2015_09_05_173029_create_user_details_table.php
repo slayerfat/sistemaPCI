@@ -19,6 +19,10 @@ class CreateUserDetailsTable extends Migration
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade');
+            $table->integer('address_id')->unsigned();
+            $table->foreign('address_id')
+                ->references('id')
+                ->on('addresses');
             $table->integer('nationality_id')->unsigned();
             $table->foreign('nationality_id')
                 ->references('id')
