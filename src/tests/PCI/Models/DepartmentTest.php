@@ -8,7 +8,7 @@ use Tests\AbstractPhpUnitTestCase;
 class DepartmentTest extends AbstractPhpUnitTestCase
 {
 
-    public function testParishRelation()
+    public function testWorkDetails()
     {
         $model = Mockery::mock(Department::class)
             ->makePartial();

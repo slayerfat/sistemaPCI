@@ -1,5 +1,7 @@
 # sistemaPCI
 
+[![Build Status](https://travis-ci.org/slayerfat/sistemaPCI.svg)](https://travis-ci.org/slayerfat/sistemaPCI)
+
 Sistema de Gestion de Inventario Para la Division de Rehabilitacion Ocupacional.
 
 Misión Alma Mater, Programa Nacional de Formación: Informatica, Trayecto 3, IUTOMS.

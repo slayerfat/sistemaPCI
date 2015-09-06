@@ -8,7 +8,7 @@ use Tests\AbstractPhpUnitTestCase;
 class AddressTest extends AbstractPhpUnitTestCase
 {
 
-    public function testParishRelation()
+    public function testParish()
     {
         $model = \Mockery::mock(Address::class)
             ->makePartial();
@@ -21,7 +21,7 @@ class AddressTest extends AbstractPhpUnitTestCase
         $this->assertEquals('mocked', $model->parish());
     }
 
-    public function testUserDetailsRelation()
+    public function testUserDetails()
     {
         $model = \Mockery::mock(Address::class)
             ->makePartial();
