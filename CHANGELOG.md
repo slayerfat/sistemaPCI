@@ -1,3 +1,10 @@
+##v0.0.3
+
+Features:
+
+- ModelFactory, todos los modelos tienen fabricas.
+- Reducido acoplamiento en Personal y ajustadas interacciones con Usuario.
+
 ##v0.0.2 07-09-15
 
 Documentacion:

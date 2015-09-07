@@ -25,6 +25,7 @@ class Employee extends Model
         'first_surname',
         'last_surname',
         'phone',
+        'cellphone'
     ];
 
     // -------------------------------------------------------------------------
