@@ -2,6 +2,7 @@
 
 use Mockery;
 use PCI\Models\Address;
+use PCI\Models\Attendant;
 use PCI\Models\Gender;
 use PCI\Models\Nationality;
 use PCI\Models\User;
@@ -29,6 +30,16 @@ class EmployeeTest extends AbstractPhpUnitTestCase
             'workDetails',
             'hasOne',
             WorkDetail::class
+        );
+    }
+
+    public function testAttendant()
+    {
+        $this->mockBasicModelRelation(
+            Employee::class,
+            'attendant',
+            'hasOne',
+            Attendant::class
         );
     }
 

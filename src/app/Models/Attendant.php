@@ -2,30 +2,33 @@
 
 namespace PCI\Models;
 
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
-class ItemType extends Model
+class Attendant extends Model
 {
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['desc'];
+    protected $fillable = [
+        'selection',
+        'status'
+    ];
 
     // -------------------------------------------------------------------------
     // Relaciones
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
-    // Has Many 1 -> 1..*
+    // belongs to
     // -------------------------------------------------------------------------
 
     /**
-     * @return Collection
+     * @return Employee
      */
-    public function items()
+    public function employee()
     {
-        return $this->hasMany(Item::class);
+        return $this->belongsTo(Employee::class);
     }
 }

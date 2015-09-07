@@ -49,6 +49,14 @@ class Employee extends Model
         return $this->hasOne(WorkDetail::class);
     }
 
+    /**
+     * @return Attendant
+     */
+    public function attendant()
+    {
+        return $this->hasOne(Attendant::class);
+    }
+
     // -------------------------------------------------------------------------
     // Belongs to 1..* -> 1
     // -------------------------------------------------------------------------
