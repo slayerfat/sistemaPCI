@@ -73,8 +73,19 @@ class Item extends Model
         return $this->belongsToMany(Item::class);
     }
 
+    /**
+     * @return Collection
+     */
     public function petitions()
     {
         return $this->belongsToMany(Petition::class)->withPivot('quantity');
+    }
+
+    /**
+     * @return Collection
+     */
+    public function movements()
+    {
+        return $this->belongsToMany(Movement::class)->withPivot('quantity');
     }
 }

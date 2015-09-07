@@ -5,7 +5,7 @@ namespace PCI\Models;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
-class MovementType extends Model
+class Movement extends Model
 {
 
     /**
@@ -13,20 +13,32 @@ class MovementType extends Model
      *
      * @var array
      */
-    protected $fillable = ['desc'];
+    protected $fillable = ['creation'];
 
     // -------------------------------------------------------------------------
     // Relaciones
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
-    // Has Many 1 -> 1..*
+    // belongs to
+    // -------------------------------------------------------------------------
+
+    /**
+     * @return MovementType
+     */
+    public function type()
+    {
+        return $this->belongsTo(MovementType::class);
+    }
+
+    // -------------------------------------------------------------------------
+    // belongs to many
     // -------------------------------------------------------------------------
 
     /**
      * @return Collection
      */
-    public function movements()
+    public function items()
     {
-        return $this->hasMany(Movement::class);
+        return $this->belongsToMany(Item::class)->withPivot('quantity');
     }
 }
