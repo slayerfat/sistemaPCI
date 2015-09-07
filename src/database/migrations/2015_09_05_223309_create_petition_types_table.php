@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateItemRequestTypesTable extends Migration
+class CreatePetitionTypesTable extends Migration
 {
     /**
      * Run the migrations.
