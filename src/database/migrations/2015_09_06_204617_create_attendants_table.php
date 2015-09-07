@@ -14,10 +14,10 @@ class CreateAttendantsTable extends Migration
     {
         Schema::create('attendants', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('employee_id');
-            $table->foreign('employee_id')
+            $table->unsignedInteger('user_id');
+            $table->foreign('user_id')
                 ->references('id')
-                ->on('employees');
+                ->on('users');
             $table->date('selection')->nullable();
             $table->boolean('status')->default(true);
             $table->timestamps();

@@ -1,6 +1,7 @@
 <?php namespace Tests\PCI\Models;
 
 use Mockery;
+use PCI\Models\Attendant;
 use PCI\Models\Note;
 use PCI\Models\Petition;
 use PCI\Models\User;
@@ -17,6 +18,16 @@ class UserTest extends AbstractPhpUnitTestCase
             'employee',
             'hasOne',
             Employee::class
+        );
+    }
+
+    public function testAttendant()
+    {
+        $this->mockBasicModelRelation(
+            User::class,
+            'attendant',
+            'hasOne',
+            Attendant::class
         );
     }
 

@@ -73,6 +73,14 @@ class User extends Model implements
         return $this->hasOne(Employee::class);
     }
 
+    /**
+     * @return Attendant
+     */
+    public function attendant()
+    {
+        return $this->hasOne(Attendant::class);
+    }
+
     // -------------------------------------------------------------------------
     // has Many 1 -> 1..*
     // -------------------------------------------------------------------------
