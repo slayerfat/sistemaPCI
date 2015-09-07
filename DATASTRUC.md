@@ -4,7 +4,24 @@ En este documento se pretende mantener la bitacora de cambios significativos en 
 
 ##v0.0.2
 
+07-09-15
+
+Entidad Nota:
+
+- el campo solicitado por fue removido ya que es redundante por la existencia de la entidad Pedido (relacion solicita con Personal). 
+- el campo aprobado se renombro a status.
+
 06-09-15
 
-- Se elimino jefe de almacen y fue incluida esta relacion en la entidad almacen en donde esta posee personal_id para ser una relacion 1 a n.
-- Ecargado de almacen posee ahora una relacion 1 a 1 ya que __una persona__ solo puede ser a la vez _un encargado_ y __un encargado__ puede ser solamente _una persona_. __TODO:__ hacer historial de encargado de almacen. 
+Jefe de Almacen:
+
+- Se elimino por redundancia inutil que quitara tiempo en el futuro inmediato. 
+
+Almacen:
+
+- Incluida relacion entre Almacen (1) y Personal (N) de 1 a N, relacion designada como alcanza.
+
+Encargado de Almacen:
+
+- Posee ahora una relacion 1 a 1 ya que __una persona__ solo puede ser a la vez _un encargado_ y __un encargado__ puede ser solamente _una persona_.
+- __TODO:__ hacer historial de encargado de almacen. 
