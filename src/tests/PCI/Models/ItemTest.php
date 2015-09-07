@@ -5,6 +5,7 @@ use PCI\Models\Depot;
 use PCI\Models\Item;
 use PCI\Models\ItemType;
 use PCI\Models\Maker;
+use PCI\Models\Petition;
 use PCI\Models\SubCategory;
 use Tests\AbstractPhpUnitTestCase;
 
@@ -59,5 +60,22 @@ class ItemTest extends AbstractPhpUnitTestCase
             'belongsToMany',
             Item::class
         );
+    }
+
+    public function testPetitions()
+    {
+        $mock = Mockery::mock(Item::class)->makePartial();
+
+        $mock->shouldReceive('belongsToMany')
+            ->once()
+            ->with(Petition::class)
+            ->andReturnSelf();
+
+        $mock->shouldReceive('withPivot')
+            ->once()
+            ->with('quantity')
+            ->andReturn('mocked');
+
+        $this->assertEquals('mocked', $mock->petitions());
     }
 }

@@ -72,4 +72,9 @@ class Item extends Model
     {
         return $this->belongsToMany(Item::class);
     }
+
+    public function petitions()
+    {
+        return $this->belongsToMany(Petition::class)->withPivot('quantity');
+    }
 }
