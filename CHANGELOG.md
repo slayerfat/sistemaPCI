@@ -3,6 +3,9 @@
 Features:
 
 - ModelFactory, todos los modelos tienen fabricas.
+
+Mejoras:
+
 - Reducido acoplamiento en Personal y ajustadas interacciones con Usuario.
 
 ##v0.0.2 07-09-15

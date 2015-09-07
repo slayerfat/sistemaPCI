@@ -2,6 +2,13 @@
 
 En este documento se pretende mantener la bitacora de cambios significativos en la estructura de datos del sistema.
 
+##v0.0.3
+
+Personal:
+
+- el acoplamiento en personal es elevado, se ajusto de la siguiente forma:
+  - ...
+
 ##v0.0.2
 
 ###07-09-15

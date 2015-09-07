@@ -7,10 +7,14 @@ $models = [
     PCI\Models\Gender::class,
     PCI\Models\ItemType::class,
     PCI\Models\Maker::class,
+    PCI\Models\MovementType::class,
     PCI\Models\Nationality::class,
+    PCI\Models\NoteType::class,
     PCI\Models\Parish::class,
+    PCI\Models\PetitionType::class,
     PCI\Models\Position::class,
     PCI\Models\State::class,
+    PCI\Models\SubCategory::class,
     PCI\Models\Town::class,
 ];
 
@@ -70,6 +74,28 @@ $factory->define(PCI\Models\Item::class, function (Faker\Generator $faker) {
         'stock'    => rand(0, 10000),
         'minimun'  => rand(0, 10000),
         'due'      => $faker->dateTime,
+    ];
+});
+
+$factory->define(PCI\Movement\Item::class, function (Faker\Generator $faker) {
+    return [
+        'creation' => $faker->dateTime,
+    ];
+});
+
+$factory->define(PCI\Movement\Note::class, function (Faker\Generator $faker) {
+    return [
+        'creation' => $faker->dateTime,
+        'comments' => $faker->paragraph,
+        'status'   => true,
+    ];
+});
+
+$factory->define(PCI\Movement\Note::class, function (Faker\Generator $faker) {
+    return [
+        'request_date' => $faker->dateTime,
+        'comments'     => $faker->paragraph,
+        'status'       => true,
     ];
 });
 
