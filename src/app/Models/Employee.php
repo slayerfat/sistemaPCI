@@ -86,16 +86,4 @@ class Employee extends Model
     {
         return $this->belongsTo(Address::class);
     }
-
-    // -------------------------------------------------------------------------
-    // has Many 1 -> 1..*
-    // -------------------------------------------------------------------------
-
-    /**
-     * @return Collection
-     */
-    public function notes()
-    {
-        return $this->hasMany(Note::class);
-    }
 }

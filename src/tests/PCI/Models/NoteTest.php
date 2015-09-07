@@ -2,12 +2,12 @@
 
 use Mockery;
 use PCI\Models\Attendant;
-use PCI\Models\Employee;
 use PCI\Models\Item;
 use PCI\Models\Movement;
 use PCI\Models\Note;
 use PCI\Models\NoteType;
 use PCI\Models\Petition;
+use PCI\Models\User;
 use Tests\AbstractPhpUnitTestCase;
 
 class NoteTest extends AbstractPhpUnitTestCase
@@ -28,17 +28,17 @@ class NoteTest extends AbstractPhpUnitTestCase
             Note::class,
             'requestedBy',
             'belongsTo',
-            Employee::class
+            User::class
         );
     }
 
-    public function testToEmployee()
+    public function testToUser()
     {
         $this->mockBasicModelRelation(
             Note::class,
-            'toEmployee',
+            'toUser',
             'belongsTo',
-            Employee::class
+            User::class
         );
     }
 

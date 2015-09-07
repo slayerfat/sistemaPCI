@@ -73,14 +73,4 @@ class EmployeeTest extends AbstractPhpUnitTestCase
             Address::class
         );
     }
-
-    public function testNotes()
-    {
-        $this->mockBasicModelRelation(
-            Employee::class,
-            'notes',
-            'hasMany',
-            Note::class
-        );
-    }
 }

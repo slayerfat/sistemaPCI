@@ -45,19 +45,19 @@ class Note extends Model
     }
 
     /**
-     * @return Employee
+     * @return User
      */
     public function requestedBy()
     {
-        return $this->belongsTo(Employee::class);
+        return $this->belongsTo(User::class);
     }
 
     /**
-     * @return Employee
+     * @return User
      */
-    public function toEmployee()
+    public function toUser()
     {
-        return $this->belongsTo(Employee::class);
+        return $this->belongsTo(User::class);
     }
 
     /**
