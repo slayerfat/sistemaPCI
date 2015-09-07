@@ -18,6 +18,16 @@ class Attendant extends Model
         'status'
     ];
 
+    /**
+     * Atributos que deben ser mutados a dates.
+     * dates se refiere a Carbon\Carbon dates.
+     * En otras palabras, genera una instancia
+     * de Carbon\Carbon para cada campo.
+     *
+     * @var array
+     */
+    protected $dates = ['selection'];
+
     // -------------------------------------------------------------------------
     // Relaciones
     // -------------------------------------------------------------------------
