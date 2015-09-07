@@ -6,6 +6,7 @@ use PCI\Models\Item;
 use PCI\Models\ItemType;
 use PCI\Models\Maker;
 use PCI\Models\Movement;
+use PCI\Models\Note;
 use PCI\Models\Petition;
 use PCI\Models\SubCategory;
 use Tests\AbstractPhpUnitTestCase;
@@ -95,5 +96,22 @@ class ItemTest extends AbstractPhpUnitTestCase
             ->andReturn('mocked');
 
         $this->assertEquals('mocked', $mock->movements());
+    }
+
+    public function testNotes()
+    {
+        $mock = Mockery::mock(Item::class)->makePartial();
+
+        $mock->shouldReceive('belongsToMany')
+            ->once()
+            ->with(Note::class)
+            ->andReturnSelf();
+
+        $mock->shouldReceive('withPivot')
+            ->once()
+            ->with('quantity')
+            ->andReturn('mocked');
+
+        $this->assertEquals('mocked', $mock->notes());
     }
 }

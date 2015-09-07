@@ -4,6 +4,7 @@ use Mockery;
 use PCI\Models\Item;
 use PCI\Models\Movement;
 use PCI\Models\MovementType;
+use PCI\Models\Note;
 use Tests\AbstractPhpUnitTestCase;
 
 class MovementTest extends AbstractPhpUnitTestCase
@@ -16,6 +17,16 @@ class MovementTest extends AbstractPhpUnitTestCase
             'type',
             'belongsTo',
             MovementType::class
+        );
+    }
+
+    public function testNote()
+    {
+        $this->mockBasicModelRelation(
+            Movement::class,
+            'note',
+            'belongsTo',
+            Note::class
         );
     }
 

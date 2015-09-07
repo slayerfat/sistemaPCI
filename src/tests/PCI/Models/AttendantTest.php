@@ -2,6 +2,7 @@
 
 use PCI\Models\Attendant;
 use PCI\Models\Employee;
+use PCI\Models\Note;
 use Tests\AbstractPhpUnitTestCase;
 
 class AttendantTest extends AbstractPhpUnitTestCase
@@ -14,6 +15,16 @@ class AttendantTest extends AbstractPhpUnitTestCase
             'employee',
             'belongsTo',
             Employee::class
+        );
+    }
+
+    public function testNotes()
+    {
+        $this->mockBasicModelRelation(
+            Attendant::class,
+            'notes',
+            'hasMany',
+            Note::class
         );
     }
 }

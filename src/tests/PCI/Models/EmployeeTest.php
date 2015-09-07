@@ -5,6 +5,7 @@ use PCI\Models\Address;
 use PCI\Models\Attendant;
 use PCI\Models\Gender;
 use PCI\Models\Nationality;
+use PCI\Models\Note;
 use PCI\Models\User;
 use PCI\Models\Employee;
 use PCI\Models\WorkDetail;
@@ -70,6 +71,16 @@ class EmployeeTest extends AbstractPhpUnitTestCase
             'address',
             'belongsTo',
             Address::class
+        );
+    }
+
+    public function testNotes()
+    {
+        $this->mockBasicModelRelation(
+            Employee::class,
+            'notes',
+            'hasMany',
+            Note::class
         );
     }
 }
