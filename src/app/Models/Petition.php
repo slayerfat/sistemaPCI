@@ -49,4 +49,16 @@ class Petition extends Model
     {
         return $this->belongsToMany(Item::class)->withPivot('quantity');
     }
+
+    // -------------------------------------------------------------------------
+    // has many
+    // -------------------------------------------------------------------------
+
+    /**
+     * @return Collection
+     */
+    public function notes()
+    {
+        return $this->hasMany(Note::class);
+    }
 }

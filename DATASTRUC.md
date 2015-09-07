@@ -4,14 +4,14 @@ En este documento se pretende mantener la bitacora de cambios significativos en 
 
 ##v0.0.2
 
-07-09-15
+###07-09-15
 
 Entidad Nota:
 
 - el campo solicitado por fue removido ya que es redundante por la existencia de la entidad Pedido (relacion solicita con Personal). 
 - el campo aprobado se renombro a status.
 
-06-09-15
+###06-09-15
 
 Jefe de Almacen:
 

@@ -30,6 +30,14 @@ class Movement extends Model
         return $this->belongsTo(MovementType::class);
     }
 
+    /**
+     * @return Note
+     */
+    public function note()
+    {
+        return $this->belongsTo(Note::class);
+    }
+
     // -------------------------------------------------------------------------
     // belongs to many
     // -------------------------------------------------------------------------

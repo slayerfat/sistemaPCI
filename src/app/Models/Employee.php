@@ -2,6 +2,7 @@
 
 namespace PCI\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -83,5 +84,17 @@ class Employee extends Model
     public function address()
     {
         return $this->belongsTo(Address::class);
+    }
+
+    // -------------------------------------------------------------------------
+    // has Many 1 -> 1..*
+    // -------------------------------------------------------------------------
+
+    /**
+     * @return Collection
+     */
+    public function notes()
+    {
+        return $this->hasMany(Note::class);
     }
 }

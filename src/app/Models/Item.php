@@ -88,4 +88,12 @@ class Item extends Model
     {
         return $this->belongsToMany(Movement::class)->withPivot('quantity');
     }
+
+    /**
+     * @return Collection
+     */
+    public function notes()
+    {
+        return $this->belongsToMany(Note::class)->withPivot('quantity');
+    }
 }

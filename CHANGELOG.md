@@ -1,6 +1,6 @@
-v0.0.2 __{{$FECHA}}__
+##v0.0.2 __{{$FECHA}}__
 
-Features
+Features:
 
   1. Modelos
     - Todos los modelos segun el diagrama de clases refinado completado.
@@ -11,9 +11,9 @@ Features
     
   1. Integracion continua
     - primeros pasos establecidos para integracion continua por medio de travis y scrutinizer.
-
-bugfixes
+    
+Bugfixes:
     
   - ajustado forma en la que se trabaja composer, phpunit y otros servicios.
-  - replace.php deberia funcionar correctamente.
+  - `replace.php` deberia funcionar correctamente.
   - cypher deberia funcionar por cambio de strings de tamaño 32.
