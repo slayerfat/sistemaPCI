@@ -225,6 +225,12 @@ _ESTE CODIGO ESTA IMPLEMENTADO EN LOS TRES EJES ESPACIALES PRODUCIDOS EN PHP3D._
 
 _ADVERTENCIA: ESTE COGIDO FUENTE GENERA MIGRAÑA_
 
+##Documentacion adicional
+
+Dentro de este repositorio existen archivos complementarios que ayudaran en la documentacion del mismo, estos son:
+
+CHANGELOG.md, DATASTRUC.md y DEDCHANGE.md.
+
 ##Laravel PHP Framework
 
 Este sistema usa el framework Laravel de PHP [documentacion](http://laravel.com/docs/5.1)

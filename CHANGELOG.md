@@ -1,5 +1,13 @@
 ##v0.0.2 __{{$FECHA}}__
 
+Documentacion:
+
+Se crearon documentacion segun aspectos clave del sistema, para ser referenciados facilmente, estos son:
+
+1. CHANGELOG.md: cambios de version.
+1. DATASTRUC.md: cambios dentro de la estructura de datos y entidades.
+1. DEDCHANGE.md: cambios relevantes en el documento de especificacion de diseño (incluyendo doc. esp. requsitos) que no impactan en la estructura de datos.
+
 Features:
 
   1. Modelos
