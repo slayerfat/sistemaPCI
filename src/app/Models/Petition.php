@@ -51,9 +51,9 @@ class Petition extends Model
     /**
      * @return Employee
      */
-    public function employee()
+    public function user()
     {
-        return $this->belongsTo(Employee::class);
+        return $this->belongsTo(User::class);
     }
 
     // -------------------------------------------------------------------------

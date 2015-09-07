@@ -1,11 +1,11 @@
 <?php namespace Tests\PCI\Models;
 
 use Mockery;
-use PCI\Models\Employee;
 use PCI\Models\Item;
 use PCI\Models\Note;
 use PCI\Models\Petition;
 use PCI\Models\PetitionType;
+use PCI\Models\User;
 use Tests\AbstractPhpUnitTestCase;
 
 class PetitionTest extends AbstractPhpUnitTestCase
@@ -21,13 +21,13 @@ class PetitionTest extends AbstractPhpUnitTestCase
         );
     }
 
-    public function testEmployee()
+    public function testUser()
     {
         $this->mockBasicModelRelation(
             Petition::class,
-            'employee',
+            'user',
             'belongsTo',
-            Employee::class
+            User::class
         );
     }
 

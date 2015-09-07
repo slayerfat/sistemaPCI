@@ -14,10 +14,10 @@ class CreatePetitionsTable extends Migration
     {
         Schema::create('petitions', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('employee_id');
-            $table->foreign('employee_id')
+            $table->unsignedInteger('user_id');
+            $table->foreign('user_id')
                 ->references('id')
-                ->on('employees');
+                ->on('users');
             $table->unsignedInteger('petition_type_id');
             $table->foreign('petition_type_id')
                 ->references('id')

@@ -84,4 +84,12 @@ class User extends Model implements
     {
         return $this->hasMany(Note::class);
     }
+
+    /**
+     * @return Collection
+     */
+    public function petitions()
+    {
+        return $this->hasMany(Petition::class);
+    }
 }

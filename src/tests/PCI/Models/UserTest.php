@@ -2,6 +2,7 @@
 
 use Mockery;
 use PCI\Models\Note;
+use PCI\Models\Petition;
 use PCI\Models\User;
 use PCI\Models\Employee;
 use Tests\AbstractPhpUnitTestCase;
@@ -26,6 +27,16 @@ class UserTest extends AbstractPhpUnitTestCase
             'notes',
             'hasMany',
             Note::class
+        );
+    }
+
+    public function testPetitions()
+    {
+        $this->mockBasicModelRelation(
+            User::class,
+            'petitions',
+            'hasMany',
+            Petition::class
         );
     }
 }

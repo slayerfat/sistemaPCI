@@ -6,8 +6,12 @@ En este documento se pretende mantener la bitacora de cambios significativos en 
 
 Personal:
 
-- el acoplamiento en Personal era elevado, se ajusto de la siguiente forma, __TODOS con la misma cardinalidad__:
-    - las Notas estan ahora relacionadas con Usuario.
+el acoplamiento en Personal era elevado, se ajusto de la siguiente forma:
+
+- las relaciones fueron extirpadas, ahora relacionadas con __Usuario y con la misma cardinalidad__:
+    - Notas.
+    - Pedido.
+    - Encargado de Almacen.
 
 ##v0.0.2
 
