@@ -1,4 +1,4 @@
-v0.0.2 $FECHA
+v0.0.2 __{{$FECHA}}__
 
 Features
 
