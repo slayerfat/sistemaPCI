@@ -11,28 +11,22 @@ class DepotTest extends AbstractPhpUnitTestCase
 
     public function testOwner()
     {
-        $model = Mockery::mock(Depot::class)
-            ->makePartial();
-
-        $model->shouldReceive('belongsTo')
-            ->once()
-            ->with(Employee::class)
-            ->andReturn('mocked');
-
-        $this->assertEquals('mocked', $model->owner());
+        $this->mockBasicModelRelation(
+            Depot::class,
+            'owner',
+            'belongsTo',
+            Employee::class
+        );
     }
 
 
     public function testItems()
     {
-        $model = \Mockery::mock(Depot::class)
-            ->makePartial();
-
-        $model->shouldReceive('belongsToMany')
-            ->once()
-            ->with(Item::class)
-            ->andReturn('mocked');
-
-        $this->assertEquals('mocked', $model->items());
+        $this->mockBasicModelRelation(
+            Depot::class,
+            'items',
+            'belongsToMany',
+            Item::class
+        );
     }
 }

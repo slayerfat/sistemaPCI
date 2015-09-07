@@ -11,27 +11,21 @@ class ParishTest extends AbstractPhpUnitTestCase
 
     public function testAddresses()
     {
-        $model = Mockery::mock(Parish::class)
-            ->makePartial();
-
-        $model->shouldReceive('hasMany')
-            ->once()
-            ->with(Address::class)
-            ->andReturn('mocked');
-
-        $this->assertEquals('mocked', $model->addresses());
+        $this->mockBasicModelRelation(
+            Parish::class,
+            'addresses',
+            'hasMany',
+            Address::class
+        );
     }
 
     public function testTown()
     {
-        $model = Mockery::mock(Parish::class)
-            ->makePartial();
-
-        $model->shouldReceive('belongsTo')
-            ->once()
-            ->with(Town::class)
-            ->andReturn('mocked');
-
-        $this->assertEquals('mocked', $model->town());
+        $this->mockBasicModelRelation(
+            Parish::class,
+            'town',
+            'belongsTo',
+            Town::class
+        );
     }
 }

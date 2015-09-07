@@ -11,27 +11,21 @@ class TownTest extends AbstractPhpUnitTestCase
 
     public function testState()
     {
-        $model = Mockery::mock(Town::class)
-            ->makePartial();
-
-        $model->shouldReceive('belongsTo')
-            ->once()
-            ->with(State::class)
-            ->andReturn('mocked');
-
-        $this->assertEquals('mocked', $model->state());
+        $this->mockBasicModelRelation(
+            Town::class,
+            'state',
+            'belongsTo',
+            State::class
+        );
     }
 
     public function testParishes()
     {
-        $model = Mockery::mock(Town::class)
-            ->makePartial();
-
-        $model->shouldReceive('hasMany')
-            ->once()
-            ->with(Parish::class)
-            ->andReturn('mocked');
-
-        $this->assertEquals('mocked', $model->parishes());
+        $this->mockBasicModelRelation(
+            Town::class,
+            'parishes',
+            'hasMany',
+            Parish::class
+        );
     }
 }

@@ -9,14 +9,11 @@ class NationalityTest extends AbstractPhpUnitTestCase
 {
     public function testUserDetails()
     {
-        $model = Mockery::mock(Nationality::class)
-            ->makePartial();
-
-        $model->shouldReceive('hasMany')
-            ->once()
-            ->with(Employee::class)
-            ->andReturn('mocked');
-
-        $this->assertEquals('mocked', $model->employee());
+        $this->mockBasicModelRelation(
+            Nationality::class,
+            'employee',
+            'hasMany',
+            Employee::class
+        );
     }
 }

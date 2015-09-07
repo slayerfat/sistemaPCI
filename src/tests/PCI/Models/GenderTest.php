@@ -10,14 +10,11 @@ class GenderTest extends AbstractPhpUnitTestCase
 
     public function testUserDetails()
     {
-        $model = Mockery::mock(Gender::class)
-            ->makePartial();
-
-        $model->shouldReceive('hasMany')
-            ->once()
-            ->with(Employee::class)
-            ->andReturn('mocked');
-
-        $this->assertEquals('mocked', $model->employee());
+        $this->mockBasicModelRelation(
+            Gender::class,
+            'employee',
+            'hasMany',
+            Employee::class
+        );
     }
 }

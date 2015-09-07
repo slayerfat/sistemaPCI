@@ -10,14 +10,11 @@ class StateTest extends AbstractPhpUnitTestCase
 
     public function testTowns()
     {
-        $model = Mockery::mock(State::class)
-            ->makePartial();
-
-        $model->shouldReceive('hasMany')
-            ->once()
-            ->with(Town::class)
-            ->andReturn('mocked');
-
-        $this->assertEquals('mocked', $model->towns());
+        $this->mockBasicModelRelation(
+            State::class,
+            'towns',
+            'hasMany',
+            Town::class
+        );
     }
 }

@@ -67,7 +67,7 @@ class User extends Model implements
     /**
      * @return Employee
      */
-    public function details()
+    public function employee()
     {
         return $this->hasOne(Employee::class);
     }

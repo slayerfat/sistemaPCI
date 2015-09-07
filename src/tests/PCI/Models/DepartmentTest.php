@@ -10,14 +10,11 @@ class DepartmentTest extends AbstractPhpUnitTestCase
 
     public function testWorkDetails()
     {
-        $model = Mockery::mock(Department::class)
-            ->makePartial();
-
-        $model->shouldReceive('hasMany')
-            ->once()
-            ->with(WorkDetail::class)
-            ->andReturn('mocked');
-
-        $this->assertEquals('mocked', $model->workDetails());
+        $this->mockBasicModelRelation(
+            Department::class,
+            'workDetails',
+            'hasMany',
+            WorkDetail::class
+        );
     }
 }

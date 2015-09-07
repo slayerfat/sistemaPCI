@@ -10,14 +10,11 @@ class PositionTest extends AbstractPhpUnitTestCase
 
     public function testWorkDetails()
     {
-        $model = Mockery::mock(Position::class)
-            ->makePartial();
-
-        $model->shouldReceive('hasMany')
-            ->once()
-            ->with(WorkDetail::class)
-            ->andReturn('mocked');
-
-        $this->assertEquals('mocked', $model->workDetails());
+        $this->mockBasicModelRelation(
+            Position::class,
+            'workDetails',
+            'hasMany',
+            WorkDetail::class
+        );
     }
 }

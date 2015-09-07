@@ -14,66 +14,51 @@ class EmployeeTest extends AbstractPhpUnitTestCase
 
     public function testUser()
     {
-        $model = Mockery::mock(Employee::class)
-            ->makePartial();
-
-        $model->shouldReceive('hasOne')
-            ->once()
-            ->with(User::class)
-            ->andReturn('mocked');
-
-        $this->assertEquals('mocked', $model->user());
+        $this->mockBasicModelRelation(
+            Employee::class,
+            'user',
+            'hasOne',
+            User::class
+        );
     }
 
     public function testWorkDetails()
     {
-        $model = Mockery::mock(Employee::class)
-            ->makePartial();
-
-        $model->shouldReceive('hasOne')
-            ->once()
-            ->with(WorkDetail::class)
-            ->andReturn('mocked');
-
-        $this->assertEquals('mocked', $model->workDetails());
+        $this->mockBasicModelRelation(
+            Employee::class,
+            'workDetails',
+            'hasOne',
+            WorkDetail::class
+        );
     }
 
     public function testNationality()
     {
-        $model = Mockery::mock(Employee::class)
-            ->makePartial();
-
-        $model->shouldReceive('belongsTo')
-            ->once()
-            ->with(Nationality::class)
-            ->andReturn('mocked');
-
-        $this->assertEquals('mocked', $model->nationality());
+        $this->mockBasicModelRelation(
+            Employee::class,
+            'nationality',
+            'belongsTo',
+            Nationality::class
+        );
     }
 
     public function testGender()
     {
-        $model = Mockery::mock(Employee::class)
-            ->makePartial();
-
-        $model->shouldReceive('belongsTo')
-            ->once()
-            ->with(Gender::class)
-            ->andReturn('mocked');
-
-        $this->assertEquals('mocked', $model->gender());
+        $this->mockBasicModelRelation(
+            Employee::class,
+            'gender',
+            'belongsTo',
+            Gender::class
+        );
     }
 
     public function testAddress()
     {
-        $model = Mockery::mock(Employee::class)
-            ->makePartial();
-
-        $model->shouldReceive('belongsTo')
-            ->once()
-            ->with(Address::class)
-            ->andReturn('mocked');
-
-        $this->assertEquals('mocked', $model->address());
+        $this->mockBasicModelRelation(
+            Employee::class,
+            'address',
+            'belongsTo',
+            Address::class
+        );
     }
 }

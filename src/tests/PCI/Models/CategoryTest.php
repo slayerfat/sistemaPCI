@@ -10,14 +10,11 @@ class CategoryTest extends AbstractPhpUnitTestCase
 
     public function testSubCategories()
     {
-        $model = Mockery::mock(Category::class)
-            ->makePartial();
-
-        $model->shouldReceive('hasMany')
-            ->once()
-            ->with(SubCategory::class)
-            ->andReturn('mocked');
-
-        $this->assertEquals('mocked', $model->subCategories());
+        $this->mockBasicModelRelation(
+            Category::class,
+            'subCategories',
+            'hasMany',
+            SubCategory::class
+        );
     }
 }

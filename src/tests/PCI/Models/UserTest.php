@@ -10,14 +10,11 @@ class UserTest extends AbstractPhpUnitTestCase
 
     public function testDetails()
     {
-        $model = Mockery::mock(User::class)
-            ->makePartial();
-
-        $model->shouldReceive('hasOne')
-            ->once()
-            ->with(Employee::class)
-            ->andReturn('mocked');
-
-        $this->assertEquals('mocked', $model->details());
+        $this->mockBasicModelRelation(
+            User::class,
+            'employee',
+            'hasOne',
+            Employee::class
+        );
     }
 }
