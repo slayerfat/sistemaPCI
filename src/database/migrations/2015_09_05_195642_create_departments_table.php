@@ -16,7 +16,7 @@ class CreateDepartmentsTable extends Migration
             $table->increments('id');
             $table->string('desc', 30);
             /**
-             * @see create_user_details_table
+             * @see create_employee_table
              */
             $table->string('phone', 15)->nullable();
             $table->timestamps();
