@@ -12,40 +12,31 @@ class WorkDetailTest extends AbstractPhpUnitTestCase
 
     public function testEmployee()
     {
-        $model = Mockery::mock(WorkDetail::class)
-            ->makePartial();
-
-        $model->shouldReceive('hasOne')
-            ->once()
-            ->with(Employee::class)
-            ->andReturn('mocked');
-
-        $this->assertEquals('mocked', $model->employee());
+        $this->mockBasicModelRelation(
+            WorkDetail::class,
+            'employee',
+            'belongsTo',
+            Employee::class
+        );
     }
 
     public function testPosition()
     {
-        $model = Mockery::mock(WorkDetail::class)
-            ->makePartial();
-
-        $model->shouldReceive('belongsTo')
-            ->once()
-            ->with(Position::class)
-            ->andReturn('mocked');
-
-        $this->assertEquals('mocked', $model->position());
+        $this->mockBasicModelRelation(
+            WorkDetail::class,
+            'position',
+            'belongsTo',
+            Position::class
+        );
     }
 
     public function testDepartment()
     {
-        $model = Mockery::mock(WorkDetail::class)
-            ->makePartial();
-
-        $model->shouldReceive('belongsTo')
-            ->once()
-            ->with(Department::class)
-            ->andReturn('mocked');
-
-        $this->assertEquals('mocked', $model->department());
+        $this->mockBasicModelRelation(
+            WorkDetail::class,
+            'department',
+            'belongsTo',
+            Department::class
+        );
     }
 }

@@ -18,7 +18,7 @@ class EmployeeTest extends AbstractPhpUnitTestCase
         $this->mockBasicModelRelation(
             Employee::class,
             'user',
-            'hasOne',
+            'belongsTo',
             User::class
         );
     }

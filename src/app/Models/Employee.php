@@ -34,14 +34,6 @@ class Employee extends Model
     // -------------------------------------------------------------------------
 
     /**
-     * @return User
-     */
-    public function user()
-    {
-        return $this->hasOne(User::class);
-    }
-
-    /**
      * @return WorkDetail
      */
     public function workDetails()
@@ -60,6 +52,14 @@ class Employee extends Model
     // -------------------------------------------------------------------------
     // Belongs to 1..* -> 1
     // -------------------------------------------------------------------------
+
+    /**
+     * @return User
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     /**
      * @return Nationality
