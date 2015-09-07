@@ -18,39 +18,34 @@
     },
     "autoload": {
         "classmap": [
-            "src/database"
+            "database"
         ],
         "psr-4": {
-            "PCI\\": "src/app/"
+            "PCI\\": "app/",
+            "Tests\\": "tests/"
         }
-    },
-    "autoload-dev": {
-        "classmap": [
-            "src/tests/TestCase.php"
-        ]
     },
     "scripts": {
         "post-install-cmd": [
-            "php replace.php",
-            "php src/artisan clear-compiled",
-            "php src/artisan optimize"
+            "php ../replace.php",
+            "php artisan clear-compiled",
+            "php artisan optimize"
         ],
         "pre-update-cmd": [
-            "php src/artisan clear-compiled"
+            "php artisan clear-compiled"
         ],
         "post-update-cmd": [
-            "php replace.php",
-            "php src/artisan optimize"
+            "php ../replace.php",
+            "php artisan optimize"
         ],
         "post-root-package-install": [
             "php -r \"copy('.env.example', '.env');\""
         ],
         "post-create-project-cmd": [
-            "php src/artisan key:generate"
+            "php artisan key:generate"
         ]
     },
     "config": {
-        "preferred-install": "dist",
-        "vendor-dir": "src/vendor"
+        "preferred-install": "dist"
     }
 }

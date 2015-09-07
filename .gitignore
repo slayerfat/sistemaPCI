@@ -5,4 +5,4 @@
 /src/.phpstorm.meta.php
 /src/_ide_helper_models.php
 /src/_ide_helper.php
-/composer.lock
+/src/composer.lock
