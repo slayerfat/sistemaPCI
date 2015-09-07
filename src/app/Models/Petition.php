@@ -16,7 +16,7 @@ class Petition extends Model
     protected $fillable = [
         'request_date',
         'comments',
-        'approved',
+        'status',
     ];
 
     /**
@@ -46,6 +46,14 @@ class Petition extends Model
     public function type()
     {
         return $this->belongsTo(PetitionType::class);
+    }
+
+    /**
+     * @return Employee
+     */
+    public function employee()
+    {
+        return $this->belongsTo(Employee::class);
     }
 
     // -------------------------------------------------------------------------

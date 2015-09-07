@@ -14,10 +14,10 @@ class CreateNotesTable extends Migration
     {
         Schema::create('notes', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->unsignedInteger('to_user_id')->nullable(); // Dirigido a
-            $table->foreign('to_user_id')->references('id')->on('users');
+            $table->unsignedInteger('employee_id'); // solicitado por
+            $table->foreign('employee_id')->references('id')->on('employees');
+            $table->unsignedInteger('to_employee_id')->nullable(); // Dirigido a
+            $table->foreign('to_employee_id')->references('id')->on('employees');
             $table->unsignedInteger('attendant_id');
             $table->foreign('attendant_id')->references('id')->on('attendants');
             $table->unsignedInteger('note_type_id');

@@ -22,6 +22,16 @@ class NoteTest extends AbstractPhpUnitTestCase
         );
     }
 
+    public function testRequestedBy()
+    {
+        $this->mockBasicModelRelation(
+            Note::class,
+            'requestedBy',
+            'belongsTo',
+            Employee::class
+        );
+    }
+
     public function testToEmployee()
     {
         $this->mockBasicModelRelation(

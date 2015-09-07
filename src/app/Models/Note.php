@@ -47,6 +47,14 @@ class Note extends Model
     /**
      * @return Employee
      */
+    public function requestedBy()
+    {
+        return $this->belongsTo(Employee::class);
+    }
+
+    /**
+     * @return Employee
+     */
     public function toEmployee()
     {
         return $this->belongsTo(Employee::class);

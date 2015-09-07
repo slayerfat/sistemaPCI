@@ -12,7 +12,7 @@ class CreateItemPetitionTable extends Migration
      */
     public function up()
     {
-        Schema::table('item_petition', function (Blueprint $table) {
+        Schema::create('item_petition', function (Blueprint $table) {
             $table->unsignedInteger('item_id');
             $table->foreign('item_id')->references('id')->on('items');
             $table->unsignedInteger('petition_id');
@@ -28,8 +28,6 @@ class CreateItemPetitionTable extends Migration
      */
     public function down()
     {
-        Schema::table('item_petition', function (Blueprint $table) {
-            //
-        });
+        Schema::drop('item_petition');
     }
 }

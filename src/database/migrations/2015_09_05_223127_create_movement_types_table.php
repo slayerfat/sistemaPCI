@@ -14,7 +14,7 @@ class CreateMovementTypesTable extends Migration
     {
         Schema::create('movement_types', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('desc', 30);
+            $table->string('desc', 30)->unique();
             $table->timestamps();
             $table->unsignedInteger('created_by');
             $table->foreign('created_by')->references('id')->on('users');

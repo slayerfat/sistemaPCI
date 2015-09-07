@@ -12,9 +12,9 @@ class CreatePetitionTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('item_request_types', function (Blueprint $table) {
+        Schema::create('petition_types', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('desc', 30);
+            $table->string('desc', 30)->unique();
             $table->timestamps();
             $table->unsignedInteger('created_by');
             $table->foreign('created_by')->references('id')->on('users');
@@ -30,6 +30,6 @@ class CreatePetitionTypesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('item_request_types');
+        Schema::drop('petition_types');
     }
 }

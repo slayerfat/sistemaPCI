@@ -6,13 +6,10 @@ En este documento se pretende mantener la bitacora de cambios significativos en 
 
 ###07-09-15
 
-Municipio:
+Pedidos:
 
-- descripcion no puede ser unica.
+- aprobado fue cambiado por status, esto se debe a que por logica se sabe si fue aprobado o no por medio de la generacion de nota.
 
-Parroquia:
-
-- descripcion no puede ser unica.
 
 (Entidad) Nota:
 

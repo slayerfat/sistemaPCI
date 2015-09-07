@@ -24,7 +24,7 @@ class CreatePetitionsTable extends Migration
                 ->on('petition_types');
             $table->date('request_date');
             $table->string('comments')->nullable();
-            $table->boolean('approved')->nullable();
+            $table->boolean('status')->nullable();
             $table->timestamps();
             $table->unsignedInteger('created_by');
             $table->foreign('created_by')->references('id')->on('users');

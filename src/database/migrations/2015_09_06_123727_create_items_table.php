@@ -27,11 +27,11 @@ class CreateItemsTable extends Migration
                 ->references('id')
                 ->on('sub_categories');
             $table->char('asoc', 1); //ABC
-            $table->unsignedInteger('priority'); // 1-100%
-            $table->string('desc');
+            $table->unsignedInteger('priority')->nullable(); // 1-100%
+            $table->string('desc')->index();
             $table->unsignedInteger('stock');
             $table->unsignedInteger('minimum');
-            $table->date('due');
+            $table->date('due')->nullable();
             $table->timestamps();
             $table->unsignedInteger('created_by');
             $table->foreign('created_by')->references('id')->on('users');

@@ -12,7 +12,7 @@ class CreateItemMovementTable extends Migration
      */
     public function up()
     {
-        Schema::table('item_movement', function (Blueprint $table) {
+        Schema::create('item_movement', function (Blueprint $table) {
             $table->unsignedInteger('item_id');
             $table->foreign('item_id')->references('id')->on('items');
             $table->unsignedInteger('movement_id');
@@ -28,8 +28,6 @@ class CreateItemMovementTable extends Migration
      */
     public function down()
     {
-        Schema::table('item_movement', function (Blueprint $table) {
-            //
-        });
+        Schema::drop('item_movement');
     }
 }

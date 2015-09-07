@@ -12,7 +12,7 @@ class CreateItemNoteTable extends Migration
      */
     public function up()
     {
-        Schema::table('item_note', function (Blueprint $table) {
+        Schema::create('item_note', function (Blueprint $table) {
             $table->unsignedInteger('item_id');
             $table->foreign('item_id')->references('id')->on('items');
             $table->unsignedInteger('note_id');
@@ -28,8 +28,6 @@ class CreateItemNoteTable extends Migration
      */
     public function down()
     {
-        Schema::table('item_note', function (Blueprint $table) {
-            //
-        });
+        Schema::drop('item_note');
     }
 }
