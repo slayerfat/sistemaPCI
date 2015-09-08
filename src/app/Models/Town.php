@@ -4,6 +4,8 @@ namespace PCI\Models;
 
 use Illuminate\Database\Eloquent\Collection;
 
+/** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
+
 /**
  * PCI\Models\Town
  *

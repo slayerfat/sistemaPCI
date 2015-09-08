@@ -2,6 +2,8 @@
 
 namespace PCI\Models;
 
+    /** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
+
 /**
  * PCI\Models\Employee
  *

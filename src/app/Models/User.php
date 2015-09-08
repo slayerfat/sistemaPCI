@@ -10,6 +10,8 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
+/** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
+
 /**
  * PCI\Models\User
  *
@@ -34,6 +36,7 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
  * @property-read \Illuminate\Database\Eloquent\Collection|Note[] $notes
  * @property-read \Illuminate\Database\Eloquent\Collection|Petition[] $petitions
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\User whereStatus($value)
+ * @property-read Profile $profile
  */
 class User extends AbstractBaseModel implements
     AuthenticatableContract,
@@ -117,5 +120,4 @@ class User extends AbstractBaseModel implements
     {
         return $this->belongsTo(Profile::class);
     }
-
 }
