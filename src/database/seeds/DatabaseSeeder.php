@@ -25,6 +25,10 @@ class DatabaseSeeder extends Seeder
         $this->command->info("*** Migracion terminada! ***");
     }
 
+    /**
+     * Genera un truncamiento (eliminacion de datos) en todas las tablas
+     * de la base de datos del sistema exceptuando las especificadas en el switche
+     */
     protected function truncateDb()
     {
         $this->command->info("--- truncating! ---");

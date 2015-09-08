@@ -7,9 +7,9 @@ use PCI\Models\Nationality;
 use PCI\Models\User;
 use PCI\Models\Employee;
 use PCI\Models\WorkDetail;
-use Tests\AbstractPhpUnitTestCase;
+use Tests\BaseTestCase;
 
-class EmployeeTest extends AbstractPhpUnitTestCase
+class EmployeeTest extends BaseTestCase
 {
 
     public function testUser()

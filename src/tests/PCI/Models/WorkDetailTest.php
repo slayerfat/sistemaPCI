@@ -5,9 +5,9 @@ use PCI\Models\Department;
 use PCI\Models\Employee;
 use PCI\Models\Position;
 use PCI\Models\WorkDetail;
-use Tests\AbstractPhpUnitTestCase;
+use Tests\BaseTestCase;
 
-class WorkDetailTest extends AbstractPhpUnitTestCase
+class WorkDetailTest extends BaseTestCase
 {
 
     public function testEmployee()

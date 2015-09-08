@@ -4,6 +4,7 @@ Features:
 
 - ModelFactory, todos los modelos tienen fabricas.
 - Creadas Migraciones de todos los modelos del sistema.
+- Añadida entidad Perfil en el sistema.
 
 Mejoras:
 

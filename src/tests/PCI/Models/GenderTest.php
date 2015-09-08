@@ -3,9 +3,9 @@
 use Mockery;
 use PCI\Models\Gender;
 use PCI\Models\Employee;
-use Tests\AbstractPhpUnitTestCase;
+use Tests\BaseTestCase;
 
-class GenderTest extends AbstractPhpUnitTestCase
+class GenderTest extends BaseTestCase
 {
 
     public function testUserDetails()

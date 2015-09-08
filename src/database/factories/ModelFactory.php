@@ -13,6 +13,7 @@ $models = [
     PCI\Models\Parish::class,
     PCI\Models\PetitionType::class,
     PCI\Models\Position::class,
+    PCI\Models\Profile::class,
     PCI\Models\State::class,
     PCI\Models\SubCategory::class,
     PCI\Models\Town::class,

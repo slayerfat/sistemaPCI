@@ -3,9 +3,9 @@
 use PCI\Models\Attendant;
 use PCI\Models\Note;
 use PCI\Models\User;
-use Tests\AbstractPhpUnitTestCase;
+use Tests\BaseTestCase;
 
-class AttendantTest extends AbstractPhpUnitTestCase
+class AttendantTest extends BaseTestCase
 {
 
     public function testUser()

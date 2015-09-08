@@ -2,7 +2,17 @@
 
 En este archivo estaran los cambios pertinentes en el DED y el Documento de Especificacion de Requsitos (DER) del sistema.
 
+##v0.0.3
+
+####08-09-15
+
+Creada entidad Perfil
+
 ###Errores
+
+####08-09-15
+
+Usuario no posee perfiles.
 
 ####07-09-15
 

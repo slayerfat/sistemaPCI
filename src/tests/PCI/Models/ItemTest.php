@@ -9,9 +9,9 @@ use PCI\Models\Movement;
 use PCI\Models\Note;
 use PCI\Models\Petition;
 use PCI\Models\SubCategory;
-use Tests\AbstractPhpUnitTestCase;
+use Tests\BaseTestCase;
 
-class ItemTest extends AbstractPhpUnitTestCase
+class ItemTest extends BaseTestCase
 {
 
     public function testSubCategory()

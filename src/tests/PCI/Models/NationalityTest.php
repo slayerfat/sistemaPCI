@@ -3,9 +3,9 @@
 use Mockery;
 use PCI\Models\Nationality;
 use PCI\Models\Employee;
-use Tests\AbstractPhpUnitTestCase;
+use Tests\BaseTestCase;
 
-class NationalityTest extends AbstractPhpUnitTestCase
+class NationalityTest extends BaseTestCase
 {
     public function testUserDetails()
     {

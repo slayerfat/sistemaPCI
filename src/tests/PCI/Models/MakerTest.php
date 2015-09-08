@@ -3,9 +3,9 @@
 use Mockery;
 use PCI\Models\Item;
 use PCI\Models\Maker;
-use Tests\AbstractPhpUnitTestCase;
+use Tests\BaseTestCase;
 
-class MakerTest extends AbstractPhpUnitTestCase
+class MakerTest extends BaseTestCase
 {
 
     public function testItems()

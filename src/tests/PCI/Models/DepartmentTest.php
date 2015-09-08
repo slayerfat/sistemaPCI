@@ -3,9 +3,9 @@
 use Mockery;
 use PCI\Models\Department;
 use PCI\Models\WorkDetail;
-use Tests\AbstractPhpUnitTestCase;
+use Tests\BaseTestCase;
 
-class DepartmentTest extends AbstractPhpUnitTestCase
+class DepartmentTest extends BaseTestCase
 {
 
     public function testWorkDetails()

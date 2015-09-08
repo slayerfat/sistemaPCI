@@ -2,9 +2,9 @@
 
 use PCI\Models\Petition;
 use PCI\Models\PetitionType;
-use Tests\AbstractPhpUnitTestCase;
+use Tests\BaseTestCase;
 
-class PetitionTypeTest extends AbstractPhpUnitTestCase
+class PetitionTypeTest extends BaseTestCase
 {
 
     public function testPetitions()

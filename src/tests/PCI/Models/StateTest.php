@@ -3,9 +3,9 @@
 use Mockery;
 use PCI\Models\State;
 use PCI\Models\Town;
-use Tests\AbstractPhpUnitTestCase;
+use Tests\BaseTestCase;
 
-class StateTest extends AbstractPhpUnitTestCase
+class StateTest extends BaseTestCase
 {
 
     public function testTowns()

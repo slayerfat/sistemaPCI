@@ -4,6 +4,18 @@ En este documento se pretende mantener la bitacora de cambios significativos en 
 
 ##v0.0.3
 
+###08-09-15
+
+Usuario:
+
+- La entidad usuario no posee relacion con Perfiles (porque no existe).
+
+Perfiles:
+
+- Se creo esta entidad de apoyo que contendran los diferentes perfiles (administrador, usuario, etc.)
+
+###07-09-15
+
 Personal:
 
 el acoplamiento en Personal era elevado, se ajusto de la siguiente forma:

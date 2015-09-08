@@ -8,9 +8,9 @@ use PCI\Models\Note;
 use PCI\Models\NoteType;
 use PCI\Models\Petition;
 use PCI\Models\User;
-use Tests\AbstractPhpUnitTestCase;
+use Tests\BaseTestCase;
 
-class NoteTest extends AbstractPhpUnitTestCase
+class NoteTest extends BaseTestCase
 {
     public function testPetition()
     {

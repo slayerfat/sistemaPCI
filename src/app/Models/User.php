@@ -105,4 +105,17 @@ class User extends AbstractBaseModel implements
     {
         return $this->hasMany(Petition::class);
     }
+
+    // -------------------------------------------------------------------------
+    // belongs to 1..* -> 1
+    // -------------------------------------------------------------------------
+
+    /**
+     * @return Employee
+     */
+    public function profile()
+    {
+        return $this->belongsTo(Profile::class);
+    }
+
 }
