@@ -2,7 +2,7 @@
 
 // se decidio hacerlo de esta forma porque
 // tienen la misma estructura
-$models = AuxEntitiesSeeder::getModels();
+$models = PCI\Database\AuxEntitiesSeeder::getModels();
 
 foreach ($models as $model) {
     $factory->define($model, function (Faker\Generator $faker) {

@@ -1,4 +1,6 @@
-<?php
+<?php namespace PCI\Database;
+
+use BaseSeeder;
 
 class AuxEntitiesSeeder extends BaseSeeder
 {
@@ -9,20 +11,20 @@ class AuxEntitiesSeeder extends BaseSeeder
     public static function getModels()
     {
         return [
-            PCI\Models\Category::class,
-            PCI\Models\Gender::class,
-            PCI\Models\ItemType::class,
-            PCI\Models\Maker::class,
-            PCI\Models\MovementType::class,
-            PCI\Models\Nationality::class,
-            PCI\Models\NoteType::class,
-            PCI\Models\Parish::class,
-            PCI\Models\PetitionType::class,
-            PCI\Models\Position::class,
-            PCI\Models\Profile::class,
-            PCI\Models\State::class,
-            PCI\Models\SubCategory::class,
-            PCI\Models\Town::class,
+            'PCI\Models\Category',
+            'PCI\Models\Gender',
+            'PCI\Models\ItemType',
+            'PCI\Models\Maker',
+            'PCI\Models\MovementType',
+            'PCI\Models\Nationality',
+            'PCI\Models\NoteType',
+            'PCI\Models\Parish',
+            'PCI\Models\PetitionType',
+            'PCI\Models\Position',
+            'PCI\Models\Profile',
+            'PCI\Models\State',
+            'PCI\Models\SubCategory',
+            'PCI\Models\Town',
         ];
     }
 }
