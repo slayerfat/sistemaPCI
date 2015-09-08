@@ -1,5 +1,6 @@
-<?php
+<?php namespace PCI\Database;
 
+use Illuminate\Support\Facades\Storage;
 use PCI\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -28,7 +29,7 @@ abstract class BaseSeeder extends Seeder
     {
         $user = User::whereName('tester')
             ->orWhere('name', env('APP_USER'))
-            ->firstOrFail();
+            ->first();
 
         return $user;
     }

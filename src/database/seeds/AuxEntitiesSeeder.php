@@ -1,11 +1,35 @@
 <?php namespace PCI\Database;
 
-use BaseSeeder;
-
 class AuxEntitiesSeeder extends BaseSeeder
 {
 
     /**
+     * @var array
+     */
+    private $models;
+
+    /**
+     * Es necesario tener los modelos ya listos.
+     */
+    public function __construct()
+    {
+        $this->setModels(self::getModels());
+    }
+
+    public function run()
+    {
+        $this->command->info('Empezando Entidades Auxiliares');
+
+        foreach ($this->models as $model) {
+            factory($model, 2)->create();
+        }
+    }
+
+    /**
+     * Arreglo de Entidades secundarias
+     * o auxiliares en el sistema.
+     * Estatico por varias razones, usado en varios lados.
+     *
      * @return array
      */
     public static function getModels()
@@ -26,5 +50,13 @@ class AuxEntitiesSeeder extends BaseSeeder
             'PCI\Models\SubCategory',
             'PCI\Models\Town',
         ];
+    }
+
+    /**
+     * @param array $models
+     */
+    public function setModels($models)
+    {
+        $this->models = $models;
     }
 }
