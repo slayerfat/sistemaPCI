@@ -5,6 +5,34 @@ namespace PCI\Models;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * PCI\Models\Petition
+ *
+ * @property integer $id
+ * @property integer $user_id
+ * @property integer $petition_type_id
+ * @property \Carbon\Carbon $request_date
+ * @property string $comments
+ * @property boolean $status
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property integer $created_by
+ * @property integer $updated_by
+ * @property-read PetitionType $type
+ * @property-read User $user
+ * @property-read \Illuminate\Database\Eloquent\Collection|Item[] $items
+ * @property-read \Illuminate\Database\Eloquent\Collection|Note[] $notes
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Petition whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Petition whereUserId($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Petition wherePetitionTypeId($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Petition whereRequestDate($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Petition whereComments($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Petition whereStatus($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Petition whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Petition whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Petition whereCreatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Petition whereUpdatedBy($value)
+ */
 class Petition extends Model
 {
 
