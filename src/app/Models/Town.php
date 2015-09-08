@@ -3,7 +3,6 @@
 namespace PCI\Models;
 
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
 
 /**
  * PCI\Models\Town
@@ -25,7 +24,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Town whereCreatedBy($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Town whereUpdatedBy($value)
  */
-class Town extends Model
+class Town extends AbstractBaseModel
 {
 
     /**

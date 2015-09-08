@@ -3,7 +3,6 @@
 namespace PCI\Models;
 
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
 
 /**
  * PCI\Models\Position
@@ -22,7 +21,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Position whereCreatedBy($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Position whereUpdatedBy($value)
  */
-class Position extends Model
+class Position extends AbstractBaseModel
 {
     /**
      * The attributes that are mass assignable.

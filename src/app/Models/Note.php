@@ -3,7 +3,6 @@
 namespace PCI\Models;
 
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
 
 /**
  * PCI\Models\Note
@@ -38,7 +37,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Note whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Note whereUpdatedAt($value)
  */
-class Note extends Model
+class Note extends AbstractBaseModel
 {
 
     /**

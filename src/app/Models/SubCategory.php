@@ -3,7 +3,6 @@
 namespace PCI\Models;
 
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
 
 /**
  * PCI\Models\SubCategory
@@ -25,7 +24,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\SubCategory whereCreatedBy($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\SubCategory whereUpdatedBy($value)
  */
-class SubCategory extends Model
+class SubCategory extends AbstractBaseModel
 {
 
     /**

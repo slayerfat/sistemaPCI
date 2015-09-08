@@ -3,7 +3,6 @@
 namespace PCI\Models;
 
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
 
 /**
  * PCI\Models\Petition
@@ -33,7 +32,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Petition whereCreatedBy($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Petition whereUpdatedBy($value)
  */
-class Petition extends Model
+class Petition extends AbstractBaseModel
 {
 
     /**

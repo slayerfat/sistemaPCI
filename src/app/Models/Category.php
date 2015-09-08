@@ -3,7 +3,6 @@
 namespace PCI\Models;
 
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
 
 /**
  * PCI\Models\Category
@@ -22,7 +21,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Category whereCreatedBy($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Category whereUpdatedBy($value)
  */
-class Category extends Model
+class Category extends AbstractBaseModel
 {
 
     /**

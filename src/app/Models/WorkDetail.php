@@ -2,8 +2,6 @@
 
 namespace PCI\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
 /**
  * PCI\Models\WorkDetail
  *
@@ -31,7 +29,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\WorkDetail whereCreatedBy($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\WorkDetail whereUpdatedBy($value)
  */
-class WorkDetail extends Model
+class WorkDetail extends AbstractBaseModel
 {
     /**
      * The attributes that are mass assignable.

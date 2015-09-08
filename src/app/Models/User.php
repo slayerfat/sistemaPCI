@@ -4,7 +4,6 @@ namespace PCI\Models;
 
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
@@ -36,7 +35,7 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
  * @property-read \Illuminate\Database\Eloquent\Collection|Petition[] $petitions
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\User whereStatus($value)
  */
-class User extends Model implements
+class User extends AbstractBaseModel implements
     AuthenticatableContract,
     AuthorizableContract,
     CanResetPasswordContract

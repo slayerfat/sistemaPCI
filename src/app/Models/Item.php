@@ -3,7 +3,6 @@
 namespace PCI\Models;
 
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
 
 /**
  * PCI\Models\Item
@@ -45,7 +44,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Item whereCreatedBy($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Item whereUpdatedBy($value)
  */
-class Item extends Model
+class Item extends AbstractBaseModel
 {
     /**
      * The attributes that are mass assignable.

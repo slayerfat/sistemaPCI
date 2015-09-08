@@ -2,8 +2,6 @@
 
 namespace PCI\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
 /**
  * PCI\Models\Employee
  *
@@ -45,7 +43,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Employee whereCreatedBy($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Employee whereUpdatedBy($value)
  */
-class Employee extends Model
+class Employee extends AbstractBaseModel
 {
 
     /**
