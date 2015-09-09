@@ -53,14 +53,6 @@ class AuxEntitiesSeeder extends BaseSeeder
                 ['desc' => 'Entrega (salida)'],
             ],
 
-            /**
-             * Administrador no hay que crearlo nuevamente.
-             */
-            'PCI\Models\Profile' => [
-                ['desc' => 'Usuario'],
-                ['desc' => 'Desactivado'],
-            ],
-
             'PCI\Models\Category' => [
                 ['desc' => 'Alimentos'],
                 ['desc' => 'Herramientas'],

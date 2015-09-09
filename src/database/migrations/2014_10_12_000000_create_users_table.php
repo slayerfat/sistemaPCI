@@ -62,11 +62,21 @@ class CreateUsersTable extends Migration
      */
     private function createInitialSeed()
     {
-        $profile = factory(PCI\Models\Profile::class)->make(['desc' => 'Administrador']);
+        $profiles = [
+            'Administrador',
+            'Usuario',
+            'Desactivado',
+        ];
 
-        $profile->created_by = 1;
-        $profile->updated_by = 1;
-        $profile->save();
+        foreach ($profiles as $profile) {
+            $obj = new PCI\Models\Profile;
+
+            $obj->desc       = $profile;
+            $obj->created_by = 1;
+            $obj->updated_by = 1;
+
+            $obj->save();
+        }
 
         $user = new User;
 
@@ -75,7 +85,8 @@ class CreateUsersTable extends Migration
         $user->password   = bcrypt(env('APP_USER_PASSWORD'));
         $user->created_by = 1;
         $user->updated_by = 1;
+        $user->profile_id = 1;
 
-        $profile->users()->save($user);
+        $user->save();
     }
 }

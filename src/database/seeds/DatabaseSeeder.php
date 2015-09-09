@@ -1,8 +1,11 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use PCI\Database\ParishSeeder;
+use PCI\Database\StateSeeder;
 use PCI\Database\AuxEntitiesSeeder;
 use Illuminate\Database\Eloquent\Model;
+use PCI\Database\TownSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -20,6 +23,9 @@ class DatabaseSeeder extends Seeder
         $this->truncateDb();
 
         $this->call(AuxEntitiesSeeder::class);
+        $this->call(StateSeeder::class);
+        $this->call(TownSeeder::class);
+        $this->call(ParishSeeder::class);
 
         Model::reguard();
 

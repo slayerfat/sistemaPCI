@@ -14,10 +14,10 @@ class CreateParishesTable extends Migration
     {
         Schema::create('parishes', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('parish_id');
-            $table->foreign('parish_id')
+            $table->unsignedInteger('town_id');
+            $table->foreign('town_id')
                 ->references('id')
-                ->on('parishes');
+                ->on('towns');
             $table->string('desc', 30);
             $table->timestamps();
             $table->unsignedInteger('created_by');

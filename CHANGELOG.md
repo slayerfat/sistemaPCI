@@ -10,6 +10,10 @@ Mejoras:
 
 - Reducido acoplamiento en Personal y ajustadas interacciones con Usuario.
 
+bugfixes:
+
+- migraciones deberian trabajar correctamente: ajuste en mig de usuario y perfiles.
+
 ##v0.0.2 07-09-15
 
 Documentacion:
