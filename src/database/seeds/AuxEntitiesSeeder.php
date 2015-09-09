@@ -3,26 +3,29 @@
 class AuxEntitiesSeeder extends BaseSeeder
 {
 
-    /**
-     * @var array
-     */
-    private $models;
-
-    /**
-     * Es necesario tener los modelos ya listos.
-     */
-    public function __construct()
-    {
-        $this->setModels(self::getModels());
-    }
-
     public function run()
     {
-        $this->command->info('Empezando Entidades Auxiliares');
+        $this->command->line('Empezando Seeding de Modelos relacionados con usuario!');
 
-        foreach ($this->models as $model) {
-            factory($model, 2)->create();
-        }
+        $data = [
+            'PCI\Models\Category' => [
+                ['desc' => 'Alimentos'],
+                ['desc' => 'Herramientas'],
+                ['desc' => 'Primeros Auxilios'],
+            ],
+
+            'PCI\Models\Gender' => [
+                ['desc' => 'Masculino'],
+                ['desc' => 'Femenino']
+            ],
+
+            'PCI\Models\ItemType' => [
+                ['desc' => 'Perecedero'],
+                ['desc' => 'No Perecedero']
+            ],
+        ];
+
+        $this->seedModels($data);
     }
 
     /**
@@ -50,13 +53,5 @@ class AuxEntitiesSeeder extends BaseSeeder
             'PCI\Models\SubCategory',
             'PCI\Models\Town',
         ];
-    }
-
-    /**
-     * @param array $models
-     */
-    public function setModels($models)
-    {
-        $this->models = $models;
     }
 }

@@ -3,7 +3,6 @@
 use Illuminate\Database\Seeder;
 use PCI\Database\AuxEntitiesSeeder;
 use Illuminate\Database\Eloquent\Model;
-use PCI\Database\UserSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -50,7 +49,7 @@ class DatabaseSeeder extends Seeder
                 case 'users':
                     break;
                 default:
-                    \DB::table($table->Tables_in_orbiagro)->truncate();
+                    \DB::table($table->Tables_in_sistemaPCI)->truncate();
                     break;
             }
         }
