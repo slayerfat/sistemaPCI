@@ -2,6 +2,7 @@
 
 use PCI\Models\Address;
 use PCI\Models\Employee;
+use PCI\Models\User;
 use PCI\Models\WorkDetail;
 
 class UserRelatedSeeder extends BaseSeeder
@@ -9,18 +10,33 @@ class UserRelatedSeeder extends BaseSeeder
 
     public function run()
     {
-        $address = $this->seedAdreess();
+        $users = collect();
 
-        $employee = $this->seedEmployee($address);
+        // El usuario principal
+        $users->push($this->user);
 
-        return $this->seedWorkDetails($employee);
+        // se crean usuarios adicionales para probar autenticacion y autorizacion.
+        $user = factory(User::class)->create(['profile_id' => 2]);
+        $users->push($user);
+
+        $user = factory(User::class)->create(['profile_id' => 3]);
+        $users->push($user);
+
+        $users->each(function ($user) {
+            $address = $this->seedAdreess();
+
+            $employee = $this->seedEmployee($user, $address);
+
+            return $this->seedWorkDetails($employee);
+        });
     }
 
     /**
+     * @param User $user
      * @param Address $address
      * @return Employee
      */
-    private function seedEmployee(Address $address)
+    private function seedEmployee(User $user, Address $address)
     {
         $this->command->comment('Empezando ' . __METHOD__);
 
@@ -30,7 +46,7 @@ class UserRelatedSeeder extends BaseSeeder
         $employee->address_id     = $address->id;
         $employee->gender_id      = 1;
 
-        $this->user->employee()->save($employee);
+        $user->employee()->save($employee);
 
         $this->command->info("{$employee->first_name}, {$employee->first_surname}.");
 
@@ -59,10 +75,10 @@ class UserRelatedSeeder extends BaseSeeder
     }
 
     /**
-     * @param $employee
+     * @param Employee $employee
      * @return WorkDetail
      */
-    private function seedWorkDetails($employee)
+    private function seedWorkDetails(Employee $employee)
     {
         $this->command->comment('Empezando ' . __METHOD__);
 

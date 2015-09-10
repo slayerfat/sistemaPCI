@@ -58,8 +58,11 @@ class AuxEntitiesSeeder extends BaseSeeder
             ],
 
             'PCI\Models\Position' => [
-                ['desc' => 'Entrada (entrada)'],
-                ['desc' => 'Entrega (salida)'],
+                ['desc' => 'Facilitador'],
+                ['desc' => 'Personal Medico'],
+                ['desc' => 'Secretaria'],
+                ['desc' => 'Ayudante'],
+                ['desc' => 'Otro'],
             ],
 
             'PCI\Models\Category' => [

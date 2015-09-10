@@ -6,6 +6,7 @@ Features:
 - Creadas Migraciones de todos los modelos del sistema.
 - Añadida entidad Perfil en el sistema.
 - Creado TODO.md para control interno.
+
 Mejoras:
 
 - Reducido acoplamiento en Personal y ajustadas interacciones con Usuario.
