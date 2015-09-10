@@ -80,8 +80,6 @@ abstract class BaseSeeder extends Seeder
 
                 $model->save();
             }
-
-            $this->command->line("{$modelName} terminado.");
         }
 
         $this->command->comment('Terminado Bucle de ' . __METHOD__);

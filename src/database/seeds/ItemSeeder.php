@@ -3,6 +3,7 @@
 use LogicException;
 use PCI\Models\Depot;
 use PCI\Models\Item;
+use PCI\Models\Movement;
 use PCI\Models\Note;
 use PCI\Models\Petition;
 
@@ -14,6 +15,8 @@ class ItemSeeder extends BaseSeeder
         $this->seedItems(10);
 
         $this->seedPetitions(5);
+
+        $this->seedMovements(2);
     }
 
     /**
@@ -27,8 +30,8 @@ class ItemSeeder extends BaseSeeder
 
         $items = $this->createModels(Item::class, $quantity);
 
-        $items->each(function ($item) {
-            $number = rand(1, 10);
+        $items->each(function ($item) use ($quantity) {
+            $number = $this->getRand(1, $quantity);
 
             $this->command->info("Uniendo Item {$item->desc} con Depot (id) {$number}");
 
@@ -36,7 +39,9 @@ class ItemSeeder extends BaseSeeder
             $item->depots()->attach([$number]);
         });
 
-        $this->command->comment('Terminado ' . __METHOD__);
+        $item = $items->random();
+
+        $this->seedItemDependency($quantity, $item);
     }
 
     /**
@@ -50,19 +55,17 @@ class ItemSeeder extends BaseSeeder
 
         $petitions->each(function ($petition) {
             foreach (range(0, 2) as $index) {
-                $number = $index + rand(1, 8);
+                $number = $index + $this->getRand(1, 8);
 
                 $this->command->info("Uniendo Pedido (id) {$petition->id} con Item (id) {$number}");
 
-                $petition->items()->attach($number);
+                $petition->items()->attach($number, ['quantity' => $number]);
             }
 
             $note = $this->createModels(Note::class);
 
             $petition->notes()->save($note);
         });
-
-        $this->command->comment('Terminado ' . __METHOD__);
     }
 
     /**
@@ -82,5 +85,55 @@ class ItemSeeder extends BaseSeeder
         $items = factory($class, $quantity)->create();
 
         return $items;
+    }
+
+    /**
+     * @param int $quantity
+     */
+    private function seedMovements($quantity)
+    {
+        $this->command->comment('Empezando ' . __METHOD__);
+
+        $movements = $this->createModels(Movement::class, $quantity);
+
+        $movements->each(function ($movement) {
+            $number = $this->getRand(5, 20);
+
+            $this->command->info("Uniendo Movimiento (id) {$movement->id} con Item (id) 1: cantidad: {$number}");
+
+            $movement->items()->attach(1, ['quantity' => $number]);
+        });
+    }
+
+    /**
+     * @param int $min
+     * @param int $max
+     * @return int
+     */
+    private function getRand($min = 1, $max = 5)
+    {
+        return rand($min, $max);
+    }
+
+    /**
+     * @param int $quantity
+     * @param Item $item
+     */
+    private function seedItemDependency($quantity, $item)
+    {
+        $this->command->comment('Empezando ' . __METHOD__);
+
+        do {
+            $number = $this->getRand(1, $quantity);
+        } while ($number == $item->id);
+
+        $this->command->info(
+            'Uniendo Item '
+            . $item->desc
+            . " (id) {$item->id}, con "
+            . "Item ~dependencia~ (id) {$number}"
+        );
+
+        $item->dependsOn()->attach($number);
     }
 }

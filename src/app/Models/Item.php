@@ -121,7 +121,12 @@ class Item extends AbstractBaseModel
      */
     public function dependsOn()
     {
-        return $this->belongsToMany(Item::class);
+        return $this->belongsToMany(
+            Item::class,
+            'item_item',
+            'item_id',
+            'depends_on_id'
+        );
     }
 
     /**

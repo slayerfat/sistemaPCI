@@ -11,20 +11,32 @@ class UserRelatedSeeder extends BaseSeeder
 
     public function run()
     {
+        $this->command->comment('Empezando ' . __METHOD__);
+
         $users = collect();
 
         // El usuario principal
         $users->push($this->user);
 
+        $password = bcrypt(env('APP_USERS_PASSWORD'));
+
         // se crean usuarios adicionales para probar autenticacion y autorizacion.
-        $user = factory(User::class)->create(['profile_id' => 2]);
+        $user = factory(User::class)->create([
+            'profile_id'  => 2,
+            'password' => $password
+        ]);
         $users->push($user);
 
         // usuario 2 es encargado de almacen
         factory(Attendant::class)->create(['user_id' => 2]);
         $this->command->info("creado Jefe de Alamacen");
 
-        $user = factory(User::class)->create(['profile_id' => 3]);
+
+
+        $user = factory(User::class)->create([
+            'profile_id'  => 3,
+            'password' => $password
+        ]);
         $users->push($user);
 
         $users->each(function ($user) {
@@ -57,8 +69,6 @@ class UserRelatedSeeder extends BaseSeeder
 
         $this->command->info("{$employee->first_name}, {$employee->first_surname}.");
 
-        $this->command->comment('Terminado ' . __METHOD__);
-
         return $employee;
     }
 
@@ -75,8 +85,6 @@ class UserRelatedSeeder extends BaseSeeder
         $address->save();
 
         $this->command->info("{$address->av}, {$address->street}.");
-
-        $this->command->comment('Terminado ' . __METHOD__);
 
         return $address;
     }
@@ -97,8 +105,6 @@ class UserRelatedSeeder extends BaseSeeder
         $employee->workDetails()->save($workDetails);
 
         $this->command->info("{$employee->first_name}: Date {$workDetails->join_date}.");
-
-        $this->command->comment('Terminado ' . __METHOD__);
 
         return $workDetails;
     }
