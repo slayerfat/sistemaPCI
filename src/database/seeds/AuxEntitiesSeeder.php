@@ -1,5 +1,7 @@
 <?php namespace PCI\Database;
 
+use Faker\Factory;
+
 /**
  * @todo: a espera de @Phantom66 para la especificacion real de algunas entidades.
  */
@@ -8,12 +10,19 @@ class AuxEntitiesSeeder extends BaseSeeder
 
     public function run()
     {
+        $faker = Factory::create('es_ES');
+
         $this->command->line('Empezando Seeding de Modelos relacionados con usuario!');
 
         $data = [
             'PCI\Models\Gender' => [
                 ['desc' => 'Masculino'],
                 ['desc' => 'Femenino']
+            ],
+
+            'PCI\Models\Department' => [
+                ['desc' => 'Servicios Generales', 'phone' => $faker->phoneNumber],
+                ['desc' => 'Gerencia General', 'phone' => $faker->phoneNumber]
             ],
 
             'PCI\Models\ItemType' => [

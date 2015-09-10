@@ -66,19 +66,22 @@ abstract class BaseSeeder extends Seeder
         $this->command->comment('Empezando Bucle de ' . __METHOD__);
 
         foreach ($data as $modelName => $arrays) {
-            foreach ($arrays as $array) {
-                $this->command->info("Empezando creacion de {$modelName}.");
+            $this->command->line("Empezando creacion de {$modelName}.");
 
+            foreach ($arrays as $array) {
                 $model = new $modelName;
 
                 foreach ($array as $attr => $value) {
                     $model->$attr = $value;
+                    if ($attr === 'desc') {
+                        $this->command->info("{$modelName}->{$value}.");
+                    }
                 }
 
                 $model->save();
-
-                $this->command->info("{$modelName} terminado.");
             }
+
+            $this->command->line("{$modelName} terminado.");
         }
 
         $this->command->comment('Terminado Bucle de ' . __METHOD__);

@@ -23,6 +23,7 @@ Las siguientes entidades poseen instancias incompletas:
 - Categoria.
 - Tipo de Nota.
 - Tipo de Pedido.
+- Departamento
 
 ###Errores
 

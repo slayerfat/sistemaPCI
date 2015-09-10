@@ -6,6 +6,7 @@ use PCI\Database\StateSeeder;
 use PCI\Database\AuxEntitiesSeeder;
 use Illuminate\Database\Eloquent\Model;
 use PCI\Database\TownSeeder;
+use PCI\Database\UserRelatedSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -26,6 +27,7 @@ class DatabaseSeeder extends Seeder
         $this->call(StateSeeder::class);
         $this->call(TownSeeder::class);
         $this->call(ParishSeeder::class);
+        $this->call(UserRelatedSeeder::class);
 
         Model::reguard();
 
