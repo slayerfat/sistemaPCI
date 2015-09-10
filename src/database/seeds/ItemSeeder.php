@@ -1,5 +1,6 @@
 <?php namespace PCI\Database;
 
+use LogicException;
 use PCI\Models\Depot;
 use PCI\Models\Item;
 use PCI\Models\Note;
@@ -22,9 +23,9 @@ class ItemSeeder extends BaseSeeder
     {
         $this->command->comment('Empezando ' . __METHOD__);
 
-        factory(Depot::class, $quantity)->create();
+        $this->createModels(Depot::class, $quantity);
 
-        $items = factory(Item::class, $quantity)->create();
+        $items = $this->createModels(Item::class, $quantity);
 
         $items->each(function ($item) {
             $number = rand(1, 10);
@@ -34,6 +35,7 @@ class ItemSeeder extends BaseSeeder
             /** @var Item $item */
             $item->depots()->attach([$number]);
         });
+
         $this->command->comment('Terminado ' . __METHOD__);
     }
 
@@ -44,7 +46,7 @@ class ItemSeeder extends BaseSeeder
     {
         $this->command->comment('Empezando ' . __METHOD__);
 
-        $petitions = factory(Petition::class, $quantity)->create();
+        $petitions = $this->createModels(Petition::class, $quantity);
 
         $petitions->each(function ($petition) {
             foreach (range(0, 2) as $index) {
@@ -55,11 +57,30 @@ class ItemSeeder extends BaseSeeder
                 $petition->items()->attach($number);
             }
 
-            $note = factory(Note::class)->create();
+            $note = $this->createModels(Note::class);
 
             $petition->notes()->save($note);
         });
 
         $this->command->comment('Terminado ' . __METHOD__);
+    }
+
+    /**
+     * Crea en la base de datos y genera objetos de alguna entidad.
+     *
+     * @param string $class
+     * @param int $quantity
+     * @return mixed
+     * @throws LogicException
+     */
+    private function createModels($class, $quantity = 1)
+    {
+        if ($quantity < 1) {
+            throw new LogicException('Cantidad no puede ser menor a uno.');
+        }
+
+        $items = factory($class, $quantity)->create();
+
+        return $items;
     }
 }
