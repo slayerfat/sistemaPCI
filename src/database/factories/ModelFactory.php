@@ -61,14 +61,14 @@ $factory->define(PCI\Models\Employee::class, function (Faker\Generator $faker) {
 
 $factory->define(PCI\Models\Item::class, function (Faker\Generator $faker) {
     return [
-        'sub_category_id' => 1,
-        'maker_id'        => 1,
-        'item_type_id'    => 1,
+        'sub_category_id' => rand(1, 2),
+        'maker_id'        => rand(1, 2),
+        'item_type_id'    => rand(1, 2),
         'asoc'            => 'C',
         'priority'        => '50',
         'desc'            => $faker->sentence,
         'stock'           => rand(0, 10000),
-        'minimun'         => rand(0, 10000),
+        'minimum'         => rand(0, 10000),
         'due'             => $faker->dateTime,
     ];
 });
@@ -105,7 +105,7 @@ $factory->define(PCI\Models\Petition::class, function (Faker\Generator $faker) {
 
 $factory->define(PCI\Models\User::class, function (Faker\Generator $faker) {
     return [
-        'profile_id'     => 1,
+        'profile_id'     => 2,
         'name'           => $faker->word,
         'email'          => $faker->email,
         'status'         => true,

@@ -28,6 +28,10 @@ class CreateNotesTable extends Migration
             $table->string('comments');
             $table->boolean('status');
             $table->timestamps();
+            $table->unsignedInteger('created_by');
+            $table->foreign('created_by')->references('id')->on('users');
+            $table->unsignedInteger('updated_by');
+            $table->foreign('updated_by')->references('id')->on('users');
         });
     }
 

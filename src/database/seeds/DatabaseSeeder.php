@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use PCI\Database\ItemSeeder;
 use PCI\Database\ParishSeeder;
 use PCI\Database\StateSeeder;
 use PCI\Database\AuxEntitiesSeeder;
@@ -28,6 +29,7 @@ class DatabaseSeeder extends Seeder
         $this->call(TownSeeder::class);
         $this->call(ParishSeeder::class);
         $this->call(UserRelatedSeeder::class);
+        $this->call(ItemSeeder::class);
 
         Model::reguard();
 
