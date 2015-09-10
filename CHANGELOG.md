@@ -1,3 +1,9 @@
+##v0.0.4
+
+Features:
+
+- /status creado rudimentariamente.
+
 ##v0.0.3 10-09-15
 
 Features:
