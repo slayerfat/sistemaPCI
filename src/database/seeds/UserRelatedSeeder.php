@@ -1,6 +1,7 @@
 <?php namespace PCI\Database;
 
 use PCI\Models\Address;
+use PCI\Models\Attendant;
 use PCI\Models\Employee;
 use PCI\Models\User;
 use PCI\Models\WorkDetail;
@@ -19,10 +20,16 @@ class UserRelatedSeeder extends BaseSeeder
         $user = factory(User::class)->create(['profile_id' => 2]);
         $users->push($user);
 
+        // usuario 2 es encargado de almacen
+        factory(Attendant::class)->create(['user_id' => 2]);
+        $this->command->info("creado Jefe de Alamacen");
+
         $user = factory(User::class)->create(['profile_id' => 3]);
         $users->push($user);
 
         $users->each(function ($user) {
+            $this->command->line("En el bucle de {$user->name}");
+
             $address = $this->seedAdreess();
 
             $employee = $this->seedEmployee($user, $address);

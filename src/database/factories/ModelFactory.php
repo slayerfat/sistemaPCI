@@ -106,7 +106,7 @@ $factory->define(PCI\Models\Petition::class, function (Faker\Generator $faker) {
 $factory->define(PCI\Models\User::class, function (Faker\Generator $faker) {
     return [
         'profile_id'     => 1,
-        'name'           => $faker->name,
+        'name'           => $faker->word,
         'email'          => $faker->email,
         'status'         => true,
         'password'       => bcrypt(str_random(10)),
