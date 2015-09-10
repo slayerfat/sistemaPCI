@@ -56,12 +56,18 @@ class ItemTest extends BaseTestCase
 
     public function testDependsOn()
     {
-        $this->mockBasicModelRelation(
-            Item::class,
-            'dependsOn',
-            'belongsToMany',
-            Item::class
-        );
+        $mock = Mockery::mock(Item::class)->makePartial();
+
+        $mock->shouldReceive('belongsToMany')
+            ->once()
+            ->with(
+                Item::class,
+                'item_item',
+                'item_id',
+                'depends_on_id'
+            )->andReturn('mocked');
+
+        $this->assertEquals('mocked', $mock->dependsOn());
     }
 
     public function testPetitions()
