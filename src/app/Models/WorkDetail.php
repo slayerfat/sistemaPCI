@@ -2,9 +2,36 @@
 
 namespace PCI\Models;
 
-use Illuminate\Database\Eloquent\Model;
+/** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
 
-class WorkDetail extends Model
+/**
+ * PCI\Models\WorkDetail
+ *
+ * @property integer $id
+ * @property integer $department_id
+ * @property integer $position_id
+ * @property integer $employee_id
+ * @property \Carbon\Carbon $join_date
+ * @property \Carbon\Carbon $departure_date
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property integer $created_by
+ * @property integer $updated_by
+ * @property-read Employee $employee
+ * @property-read Position $position
+ * @property-read Department $department
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\WorkDetail whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\WorkDetail whereDepartmentId($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\WorkDetail wherePositionId($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\WorkDetail whereEmployeeId($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\WorkDetail whereJoinDate($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\WorkDetail whereDepartureDate($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\WorkDetail whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\WorkDetail whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\WorkDetail whereCreatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\WorkDetail whereUpdatedBy($value)
+ */
+class WorkDetail extends AbstractBaseModel
 {
     /**
      * The attributes that are mass assignable.

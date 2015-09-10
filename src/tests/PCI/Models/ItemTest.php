@@ -9,9 +9,9 @@ use PCI\Models\Movement;
 use PCI\Models\Note;
 use PCI\Models\Petition;
 use PCI\Models\SubCategory;
-use Tests\AbstractPhpUnitTestCase;
+use Tests\BaseTestCase;
 
-class ItemTest extends AbstractPhpUnitTestCase
+class ItemTest extends BaseTestCase
 {
 
     public function testSubCategory()
@@ -56,12 +56,18 @@ class ItemTest extends AbstractPhpUnitTestCase
 
     public function testDependsOn()
     {
-        $this->mockBasicModelRelation(
-            Item::class,
-            'dependsOn',
-            'belongsToMany',
-            Item::class
-        );
+        $mock = Mockery::mock(Item::class)->makePartial();
+
+        $mock->shouldReceive('belongsToMany')
+            ->once()
+            ->with(
+                Item::class,
+                'item_item',
+                'item_id',
+                'depends_on_id'
+            )->andReturn('mocked');
+
+        $this->assertEquals('mocked', $mock->dependsOn());
     }
 
     public function testPetitions()

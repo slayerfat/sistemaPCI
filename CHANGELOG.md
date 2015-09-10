@@ -1,3 +1,20 @@
+##v0.0.3
+
+Features:
+
+- ModelFactory, todos los modelos tienen fabricas.
+- Creadas Migraciones de todos los modelos del sistema.
+- Añadida entidad Perfil en el sistema.
+- Creado TODO.md para control interno.
+
+Mejoras:
+
+- Reducido acoplamiento en Personal y ajustadas interacciones con Usuario.
+
+bugfixes:
+
+- migraciones deberian trabajar correctamente: ajuste en mig de usuario y perfiles.
+
 ##v0.0.2 07-09-15
 
 Documentacion:

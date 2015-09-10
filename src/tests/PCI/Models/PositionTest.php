@@ -3,9 +3,9 @@
 use Mockery;
 use PCI\Models\Position;
 use PCI\Models\WorkDetail;
-use Tests\AbstractPhpUnitTestCase;
+use Tests\BaseTestCase;
 
-class PositionTest extends AbstractPhpUnitTestCase
+class PositionTest extends BaseTestCase
 {
 
     public function testWorkDetails()

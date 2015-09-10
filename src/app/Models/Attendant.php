@@ -3,9 +3,32 @@
 namespace PCI\Models;
 
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
 
-class Attendant extends Model
+/** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
+
+/**
+ * PCI\Models\Attendant
+ *
+ * @property integer $id
+ * @property integer $user_id
+ * @property \Carbon\Carbon $selection
+ * @property boolean $status
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property integer $created_by
+ * @property integer $updated_by
+ * @property-read User $user
+ * @property-read \Illuminate\Database\Eloquent\Collection|Note[] $notes
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Attendant whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Attendant whereUserId($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Attendant whereSelection($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Attendant whereStatus($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Attendant whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Attendant whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Attendant whereCreatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Attendant whereUpdatedBy($value)
+ */
+class Attendant extends AbstractBaseModel
 {
 
     /**
@@ -36,11 +59,11 @@ class Attendant extends Model
     // -------------------------------------------------------------------------
 
     /**
-     * @return Employee
+     * @return User
      */
-    public function employee()
+    public function user()
     {
-        return $this->belongsTo(Employee::class);
+        return $this->belongsTo(User::class);
     }
 
     // -------------------------------------------------------------------------

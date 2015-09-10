@@ -3,9 +3,29 @@
 namespace PCI\Models;
 
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
 
-class Movement extends Model
+/** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
+
+/**
+ * PCI\Models\Movement
+ *
+ * @property integer $id
+ * @property integer $movement_type_id
+ * @property integer $note_id
+ * @property \Carbon\Carbon $creation
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property-read MovementType $type
+ * @property-read Note $note
+ * @property-read \Illuminate\Database\Eloquent\Collection|Item[] $items
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Movement whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Movement whereMovementTypeId($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Movement whereNoteId($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Movement whereCreation($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Movement whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Movement whereUpdatedAt($value)
+ */
+class Movement extends AbstractBaseModel
 {
 
     /**

@@ -2,9 +2,9 @@
 
 use PCI\Models\Note;
 use PCI\Models\NoteType;
-use Tests\AbstractPhpUnitTestCase;
+use Tests\BaseTestCase;
 
-class NoteTypeTest extends AbstractPhpUnitTestCase
+class NoteTypeTest extends BaseTestCase
 {
 
     public function testNotes()

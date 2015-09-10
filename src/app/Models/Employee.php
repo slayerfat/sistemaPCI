@@ -2,15 +2,50 @@
 
 namespace PCI\Models;
 
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
+    /** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
 
 /**
  * PCI\Models\Employee
  *
  * @property-read User $user
+ * @property integer $id
+ * @property integer $user_id
+ * @property integer $address_id
+ * @property integer $nationality_id
+ * @property integer $gender_id
+ * @property integer $ci
+ * @property string $first_name
+ * @property string $last_name
+ * @property string $first_surname
+ * @property string $last_surname
+ * @property string $phone
+ * @property string $cellphone
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property integer $created_by
+ * @property integer $updated_by
+ * @property-read WorkDetail $workDetails
+ * @property-read Nationality $nationality
+ * @property-read Gender $gender
+ * @property-read Address $address
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Employee whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Employee whereUserId($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Employee whereAddressId($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Employee whereNationalityId($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Employee whereGenderId($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Employee whereCi($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Employee whereFirstName($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Employee whereLastName($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Employee whereFirstSurname($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Employee whereLastSurname($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Employee wherePhone($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Employee whereCellphone($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Employee whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Employee whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Employee whereCreatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Employee whereUpdatedBy($value)
  */
-class Employee extends Model
+class Employee extends AbstractBaseModel
 {
 
     /**
@@ -25,6 +60,7 @@ class Employee extends Model
         'first_surname',
         'last_surname',
         'phone',
+        'cellphone'
     ];
 
     // -------------------------------------------------------------------------
@@ -40,14 +76,6 @@ class Employee extends Model
     public function workDetails()
     {
         return $this->hasOne(WorkDetail::class);
-    }
-
-    /**
-     * @return Attendant
-     */
-    public function attendant()
-    {
-        return $this->hasOne(Attendant::class);
     }
 
     // -------------------------------------------------------------------------
@@ -84,17 +112,5 @@ class Employee extends Model
     public function address()
     {
         return $this->belongsTo(Address::class);
-    }
-
-    // -------------------------------------------------------------------------
-    // has Many 1 -> 1..*
-    // -------------------------------------------------------------------------
-
-    /**
-     * @return Collection
-     */
-    public function notes()
-    {
-        return $this->hasMany(Note::class);
     }
 }

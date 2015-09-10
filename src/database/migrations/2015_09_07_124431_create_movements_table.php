@@ -22,6 +22,10 @@ class CreateMovementsTable extends Migration
             $table->foreign('note_id')->references('id')->on('notes');
             $table->date('creation');
             $table->timestamps();
+            $table->unsignedInteger('created_by');
+            $table->foreign('created_by')->references('id')->on('users');
+            $table->unsignedInteger('updated_by');
+            $table->foreign('updated_by')->references('id')->on('users');
         });
     }
 

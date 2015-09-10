@@ -4,9 +4,9 @@ use Mockery;
 use PCI\Models\Category;
 use PCI\Models\Item;
 use PCI\Models\SubCategory;
-use Tests\AbstractPhpUnitTestCase;
+use Tests\BaseTestCase;
 
-class SubCategoryTest extends AbstractPhpUnitTestCase
+class SubCategoryTest extends BaseTestCase
 {
 
     public function testCategory()

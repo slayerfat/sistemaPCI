@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateParishesTable extends Migration
+class CreateProfilesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,18 +12,12 @@ class CreateParishesTable extends Migration
      */
     public function up()
     {
-        Schema::create('parishes', function (Blueprint $table) {
+        Schema::create('profiles', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('town_id');
-            $table->foreign('town_id')
-                ->references('id')
-                ->on('towns');
-            $table->string('desc', 30);
+            $table->string('desc', 30)->unique();
             $table->timestamps();
             $table->unsignedInteger('created_by');
-            $table->foreign('created_by')->references('id')->on('users');
             $table->unsignedInteger('updated_by');
-            $table->foreign('updated_by')->references('id')->on('users');
         });
     }
 
@@ -34,6 +28,6 @@ class CreateParishesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('parishes');
+        Schema::drop('profiles');
     }
 }

@@ -2,6 +2,29 @@
 
 En este documento se pretende mantener la bitacora de cambios significativos en la estructura de datos del sistema.
 
+##v0.0.3
+
+###08-09-15
+
+Usuario:
+
+- La entidad usuario no posee relacion con Perfiles (porque no existe).
+
+Perfiles:
+
+- Se creo esta entidad de apoyo que contendran los diferentes perfiles (administrador, usuario, etc.)
+
+###07-09-15
+
+Personal:
+
+el acoplamiento en Personal era elevado, se ajusto de la siguiente forma:
+
+- las relaciones fueron extirpadas, ahora relacionadas con __Usuario y con la misma cardinalidad__:
+    - Notas.
+    - Pedido.
+    - Encargado de Almacen.
+
 ##v0.0.2
 
 ###07-09-15

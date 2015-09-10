@@ -1,20 +1,20 @@
 <?php namespace Tests\PCI\Models;
 
 use PCI\Models\Attendant;
-use PCI\Models\Employee;
 use PCI\Models\Note;
-use Tests\AbstractPhpUnitTestCase;
+use PCI\Models\User;
+use Tests\BaseTestCase;
 
-class AttendantTest extends AbstractPhpUnitTestCase
+class AttendantTest extends BaseTestCase
 {
 
-    public function testEmployee()
+    public function testUser()
     {
         $this->mockBasicModelRelation(
             Attendant::class,
-            'employee',
+            'user',
             'belongsTo',
-            Employee::class
+            User::class
         );
     }
 
