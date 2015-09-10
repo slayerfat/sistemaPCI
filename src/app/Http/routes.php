@@ -11,6 +11,6 @@
 |
 */
 
-Route::get('/', ['as' => 'welcome', function () {
-    return view('welcome');
+Route::get('/status', ['as' => 'status', function () {
+    return view('status');
 }]);

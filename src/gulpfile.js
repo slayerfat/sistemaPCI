@@ -8,6 +8,9 @@ var bump = require('gulp-bump');
 var filter = require('gulp-filter');
 var tag_version = require('gulp-tag-version');
 
+// editar envs
+var replace = require('gulp-replace');
+
 /**
  * Bumping version number and tagging the repository with it.
  * Please read http://semver.org/
