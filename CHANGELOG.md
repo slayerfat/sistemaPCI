@@ -3,6 +3,8 @@
 Features:
 
 - /status creado rudimentariamente.
+- Añadido SEOtools para manipular meta-data en las vistas.
+- Creadas clases relacionadas con las rutas del sistema.
 
 Cambios:
 

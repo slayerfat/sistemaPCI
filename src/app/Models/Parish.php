@@ -25,6 +25,8 @@ use Illuminate\Database\Eloquent\Collection;
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Parish whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Parish whereCreatedBy($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Parish whereUpdatedBy($value)
+ * @property integer $town_id
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Parish whereTownId($value)
  */
 class Parish extends AbstractBaseModel
 {

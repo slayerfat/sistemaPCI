@@ -37,6 +37,12 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
  * @property-read \Illuminate\Database\Eloquent\Collection|Petition[] $petitions
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\User whereStatus($value)
  * @property-read Profile $profile
+ * @property integer $profile_id
+ * @property integer $created_by
+ * @property integer $updated_by
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\User whereProfileId($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\User whereCreatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\User whereUpdatedBy($value)
  */
 class User extends AbstractBaseModel implements
     AuthenticatableContract,

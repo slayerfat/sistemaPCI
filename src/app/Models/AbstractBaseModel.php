@@ -7,6 +7,7 @@ use LogicException;
 
 /**
  * Class AbstractBaseModel
+ *
  * @package PCI\Models
  * @SuppressWarnings(PHPMD.NumberOfChildren)
  * Se suprime esta advertencia por ser todos los hijos

@@ -24,6 +24,10 @@ use Illuminate\Database\Eloquent\Collection;
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Movement whereCreation($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Movement whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Movement whereUpdatedAt($value)
+ * @property integer $created_by
+ * @property integer $updated_by
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Movement whereCreatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Movement whereUpdatedBy($value)
  */
 class Movement extends AbstractBaseModel
 {
