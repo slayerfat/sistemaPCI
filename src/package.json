@@ -10,7 +10,6 @@
     "gulp-filter": "^2.0.2",
     "gulp-git": "^1.1.0",
     "gulp-notify": "^2.0.0",
-    "gulp-replace": "^0.5.4",
     "gulp-tag-version": "^1.2.1"
   },
   "dependencies": {

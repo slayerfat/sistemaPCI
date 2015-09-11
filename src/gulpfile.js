@@ -2,6 +2,9 @@ var gulp = require('gulp');
 var notify = require('gulp-notify');
 var elixir = require('laravel-elixir');
 
+// public path sistemaPCI/public
+elixir.config.publicPath = '../public';
+
 // git bump (v0.1.2) <-- gulp release|feature|patch|pre
 var git = require('gulp-git');
 var bump = require('gulp-bump');
