@@ -6,4 +6,12 @@ php:
   - "nightly"
 
 before_script:
-  - composer --working-dir=src/ install --no-interaction --prefer-source
+  - composer --working-dir=src/ install --no-interaction --prefer-
+  - pyrus install pear/PHP_CodeSniffer
+  - phpenv rehash
+  - wget https://gist.githubusercontent.com/slayerfat/2b3cc4faf94d2863b505/raw/b958e68fa8886baac8880cdf381d1dfbc403270f/phpmd-ruleset.xml
+
+script:
+  - phpunit
+  - phpcs -p --colors --standard=PSR2 --ignore=src/vendor/ src/app src/database/seeds/ src/config/
+  - if [ -e phpmd-ruleset.xml ]; then phpmd src/app/ text phpmd-ruleset.xml; fi;
