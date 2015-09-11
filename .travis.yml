@@ -6,7 +6,7 @@ php:
   - "nightly"
 
 before_script:
-  - composer --working-dir=src/ install --no-interaction --prefer-
+  - composer --working-dir=src/ install --no-interaction --prefer-source
   - pyrus install pear/PHP_CodeSniffer
   - phpenv rehash
   - wget https://gist.githubusercontent.com/slayerfat/2b3cc4faf94d2863b505/raw/b958e68fa8886baac8880cdf381d1dfbc403270f/phpmd-ruleset.xml
