@@ -15,7 +15,6 @@ script:
   - phpunit
   - phpcs -p --colors --standard=PSR2 --ignore=src/vendor/ src/app src/database/seeds/ src/config/
   - if [ -e phpmd-ruleset.xml ]; then php phpmd.phar src/app/ text phpmd-ruleset.xml; php phpmd.phar src/database/seeds/ text phpmd-ruleset.xml; php phpmd.phar src/config/ text phpmd-ruleset.xml; fi;
-  - if [ -e phpmd-ruleset.xml ]; then  fi;
 
 matrix:
   allow_failures:
