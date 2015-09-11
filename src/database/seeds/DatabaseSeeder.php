@@ -1,4 +1,4 @@
-<?php
+<?php namespace PCI\Database;
 
 use Illuminate\Database\Seeder;
 use PCI\Database\ItemSeeder;

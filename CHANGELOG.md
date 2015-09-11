@@ -4,6 +4,11 @@ Features:
 
 - /status creado rudimentariamente.
 
+Cambios:
+
+- Como todos los seeds tienen namespace, es necesario usarlos con 
+    `php src/artisan db:seed --class="PCI\Database\DatabaseSeeder"`
+
 ##v0.0.3 10-09-15
 
 Features:

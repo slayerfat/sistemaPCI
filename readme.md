@@ -121,7 +121,9 @@ se hace de esta forma para mantener las claves seguras, etc, el pito y la guacha
 
 cuando tengan el archivo pueden hacer un simple:
 
-`php artisan migrate --seed`
+`php src/artisan migrate`
+
+y luego: `php src/artisan db:seed --class="PCI\Database\DatabaseSeeder"`
 
 si por alguna razon eso falla, pueden `php artisan migrate:reset` --> `php artisan migrate` --> `php artisan db:seed`
 
