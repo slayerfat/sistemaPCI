@@ -8,29 +8,56 @@ use Faker\Factory;
 class AuxEntitiesSeeder extends BaseSeeder
 {
 
+    /**
+     * Este atributo es usado para iterar las entidades
+     * auxiliares que necesitan ser creadas.
+     * @var array
+     */
+    private $data;
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->setData();
+    }
+
     public function run()
+    {
+        $this->command->line('Empezando Seeding de Modelos relacionados con usuario!');
+
+        $this->seedModels($this->data);
+    }
+
+    /**
+     * Genera la informacion necesaria para crear las entidades.
+     *
+     * Cada entidad poseen atributos que se repiten por cada iteracion (DUH).
+     */
+    private function setData()
     {
         $faker = Factory::create('es_ES');
 
-        $this->command->line('Empezando Seeding de Modelos relacionados con usuario!');
-
-        $data = [
-            'PCI\Models\Gender' => [
+        $this->data = [
+            'PCI\Models\Gender'       => [
                 ['desc' => 'Masculino'],
                 ['desc' => 'Femenino']
             ],
 
-            'PCI\Models\Department' => [
-                ['desc' => 'Servicios Generales', 'phone' => $faker->phoneNumber],
+            'PCI\Models\Department'   => [
+                [
+                    'desc'  => 'Servicios Generales',
+                    'phone' => $faker->phoneNumber
+                ],
                 ['desc' => 'Gerencia General', 'phone' => $faker->phoneNumber]
             ],
 
-            'PCI\Models\ItemType' => [
+            'PCI\Models\ItemType'     => [
                 ['desc' => 'Perecedero'],
                 ['desc' => 'No Perecedero']
             ],
 
-            'PCI\Models\Maker' => [
+            'PCI\Models\Maker'        => [
                 ['desc' => 'Empresa X'],
                 ['desc' => 'Empresa Y'],
                 ['desc' => 'Empresa Z'],
@@ -42,12 +69,12 @@ class AuxEntitiesSeeder extends BaseSeeder
                 ['desc' => 'Otro'],
             ],
 
-            'PCI\Models\Nationality' => [
+            'PCI\Models\Nationality'  => [
                 ['desc' => 'Venezolano'],
                 ['desc' => 'Extrangero'],
             ],
 
-            'PCI\Models\NoteType' => [
+            'PCI\Models\NoteType'     => [
                 ['desc' => 'Entrada (entrada)'],
                 ['desc' => 'Entrega (salida)'],
             ],
@@ -57,7 +84,7 @@ class AuxEntitiesSeeder extends BaseSeeder
                 ['desc' => 'Entrega (salida)'],
             ],
 
-            'PCI\Models\Position' => [
+            'PCI\Models\Position'     => [
                 ['desc' => 'Facilitador'],
                 ['desc' => 'Personal Medico'],
                 ['desc' => 'Secretaria'],
@@ -65,14 +92,14 @@ class AuxEntitiesSeeder extends BaseSeeder
                 ['desc' => 'Otro'],
             ],
 
-            'PCI\Models\Category' => [
+            'PCI\Models\Category'     => [
                 ['desc' => 'Alimentos'],
                 ['desc' => 'Herramientas'],
                 ['desc' => 'Articulos de Limpieza'],
                 ['desc' => 'Articulos Medicos'],
             ],
 
-            'PCI\Models\SubCategory' => [
+            'PCI\Models\SubCategory'  => [
                 /**
                  * Alimentos
                  */
@@ -105,9 +132,8 @@ class AuxEntitiesSeeder extends BaseSeeder
                 ['desc' => 'Otro', 'category_id' => 4],
             ],
         ];
-
-        $this->seedModels($data);
     }
+
 
     /**
      * Arreglo de Entidades secundarias o auxiliares en el sistema.
