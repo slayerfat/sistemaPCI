@@ -142,7 +142,8 @@ return [
          */
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Artesaos\SEOTools\Providers\SEOToolsServiceProvider::class,
-
+        Laracasts\Flash\FlashServiceProvider::class,
+        Collective\Html\HtmlServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -151,7 +152,6 @@ return [
         PCI\Providers\AuthServiceProvider::class,
         PCI\Providers\EventServiceProvider::class,
         PCI\Providers\RouteServiceProvider::class,
-
     ],
 
     /*
@@ -205,7 +205,8 @@ return [
          * Vendor
          */
         'SEO' => Artesaos\SEOTools\Facades\SEOTools::class,
-
+        'Flash' => Laracasts\Flash\Flash::class,
+        'Form' => Collective\Html\FormFacade::class,
+        'Html' => Collective\Html\HtmlFacade::class,
     ],
-
 ];

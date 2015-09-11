@@ -2,7 +2,19 @@
 
 Esto esta ~~completo~~, **incompleto**, *con errores*, no implementado
 
-##migrations
+##Resource
+
+el recurso es la combinacion de Rutas + Vistas + Controladores para brindar un Recurso.
+
+Completados:
+
+Status, **Index**
+
+Faltantes:
+
+ALMOST EVERYTHING.
+
+##Migrations
 
 Completados:
 

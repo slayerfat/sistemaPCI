@@ -6,8 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link href="{!! asset('css/vendor/font-awesome.min.css') !!}" rel="stylesheet">
-    <link href="/css/app.css" rel="stylesheet">
+    <link href="{!!asset('css/app.css')!!}" rel="stylesheet">
     {{-- css de una libreria en alguna vista --}}
 
     @yield('css')
