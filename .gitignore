@@ -1,4 +1,5 @@
 .idea
+/.vagrant
 /public/css
 /public/js
 /src/vendor
