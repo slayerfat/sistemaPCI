@@ -59,7 +59,7 @@ gulp.task('release', function() { return inc('major'); });
 
 elixir(function (mix) {
     mix
-        .sass('app.scss')
+        .sass('app.sass')
 
         // copiamos los fonts de bootstrap para que no se queje.
         // otra opcion seria un symlink o algo asi.
