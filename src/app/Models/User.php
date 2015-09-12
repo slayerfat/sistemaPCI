@@ -52,6 +52,13 @@ class User extends AbstractBaseModel implements
     use Authenticatable, Authorizable, CanResetPassword;
 
     /**
+     * Valores que no deberian cambiar en el futuro inmediato
+     */
+    const ADMIN_PROFILE_ID    = 1;
+    const USER_PROFILE_ID     = 2;
+    const DISABLED_PROFILE_ID = 3;
+
+    /**
      * The database table used by the model.
      *
      * @var string
@@ -125,5 +132,80 @@ class User extends AbstractBaseModel implements
     public function profile()
     {
         return $this->belongsTo(Profile::class);
+    }
+
+    // -------------------------------------------------------------------------
+    // Helpers
+    // -------------------------------------------------------------------------
+
+    /**
+     * @return boolean
+     */
+    public function isAdmin()
+    {
+        return $this->attributes['profile_id'] === self::ADMIN_PROFILE_ID;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isUser()
+    {
+        return $this->attributes['profile_id'] === self::USER_PROFILE_ID;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isDisabled()
+    {
+        return $this->attributes['profile_id'] === self::DISABLED_PROFILE_ID;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isVerified()
+    {
+        return ! $this->isDisabled();
+    }
+
+    /**
+     * chequea si el id del foreign key del recurso es igual al id del usuario,
+     * en otras palabras, verific que el usuario pueda modificar algun recurso
+     * viendo si le pertenece o no.
+     *
+     * @param int $id el foreign key del recurso.
+     *
+     * @return boolean
+     */
+    public function isOwner($id)
+    {
+        if (!isset($id)) {
+            return false;
+        }
+
+        if (isset($this->attributes['id'])) {
+            $userId = $this->attributes['id'];
+        } elseif (isset($this->attributes['name'])) {
+            $userId = $this->attributes['name'];
+        }
+
+        if (isset($userId)) {
+            return $userId == $id;
+        }
+
+        return false;
+    }
+    /**
+     * helper para ver si es admin o si puede manipular algun recurso.
+     *
+     * @param int $id el foreign key del recurso.
+     *
+     * @return boolean
+     */
+    public function isOwnerOrAdmin($id)
+    {
+        return $this->isAdmin() || $this->isOwner($id);
     }
 }
