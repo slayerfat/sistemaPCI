@@ -5,6 +5,13 @@ var elixir = require('laravel-elixir');
 // public path sistemaPCI/public
 elixir.config.publicPath = '../public';
 
+// para copiar u otros.
+var paths = {
+    'public': elixir.config.publicPath,
+    'jquery': './vendor/bower_components/jquery/',
+    'bootstrap': './node_modules/bootstrap-sass/assets/'
+}
+
 // git bump (v0.1.2) <-- gulp release|feature|patch|pre
 var git = require('gulp-git');
 var bump = require('gulp-bump');
@@ -50,6 +57,16 @@ gulp.task('patch',   function() { return inc('patch'); });
 gulp.task('feature', function() { return inc('minor'); });
 gulp.task('release', function() { return inc('major'); });
 
-elixir(function(mix) {
-    mix.sass('app.scss');
+elixir(function (mix) {
+    mix
+        .sass('app.scss')
+        // copiamos los fonts de bootstrap para que no se queje.
+        // otra opcion seria un symlink o algo asi.
+        .copy(paths.bootstrap + 'fonts/bootstrap/**', paths.public + '/fonts')
+        // le hace el amor y ejacula ~/sistemaPCI/public/js/all.js
+        .scripts([
+            paths.jquery + "dist/jquery.js",
+            paths.bootstrap + "javascripts/bootstrap.js"
+        ])
+        .version(['css/app.css', 'js/all.js']);
 });

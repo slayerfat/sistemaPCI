@@ -6,7 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    {!! Html::style('css/app.css') !!}
+    <link rel="stylesheet" href="{{ elixir('css/app.css') }}">
+
     {{-- css de una libreria en alguna vista --}}
     @yield('css')
 
@@ -41,8 +42,9 @@
     ga('send', 'pageview');
 </script>
 
-{!! Html::script('js/vendor/jquery.min.js') !!}
-{!! Html::script('js/vendor/bootstrap.min.js') !!}
+<script src="{{ elixir('js/all.js') }}"></script>
+
 @yield('js')
+
 </body>
 </html>

@@ -1,0 +1,16 @@
+{
+  "name": "sistemaPCI",
+  "version": "0.0.3",
+  "homepage": "https://github.com/slayerfat/sistemaPCI",
+  "authors": [
+    "slayerfat <slayerfat@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

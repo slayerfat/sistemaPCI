@@ -2,6 +2,8 @@
 /.vagrant
 /public/css
 /public/js
+/public/build
+/public/fonts
 /src/vendor
 /src/node_modules
 /src/.env
