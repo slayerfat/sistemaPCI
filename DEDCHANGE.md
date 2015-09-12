@@ -1,16 +1,12 @@
-##Cambios en Documento de Especificacion de Diseño
+# Cambios en Documento de Especificacion de Diseño
 
 En este archivo estaran los cambios pertinentes en el DED y el Documento de Especificacion de Requsitos (DER) del sistema, asi como notas, apuntes, reclamos y otros que sean pertinentes especificamente para estos documentos.
 
-##v0.0.3
+## Notas
 
-####08-09-15
+Detalles, observaciones u otros:
 
-Creada entidad Perfil
-
-###Notas
-
-####09-09-15
+#### 09-09-15
 
 Faltan las instancias las siguientes entidades:
 
@@ -25,13 +21,13 @@ Las siguientes entidades poseen instancias incompletas:
 - Tipo de Pedido.
 - Departamento
 
-###Errores
+## Errores
 
-####08-09-15
+#### 08-09-15
 
 Usuario no posee perfiles.
 
-####07-09-15
+#### 07-09-15
 
 Diagrama relacional:
 
@@ -43,3 +39,11 @@ Diagrama relacional:
 - almacen_item: __NO EXISTE en el diagrama.__ necesaria por el tipo de relacion.
 - encargado_almacen: fecha_seleccion puede ser nula, status por defecto es true.
 - movimiento: falta tipo_movimiento_id.
+
+## Otros
+
+### v0.0.3
+
+#### 08-09-15
+
+Creada entidad Perfil.
