@@ -60,13 +60,18 @@ gulp.task('release', function() { return inc('major'); });
 elixir(function (mix) {
     mix
         .sass('app.scss')
+
         // copiamos los fonts de bootstrap para que no se queje.
         // otra opcion seria un symlink o algo asi.
         .copy(paths.bootstrap + 'fonts/bootstrap/**', paths.public + '/fonts')
+
         // le hace el amor y ejacula ~/sistemaPCI/public/js/all.js
         .scripts([
             paths.jquery + "dist/jquery.js",
             paths.bootstrap + "javascripts/bootstrap.js"
         ])
+
+        // 'versiona' los archivos para obtener copias actualizadas
+        // y no versiones de cache del explorador (firefox es el peor)
         .version(['css/app.css', 'js/all.js']);
 });

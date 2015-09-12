@@ -1,5 +1,5 @@
 <footer class="footer-center">
-    <p class="footer-orbiagro">
+    <p class="footer-centered-text">
         sistemaPCI
     </p>
 
@@ -10,5 +10,5 @@
         <a href="#">Notas</a>
     </p>
 
-    <p class="footer-orbiagro">slayerfat © 2015</p>
+    <p class="footer-centered-text">slayerfat © 2015</p>
 </footer>

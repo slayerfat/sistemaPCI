@@ -9,7 +9,7 @@ use LogicException;
  * Class AbstractBaseModel
  *
  * @package PCI\Models
- * @SuppressWarnings(PHPMD.NumberOfChildren)
+ * @SuppressWarnings (PHPMD.NumberOfChildren)
  * Se suprime esta advertencia por ser todos los hijos
  * modelos eloquens que contienen el metodo boot igual.
  */

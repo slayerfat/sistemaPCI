@@ -220,9 +220,10 @@ return [
         'Button'         => Bootstrapper\Facades\Button::class,
         'ButtonGroup'    => Bootstrapper\Facades\ButtonGroup::class,
         'Carousel'       => Bootstrapper\Facades\Carousel::class,
-        'ControlGroup'   => Bootstrapper\Facades\ControlGroup::class,
         'DropdownButton' => Bootstrapper\Facades\DropdownButton::class,
-        'BSForm'         => Bootstrapper\Facades\Form::class,
+        // error aleatorio que no tengo tiempo de solucionar
+        // 'ControlGroup'   => Bootstrapper\Facades\ControlGroup::class,
+        // 'BSForm'         => Bootstrapper\Facades\Form::class,
         'Helpers'        => Bootstrapper\Facades\Helpers::class,
         'Icon'           => Bootstrapper\Facades\Icon::class,
         'InputGroup'     => Bootstrapper\Facades\InputGroup::class,
