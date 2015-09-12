@@ -8,6 +8,24 @@
  */
 
 /*
+|--------------------------------------------------------------------
+| public_path() function
+|--------------------------------------------------------------------
+|
+| Defining this function here causes the helper function by the same
+| name to be skipped, thereby allowing its functionality to be
+| overridden. This is required to use a "non-standard" location for
+| Laravel's "public" directory.
+|
+| @cbj4074 - https://laracasts.com/discuss/channels/general-discussion/where-do-you-set-public-directory-laravel-5
+*/
+
+function public_path()
+{
+    return realpath(__DIR__);
+}
+
+/*
 |--------------------------------------------------------------------------
 | Register The Auto Loader
 |--------------------------------------------------------------------------

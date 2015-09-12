@@ -6,9 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link href="{!!asset('css/app.css')!!}" rel="stylesheet">
+    {!! Html::style('css/app.css') !!}
     {{-- css de una libreria en alguna vista --}}
-
     @yield('css')
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -41,9 +40,9 @@
     ga('create', '{!! env('GOOGLE_ANALYTICS_ID') !!}', 'auto');
     ga('send', 'pageview');
 </script>
-<script src="{!! asset('js/vendor/jquery.min.js') !!}"></script>
-<script src="{!! asset('js/vendor/bootstrap.min.js') !!}"></script>
-{{-- js de una libreria en alguna vista --}}
+
+{!! Html::script('js/vendor/jquery.min.js') !!}
+{!! Html::script('js/vendor/bootstrap.min.js') !!}
 @yield('js')
 </body>
 </html>

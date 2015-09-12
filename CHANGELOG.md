@@ -10,6 +10,17 @@ Cambios:
 
 - Como todos los seeds tienen namespace, es necesario usarlos con 
     `php src/artisan db:seed --class="PCI\Database\DatabaseSeeder"`
+- Gran decepcion en el uso de artisan serve: por alguna razon, ya sea por mi ignorancia
+o por algun otro motivo, el servidor de php no estaba funcionando correctamente 
+para jalar algunos assets (bootstrap, jquery etc.) de forma normal, sin embargo 
+por medio de apache2 funciona segun lo esperado.
+    - problema: artisan serve no trae los scripts y css del directorio public. 
+        apache2 si lo hace sin inconveniente.
+    - solucion: se implemento servidor apache para desarrollo local, 
+        no deberia afectar el shared hosting, sin embargo destruiria desarrollo por 
+        medio de VB como vagrant o similares.
+    - alternativa: devolver sistema a estructura original (ni se cuanto tiempo quitara).
+    - alternativa: ver como desacoplar este asunto de laravel.
 
 ##v0.0.3 10-09-15
 

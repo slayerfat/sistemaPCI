@@ -20,7 +20,7 @@ class AppServiceProvider extends ServiceProvider
          * en este caso se cambio a .../sistemaPCI/Public
          */
         $this->app->bind('path.public', function () {
-            return base_path().'/../public';
+            return public_path();
         });
     }
 }
