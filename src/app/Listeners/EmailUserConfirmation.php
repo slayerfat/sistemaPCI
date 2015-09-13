@@ -37,7 +37,7 @@ class EmailUserConfirmation
         $email = $event->user->email;
 
         $this->mail->send('emails.verify', compact('user'), function ($message) use ($email) {
-            $subjectMsg = 'Bienvenido a'.trans('global.appName').'! por favor verifique su cuenta.';
+            $subjectMsg = 'Bienvenido a '.trans('global.appName').'! por favor verifique su cuenta.';
 
             $message->to($email)->subject($subjectMsg);
         });

@@ -210,6 +210,26 @@ sistemaPCI
 
 _ADVERTENCIA: ESTE COGIDO FUENTE GENERA MIGRAÑA_
 
+## Artisan Inspirar
+
+Se creo un mega comando por medio de `Caimaneitor` se puede usar directamente en artisan con: `php src/artisan inspirar`.
+
+Tambien puede ser incluido en el sistema por medio de:
+
+```php
+
+<?php
+
+use PCI\Mamarrachismo\Caimaneitor\Caimaneitor;
+
+echo Caimaneitor::caimanais();
+
+```
+
+o por medio de blade: `{{ PCI\Mamarrachismo\Caimaneitor\Caimaneitor::caimanais() }}`
+
+Esta compleja implementacion fue inspirada por la inspiradora `Inspire: Inspired by Illuminate\Foundation\Inspiring`
+
 ## Documentacion adicional
 
 Dentro de este repositorio existen archivos complementarios que ayudaran en la documentacion del mismo, estos son:
