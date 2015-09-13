@@ -217,16 +217,22 @@ Se creo un mega comando por medio de `Caimaneitor` se puede usar directamente en
 Tambien puede ser incluido en el sistema por medio de:
 
 ```php
-
 <?php
 
 use PCI\Mamarrachismo\Caimaneitor\Caimaneitor;
 
 echo Caimaneitor::caimanais();
-
 ```
 
-o por medio de blade: `{{ PCI\Mamarrachismo\Caimaneitor\Caimaneitor::caimanais() }}`
+tambien posee su Facade:
+
+```php
+<?php
+
+echo Caimaneitor::caimanais();
+```
+
+o por medio de blade: `{{ Caimaneitor::caimanais() }}`
 
 Esta compleja implementacion fue inspirada por la inspiradora `Inspire: Inspired by Illuminate\Foundation\Inspiring`
 
