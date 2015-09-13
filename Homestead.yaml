@@ -28,6 +28,8 @@ databases:
 variables:
     - key: APP_ENV
       value: local
+    - key: DB_PASSWORD
+      value: secret
 
 # blackfire:
 #     - id: foo

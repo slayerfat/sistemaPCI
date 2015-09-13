@@ -1,7 +1,6 @@
 @extends('master')
 
 @section('content')
-
     @include('partials.errors')
 
     <div class="container">
@@ -14,7 +13,7 @@
         ControlGroup::generate(
             BSForm::label('name', 'Seudónimo'),
             BSForm::text('name'),
-            BSForm::help('Este seudónimo debe ser unico en el sistema.'),
+            BSForm::help('&nbsp;'),
             2
         )
 
@@ -25,7 +24,7 @@
         ControlGroup::generate(
             BSForm::label('email', 'Correo Electrónico'),
             BSForm::text('email'),
-            BSForm::help('Por favor introduzca un correo electronico valido.'),
+            BSForm::help('&nbsp;'),
             2
         )
 
@@ -35,7 +34,7 @@
 
         ControlGroup::generate(
             BSForm::label('password', 'Contraseña'),
-            BSForm::text('password'),
+            BSForm::password('password'),
             BSForm::help('Por favor la contraseña debe ser al menos 6 caracteres.'),
             2
         )
@@ -46,8 +45,8 @@
 
         ControlGroup::generate(
             BSForm::label('password_confirmation', 'Confirmar Contraseña'),
-            BSForm::text('password_confirmation'),
-            BSForm::help('Reintroduzca la contraseña.'),
+            BSForm::password('password_confirmation'),
+            BSForm::help('&nbsp;'),
             2
         )
 
@@ -57,5 +56,4 @@
 
         {!! BSForm::close() !!}
     </div>
-
 @stop
