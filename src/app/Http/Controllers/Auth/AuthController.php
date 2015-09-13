@@ -2,8 +2,9 @@
 
 namespace PCI\Http\Controllers\Auth;
 
-use PCI\Models\User;
 use Validator;
+use PCI\Models\User;
+use PCI\Events\NewUserRegistration;
 use PCI\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
@@ -62,14 +63,16 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
-        $user = User::create([
-            'name'     => $data['name'],
-            'email'    => $data['email'],
-            'password' => bcrypt($data['password']),
-            'status'   => true,
-        ]);
+//        $user = User::create([
+//            'name'     => $data['name'],
+//            'email'    => $data['email'],
+//            'password' => bcrypt($data['password']),
+//            'status'   => true,
+//        ]);
 
-        event(new UserRegistration($user));
+        $user = factory(User::class)->make();
+
+        event(new NewUserRegistration($user));
 
         return $user;
     }

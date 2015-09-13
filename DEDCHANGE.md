@@ -6,6 +6,10 @@ En este archivo estaran los cambios pertinentes en el DED y el Documento de Espe
 
 Detalles, observaciones u otros:
 
+#### 13-09-15
+
+La entidad Usuario posee un campo status que parece redundante con Perfil: Desactivado.
+
 #### 09-09-15
 
 Faltan las instancias las siguientes entidades:

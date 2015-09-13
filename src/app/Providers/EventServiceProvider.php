@@ -13,8 +13,8 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'PCI\Events\SomeEvent' => [
-            'PCI\Listeners\EventListener',
+        'PCI\Events\NewUserRegistration' => [
+            'PCI\Listeners\EmailUserConfirmation',
         ],
     ];
 

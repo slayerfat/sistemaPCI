@@ -2,6 +2,15 @@
 
 En este documento se pretende mantener la bitacora de cambios significativos en la estructura de datos del sistema.
 
+## v0.0.4
+
+### 13-09-15
+
+Usuario:
+
+- el campo status parace redundante con Perfil: desactivado
+- añadido campo confirmacion que contendra el codigo de confirmacion generado por el sistema al momento de registrarse en el mismo.
+
 ## v0.0.3
 
 ### 08-09-15

@@ -59,7 +59,19 @@ class MiscRoutes extends PCIRoute
         ],
 
         /**
-         * usuario por verificar
+         * Validacion de confirmacion
+         */
+        [
+            'method'         => 'get',
+            'url'            => 'confirmar/{codigos}',
+            'data'           => [
+                'uses'       => 'Auth\AuthController@confirm',
+                'as'         => 'auth.confirm',
+            ]
+        ],
+
+        /**
+         * Index/Home/Inicio
          */
         [
             'method'         => 'get',

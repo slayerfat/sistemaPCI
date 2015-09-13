@@ -54,9 +54,9 @@ class User extends AbstractBaseModel implements
     /**
      * Valores que no deberian cambiar en el futuro inmediato
      */
-    const ADMIN_PROFILE_ID    = 1;
-    const USER_PROFILE_ID     = 2;
-    const DISABLED_PROFILE_ID = 3;
+    const ADMIN_ID    = 1;
+    const USER_ID     = 2;
+    const DISABLED_ID = 3;
 
     /**
      * The database table used by the model.
@@ -70,14 +70,14 @@ class User extends AbstractBaseModel implements
      *
      * @var array
      */
-    protected $fillable = ['name', 'email', 'password', 'status'];
+    protected $fillable = ['name', 'email', 'password', 'status', 'confirmation_code'];
 
     /**
      * The attributes excluded from the model's JSON form.
      *
      * @var array
      */
-    protected $hidden = ['password', 'remember_token'];
+    protected $hidden = ['password', 'remember_token', 'confirmation_code'];
 
     // -------------------------------------------------------------------------
     // Relaciones
@@ -143,7 +143,7 @@ class User extends AbstractBaseModel implements
      */
     public function isAdmin()
     {
-        return $this->attributes['profile_id'] === self::ADMIN_PROFILE_ID;
+        return $this->attributes['profile_id'] === self::ADMIN_ID;
     }
 
     /**
@@ -151,7 +151,7 @@ class User extends AbstractBaseModel implements
      */
     public function isUser()
     {
-        return $this->attributes['profile_id'] === self::USER_PROFILE_ID;
+        return $this->attributes['profile_id'] === self::USER_ID;
     }
 
     /**
@@ -159,7 +159,7 @@ class User extends AbstractBaseModel implements
      */
     public function isDisabled()
     {
-        return $this->attributes['profile_id'] === self::DISABLED_PROFILE_ID;
+        return $this->attributes['profile_id'] === self::DISABLED_ID;
     }
 
     /**
