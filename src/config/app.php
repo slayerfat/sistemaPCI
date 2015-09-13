@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'es',
 
     /*
     |--------------------------------------------------------------------------
@@ -221,9 +221,8 @@ return [
         'ButtonGroup'    => Bootstrapper\Facades\ButtonGroup::class,
         'Carousel'       => Bootstrapper\Facades\Carousel::class,
         'DropdownButton' => Bootstrapper\Facades\DropdownButton::class,
-        // error aleatorio que no tengo tiempo de solucionar
-        // 'ControlGroup'   => Bootstrapper\Facades\ControlGroup::class,
-        // 'BSForm'         => Bootstrapper\Facades\Form::class,
+        'ControlGroup'   => Bootstrapper\Facades\ControlGroup::class,
+        'BSForm'         => Bootstrapper\Facades\Form::class,
         'Helpers'        => Bootstrapper\Facades\Helpers::class,
         'Icon'           => Bootstrapper\Facades\Icon::class,
         'InputGroup'     => Bootstrapper\Facades\InputGroup::class,
