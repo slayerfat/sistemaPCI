@@ -43,6 +43,8 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\User whereProfileId($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\User whereCreatedBy($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\User whereUpdatedBy($value)
+ * @property string $confirmation_code
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\User whereConfirmationCode($value)
  */
 class User extends AbstractBaseModel implements
     AuthenticatableContract,
