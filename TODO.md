@@ -8,7 +8,7 @@ el recurso es la combinacion de Rutas + Vistas + Controladores para brindar un R
 
 Completados:
 
-Status, **Index**
+Status, **Index**, **User**
 
 Faltantes:
 

@@ -1,5 +1,5 @@
 <footer class="footer-center">
-    <p class="footer-centered-text">
+    <p class="footer-centered-text footer-jumbo">
         sistemaPCI
     </p>
 
@@ -10,5 +10,5 @@
         <a href="#">Notas</a>
     </p>
 
-    <p class="footer-centered-text">slayerfat © 2015</p>
+    <p class="footer-centered-text footer-authors">slayerfat © 2015</p>
 </footer>

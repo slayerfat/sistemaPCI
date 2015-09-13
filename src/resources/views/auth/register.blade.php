@@ -2,6 +2,8 @@
 
 @section('content')
 
+    @include('partials.errors')
+
     <div class="container">
         {!! BSForm::horizontal() !!}
 

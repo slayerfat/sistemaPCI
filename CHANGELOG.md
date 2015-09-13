@@ -5,6 +5,8 @@ Features:
 - /status creado rudimentariamente.
 - Añadido SEOtools para manipular meta-data en las vistas.
 - Creadas clases relacionadas con las rutas del sistema.
+- Creados archivos relacionados a mensajes en español en el sistema, tambien incluidos mensajes globales.
+- Creado proceso de Autenticacion y Autorizacion de Usuario.
 
 Cambios:
 
