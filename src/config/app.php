@@ -153,6 +153,7 @@ return [
         PCI\Providers\AuthServiceProvider::class,
         PCI\Providers\EventServiceProvider::class,
         PCI\Providers\RouteServiceProvider::class,
+        PCI\Providers\ViewComposerServiceProvider::class,
     ],
 
     /*
