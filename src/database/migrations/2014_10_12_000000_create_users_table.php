@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password', 60);
             $table->boolean('status');
+            $table->string('confirmation_code', 32)->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->unsignedInteger('created_by');
@@ -69,7 +70,7 @@ class CreateUsersTable extends Migration
         ];
 
         foreach ($profiles as $profile) {
-            $obj = new PCI\Models\Profile;
+            $obj = new Profile;
 
             $obj->desc       = $profile;
             $obj->created_by = 1;
