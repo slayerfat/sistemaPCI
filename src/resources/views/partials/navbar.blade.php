@@ -1,5 +1,8 @@
-<?php
-echo Navbar::withBrand('sistemaPCI', '/')
+{!!
+
+Navbar::withBrand('sistemaPCI', '/')
     ->withContent(Navigation::links($links))
     ->withContent($searchBox)
-    ->withContent(Navigation::links($rightLinks)->right());
+    ->withContent(Navigation::links($rightLinks)->right())
+
+!!}
