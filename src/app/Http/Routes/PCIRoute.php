@@ -103,7 +103,7 @@ abstract class PCIRoute
                  * rule[1] es el url
                  *
                  * @example Route::rule[0](rule[1], ...)
-                 *          Route::create('/',      ...)
+                 *          Route::create('/', ...)
                  */
                 Route::$rule[0](
                     $rule[1],

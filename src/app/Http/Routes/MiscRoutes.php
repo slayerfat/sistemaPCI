@@ -79,6 +79,7 @@ class MiscRoutes extends PCIRoute
             'data'           => [
                 'uses'       => 'IndexController@index',
                 'as'         => 'index',
+                'middleware' => 'auth',
             ]
         ],
     ];

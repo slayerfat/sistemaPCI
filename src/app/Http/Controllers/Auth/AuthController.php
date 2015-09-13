@@ -25,12 +25,28 @@ class AuthController extends Controller
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
 
     /**
+     * el campo en la tabla usuario que es el seudonimo
+     * (overwrites email como default)
+     *
+     * @var string
+     */
+    protected $username = 'name';
+
+    /**
      * AuthenticatesAndRegistersUsers
      * @redirectPath()
      *
      * @var string
      */
     protected $redirectTo = '/';
+
+    /**
+     * path de redireccionamiento cuando
+     * autenticacion falla en postLogin y otros.
+     *
+     * @var string
+     */
+    protected $loginPath = 'sesion/iniciar';
 
     /**
      * Create a new authentication controller instance.
