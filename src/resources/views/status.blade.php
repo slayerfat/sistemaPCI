@@ -33,12 +33,23 @@
             .title {
                 font-size: 96px;
             }
+
+            .caimanize {
+                font-size: 48px;
+                margin-top: 32px;
+            }
         </style>
     </head>
     <body>
         <div class="container">
             <div class="content">
-                <div class="title">sistemaPCI</div>
+                <div class="title">
+                    {!! trans('defaults.appName') !!}
+                </div>
+
+                <div class="caimanize">
+                    {!! Caimaneitor::caimanais() !!}
+                </div>
             </div>
         </div>
     </body>

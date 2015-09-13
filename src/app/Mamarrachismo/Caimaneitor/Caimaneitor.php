@@ -21,8 +21,8 @@ class Caimaneitor implements CaimanizerInterface
             'Puro cara e\' papeo. - Bryan Torres',
             'Tranquilo que en vacaciones me pongo pa\' eso. - Andres Leotur',
             'Si, si... eso lo hago yo. - Erick Zerpa',
-            'Que tipo de relacion es una relacion de tipo muchos a muchos?. - Anonimo',
-            'Cuanto es uno por menos uno?. - Anonimo',
+            '¿Que tipo de relacion es una relacion de tipo muchos a muchos? - Anonimo',
+            '¿Cuanto es uno por menos uno? - Anonimo',
 
         ])->random();
     }
