@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('profile_id');
             $table->foreign('profile_id')->references('id')->on('profiles');
-            $table->string('name')->unique();
+            $table->string('name', 20)->unique();
             $table->string('email')->unique();
             $table->string('password', 60);
             $table->boolean('status');
