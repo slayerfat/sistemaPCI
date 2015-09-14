@@ -1,4 +1,4 @@
-<?php namespace Tests\PCI\Models;
+<?php namespace Tests\PCI\Models\User;
 
 use Mockery;
 use PCI\Models\Attendant;
@@ -60,36 +60,5 @@ class UserTest extends BaseTestCase
             'hasMany',
             Petition::class
         );
-    }
-
-    public function testIsDisabledShouldReturnFalseIfProfileIsNotDisbled()
-    {
-        $user = factory(User::class)->make();
-        $user->profile_id = User::ADMIN_ID;
-        $user->confirmation_code = null;
-
-        $this->assertFalse($user->isDisabled());
-        $this->assertTrue($user->isActive());
-    }
-
-    public function testIsVerifiedShouldReturnFalseIfUserIsNotVerified()
-    {
-        $user = factory(User::class)->make();
-        $user->profile_id = User::ADMIN_ID;
-        $user->confirmation_code = 'null';
-
-        $this->assertFalse($user->isVerified());
-        $this->assertTrue($user->isUnverified());
-    }
-
-    public function testIsVerifiedShouldReturnTrueIfUserIsVerified()
-    {
-        /** @var User $user */
-        $user = factory(User::class)->make();
-        $user->profile_id = User::ADMIN_ID;
-        $user->confirmation_code = null;
-
-        $this->assertTrue($user->isVerified());
-        $this->assertFalse($user->isUnverified());
     }
 }
