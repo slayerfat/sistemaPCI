@@ -25,6 +25,7 @@ $routes = collect();
 
 // El orden importa.
 $routes->push(new \PCI\Http\Routes\MiscRoutes);
+$routes->push(new \PCI\Http\Routes\UserRoutes);
 
 foreach ($routes as $route) {
     $route->execute();

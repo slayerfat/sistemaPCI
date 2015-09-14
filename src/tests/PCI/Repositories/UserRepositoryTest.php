@@ -58,4 +58,23 @@ class UserRepositoryTest extends BaseTestCase
         $this->assertSame($this->user, $repoResults);
         $this->assertNotEmpty($repoResults->confirmation_code);
     }
+
+    public function testConfirmShouldNotPersistAndReturnFalse()
+    {
+        $repoResults = $this->repo->confirm('invalid code');
+
+        $this->assertFalse($repoResults);
+    }
+
+    public function testConfirmShouldPersistIfCorrectCodeIsGiven()
+    {
+        $repoResults = $this->repo->confirm($this->user->confirmation_code);
+
+        $this->assertTrue($repoResults);
+    }
+
+    public function testGetAllShouldNotBeEmpty()
+    {
+        $this->assertNotEmpty($this->repo->getAll());
+    }
 }

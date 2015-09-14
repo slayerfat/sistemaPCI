@@ -1,5 +1,6 @@
 <?php namespace PCI\Repositories\Interfaces;
 
+use Illuminate\Database\Eloquent\Collection;
 use PCI\Models\User;
 
 interface UserRepositoryInterface
@@ -28,4 +29,9 @@ interface UserRepositoryInterface
      * @return bool
      */
     public function confirm($code);
+
+    /**
+     * @return Collection
+     */
+    public function getAll();
 }
