@@ -168,9 +168,25 @@ class User extends AbstractBaseModel implements
     /**
      * @return boolean
      */
-    public function isVerified()
+    public function isActive()
     {
         return ! $this->isDisabled();
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isVerified()
+    {
+        return ! $this->confirmation_code;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isUnverified()
+    {
+        return ! $this->isVerified();
     }
 
     /**

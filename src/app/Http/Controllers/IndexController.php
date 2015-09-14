@@ -10,10 +10,10 @@ class IndexController extends Controller
         return view('index');
     }
 
-    public function disabled()
+    public function unverified()
     {
         $user = auth()->user();
 
-        return view('disabled', compact('user'));
+        return view('unverified', compact('user'));
     }
 }

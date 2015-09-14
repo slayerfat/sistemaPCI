@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\Kernel as HttpKernel;
 use PCI\Http\Middleware\Authenticate;
 use PCI\Http\Middleware\EncryptCookies;
 use PCI\Http\Middleware\RedirectIfAuthenticated;
-use PCI\Http\Middleware\RedirectIfNotDisabled;
+use PCI\Http\Middleware\RedirectIfNotVerified;
 use PCI\Http\Middleware\VerifyCsrfToken;
 
 class Kernel extends HttpKernel
@@ -32,7 +32,7 @@ class Kernel extends HttpKernel
      */
     protected $routeMiddleware = [
         'auth'       => Authenticate::class,
-        'disabled'   => RedirectIfNotDisabled::class,
+        'unverified' => RedirectIfNotVerified::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'guest'      => RedirectIfAuthenticated::class,
     ];

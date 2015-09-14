@@ -94,9 +94,9 @@ class MiscRoutes extends PCIRoute
             'method'         => 'get',
             'url'            => '/por-verificar',
             'data'           => [
-                'uses'       => 'IndexController@disabled',
-                'as'         => 'index.disabled',
-                'middleware' => 'disabled',
+                'uses'       => 'IndexController@unverified',
+                'as'         => 'index.unverified',
+                'middleware' => 'unverified',
             ]
         ],
     ];
