@@ -3,12 +3,14 @@
 Features:
 
 - **Creado Caimaneitor:** `php artisan inspirar`
+- Creadp Repositorio parcial de Usuario.
 - /status creado rudimentariamente.
 - Añadido SEOtools para manipular meta-data en las vistas.
 - Creadas clases relacionadas con las rutas del sistema.
 - Creados archivos relacionados a mensajes en español en el sistema, tambien incluidos mensajes globales.
 - Creado proceso de Autenticacion y Autorizacion de Usuario.
 - creado evento de registro de nuevo usuario (enviar email, codigo de autorizacion, etc...)
+- creado evento de generar confirmacion para usuarios por verificar.
 
 Cambios:
 
