@@ -1,15 +1,16 @@
 <?php namespace Tests\PCI\Repositories;
 
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Mockery;
 use PCI\Models\User;
-use PCI\Repositories\UserRepository;
 use Tests\BaseTestCase;
+use PCI\Repositories\UserRepository;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class UserRepositoryTest extends BaseTestCase
 {
 
-    use DatabaseTransactions;
+    use DatabaseTransactions, DatabaseMigrations;
 
     /**
      * @var UserRepository
@@ -24,6 +25,8 @@ class UserRepositoryTest extends BaseTestCase
     public function setUp()
     {
         parent::setUp();
+
+        $this->runDatabaseMigrations();
 
         $this->user = factory(User::class)->create();
 
@@ -47,9 +50,12 @@ class UserRepositoryTest extends BaseTestCase
 
     public function testGenerateConfirmationCodeShouldMakeChangesAndReturnUser()
     {
+        $this->actingAs($this->user);
+
         $repoResults = $this->repo->generateConfirmationCode();
 
         $this->assertInstanceOf(User::class, $repoResults);
-        $this->assertEquals('testing', $repoResults->name);
+        $this->assertSame($this->user, $repoResults);
+        $this->assertNotEmpty($repoResults->confirmation_code);
     }
 }
