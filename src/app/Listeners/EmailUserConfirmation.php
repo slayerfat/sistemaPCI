@@ -4,10 +4,9 @@ namespace PCI\Listeners;
 
 use Illuminate\Contracts\Mail\Mailer;
 use PCI\Events\NewUserRegistration;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class EmailUserConfirmation
+class EmailUserConfirmation implements ShouldQueue
 {
 
     /**
@@ -38,7 +37,7 @@ class EmailUserConfirmation
 
         $this->mail->send('emails.verify', compact('user'), function ($message) use ($email) {
             $message->to($email)
-                ->subject('Bienvenido al sistemaPCI! por favor verifique su cuenta.');
+                ->subject('sistemaPCI: por favor verifique su cuenta.');
         });
     }
 }

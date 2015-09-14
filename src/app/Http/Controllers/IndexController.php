@@ -12,6 +12,8 @@ class IndexController extends Controller
 
     public function disabled()
     {
-        return view('disabled');
+        $user = auth()->user();
+
+        return view('disabled', compact('user'));
     }
 }

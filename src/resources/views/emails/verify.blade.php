@@ -2,9 +2,7 @@
 
 @section('content')
     <section style="color: #333;font-family: sans-serif;">
-        <h1>Bienvenido a {{ trans('defaults.appName') }}!</h1>
-
-        <h3>Hola {{ $user->name }}!</h3>
+        <h1>Hola {{ $user->name }}!</h1>
     </section>
     <section style="color: #333;font-family: sans-serif;">
         <p id="body" style="text-align: justify;">

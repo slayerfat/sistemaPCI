@@ -22,4 +22,10 @@ interface UserRepositoryInterface
      * @return User
      */
     public function generateConfirmationCode();
+
+    /**
+     * @param string $code
+     * @return bool
+     */
+    public function confirm($code);
 }

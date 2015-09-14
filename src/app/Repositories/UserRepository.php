@@ -39,4 +39,23 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
 
         return $user;
     }
+
+    /**
+     * @param string $code
+     * @return bool
+     */
+    public function confirm($code)
+    {
+        $user = $this->model->whereConfirmationCode($code)->first();
+
+        if (is_null($user)) {
+            return false;
+        }
+
+        $user->status            = true;
+        $user->confirmation_code = null;
+        $user->save();
+
+        return true;
+    }
 }

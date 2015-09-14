@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <h1>
-            Hola! {{ $user->name }}!
+            Hola {{ $user->name }}!
         </h1>
 
         <h3 class="text-justify">
@@ -17,7 +17,7 @@
         <h4>
             Si ha seguido estos pasos o borro sin querer el susodicho correo, puede generar
             <strong>
-                {!! link_to_route('users.confirmations.create', 'Una nueva Verificacion.') !!}
+                {!! link_to_route('auth.confirm.create', 'Una nueva Verificacion.') !!}
             </strong>
         </h4>
     </div>

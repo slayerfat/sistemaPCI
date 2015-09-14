@@ -63,18 +63,18 @@ class MiscRoutes extends PCIRoute
          */
         [
             'method'         => 'get',
-            'url'            => 'confirmar/{codigos}',
+            'url'            => 'confirmar/crear',
             'data'           => [
-                'uses'       => 'Auth\UserConfirmationController@confirm',
-                'as'         => 'auth.confirm',
+                'uses'       => 'Auth\UserConfirmationController@create',
+                'as'         => 'auth.confirm.create',
             ]
         ],
         [
             'method'         => 'get',
             'url'            => 'confirmar/{codigos}',
             'data'           => [
-                'uses'       => 'Auth\UserConfirmationController@create',
-                'as'         => 'auth.confirm.create',
+                'uses'       => 'Auth\UserConfirmationController@confirm',
+                'as'         => 'auth.confirm',
             ]
         ],
 

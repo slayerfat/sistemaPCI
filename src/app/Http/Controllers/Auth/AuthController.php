@@ -2,6 +2,7 @@
 
 namespace PCI\Http\Controllers\Auth;
 
+use Event;
 use Flash;
 use Validator;
 use PCI\Models\User;
@@ -90,7 +91,7 @@ class AuthController extends Controller
 
         $user->save();
 
-        event(new NewUserRegistration($user));
+        Event::fire(new NewUserRegistration($user));
 
         Flash::info(
             'Usuario creado exitosamene, un correo de confirmación '

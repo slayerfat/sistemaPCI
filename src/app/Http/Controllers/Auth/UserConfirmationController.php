@@ -1,10 +1,12 @@
 <?php namespace PCI\Http\Controllers\Auth;
 
+use Event;
 use Flash;
-use Illuminate\Auth\Guard;
 use Redirect;
-use PCI\Models\User;
+use Illuminate\Auth\Guard;
 use PCI\Http\Controllers\Controller;
+use PCI\Events\ConfirmationCodeRequest;
+use PCI\Repositories\Interfaces\UserRepositoryInterface;
 
 class UserConfirmationController extends Controller
 {
@@ -15,11 +17,18 @@ class UserConfirmationController extends Controller
     private $auth;
 
     /**
-     * @param Guard $auth
+     * @var UserRepositoryInterface
      */
-    public function __construct(Guard $auth)
+    private $userRepo;
+
+    /**
+     * @param Guard $auth
+     * @param UserRepositoryInterface $userRepo
+     */
+    public function __construct(Guard $auth, UserRepositoryInterface $userRepo)
     {
         $this->auth = $auth;
+        $this->userRepo = $userRepo;
     }
 
     /**
@@ -32,15 +41,9 @@ class UserConfirmationController extends Controller
             return Redirect::route('index');
         }
 
-        $user = User::whereConfirmationCode($code)->first();
-
-        if (!$user) {
+        if (!$this->userRepo->confirm($code)) {
             return Redirect::route('index');
         }
-
-        $user->status            = true;
-        $user->confirmation_code = null;
-        $user->save();
 
         $this->auth->logout();
 
@@ -54,7 +57,9 @@ class UserConfirmationController extends Controller
      */
     public function create()
     {
+        $user = $this->userRepo->generateConfirmationCode();
 
+        Event::fire(new ConfirmationCodeRequest($user));
 
         Flash::info(
             'Nueva confirmación generada y enviada a '
@@ -62,6 +67,6 @@ class UserConfirmationController extends Controller
             .', por favor revise su correo electronico.'
         );
 
-        return redirect('/');
+        return Redirect::route('index.disabled');
     }
 }

@@ -16,6 +16,10 @@ class EventServiceProvider extends ServiceProvider
         'PCI\Events\NewUserRegistration' => [
             'PCI\Listeners\EmailUserConfirmation',
         ],
+
+        'PCI\Events\ConfirmationCodeRequest' => [
+            'PCI\Listeners\EmailUserConfirmation',
+        ],
     ];
 
     /**
