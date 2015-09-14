@@ -71,7 +71,7 @@
                     </p>
 
                     <p class="caimanibiri right">
-                        {!! Date::now()->format('l j F Y H:i:s') !!}
+                        Hace {!! $date !!}.
                     </p>
                 </div>
             </div>
