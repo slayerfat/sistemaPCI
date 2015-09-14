@@ -2,6 +2,7 @@
 
 namespace PCI\Http\Controllers\Auth;
 
+use Flash;
 use Validator;
 use PCI\Models\User;
 use PCI\Events\NewUserRegistration;
@@ -73,22 +74,29 @@ class AuthController extends Controller
 
     /**
      * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
+     * @param  array $data
      * @return User
      */
     protected function create(array $data)
     {
-//        $user = User::create([
-//            'name'     => $data['name'],
-//            'email'    => $data['email'],
-//            'password' => bcrypt($data['password']),
-//            'status'   => true,
-//        ]);
+        $user = new User;
 
-        $user = factory(User::class)->make();
+        $user->profile_id        = User::DISABLED_ID;
+        $user->status            = false;
+        $user->name              = $data['name'];
+        $user->email             = $data['email'];
+        $user->password          = bcrypt($data['password']);
+        $user->confirmation_code = str_random(32);
+
+        $user->save();
 
         event(new NewUserRegistration($user));
+
+        Flash::info(
+            'Usuario creado exitosamene, un correo de confirmación '
+            .'ha sido enviado a '
+            .$user->email
+        );
 
         return $user;
     }

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Be right back.</title>
+        <title>404</title>
 
         <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
 
@@ -14,7 +14,6 @@
                 margin: 0;
                 padding: 0;
                 width: 100%;
-                color: #7e7e7e;
                 display: table;
                 font-weight: 100;
                 font-family: 'Lato';
@@ -40,7 +39,7 @@
     <body>
         <div class="container">
             <div class="content">
-                <div class="title">Volveremos.</div>
+                <div class="title">404 Pagina no encontrada.</div>
             </div>
         </div>
     </body>

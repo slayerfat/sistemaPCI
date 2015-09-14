@@ -5,6 +5,10 @@ Route::get('/status', ['as' => 'status', function () {
     return view('status');
 }]);
 
+Route::get('/home', ['as' => 'home', function () {
+    return redirect()->route('index');
+}]);
+
 /**
  * @todo ver como mover esto a un ServiceProvider o algo similar.
  *
