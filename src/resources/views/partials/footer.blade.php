@@ -11,4 +11,7 @@
     </p>
 
     <p class="footer-centered-text footer-authors">slayerfat © 2015</p>
+    <p class="footer-centered-text footer-authors">
+        <a href="{{route('status')}}">status</a>
+    </p>
 </footer>

@@ -145,6 +145,7 @@ return [
         Laracasts\Flash\FlashServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         Bootstrapper\BootstrapperL5ServiceProvider::class,
+        Jenssegers\Date\DateServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -209,10 +210,11 @@ return [
         /**
          * Vendor
          */
-        'SEO'   => Artesaos\SEOTools\Facades\SEOTools::class,
+        'Date'  => Jenssegers\Date\Date::class,
         'Flash' => Laracasts\Flash\Flash::class,
         'Form'  => Collective\Html\FormFacade::class,
         'Html'  => Collective\Html\HtmlFacade::class,
+        'SEO'   => Artesaos\SEOTools\Facades\SEOTools::class,
 
         /**
          * Bootstrapper

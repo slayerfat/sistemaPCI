@@ -14,5 +14,9 @@
             <?php $url = route('auth.confirm', $user->confirmation_code) ?>
             <a href="{{ $url }}">{{ $url }}</a>
         </p>
+
+        <p>
+            Mensaje generado el {!! Date::now()->format('l j F Y H:i:s') !!}
+        </p>
     </section>
 @stop

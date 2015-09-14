@@ -4,7 +4,7 @@ interface CaimanizerInterface
 {
 
     /**
-     * @return \Illuminate\Support\Collection
+     * @return string
      */
     public static function caimanais();
 }

@@ -48,7 +48,12 @@
                 </div>
 
                 <div class="caimanize">
-                    {!! Caimaneitor::caimanais() !!}
+                    <p>
+                        {!! Caimaneitor::caimanais() !!}
+                    </p>
+                    <p>
+                        {!! Date::now()->format('l j F Y H:i:s') !!}
+                    </p>
                 </div>
             </div>
         </div>

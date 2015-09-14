@@ -12,7 +12,7 @@ class Caimaneitor implements CaimanizerInterface
      *
      * Alejandro Granadillo made this commit from Caracas. (45° Celcius)
      *
-     * @return Collection
+     * @return string
      */
     public static function caimanais()
     {
@@ -25,5 +25,13 @@ class Caimaneitor implements CaimanizerInterface
             '¿Cuanto es uno por menos uno? - Anonimo',
 
         ])->random();
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return self::caimanais();
     }
 }

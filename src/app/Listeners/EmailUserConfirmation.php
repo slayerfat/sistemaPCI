@@ -35,7 +35,7 @@ class EmailUserConfirmation implements ShouldQueue
 
         $email = $event->user->email;
 
-        $this->mail->send('emails.verify', compact('user'), function ($message) use ($email) {
+        $this->mail->send(['emails.verify', 'emails.verify-plain'], compact('user'), function ($message) use ($email) {
             $message->to($email)
                 ->subject('sistemaPCI: por favor verifique su cuenta.');
         });
