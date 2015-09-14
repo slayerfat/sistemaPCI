@@ -110,7 +110,6 @@ $factory->define(PCI\Models\User::class, function () use ($faker) {
         'profile_id'        => 2,
         'name'              => $faker->word,
         'email'             => $faker->email,
-        'status'            => true,
         'password'          => bcrypt(str_random(10)),
         'remember_token'    => str_random(10),
         'confirmation_code' => str_random(32),

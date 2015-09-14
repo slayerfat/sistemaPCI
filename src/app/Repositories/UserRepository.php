@@ -52,7 +52,6 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
             return false;
         }
 
-        $user->status            = true;
         $user->confirmation_code = null;
         $user->save();
 

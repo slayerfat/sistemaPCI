@@ -21,7 +21,6 @@ class CreateUsersTable extends Migration
             $table->string('name', 20)->unique();
             $table->string('email')->unique();
             $table->string('password', 60);
-            $table->boolean('status');
             $table->string('confirmation_code', 32)->nullable();
             $table->rememberToken();
             $table->timestamps();
@@ -87,7 +86,6 @@ class CreateUsersTable extends Migration
         $user->created_by = 1;
         $user->updated_by = 1;
         $user->profile_id = 1;
-        $user->status     = 1;
 
         $user->save();
     }

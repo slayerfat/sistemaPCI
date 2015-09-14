@@ -83,7 +83,6 @@ class AuthController extends Controller
         $user = new User;
 
         $user->profile_id        = User::DISABLED_ID;
-        $user->status            = false;
         $user->name              = $data['name'];
         $user->email             = $data['email'];
         $user->password          = bcrypt($data['password']);
