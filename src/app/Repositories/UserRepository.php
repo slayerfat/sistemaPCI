@@ -21,7 +21,7 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
      * @param array $data
      * @return User
      */
-    public function getNewInstance(array $data)
+    public function getNewInstance(array $data = [])
     {
         return $this->newInstance($data);
     }

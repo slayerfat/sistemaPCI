@@ -16,7 +16,7 @@ interface UserRepositoryInterface
      * @param array $data
      * @return User
      */
-    public function getNewInstance(array $data);
+    public function getNewInstance(array $data = []);
 
     /**
      * @return User
