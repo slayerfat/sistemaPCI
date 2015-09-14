@@ -81,8 +81,8 @@ class CreateUsersTable extends Migration
 
         $user = new User;
 
-        $user->name       = env('APP_USER');
-        $user->email      = env('APP_USER_EMAIL');
+        $user->name       = env('APP_USER', 'tester');
+        $user->email      = env('APP_USER_EMAIL', 'tester');
         $user->password   = bcrypt(env('APP_USER_PASSWORD'));
         $user->created_by = 1;
         $user->updated_by = 1;
