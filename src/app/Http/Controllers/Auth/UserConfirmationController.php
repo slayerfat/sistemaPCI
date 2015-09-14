@@ -10,30 +10,58 @@ class UserConfirmationController extends Controller
 {
 
     /**
-     * @param $code
-     * @param Guard $auth
-     * @return mixed
+     * @var Guard
      */
-    public function confirm($code, Guard $auth)
+    private $auth;
+
+    /**
+     * @param Guard $auth
+     */
+    public function __construct(Guard $auth)
+    {
+        $this->auth = $auth;
+    }
+
+    /**
+     * @param $code
+     * @return \Illuminate\Http\RedirectResponse;
+     */
+    public function confirm($code)
     {
         if (!$code) {
-            abort(403);
+            return Redirect::route('index');
         }
 
         $user = User::whereConfirmationCode($code)->first();
 
         if (!$user) {
-            abort(403);
+            return Redirect::route('index');
         }
 
         $user->status            = true;
         $user->confirmation_code = null;
         $user->save();
 
-        $auth->logout();
+        $this->auth->logout();
 
         Flash::success('Ud. ha verificado exitosamente su cuenta.');
 
         return Redirect::route('auth.getLogin');
+    }
+
+    /**
+     * @return \Illuminate\Http\RedirectResponse;
+     */
+    public function create()
+    {
+
+
+        Flash::info(
+            'Nueva confirmación generada y enviada a '
+            .$user->email
+            .', por favor revise su correo electronico.'
+        );
+
+        return redirect('/');
     }
 }

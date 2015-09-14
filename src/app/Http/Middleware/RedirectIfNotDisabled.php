@@ -5,8 +5,9 @@ namespace PCI\Http\Middleware;
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
 
-class RedirectIfAuthenticated
+class RedirectIfNotDisabled
 {
+
     /**
      * The Guard implementation.
      *
@@ -33,8 +34,8 @@ class RedirectIfAuthenticated
      */
     public function handle($request, Closure $next)
     {
-        if ($this->auth->check()) {
-            return redirect('/');
+        if (!$this->auth->user()->isDisabled()) {
+            return redirect()->route('index');
         }
 
         return $next($request);

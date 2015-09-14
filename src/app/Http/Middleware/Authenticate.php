@@ -40,6 +40,10 @@ class Authenticate
             return redirect()->guest('sesion/iniciar');
         }
 
+        if ($this->auth->user()->isDisabled()) {
+            return redirect()->route('index.disabled');
+        }
+
         return $next($request);
     }
 }

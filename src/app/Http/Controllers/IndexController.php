@@ -9,4 +9,9 @@ class IndexController extends Controller
     {
         return view('index');
     }
+
+    public function disabled()
+    {
+        return view('disabled');
+    }
 }

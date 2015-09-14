@@ -69,6 +69,14 @@ class MiscRoutes extends PCIRoute
                 'as'         => 'auth.confirm',
             ]
         ],
+        [
+            'method'         => 'get',
+            'url'            => 'confirmar/{codigos}',
+            'data'           => [
+                'uses'       => 'Auth\UserConfirmationController@create',
+                'as'         => 'auth.confirm.create',
+            ]
+        ],
 
         /**
          * Index/Home/Inicio
@@ -80,6 +88,15 @@ class MiscRoutes extends PCIRoute
                 'uses'       => 'IndexController@index',
                 'as'         => 'index',
                 'middleware' => 'auth',
+            ]
+        ],
+        [
+            'method'         => 'get',
+            'url'            => '/por-verificar',
+            'data'           => [
+                'uses'       => 'IndexController@disabled',
+                'as'         => 'index.disabled',
+                'middleware' => 'disabled',
             ]
         ],
     ];
