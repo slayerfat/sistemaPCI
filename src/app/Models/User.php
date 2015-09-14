@@ -189,17 +189,12 @@ class User extends AbstractBaseModel implements
         }
 
         if (isset($this->attributes['id'])) {
-            $userId = $this->attributes['id'];
-        } elseif (isset($this->attributes['name'])) {
-            $userId = $this->attributes['name'];
-        }
-
-        if (isset($userId)) {
-            return $userId == $id;
+            return $this->attributes['id'] == $id;
         }
 
         return false;
     }
+
     /**
      * helper para ver si es admin o si puede manipular algun recurso.
      *

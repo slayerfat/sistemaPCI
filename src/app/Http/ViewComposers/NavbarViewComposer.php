@@ -46,7 +46,7 @@ class NavbarViewComposer
     private function getRightLinks()
     {
         if (is_null($this->user)) {
-            return $rightLinks = [
+            return [
                 [
                     'link'  => route('auth.getLogin'),
                     'title' => 'Entrar'
@@ -58,13 +58,12 @@ class NavbarViewComposer
             ];
         }
 
-        return $rightLinks = [
+        return [
             [
                 "Hola " . $this->user->name,
                 [
                     [
-                        'link'  => '#',
-                        //route('users.show', $this->user->name)
+                        'link'  => '#', //todo: route('users.show', $this->user->name)
                         'title' => 'Ver Perfil'
                     ],
                     [
