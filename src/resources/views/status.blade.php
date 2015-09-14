@@ -37,6 +37,13 @@
             .caimanize {
                 font-size: 48px;
                 margin-top: 32px;
+                padding: 0 10%;
+            }
+
+            .mini-caimanize {
+                font-size: 32px;
+                text-align: right;
+                padding-top: 32px;
             }
         </style>
     </head>
@@ -51,7 +58,8 @@
                     <p>
                         {!! Caimaneitor::caimanais() !!}
                     </p>
-                    <p>
+
+                    <p class="mini-caimanize">
                         {!! Date::now()->format('l j F Y H:i:s') !!}
                     </p>
                 </div>
