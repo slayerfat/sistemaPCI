@@ -6,7 +6,7 @@ use PCI\Mamarrachismo\Caimaneitor\Interfaces\CaimanizerInterface;
 class Caimaneitor implements CaimanizerInterface
 {
 
-    const CAIMANEISHONS = [
+    public static $caimaneishons = [
         'Puro cara e\' papeo. - Bryan Torres',
         'Tranquilo que en vacaciones me pongo pa\' eso. - Andres Leotur',
         'Si, si... eso lo hago yo. - Erick Zerpa',
@@ -16,7 +16,7 @@ class Caimaneitor implements CaimanizerInterface
         para darme cuenta que la solucion estaba detras de mi. - Alejandro Granadillo',
     ];
 
-    const LOCAISHONS = [
+    public static $locaishons = [
 
         'Con cinco tragos de mas en la taguara La Barcaza Azul.',
         'Tomando Roncito en Los Caracas.',
@@ -38,7 +38,7 @@ class Caimaneitor implements CaimanizerInterface
      */
     public static function caimanais()
     {
-        return Collection::make(self::CAIMANEISHONS)->random();
+        return Collection::make(self::$caimaneishons)->random();
     }
 
     /**
@@ -51,10 +51,8 @@ class Caimaneitor implements CaimanizerInterface
      */
     public static function locaishon()
     {
-        return Collection::make(self::LOCAISHONS)->random();
+        return Collection::make(self::$locaishons)->random();
     }
-
-
 
     /**
      * @return string
