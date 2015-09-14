@@ -3,6 +3,11 @@
 namespace PCI\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
+use PCI\Http\Middleware\Authenticate;
+use PCI\Http\Middleware\EncryptCookies;
+use PCI\Http\Middleware\RedirectIfAuthenticated;
+use PCI\Http\Middleware\RedirectIfNotDisabled;
+use PCI\Http\Middleware\VerifyCsrfToken;
 
 class Kernel extends HttpKernel
 {
@@ -13,11 +18,11 @@ class Kernel extends HttpKernel
      */
     protected $middleware = [
         \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
-        \PCI\Http\Middleware\EncryptCookies::class,
+        EncryptCookies::class,
         \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
         \Illuminate\Session\Middleware\StartSession::class,
         \Illuminate\View\Middleware\ShareErrorsFromSession::class,
-        \PCI\Http\Middleware\VerifyCsrfToken::class,
+        VerifyCsrfToken::class,
     ];
 
     /**
@@ -26,8 +31,9 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'auth' => \PCI\Http\Middleware\Authenticate::class,
+        'auth'       => Authenticate::class,
+        'disabled'   => RedirectIfNotDisabled::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
-        'guest' => \PCI\Http\Middleware\RedirectIfAuthenticated::class,
+        'guest'      => RedirectIfAuthenticated::class,
     ];
 }

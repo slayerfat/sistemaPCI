@@ -4,6 +4,7 @@ namespace PCI\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use PCI\Console\Commands\Inspaier;
 use PCI\Console\Commands\Inspire;
 
 class Kernel extends ConsoleKernel
@@ -15,6 +16,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         Inspire::class,
+        Inspaier::class
     ];
 
     /**
@@ -25,7 +27,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('inspire')
+        $schedule->command('inspaier')
                  ->hourly();
     }
 }

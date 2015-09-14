@@ -37,6 +37,14 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
  * @property-read \Illuminate\Database\Eloquent\Collection|Petition[] $petitions
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\User whereStatus($value)
  * @property-read Profile $profile
+ * @property integer $profile_id
+ * @property integer $created_by
+ * @property integer $updated_by
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\User whereProfileId($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\User whereCreatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\User whereUpdatedBy($value)
+ * @property string $confirmation_code
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\User whereConfirmationCode($value)
  */
 class User extends AbstractBaseModel implements
     AuthenticatableContract,
@@ -46,25 +54,33 @@ class User extends AbstractBaseModel implements
     use Authenticatable, Authorizable, CanResetPassword;
 
     /**
+     * Valores que no deberian cambiar en el futuro inmediato
+     */
+    const ADMIN_ID    = 1;
+    const USER_ID     = 2;
+    const DISABLED_ID = 3;
+
+    /**
      * The database table used by the model.
      *
      * @var string
      */
     protected $table = 'users';
 
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['name', 'email', 'password', 'status'];
+    protected $fillable = ['name', 'email', 'password', 'status', 'confirmation_code'];
 
     /**
      * The attributes excluded from the model's JSON form.
      *
      * @var array
      */
-    protected $hidden = ['password', 'remember_token'];
+    protected $hidden = ['password', 'remember_token', 'confirmation_code'];
 
     // -------------------------------------------------------------------------
     // Relaciones
@@ -119,5 +135,75 @@ class User extends AbstractBaseModel implements
     public function profile()
     {
         return $this->belongsTo(Profile::class);
+    }
+
+    // -------------------------------------------------------------------------
+    // Helpers
+    // -------------------------------------------------------------------------
+
+    /**
+     * @return boolean
+     */
+    public function isAdmin()
+    {
+        return $this->attributes['profile_id'] == self::ADMIN_ID;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isUser()
+    {
+        return $this->attributes['profile_id'] == self::USER_ID;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isDisabled()
+    {
+        return $this->attributes['profile_id'] == self::DISABLED_ID;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isVerified()
+    {
+        return ! $this->isDisabled();
+    }
+
+    /**
+     * chequea si el id del foreign key del recurso es igual al id del usuario,
+     * en otras palabras, verific que el usuario pueda modificar algun recurso
+     * viendo si le pertenece o no.
+     *
+     * @param int $id el foreign key del recurso.
+     *
+     * @return boolean
+     */
+    public function isOwner($id)
+    {
+        if (!isset($id)) {
+            return false;
+        }
+
+        if (isset($this->attributes['id'])) {
+            return $this->attributes['id'] == $id;
+        }
+
+        return false;
+    }
+
+    /**
+     * helper para ver si es admin o si puede manipular algun recurso.
+     *
+     * @param int $id el foreign key del recurso.
+     *
+     * @return boolean
+     */
+    public function isOwnerOrAdmin($id)
+    {
+        return $this->isAdmin() || $this->isOwner($id);
     }
 }

@@ -11,9 +11,6 @@
 |
 */
 
-use Monolog\Logger;
-use Monolog\Handler\StreamHandler;
-
 $app = new Illuminate\Foundation\Application(
     realpath(__DIR__.'/../')
 );
@@ -43,14 +40,6 @@ $app->singleton(
     Illuminate\Contracts\Debug\ExceptionHandler::class,
     PCI\Exceptions\Handler::class
 );
-
-/**
- * Custom Log, para dev.
- */
-$app->configureMonologUsing(function ($monolog) {
-    /** @var Logger $monolog */
-    $monolog->pushHandler(new StreamHandler(storage_path().'/logs/debug.log'));
-});
 
 /*
 |--------------------------------------------------------------------------

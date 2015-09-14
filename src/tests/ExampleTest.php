@@ -13,7 +13,7 @@ class ExampleTest extends BaseTestCase
      */
     public function testBasicExample()
     {
-        $this->visit('/')
-             ->see('Laravel 5');
+        $this->visit('/status')
+             ->see('sistemaPCI');
     }
 }

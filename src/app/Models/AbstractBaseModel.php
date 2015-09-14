@@ -5,6 +5,14 @@ use Eloquent;
 use Log;
 use LogicException;
 
+/**
+ * Class AbstractBaseModel
+ *
+ * @package PCI\Models
+ * @SuppressWarnings(PHPMD.NumberOfChildren)
+ * Se suprime esta advertencia por ser todos los hijos
+ * modelos eloquens que contienen el metodo boot igual.
+ */
 class AbstractBaseModel extends Eloquent
 {
 
@@ -30,7 +38,7 @@ class AbstractBaseModel extends Eloquent
         if (is_null($id) && !app()->environment() == 'local') {
             throw new LogicException('Se necesita el ID del usuario actual para manipular este modelo.');
         } elseif (is_null($id) && app()->environment() == 'local') {
-            Log::critical(__CLASS__.' no pudo encontrar en'.__METHOD__.' ID para la manipulacion.');
+            Log::critical(__CLASS__.' no pudo encontrar en '.__METHOD__.' ID para la manipulacion.');
 
             $id = 1;
         }

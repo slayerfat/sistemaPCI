@@ -105,12 +105,13 @@ $factory->define(PCI\Models\Petition::class, function (Faker\Generator $faker) {
 
 $factory->define(PCI\Models\User::class, function (Faker\Generator $faker) {
     return [
-        'profile_id'     => 2,
-        'name'           => $faker->word,
-        'email'          => $faker->email,
-        'status'         => true,
-        'password'       => bcrypt(str_random(10)),
-        'remember_token' => str_random(10),
+        'profile_id'        => 2,
+        'name'              => $faker->word,
+        'email'             => $faker->email,
+        'status'            => true,
+        'password'          => bcrypt(str_random(10)),
+        'remember_token'    => str_random(10),
+        'confirmation_code' => str_random(32),
     ];
 });
 

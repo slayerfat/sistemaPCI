@@ -2,8 +2,11 @@
 
 namespace PCI\Http\Controllers\Auth;
 
-use PCI\Models\User;
+use Event;
+use Flash;
 use Validator;
+use PCI\Models\User;
+use PCI\Events\NewUserRegistration;
 use PCI\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
@@ -24,6 +27,30 @@ class AuthController extends Controller
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
 
     /**
+     * el campo en la tabla usuario que es el seudonimo
+     * (overwrites email como default)
+     *
+     * @var string
+     */
+    protected $username = 'name';
+
+    /**
+     * AuthenticatesAndRegistersUsers
+     * @redirectPath()
+     *
+     * @var string
+     */
+    protected $redirectTo = '/';
+
+    /**
+     * path de redireccionamiento cuando
+     * autenticacion falla en postLogin y otros.
+     *
+     * @var string
+     */
+    protected $loginPath = 'sesion/iniciar';
+
+    /**
      * Create a new authentication controller instance.
      */
     public function __construct()
@@ -40,24 +67,38 @@ class AuthController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
+            'name'     => 'required|max:20|alpha-dash|unique:users',
+            'email'    => 'required|email|max:255|unique:users',
             'password' => 'required|confirmed|min:6',
         ]);
     }
 
     /**
      * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
+     * @param  array $data
      * @return User
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
+        $user = new User;
+
+        $user->profile_id        = User::DISABLED_ID;
+        $user->status            = false;
+        $user->name              = $data['name'];
+        $user->email             = $data['email'];
+        $user->password          = bcrypt($data['password']);
+        $user->confirmation_code = str_random(32);
+
+        $user->save();
+
+        Event::fire(new NewUserRegistration($user));
+
+        Flash::info(
+            'Usuario creado exitosamene, un correo de confirmación '
+            .'ha sido enviado a '
+            .$user->email
+        );
+
+        return $user;
     }
 }

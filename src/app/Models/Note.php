@@ -38,6 +38,10 @@ use Illuminate\Database\Eloquent\Collection;
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Note whereStatus($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Note whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Note whereUpdatedAt($value)
+ * @property integer $created_by
+ * @property integer $updated_by
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Note whereCreatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Note whereUpdatedBy($value)
  */
 class Note extends AbstractBaseModel
 {
