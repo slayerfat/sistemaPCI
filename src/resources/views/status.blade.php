@@ -40,10 +40,17 @@
                 padding: 0 10%;
             }
 
-            .mini-caimanize {
+            .caimanibiri {
                 font-size: 32px;
-                text-align: right;
                 padding-top: 32px;
+            }
+
+            .left {
+                text-align: left;
+            }
+
+            .right {
+                text-align: right;
             }
         </style>
     </head>
@@ -59,7 +66,11 @@
                         {!! Caimaneitor::caimanais() !!}
                     </p>
 
-                    <p class="mini-caimanize">
+                    <p class="caimanibiri left">
+                        {!! Caimaneitor::locaishon() !!}
+                    </p>
+
+                    <p class="caimanibiri right">
                         {!! Date::now()->format('l j F Y H:i:s') !!}
                     </p>
                 </div>

@@ -30,6 +30,29 @@ class Caimaneitor implements CaimanizerInterface
     }
 
     /**
+     * Inspired by Illuminate\Foundation\Inspiring
+     * A very Inspiring class.
+     *
+     * Alejandro Granadillo made this commit from Caracas. (45° Celcius)
+     *
+     * @return string
+     */
+    public static function locaishon()
+    {
+        return Collection::make([
+
+            'Con cinco tragos de mas en la taguara La Barcaza Azul.',
+            'Tomando Roncito en Los Caracas.',
+            'Durante la prueba de calculo.',
+            'En el anden del Metro de Caracas.',
+            'Durante la Pre-defensa de Proyecto.',
+            'Via Skype.',
+            'Via Gmail.',
+
+        ])->random();
+    }
+
+    /**
      * @return string
      */
     public function __toString()
