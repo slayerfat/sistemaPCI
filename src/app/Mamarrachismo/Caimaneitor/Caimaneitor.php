@@ -12,8 +12,8 @@ class Caimaneitor implements CaimanizerInterface
         'Si, si... eso lo hago yo. - Erick Zerpa',
         '¿Que tipo de relacion es una relacion de tipo muchos a muchos? - Anonimo',
         '¿Cuanto es uno por menos uno? - Anonimo',
-        'Tuve que darle la vuelta al mundo '
-        .'para darme cuenta que la solucion estaba detras de mi. - Alejandro Granadillo',
+        'Tuve que darle la vuelta al mundo
+        para darme cuenta que la solucion estaba detras de mi. - Alejandro Granadillo',
     ];
 
     const LOCAISHONS = [
