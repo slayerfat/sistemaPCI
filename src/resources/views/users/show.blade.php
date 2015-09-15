@@ -14,8 +14,14 @@
                 </h1>
 
                 <h2>
-                    <small>{{$user->profile->description}}</small>
+                    Perfil <small>{{$user->profile->desc}}</small>
                 </h2>
+
+                @if($user->employee)
+                    <h1>
+                        --
+                    </h1>
+                @endif
 
                 @if(Auth::user()->isAdmin() && $user->employee)
                     <h2>

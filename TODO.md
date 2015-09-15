@@ -8,7 +8,7 @@ el recurso es la combinacion de Rutas + Vistas + Controladores para brindar un R
 
 Completados:
 
-Status, **Index**, **User**
+Status, **Index**, **User** (HACER USUARIO DESHABILITADO)
 
 Faltantes:
 
