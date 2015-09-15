@@ -2,6 +2,7 @@
 
 use Auth;
 use Eloquent;
+use Jenssegers\Date\Date;
 use Log;
 use LogicException;
 
@@ -58,5 +59,32 @@ class AbstractBaseModel extends Eloquent
         static::updating(function ($model) use ($id) {
             $model->updated_by = $id;
         });
+    }
+
+    /**
+     * @param $value
+     * @return Date
+     */
+    public function getCreatedAtAttribute($value)
+    {
+        return $this->getDateInstance($value);
+    }
+
+    /**
+     * @param $value
+     * @return Date
+     */
+    public function getUpdatedAtAttribute($value)
+    {
+        return $this->getDateInstance($value);
+    }
+
+    /**
+     * @param $value
+     * @return Date
+     */
+    protected function getDateInstance($value)
+    {
+        return Date::make($value);
     }
 }
