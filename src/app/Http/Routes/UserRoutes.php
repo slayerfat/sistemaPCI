@@ -9,9 +9,10 @@ class UserRoutes extends PCIRoute
     protected $restfulOptions = [
         [
             'routerOptions' => [
-                'prefix' => 'usuarios',
+                'prefix'     => 'usuarios',
+                'middleware' => 'auth',
             ],
-            'rtDetails' => [
+            'rtDetails'     => [
                 'uses'     => 'User\UsersController',
                 'as'       => 'users',
                 'resource' => '{users}'

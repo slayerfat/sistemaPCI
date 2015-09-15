@@ -17,19 +17,33 @@
                     Perfil <small>{{$user->profile->desc}}</small>
                 </h2>
 
-                @if($user->employee)
+                @if(!$user->employee)
                     <h1>
                         --
                     </h1>
-                @endif
 
-                @if(Auth::user()->isAdmin() && $user->employee)
-                    <h2>
-                        --
-                    </h2>
-                    <h3>
-                        --
-                    </h3>
+                    @if(!Auth::user()->isAdmin())
+                        <h2>
+                            --
+                        </h2>
+                        <h3>
+                            --
+                        </h3>
+
+                        <h4>
+                            Usuario creado
+                            {{$user->created_at->diffForHumans()}}
+                            <small>{{$user->created_at}}</small>
+                        </h4>
+
+                        @unless(false)
+                            <h4>
+                                Usuario actualizado
+                                {{$user->updated_at->diffForHumans()}}
+                                <small>{{$user->updated_at}}</small>
+                            </h4>
+                        @endunless
+                    @endif
                 @endif
             </div>
 
