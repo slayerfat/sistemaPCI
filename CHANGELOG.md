@@ -1,4 +1,21 @@
-## v0.0.4
+## v0.0.6
+
+Features:
+
+- ...
+
+## v0.0.5 14-09-15
+
+Features:
+
+- **Caimaneitor: ENJANST!**
+- implementacion parcial de modulo de usuarios.
+
+Mejoras:
+
+- añadidas algunas pruebas del repositorio de usuarios y el modelo de usuarios.
+
+## v0.0.4 13-09-15
 
 Features:
 

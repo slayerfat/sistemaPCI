@@ -2,6 +2,12 @@
 
 En este documento se pretende mantener la bitacora de cambios significativos en la estructura de datos del sistema.
 
+## v0.0.6
+
+Personal/Empleado:
+
+- El campo direccion_id puede ser nulo.
+
 ## v0.0.4
 
 ### 14-09-15
