@@ -1,0 +1,38 @@
+.sidebar
+  display: none
+
+  @media (min-width: 768px)
+    border-right: 1px solid #eee
+    bottom: 0
+    display: block
+    left: 0
+    margin-top: 20px
+    overflow-x: hidden
+    overflow-y: auto //Scrollable contents if viewport is shorter than content.
+
+// Sidebar navigation
+.nav-sidebar
+  margin-bottom: 20px
+  margin-left: -20px
+  margin-right: -21px //20px padding + 1px border
+
+  li > a
+    padding-left: 20px
+    padding-right: 20px
+
+  .sidebar-header
+    $length: 18px
+
+    font-size: $length
+    padding-bottom: 32 - $length
+    padding-left: 20px
+    padding-right: 20px
+
+  .sidebar-danger > a
+    color: $brand-danger
+
+  .active > a,
+  .active > a:hover,
+  .active > a:focus
+    background-color: #428bca
+    color: #fff

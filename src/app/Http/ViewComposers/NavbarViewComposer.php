@@ -64,7 +64,7 @@ class NavbarViewComposer
                 [
                     [
                         'link'  => route('users.show', $this->user->name),
-                        'title' => 'Ver Perfil'
+                        'title' => trans('defaults.users.show')
                     ],
                     [
                         'link'  => route('auth.getLogout'),
