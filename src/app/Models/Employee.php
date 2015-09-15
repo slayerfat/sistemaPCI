@@ -113,4 +113,44 @@ class Employee extends AbstractBaseModel
     {
         return $this->belongsTo(Address::class);
     }
+
+    // -------------------------------------------------------------------------
+    // Publicos
+    // -------------------------------------------------------------------------
+
+    /**
+     * @param null $everything
+     * @return string
+     */
+    public function formattedNames($everything = null)
+    {
+        $firstName = ucfirst($this->attributes['first_name']);
+
+        $firstSurname = ucfirst($this->attributes['first_surname']);
+
+        if (is_null($everything)) {
+            return "{$firstSurname}, {$firstName}";
+        }
+
+        return $this->formattedNamesWithLast($firstSurname, $firstName);
+    }
+
+    /**
+     * @param $firstSurname
+     * @param $firstName
+     * @return string
+     */
+    private function formattedNamesWithLast($firstSurname, $firstName)
+    {
+        $lastName = isset($this->attributes['last_name']) ?
+            ucfirst($this->attributes['last_name']) : '';
+
+        $lastSurName = isset($this->attributes['last_surname']) ?
+            ucfirst($this->attributes['last_surname']) : '';
+
+        $surnames = trim("{$firstSurname} {$lastSurName}");
+        $names = trim("{$firstName} {$lastName}");
+
+        return "{$surnames}, {$names}";
+    }
 }

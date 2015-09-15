@@ -9,7 +9,7 @@ use PCI\Models\Employee;
 use PCI\Models\WorkDetail;
 use Tests\BaseTestCase;
 
-class EmployeeTest extends BaseTestCase
+class EmployeeRelationsTest extends BaseTestCase
 {
 
     public function testUser()
