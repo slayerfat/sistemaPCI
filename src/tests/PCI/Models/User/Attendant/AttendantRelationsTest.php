@@ -5,7 +5,7 @@ use PCI\Models\Note;
 use PCI\Models\User;
 use Tests\BaseTestCase;
 
-class AttendantTest extends BaseTestCase
+class AttendantRelationsTest extends BaseTestCase
 {
 
     public function testUser()

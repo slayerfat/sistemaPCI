@@ -5,7 +5,7 @@ use PCI\Models\Position;
 use PCI\Models\WorkDetail;
 use Tests\BaseTestCase;
 
-class PositionTest extends BaseTestCase
+class PositionRelationsTest extends BaseTestCase
 {
 
     public function testWorkDetails()

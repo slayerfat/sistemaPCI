@@ -5,7 +5,7 @@ use PCI\Models\Nationality;
 use PCI\Models\Employee;
 use Tests\BaseTestCase;
 
-class NationalityTest extends BaseTestCase
+class NationalityRelationsTest extends BaseTestCase
 {
     public function testUserDetails()
     {

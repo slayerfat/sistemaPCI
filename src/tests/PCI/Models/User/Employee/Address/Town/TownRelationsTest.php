@@ -6,7 +6,7 @@ use PCI\Models\State;
 use PCI\Models\Town;
 use Tests\BaseTestCase;
 
-class TownTest extends BaseTestCase
+class TownRelationsTest extends BaseTestCase
 {
 
     public function testState()

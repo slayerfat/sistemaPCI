@@ -5,7 +5,7 @@ use PCI\Models\Gender;
 use PCI\Models\Employee;
 use Tests\BaseTestCase;
 
-class GenderTest extends BaseTestCase
+class GenderRelationsTest extends BaseTestCase
 {
 
     public function testUserDetails()

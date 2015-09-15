@@ -6,7 +6,7 @@ use PCI\Models\Parish;
 use PCI\Models\Town;
 use Tests\BaseTestCase;
 
-class ParishTest extends BaseTestCase
+class ParishRelationsTest extends BaseTestCase
 {
 
     public function testAddresses()

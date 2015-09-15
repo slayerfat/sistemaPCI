@@ -5,7 +5,7 @@ use PCI\Models\Department;
 use PCI\Models\WorkDetail;
 use Tests\BaseTestCase;
 
-class DepartmentTest extends BaseTestCase
+class DepartmentRelationsTest extends BaseTestCase
 {
 
     public function testWorkDetails()
