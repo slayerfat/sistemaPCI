@@ -45,6 +45,30 @@ class Address extends AbstractBaseModel
     ];
 
     // -------------------------------------------------------------------------
+    // Accesors
+    // -------------------------------------------------------------------------
+
+    /**
+     * @return string
+     */
+    public function getFormattedDetailsAttribute()
+    {
+        $details = [];
+
+        $details[] = $this->formattedBuilding();
+
+        $details[] = $this->formattedStreet();
+
+        $details[] = $this->formattedAv();
+
+
+
+        return $details;
+    }
+
+
+
+    // -------------------------------------------------------------------------
     // Relaciones
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
@@ -69,5 +93,41 @@ class Address extends AbstractBaseModel
     public function employee()
     {
         return $this->hasMany(Employee::class);
+    }
+
+    /**
+     * @return string|null
+     */
+    public function formattedBuilding()
+    {
+        if (!isset($this->attributes['building'])) {
+            return null;
+        }
+
+        return 'Edf./Qta./Blq. '. $this->attributes['building'];
+    }
+
+    /**
+     * @return string|null
+     */
+    public function formattedStreet()
+    {
+        if (!isset($this->attributes['street'])) {
+            return null;
+        }
+
+        return 'Calle(s) '. $this->attributes['street'];
+    }
+
+    /**
+     * @return string|null
+     */
+    public function formattedAv()
+    {
+        if (!isset($this->attributes['building'])) {
+            return null;
+        }
+
+        return 'Av. '. $this->attributes['building'];
     }
 }

@@ -20,6 +20,9 @@
         Telefonos: <br/>
 
         {{$phoneParser->parseNumber($user->employee->phone)}}
+
+        <br/>
+
         {{$phoneParser->parseNumber($user->employee->cellphone)}}
     </h3>
 
@@ -32,7 +35,7 @@
 
             <br/>
 
-            {{$user->address->formattedParish}}
+            Parroquia {{$user->address->parish->desc}}
         </h3>
 
         @if(Auth::user()->isAdmin())
