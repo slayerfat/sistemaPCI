@@ -1,64 +1,50 @@
 <?php namespace Tests\PCI\Models\User;
 
-use Mockery;
-use PCI\Models\Attendant;
-use PCI\Models\Note;
-use PCI\Models\Petition;
-use PCI\Models\Profile;
 use PCI\Models\User;
-use PCI\Models\Employee;
 use Tests\BaseTestCase;
 
 class UserTest extends BaseTestCase
 {
 
-    public function testDetails()
+    /**
+     * @var User
+     */
+    private $user;
+
+    public function setUp()
     {
-        $this->mockBasicModelRelation(
-            User::class,
-            'employee',
-            'hasOne',
-            Employee::class
-        );
+        parent::setUp();
+
+        $this->user = factory(User::class)->make();
+        $this->user->profile_id = User::ADMIN_ID;
+        $this->user->confirmation_code = null;
     }
 
-    public function testProfile()
+    public function testIsDisabledShouldNotInterfereWithIsVerifed()
     {
-        $this->mockBasicModelRelation(
-            User::class,
-            'profile',
-            'belongsTo',
-            Profile::class
-        );
+        $this->assertFalse($this->user->isDisabled());
+        $this->assertTrue($this->user->isActive());
+        $this->assertTrue($this->user->isVerified());
+        $this->assertFalse($this->user->isUnverified());
     }
 
-    public function testAttendant()
+    public function testProfileShouldNotInterfereWithConfirmationStatus()
     {
-        $this->mockBasicModelRelation(
-            User::class,
-            'attendant',
-            'hasOne',
-            Attendant::class
-        );
+        $this->user->profile_id = User::DISABLED_ID;
+
+        $this->assertTrue($this->user->isDisabled());
+        $this->assertFalse($this->user->isActive());
+        $this->assertTrue($this->user->isVerified());
+        $this->assertFalse($this->user->isUnverified());
     }
 
-    public function testNotes()
+    public function testConfirmationShouldNotInterfereWithProfile()
     {
-        $this->mockBasicModelRelation(
-            User::class,
-            'notes',
-            'hasMany',
-            Note::class
-        );
-    }
+        $this->user->confirmation_code = 'null';
 
-    public function testPetitions()
-    {
-        $this->mockBasicModelRelation(
-            User::class,
-            'petitions',
-            'hasMany',
-            Petition::class
-        );
+        $this->assertFalse($this->user->isVerified());
+        $this->assertTrue($this->user->isUnverified());
+        $this->assertFalse($this->user->isDisabled());
+        $this->assertTrue($this->user->isActive());
     }
 }

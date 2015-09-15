@@ -34,6 +34,8 @@
                             Usuario creado
                             {{$user->created_at->diffForHumans()}}
                             <small>{{$user->created_at}}</small>
+                            <br/>
+                            Por {{$user->createdBy()}}
                         </h4>
 
                         @unless(false)
@@ -41,6 +43,8 @@
                                 Usuario actualizado
                                 {{$user->updated_at->diffForHumans()}}
                                 <small>{{$user->updated_at}}</small>
+                                <br/>
+                                Por {{$user->updatedBy()}}
                             </h4>
                         @endunless
                     @endif
