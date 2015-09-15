@@ -87,4 +87,37 @@ class AbstractBaseModel extends Eloquent
     {
         return Date::make($value);
     }
+
+    /**
+     * @return User
+     */
+    public function createdBy()
+    {
+        return $this->findModelManipulator('created_by');
+    }
+
+    /**
+     * @return User
+     */
+    public function updatedBy()
+    {
+        return $this->findModelManipulator('updated_by');
+    }
+
+    /**
+     * @param string $key
+     * @return User
+     */
+    protected function findModelManipulator($key)
+    {
+        if (isset($this->attributes[$key])) {
+            $user = User::find($this->attributes[$key]);
+
+            if ($user) {
+                return $user;
+            }
+        }
+
+        return User::newInstance();
+    }
 }
