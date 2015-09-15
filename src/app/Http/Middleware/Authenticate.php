@@ -4,6 +4,7 @@ namespace PCI\Http\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
+use PCI\Models\User;
 
 class Authenticate
 {
@@ -15,12 +16,20 @@ class Authenticate
     protected $auth;
 
     /**
+     * @var User|null
+     */
+    protected $user;
+
+
+    /**
      * Create a new filter instance.
      * @param  Guard $auth
      */
     public function __construct(Guard $auth)
     {
         $this->auth = $auth;
+
+        $this->user = $auth->user();
     }
 
     /**
@@ -40,8 +49,8 @@ class Authenticate
             return redirect()->guest('sesion/iniciar');
         }
 
-        if ($this->auth->user()->isDisabled()) {
-            return redirect()->route('index.disabled');
+        if ($this->user->isUnverified()) {
+            return redirect()->route('index.unverified');
         }
 
         return $next($request);

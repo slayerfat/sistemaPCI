@@ -4,8 +4,9 @@ namespace PCI\Http\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
+use PCI\Models\User;
 
-class RedirectIfNotDisabled
+class RedirectIfNotVerified
 {
 
     /**
@@ -16,6 +17,11 @@ class RedirectIfNotDisabled
     protected $auth;
 
     /**
+     * @var User|null
+     */
+    protected $user;
+
+    /**
      * Create a new filter instance.
      *
      * @param  Guard  $auth
@@ -23,6 +29,8 @@ class RedirectIfNotDisabled
     public function __construct(Guard $auth)
     {
         $this->auth = $auth;
+
+        $this->user = $auth->user();
     }
 
     /**
@@ -34,8 +42,10 @@ class RedirectIfNotDisabled
      */
     public function handle($request, Closure $next)
     {
-        if (!$this->auth->user()->isDisabled()) {
-            return redirect()->route('index');
+        if ($this->user) {
+            if ($this->user->isVerified()) {
+                return redirect()->route('index');
+            }
         }
 
         return $next($request);

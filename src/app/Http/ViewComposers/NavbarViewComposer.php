@@ -63,7 +63,7 @@ class NavbarViewComposer
                 "Hola " . $this->user->name,
                 [
                     [
-                        'link'  => '#', //todo: route('users.show', $this->user->name)
+                        'link'  => route('users.show', $this->user->name),
                         'title' => 'Ver Perfil'
                     ],
                     [
@@ -115,11 +115,11 @@ class NavbarViewComposer
                 'Mant.',
                 [
                     [
-                        'link'  => '#',
+                        'link'  => route('users.create'),
                         'title' => 'Crear Usuario'
                     ],
                     [
-                        'link'  => '#',
+                        'link'  => route('users.show'),
                         'title' => 'Consultar Usuarios'
                     ],
                     Navigation::NAVIGATION_DIVIDER,

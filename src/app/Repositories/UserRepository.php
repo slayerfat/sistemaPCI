@@ -1,10 +1,16 @@
 <?php namespace PCI\Repositories;
 
+use Illuminate\Database\Eloquent\Collection;
 use PCI\Models\User;
 use PCI\Repositories\Interfaces\UserRepositoryInterface;
 
 class UserRepository extends AbstractRepository implements UserRepositoryInterface
 {
+
+    /**
+     * @var User
+     */
+    protected $model;
 
     /**
      * @param  string|int $id
@@ -21,7 +27,7 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
      * @param array $data
      * @return User
      */
-    public function getNewInstance(array $data)
+    public function getNewInstance(array $data = [])
     {
         return $this->newInstance($data);
     }
@@ -52,10 +58,19 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
             return false;
         }
 
-        $user->status            = true;
         $user->confirmation_code = null;
         $user->save();
 
         return true;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getAll()
+    {
+        $users = $this->model->all();
+
+        return $users;
     }
 }

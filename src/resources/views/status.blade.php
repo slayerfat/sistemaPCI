@@ -37,6 +37,20 @@
             .caimanize {
                 font-size: 48px;
                 margin-top: 32px;
+                padding: 0 10%;
+            }
+
+            .caimanibiri {
+                font-size: 32px;
+                padding-top: 32px;
+            }
+
+            .left {
+                text-align: left;
+            }
+
+            .right {
+                text-align: right;
             }
         </style>
     </head>
@@ -51,8 +65,13 @@
                     <p>
                         {!! Caimaneitor::caimanais() !!}
                     </p>
-                    <p>
-                        {!! Date::now()->format('l j F Y H:i:s') !!}
+
+                    <p class="caimanibiri left">
+                        {!! Caimaneitor::locaishon() !!}
+                    </p>
+
+                    <p class="caimanibiri right">
+                        Hace {!! $date !!}.
                     </p>
                 </div>
             </div>

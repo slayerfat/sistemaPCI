@@ -4,6 +4,12 @@ En este documento se pretende mantener la bitacora de cambios significativos en 
 
 ## v0.0.4
 
+### 14-09-15
+
+Usuario:
+
+- el campo status fue removido.
+
 ### 13-09-15
 
 Usuario:

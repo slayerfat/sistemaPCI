@@ -35,10 +35,17 @@ class AbstractBaseModel extends Eloquent
          * una exception o continuar porque estamos en el medio
          * de una migracion en el sistema.
          */
-        if (is_null($id) && !app()->environment() == 'local') {
-            throw new LogicException('Se necesita el ID del usuario actual para manipular este modelo.');
-        } elseif (is_null($id) && app()->environment() == 'local') {
-            Log::critical(__CLASS__.' no pudo encontrar en '.__METHOD__.' ID para la manipulacion.');
+        $env = app()->environment();
+
+        if (is_null($id) && !$env == 'local') {
+            throw new LogicException(
+                'Se necesita el ID del usuario actual para manipular este modelo.'
+            );
+        } elseif (is_null($id) && ($env == 'local' || $env == 'testing')) {
+            Log::critical(
+                __CLASS__.' no pudo encontrar en '
+                .__METHOD__.' ID para la manipulacion.'
+            );
 
             $id = 1;
         }

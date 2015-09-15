@@ -1,4 +1,4 @@
-<?php namespace Tests\PCI\Models;
+<?php namespace Tests\PCI\Models\User;
 
 use Mockery;
 use PCI\Models\Attendant;

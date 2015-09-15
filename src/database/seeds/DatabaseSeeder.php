@@ -1,15 +1,9 @@
 <?php namespace PCI\Database;
 
-use Illuminate\Database\Seeder;
-use PCI\Database\ItemSeeder;
-use PCI\Database\ParishSeeder;
-use PCI\Database\StateSeeder;
-use PCI\Database\AuxEntitiesSeeder;
-use Illuminate\Database\Eloquent\Model;
-use PCI\Database\TownSeeder;
-use PCI\Database\UserRelatedSeeder;
+use DB;
+use Config;
 
-class DatabaseSeeder extends Seeder
+class DatabaseSeeder extends AbstractTableSeeder
 {
     /**
      * Run the database seeds.
@@ -20,7 +14,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->command->info("*** Empezando Migracion! ***");
 
-        Model::unguard();
+        $this->toggleModelGuard();
 
         $this->truncateDb();
 
@@ -31,7 +25,7 @@ class DatabaseSeeder extends Seeder
         $this->call(UserRelatedSeeder::class);
         $this->call(ItemSeeder::class);
 
-        Model::reguard();
+        $this->toggleModelGuard();
 
         $this->command->info("*** Migracion terminada! ***");
     }
@@ -45,12 +39,12 @@ class DatabaseSeeder extends Seeder
         $this->command->info("--- truncating! ---");
 
         // Truncate all tables, except migrations
-        $tables = \DB::select('SHOW TABLES');
+        $tables = DB::select('SHOW TABLES');
 
-        $tablesInDb = "Tables_in_" . \Config::get('database.connections.mysql.database');
+        $tablesInDb = "Tables_in_" . Config::get('database.connections.mysql.database');
 
         // desactiva impedimento de foreign keys
-        \DB::statement('SET FOREIGN_KEY_CHECKS = 0;');
+        DB::statement('SET FOREIGN_KEY_CHECKS = 0;');
 
         foreach ($tables as $table) {
             switch ($table->$tablesInDb) {
@@ -59,13 +53,13 @@ class DatabaseSeeder extends Seeder
                 case 'users':
                     break;
                 default:
-                    \DB::table($table->Tables_in_sistemaPCI)->truncate();
+                    DB::table($table->Tables_in_sistemaPCI)->truncate();
                     break;
             }
         }
 
         // reactiva impedimento (no se si sea necesario)
-        \DB::statement('SET FOREIGN_KEY_CHECKS = 1;');
+        DB::statement('SET FOREIGN_KEY_CHECKS = 1;');
         $this->command->info("--- truncate completado ---");
     }
 }

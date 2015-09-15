@@ -67,6 +67,6 @@ class UserConfirmationController extends Controller
             .', por favor revise su correo electronico.'
         );
 
-        return Redirect::route('index.disabled');
+        return Redirect::route('index.unverified');
     }
 }
