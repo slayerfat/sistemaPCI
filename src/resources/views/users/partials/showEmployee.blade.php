@@ -19,8 +19,8 @@
     <h3>
         Telefonos: <br/>
 
-        {{--{{$user->employee->formattedPhone()}}--}}
-        {{--{{$user->employee->formattedCellPhone()}}--}}
+        {{$phoneParser->parseNumber($user->employee->phone)}}
+        {{$phoneParser->parseNumber($user->employee->cellphone)}}
     </h3>
 
     @if(Auth::user()->isOwnerOrAdmin($user->id))

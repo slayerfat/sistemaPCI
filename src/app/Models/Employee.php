@@ -115,7 +115,7 @@ class Employee extends AbstractBaseModel
     }
 
     // -------------------------------------------------------------------------
-    // Publicos
+    // Metodos Publicos
     // -------------------------------------------------------------------------
 
     /**
@@ -134,6 +134,10 @@ class Employee extends AbstractBaseModel
 
         return $this->formattedNamesWithLast($firstSurname, $firstName);
     }
+
+    // -------------------------------------------------------------------------
+    // Metodos Privados
+    // -------------------------------------------------------------------------
 
     /**
      * @param $firstSurname
