@@ -2,7 +2,13 @@
 
 Features:
 
-- ...
+- creado PhoneParser: manipula telefonos segun formato venezolano.
+- **Caimaneitor** posee sus propios **JIUNITESTS**.
+
+Mejoras:
+
+- restructurada carpeta de tests.
+- creadas pruebas adicionales.
 
 ## v0.0.5 14-09-15
 
