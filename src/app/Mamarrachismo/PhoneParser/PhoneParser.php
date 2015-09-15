@@ -24,7 +24,7 @@ class PhoneParser implements PhoneParserInterface
     /**
      * Chequea y devuelve el telefono acomodado.
      * ej: 02123334422 -> (212)-333-4422
-     * @param int $number
+     * @param string $number
      * @return string
      */
     public function parseNumber($number)
@@ -45,13 +45,13 @@ class PhoneParser implements PhoneParserInterface
     /**
      * Chequea y devuelve el telefono acomodado.
      * ej: algo1232224455xzx -> 1232224455
-     * @param int $number
-     * @return int
+     * @param int|string $number
+     * @return string
      */
     public function parseString($number)
     {
         if (is_null($number)) {
-            return 0;
+            return '';
         }
 
         $matches = $this->execute($this->rawPhoneRegex, $number);
@@ -60,19 +60,19 @@ class PhoneParser implements PhoneParserInterface
             return $matches['numbers'];
         }
 
-        return 0;
+        return '';
     }
 
     /**
      * @param $regex
-     * @param $number
+     * @param $data
      * @return array
      */
-    private function execute($regex, $number)
+    private function execute($regex, $data)
     {
         $matches = [];
 
-        preg_match($regex, $number, $matches);
+        preg_match($regex, (string) $data, $matches);
 
         return $matches;
     }

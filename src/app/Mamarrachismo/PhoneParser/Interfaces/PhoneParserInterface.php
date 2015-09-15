@@ -6,7 +6,7 @@ interface PhoneParserInterface
     /**
      * Chequea y devuelve el telefono acomodado.
      * ej: 02123334422 -> (212)-333-4422
-     * @param int $number
+     * @param int|string $number
      * @return string
      */
     public function parseNumber($number);
@@ -14,8 +14,8 @@ interface PhoneParserInterface
     /**
      * Chequea y devuelve el telefono acomodado.
      * ej: algo1232224455xzx -> 1232224455
-     * @param int $number
-     * @return int
+     * @param string $number
+     * @return string
      */
     public function parseString($number);
 }
