@@ -4,6 +4,8 @@ En este documento se pretende mantener la bitacora de cambios significativos en 
 
 ## v0.0.6
 
+### 15-09-15
+
 Personal/Empleado:
 
 - El campo direccion_id puede ser nulo.
