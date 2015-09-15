@@ -61,12 +61,35 @@ class Address extends AbstractBaseModel
 
         $details[] = $this->formattedAv();
 
+        $results = implode(', ', $details);
 
+        if (strlen($results) < 5) {
+            return '';
+        }
 
-        return $details;
+        return $results;
     }
 
+    public function getBuildingAttribute($value)
+    {
+        $value = $this->removeDotInString($value);
 
+        return $this->ucAndCleanString($value);
+    }
+
+    public function getStreetAttribute($value)
+    {
+        $value = $this->removeDotInString($value);
+
+        return $this->ucAndCleanString($value);
+    }
+
+    public function getAvAttribute($value)
+    {
+        $value = $this->removeDotInString($value);
+
+        return $this->ucAndCleanString($value);
+    }
 
     // -------------------------------------------------------------------------
     // Relaciones
@@ -104,7 +127,7 @@ class Address extends AbstractBaseModel
             return null;
         }
 
-        return 'Edf./Qta./Blq. '. $this->attributes['building'];
+        return 'Edf./Qta./Blq. '. $this->building;
     }
 
     /**
@@ -116,7 +139,7 @@ class Address extends AbstractBaseModel
             return null;
         }
 
-        return 'Calle(s) '. $this->attributes['street'];
+        return 'Calle(s) '. $this->street;
     }
 
     /**
@@ -124,10 +147,32 @@ class Address extends AbstractBaseModel
      */
     public function formattedAv()
     {
-        if (!isset($this->attributes['building'])) {
+        if (!isset($this->attributes['av'])) {
             return null;
         }
 
-        return 'Av. '. $this->attributes['building'];
+        return 'Av. '. $this->av;
+    }
+
+    /**
+     * @param $value
+     * @return mixed
+     */
+    private function removeDotInString($value)
+    {
+        if ($value[strlen($value) - 1] == '.') {
+            $value[strlen($value) - 1] = null;
+        }
+
+        return $value;
+    }
+
+    /**
+     * @param $value
+     * @return string
+     */
+    private function ucAndCleanString($value)
+    {
+        return ucfirst(trim($value));
     }
 }
