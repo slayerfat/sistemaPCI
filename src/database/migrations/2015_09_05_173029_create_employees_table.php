@@ -19,7 +19,7 @@ class CreateEmployeesTable extends Migration
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade');
-            $table->unsignedInteger('address_id');
+            $table->unsignedInteger('address_id')->nullable();
             $table->foreign('address_id')
                 ->references('id')
                 ->on('addresses');

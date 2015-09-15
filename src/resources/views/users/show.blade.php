@@ -17,38 +17,7 @@
                     Perfil <small>{{$user->profile->desc}}</small>
                 </h2>
 
-                @if(!$user->employee)
-                    <h1>
-                        --
-                    </h1>
-
-                    @if(!Auth::user()->isAdmin())
-                        <h2>
-                            --
-                        </h2>
-                        <h3>
-                            --
-                        </h3>
-
-                        <h4>
-                            Usuario creado
-                            {{$user->created_at->diffForHumans()}}
-                            <small>{{$user->created_at}}</small>
-                            <br/>
-                            Por {{$user->createdBy()}}
-                        </h4>
-
-                        @unless(false)
-                            <h4>
-                                Usuario actualizado
-                                {{$user->updated_at->diffForHumans()}}
-                                <small>{{$user->updated_at}}</small>
-                                <br/>
-                                Por {{$user->updatedBy()}}
-                            </h4>
-                        @endunless
-                    @endif
-                @endif
+                @include('users.partials.showEmployee')
             </div>
 
             {{-- pedidos --}}
