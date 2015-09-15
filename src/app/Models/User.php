@@ -83,6 +83,18 @@ class User extends AbstractBaseModel implements
     protected $hidden = ['password', 'remember_token', 'confirmation_code'];
 
     // -------------------------------------------------------------------------
+    // Accessor
+    // -------------------------------------------------------------------------
+
+    /**
+     * @return \PCI\Models\Address
+     */
+    public function getAddressAttribute()
+    {
+        return $this->employee->address;
+    }
+
+    // -------------------------------------------------------------------------
     // Relaciones
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------

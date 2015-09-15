@@ -1,28 +1,52 @@
-@if(!$user->employee)
-    <h1>
-        --
-    </h1>
+@if($user->employee)
+<section class="employee.show">
+    <h2>
+        {{$user->employee->formattedNames(true)}}
+    </h2>
 
-    @if(!Auth::user()->isAdmin())
+    <h2>
+        @if(Auth::user()->isOwnerOrAdmin($user->id))
+            <small>{{$user->employee->nationality->desc}}</small>
+
+            <small>C.I. {{$user->employee->ci}}</small>
+
+            <br/>
+        @endif
+
+        <small>Genero {{$user->employee->gender->desc}}</small>
+    </h2>
+
+    <h3>
+        Telefonos: <br/>
+
+        {{--{{$user->employee->formattedPhone()}}--}}
+        {{--{{$user->employee->formattedCellPhone()}}--}}
+    </h3>
+
+    @if(Auth::user()->isOwnerOrAdmin($user->id))
         <h2>
-            --
+            Direccion
         </h2>
         <h3>
-            --
+            {{$user->address->formattedDetails}}
+
+            <br/>
+
+            {{$user->address->formattedParish}}
         </h3>
 
-        <h4>
-            Usuario creado
-            {{$user->created_at->diffForHumans()}}
-            <small>
-                {{$user->created_at}} por
-                <a href="{{route('users.show', $user->createdBy()->name)}}">
-                    {{$user->createdBy()->name}}
-                </a>
-            </small>
-        </h4>
+        @if(Auth::user()->isAdmin())
+            <h4>
+                Usuario creado
+                {{$user->created_at->diffForHumans()}}
+                <small>
+                    {{$user->created_at}} por
+                    <a href="{{route('users.show', $user->createdBy()->name)}}">
+                        {{$user->createdBy()->name}}
+                    </a>
+                </small>
+            </h4>
 
-        @unless(false)
             <h4>
                 Usuario actualizado
                 {{$user->created_at->diffForHumans()}}
@@ -33,6 +57,7 @@
                     </a>
                 </small>
             </h4>
-        @endunless
+        @endif
     @endif
+</section>
 @endif
