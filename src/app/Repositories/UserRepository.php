@@ -78,14 +78,17 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
     }
 
     /**
+     * Genera un objeto LengthAwarePaginator con todos los
+     * usuarios en el sistema y con eager loading.
      * @param int $quantity
      * @return LengthAwarePaginator
      */
     public function getAllForTableWithPaginator($quantity = 25)
     {
-        $results = $this->getAll();
+        $users = $this->getAll();
+        $users->load('profile', 'employee');
 
-        return $this->generatePaginator($results, $quantity);
+        return $this->generatePaginator($users, $quantity);
     }
 
     /**
@@ -130,6 +133,8 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
     }
 
     /**
+     * Genera un objeto LengthAwarePaginator con una coleccion paginada.
+     * @link http://stackoverflow.com/a/29527744
      * @param Collection $results
      * @param int        $quantity
      * @return LengthAwarePaginator
@@ -149,6 +154,8 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
     }
 
     /**
+     * Itera la coleccion y genera la informacion final
+     * que se vera en la tabla de index.
      * @param Collection $results
      * @return \Illuminate\Support\Collection
      */
