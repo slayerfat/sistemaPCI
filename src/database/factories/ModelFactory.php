@@ -56,8 +56,8 @@ $factory->define(PCI\Models\Employee::class, function () use ($faker) {
         'last_name'      => $faker->firstName,
         'first_surname'  => $faker->lastName,
         'last_surname'   => $faker->lastName,
-        'phone'          => $faker->phoneNumber,
-        'cellphone'      => $faker->phoneNumber,
+        'phone'          => '0'.rand(400, 499).rand(100, 999).rand(1000, 9999),
+        'cellphone'      => '0'.rand(400, 499).rand(100, 999).rand(1000, 9999),
     ];
 });
 
