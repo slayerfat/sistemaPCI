@@ -41,7 +41,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $users = $this->userRepo->getAll();
+        $users = $this->userRepo->getAllForTableWithPaginator();
 
         return $this->view->make('users.index', compact('users'));
     }
