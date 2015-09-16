@@ -119,7 +119,7 @@ class NavbarViewComposer
                         'title' => 'Crear Usuario'
                     ],
                     [
-                        'link'  => route('users.show'),
+                        'link'  => route('users.index'),
                         'title' => 'Consultar Usuarios'
                     ],
                     Navigation::NAVIGATION_DIVIDER,
