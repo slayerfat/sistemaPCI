@@ -164,26 +164,41 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
         $array = collect();
 
         $results->each(function ($user) use (&$array) {
-            $names = $user->employee ? $user->employee->formattedNames() : '-';
-            $id    = $user->employee ? $user->employee->ci : '-';
-            $phone = '-';
+            $data = $this->makePaginatorData($user);
 
-            if ($user->employee) {
-                $parser = new PhoneParser;
-
-                $phone = $parser->parseNumber($user->employee->phone);
-            }
-
-            $array->push([
-                'Seudonimo' => $user->name,
-                'Email'     => $user->email,
-                'Perfil'    => $user->profile->desc,
-                'Nombres'   => $names,
-                'C.I.'      => $id,
-                'Telefono'  => $phone,
-            ]);
+            $array->push($data);
         });
 
         return $array;
+    }
+
+    /**
+     * genera la data necesaria que utilizara el paginator.
+     *
+     * @param User $user
+     * @return array
+     */
+    protected function makePaginatorData(User $user)
+    {
+        $names = $user->employee ? $user->employee->formattedNames() : '-';
+        $id    = $user->employee ? $user->employee->ci : '-';
+        $phone = '-';
+
+        if ($user->employee) {
+            $parser = new PhoneParser;
+
+            $phone = $parser->parseNumber($user->employee->phone);
+        }
+
+        $data = [
+            'Seudonimo' => $user->name,
+            'Email'     => $user->email,
+            'Perfil'    => $user->profile->desc,
+            'Nombres'   => $names,
+            'C.I.'      => $id,
+            'Telefono'  => $phone,
+        ];
+
+        return $data;
     }
 }
