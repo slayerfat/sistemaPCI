@@ -2,9 +2,11 @@
     <div class="container">
         {!!
 
-        Table::withContents($data)->striped()
+        Table::withContents($data->getCollection()->toArray())->striped()
 
         !!}
+
+        {!! $data->render() !!}
     </div>
 @else
     <div class="container">

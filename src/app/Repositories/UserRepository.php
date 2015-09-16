@@ -1,6 +1,8 @@
 <?php namespace PCI\Repositories;
 
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
+use PCI\Mamarrachismo\PhoneParser\PhoneParser;
 use PCI\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 use PCI\Repositories\Interfaces\UserRepositoryInterface;
@@ -76,26 +78,28 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
     }
 
     /**
+     * @param int $quantity
      * @return LengthAwarePaginator
      */
-    public function getAllForTableWithPaginator()
+    public function getAllForTableWithPaginator($quantity = 25)
     {
         $results = $this->getAll();
 
-        $array = [];
+        $page = \Input::get('page', 1);
 
-        $results->each(function ($user) use (&$array) {
-            $names   = $user->employee ? $user->employee->formattedNames() : '-';
+        return $this->generatePaginator($results, $page, $quantity);
+//        return $this->model->paginate($quantity);
 
-            $array[] = [
-                'Nombre'  => $user->name,
-                'Email'   => $user->email,
-                'Perfil'  => $user->profile->desc,
-                'Nombres' => $names,
-            ];
-        });
-
-        return $array;
+//        $results = $this->getAll();
+//
+//        $page = \Input::get('page', 1);
+//
+//        return new LengthAwarePaginator(
+//            $results->forPage($page, $quantity),
+//            $results->count(),
+//            $quantity,
+//            $page
+//        );
     }
 
     /**
@@ -137,5 +141,47 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
         $user->save();
 
         return $user;
+    }
+
+    /**
+     * @param Collection $results
+     * @param int        $quantity
+     * @return LengthAwarePaginator
+     */
+    protected function generatePaginator(Collection $results, $page, $quantity)
+    {
+        $array = collect();
+
+        $results->each(function ($user) use (&$array) {
+            $names = $user->employee ? $user->employee->formattedNames() : '-';
+            $id    = $user->employee ? $user->employee->ci : '-';
+            $phone = '-';
+
+            if ($user->employee) {
+                $parser = new PhoneParser;
+
+                $phone = $parser->parseNumber($user->employee->phone);
+            }
+
+            $array->push([
+                'Seudonimo' => $user->name,
+                'Email'     => $user->email,
+                'Perfil'    => $user->profile->desc,
+                'Nombres'   => $names,
+                'C.I.'      => $id,
+                'Telefono'  => $phone,
+            ]);
+        });
+
+        return new LengthAwarePaginator(
+            $array->forPage($page, $quantity),
+            $array->count(),
+            $quantity,
+            $page
+        );
+
+//        $paginator = new LengthAwarePaginator($array, $array->count(), $quantity, $page);
+//
+//        return $paginator;
     }
 }

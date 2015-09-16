@@ -43,9 +43,10 @@ interface UserRepositoryInterface
     public function getAll();
 
     /**
+     * @param int $quantity
      * @return LengthAwarePaginator
      */
-    public function getAllForTableWithPaginator();
+    public function getAllForTableWithPaginator($quantity = 25);
 
     /**
      * @param array $data
