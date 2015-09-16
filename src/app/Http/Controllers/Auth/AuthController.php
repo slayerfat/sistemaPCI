@@ -94,7 +94,7 @@ class AuthController extends Controller
         Event::fire(new NewUserRegistration($user));
 
         Flash::info(
-            'Usuario creado exitosamene, un correo de confirmación '
+            'Usuario creado exitosamente, un correo de confirmación '
             .'ha sido enviado a '
             .$user->email
         );
