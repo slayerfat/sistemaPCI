@@ -2,12 +2,23 @@
 
 namespace PCI\Http\Controllers;
 
-use Illuminate\Foundation\Bus\DispatchesJobs;
+use Flash;
+use Redirect;
 use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Foundation\Validation\ValidatesRequests;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 abstract class Controller extends BaseController
 {
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    /**
+     * @param null $message
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    protected function redirectBack($message = null)
+    {
+        $message = $message ? $message : trans('defaults.auth.error');
+
+        Flash::error($message);
+
+        return Redirect::back();
+    }
 }

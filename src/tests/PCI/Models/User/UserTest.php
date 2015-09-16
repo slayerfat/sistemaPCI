@@ -47,4 +47,20 @@ class UserTest extends BaseTestCase
         $this->assertFalse($this->user->isDisabled());
         $this->assertTrue($this->user->isActive());
     }
+
+    public function testIsOwnerOrAdminShouldReturnTrueIfAdmin()
+    {
+        $this->user->id = 9000;
+
+        $this->assertTrue($this->user->isOwnerOrAdmin(55));
+    }
+
+    public function testIsOwnerOrAdminShouldReturnFalseIfNotAdminOrIdsDontMatch()
+    {
+        $this->user->profile_id = User::USER_ID;
+        $this->user->id = 9000;
+
+        $this->assertFalse($this->user->isOwnerOrAdmin(9001));
+        $this->asserttrue($this->user->isOwnerOrAdmin(9000));
+    }
 }

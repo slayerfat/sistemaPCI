@@ -47,14 +47,14 @@ class UsersController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
+     * @param \PCI\Models\Profile $profile
      * @return \Illuminate\Contracts\View\View
      */
-    public function create()
+    public function create(Profile $profile)
     {
         $user = $this->userRepo->getNewInstance();
 
-        $profiles = Profile::lists('desc', 'id');
+        $profiles = $profile->lists('desc', 'id');
 
         return $this->view->make('users.create', compact('user', 'profiles'));
     }
@@ -94,6 +94,10 @@ class UsersController extends Controller
     {
         $user = $this->userRepo->find($id);
 
+        if ($user->cannot('update', $user)) {
+            return $this->redirectBack();
+        }
+
         $profiles = Profile::lists('desc', 'id');
 
         return View::make('users.edit', compact('user', 'profiles'));
@@ -101,12 +105,11 @@ class UsersController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  Request  $request
-     * @param  int  $id
+     * @param UserRequest $request
+     * @param             $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(UserRequest $request, $id)
     {
         $user = $this->userRepo->find($id);
 
