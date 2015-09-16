@@ -1,13 +1,11 @@
 <?php namespace PCI\Http\Controllers\User;
 
-use View;
 use Redirect;
 use PCI\Http\Requests;
 use PCI\Models\Profile;
-use Illuminate\Http\Request;
-use Illuminate\View\Factory;
 use PCI\Http\Requests\UserRequest;
 use PCI\Http\Controllers\Controller;
+use Illuminate\View\Factory as View;
 use PCI\Repositories\Interfaces\UserRepositoryInterface;
 
 class UsersController extends Controller
@@ -19,15 +17,15 @@ class UsersController extends Controller
     private $userRepo;
 
     /**
-     * @var \Illuminate\View\Factory
+     * @var View
      */
     private $view;
 
     /**
      * @param UserRepositoryInterface $userRepo
-     * @param \Illuminate\View\Factory $view
+     * @param View                    $view
      */
-    public function __construct(UserRepositoryInterface $userRepo, Factory $view)
+    public function __construct(UserRepositoryInterface $userRepo, View $view)
     {
         $this->userRepo = $userRepo;
         $this->view     = $view;
@@ -42,7 +40,7 @@ class UsersController extends Controller
     {
         $users = $this->userRepo->getAll();
 
-        return View::make('users.index', compact('users'));
+        return $this->view->make('users.index', compact('users'));
     }
 
     /**
@@ -81,7 +79,7 @@ class UsersController extends Controller
     {
         $user = $this->userRepo->find($id);
 
-        return View::make('users.show', compact('user'));
+        return $this->view->make('users.show', compact('user'));
     }
 
     /**
@@ -100,7 +98,7 @@ class UsersController extends Controller
 
         $profiles = Profile::lists('desc', 'id');
 
-        return View::make('users.edit', compact('user', 'profiles'));
+        return $this->view->make('users.edit', compact('user', 'profiles'));
     }
 
     /**
