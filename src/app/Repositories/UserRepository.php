@@ -180,25 +180,32 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
      */
     protected function makePaginatorData(User $user)
     {
-        $names = $user->employee ? $user->employee->formattedNames() : '-';
-        $id    = $user->employee ? $user->employee->ci : '-';
-        $phone = '-';
+        $partial = [
+            'Seudonimo' => $user->name,
+            'Email'     => $user->email,
+            'Perfil'    => $user->profile->desc
+        ];
 
         if ($user->employee) {
             $parser = new PhoneParser;
 
             $phone = $parser->parseNumber($user->employee->phone);
+
+            $employee = [
+                'Nombres'   => $user->employee->formattedNames(),
+                'C.I.'      => $user->employee->ci,
+                'Telefono'  => $phone
+            ];
+
+            return array_merge($partial, $employee);
         }
 
-        $data = [
-            'Seudonimo' => $user->name,
-            'Email'     => $user->email,
-            'Perfil'    => $user->profile->desc,
-            'Nombres'   => $names,
-            'C.I.'      => $id,
-            'Telefono'  => $phone,
+        $defaults = [
+            'Nombres'   => '-',
+            'C.I.'      => '-',
+            'Telefono'  => '-'
         ];
 
-        return $data;
+        return array_merge($partial, $defaults);
     }
 }
