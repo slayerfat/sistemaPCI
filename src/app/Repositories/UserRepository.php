@@ -1,10 +1,10 @@
 <?php namespace PCI\Repositories;
 
-use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Pagination\Paginator;
-use PCI\Mamarrachismo\PhoneParser\PhoneParser;
+use Input;
 use PCI\Models\User;
 use Illuminate\Database\Eloquent\Collection;
+use PCI\Mamarrachismo\PhoneParser\PhoneParser;
+use Illuminate\Pagination\LengthAwarePaginator;
 use PCI\Repositories\Interfaces\UserRepositoryInterface;
 
 class UserRepository extends AbstractRepository implements UserRepositoryInterface
@@ -85,21 +85,7 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
     {
         $results = $this->getAll();
 
-        $page = \Input::get('page', 1);
-
-        return $this->generatePaginator($results, $page, $quantity);
-//        return $this->model->paginate($quantity);
-
-//        $results = $this->getAll();
-//
-//        $page = \Input::get('page', 1);
-//
-//        return new LengthAwarePaginator(
-//            $results->forPage($page, $quantity),
-//            $results->count(),
-//            $quantity,
-//            $page
-//        );
+        return $this->generatePaginator($results, $quantity);
     }
 
     /**
@@ -148,7 +134,25 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
      * @param int        $quantity
      * @return LengthAwarePaginator
      */
-    protected function generatePaginator(Collection $results, $page, $quantity)
+    protected function generatePaginator(Collection $results, $quantity)
+    {
+        $page = Input::get('page', 1);
+
+        $items = $this->generatePaginatorContents($results);
+
+        return new LengthAwarePaginator(
+            $items->forPage($page, $quantity),
+            $items->count(),
+            $quantity,
+            $page
+        );
+    }
+
+    /**
+     * @param Collection $results
+     * @return \Illuminate\Support\Collection
+     */
+    protected function generatePaginatorContents(Collection $results)
     {
         $array = collect();
 
@@ -173,15 +177,6 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
             ]);
         });
 
-        return new LengthAwarePaginator(
-            $array->forPage($page, $quantity),
-            $array->count(),
-            $quantity,
-            $page
-        );
-
-//        $paginator = new LengthAwarePaginator($array, $array->count(), $quantity, $page);
-//
-//        return $paginator;
+        return $array;
     }
 }
