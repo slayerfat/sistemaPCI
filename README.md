@@ -11,6 +11,8 @@ Misión Alma Mater, Programa Nacional de Formación: Informatica, Trayecto 3, IU
 
 Para poder usar el software adecuadamente, es necesario instalar los siguientes paquetes de sofware y sus dependencias expresadas a continuacion.
 
+**NOTA:** una vez completado los pasos necesarios para instalar las dependencias, es necesario ejecutar `gulp` en el directorio del sistema, ej: `~/sistemaPCI/src/$ gulp` 
+
 ### Node
 
 Para usar este repositorio es necesario tener instalado en el sistema [node.js](http://nodejs.org/).
@@ -73,6 +75,25 @@ Si todo sale bien, debera generar las carpetas `vendor/` y `node_modules/` en do
 
 Es importante destacar que cada branch puede tener diferentes dependencias, lo que implica hacer installs adicionales segun el branch.
 
+### Gulp
+
+Se puede ejecutar simplemente `gulp` (dentro de la carpeta src) para copiar y compilar `sass` y otros archivos a la carpeta publica del sistema.
+
+se vera:
+
+```
+[21:43:07] Using gulpfile ~/sistemaPCI/src/gulpfile.js
+[21:43:07] Starting 'default'...
+[21:43:07] Starting 'sass'...
+[21:43:09] Finished 'default' after 2.05 s
+[21:43:11] gulp-notify: [Laravel Elixir]
+[21:43:11] Finished 'sass' after 3.79 s
+[21:43:11] Starting 'copy'...
+[21:43:11] Finished 'copy' after 159 ms
+```
+
+Tambien pueden hacer un `gulp watch` para autocompilar `scss` (sass).
+
 ## Base de datos
 
 Para instalar la base de datos en el sistema necesitan el archivo **.env** con la informacion de la base de datos.
@@ -123,25 +144,6 @@ php src/artisan migrate:reset && php src/artisan migrate && php src/artisan db:s
 y listo, la base de datos esta localmente en el sistema.
 
 Si falla pueden hacer un `composer dump-autoload` y reintentarlo, si vuelve a falla puden crear un [problema (issue) en github](https://github.com/slayerfat/sistemaPCI/issues) con el error y la descripcion del mismo.
-
-## Gulp
-
-Se puede ejecutar simplemente `gulp` (dentro de la carpeta src) para copiar y compilar `sass` y otros archivos a la carpeta publica del sistema.
-
-se vera:
-
-```
-[21:43:07] Using gulpfile ~/sistemaPCI/src/gulpfile.js
-[21:43:07] Starting 'default'...
-[21:43:07] Starting 'sass'...
-[21:43:09] Finished 'default' after 2.05 s
-[21:43:11] gulp-notify: [Laravel Elixir]
-[21:43:11] Finished 'sass' after 3.79 s
-[21:43:11] Starting 'copy'...
-[21:43:11] Finished 'copy' after 159 ms
-```
-
-Tambien pueden hacer un `gulp watch` para autocompilar `scss` (sass).
 
 ## Homestead
 

@@ -82,8 +82,8 @@ class UserRepositoryTest extends BaseTestCase
     public function testUpdateShouldNotChangePasswordIfInputIsEmpty()
     {
         $data = [
-            'name'       => 'tester',
-            'email'      => 'tester@test.com',
+            'name'       => str_random(),
+            'email'      => str_random(),
             'password'   => '',
             'profile_id' => 1,
         ];
@@ -96,8 +96,8 @@ class UserRepositoryTest extends BaseTestCase
     public function testUpdateShouldChangeChangePasswordIfInputIsNotEmpty()
     {
         $data = [
-            'name'       => 'tester',
-            'email'      => 'tester@test.com',
+            'name'       => str_random(),
+            'email'      => str_random(),
             'password'   => 'password',
             'profile_id' => 1,
         ];
