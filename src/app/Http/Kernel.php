@@ -2,12 +2,13 @@
 
 namespace PCI\Http;
 
-use Illuminate\Foundation\Http\Kernel as HttpKernel;
 use PCI\Http\Middleware\Authenticate;
 use PCI\Http\Middleware\EncryptCookies;
-use PCI\Http\Middleware\RedirectIfAuthenticated;
-use PCI\Http\Middleware\RedirectIfNotVerified;
 use PCI\Http\Middleware\VerifyCsrfToken;
+use PCI\Http\Middleware\RedirectIfNotAdmin;
+use PCI\Http\Middleware\RedirectIfNotVerified;
+use PCI\Http\Middleware\RedirectIfAuthenticated;
+use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
 {
@@ -35,5 +36,6 @@ class Kernel extends HttpKernel
         'unverified' => RedirectIfNotVerified::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'guest'      => RedirectIfAuthenticated::class,
+        'admin'      => RedirectIfNotAdmin::class,
     ];
 }

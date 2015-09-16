@@ -1,10 +1,12 @@
 <?php namespace PCI\Http\Controllers\User;
 
-use Illuminate\Http\Request;
-
-use PCI\Models\Profile;
 use View;
+use Redirect;
 use PCI\Http\Requests;
+use PCI\Models\Profile;
+use Illuminate\Http\Request;
+use Illuminate\View\Factory;
+use PCI\Http\Requests\UserRequest;
 use PCI\Http\Controllers\Controller;
 use PCI\Repositories\Interfaces\UserRepositoryInterface;
 
@@ -17,11 +19,20 @@ class UsersController extends Controller
     private $userRepo;
 
     /**
-     * @param UserRepositoryInterface $userRepo
+     * @var \Illuminate\View\Factory
      */
-    public function __construct(UserRepositoryInterface $userRepo)
+    private $view;
+
+    /**
+     * @param UserRepositoryInterface $userRepo
+     * @param \Illuminate\View\Factory $view
+     */
+    public function __construct(UserRepositoryInterface $userRepo, Factory $view)
     {
         $this->userRepo = $userRepo;
+        $this->view     = $view;
+
+        $this->middleware('admin', ['except' => 'edit', 'update', 'show']);
     }
 
     /**
@@ -45,18 +56,19 @@ class UsersController extends Controller
 
         $profiles = Profile::lists('desc', 'id');
 
-        return View::make('users.create', compact('user', 'profiles'));
+        return $this->view->make('users.create', compact('user', 'profiles'));
     }
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  Request  $request
-     * @return Response
+     * @param \PCI\Http\Requests\UserRequest $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
         return $request->all();
+
+        // Redirect::route('users.show', $user->name);
     }
 
     /**
@@ -92,7 +104,7 @@ class UsersController extends Controller
      *
      * @param  Request  $request
      * @param  int  $id
-     * @return Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, $id)
     {
@@ -107,7 +119,7 @@ class UsersController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($id)
     {
