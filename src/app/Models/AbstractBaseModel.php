@@ -13,6 +13,8 @@ use LogicException;
  * @SuppressWarnings(PHPMD.NumberOfChildren)
  * Se suprime esta advertencia por ser todos los hijos
  * modelos eloquens que contienen el metodo boot igual.
+ * @property-read \Jenssegers\Date\Date $created_at
+ * @property-read \Jenssegers\Date\Date $updated_at
  */
 class AbstractBaseModel extends Eloquent
 {

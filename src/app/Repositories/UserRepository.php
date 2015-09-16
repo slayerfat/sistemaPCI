@@ -1,5 +1,6 @@
 <?php namespace PCI\Repositories;
 
+use Illuminate\Pagination\LengthAwarePaginator;
 use PCI\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 use PCI\Repositories\Interfaces\UserRepositoryInterface;
@@ -72,6 +73,29 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
         $users = $this->model->all();
 
         return $users;
+    }
+
+    /**
+     * @return LengthAwarePaginator
+     */
+    public function getAllForTableWithPaginator()
+    {
+        $results = $this->getAll();
+
+        $array = [];
+
+        $results->each(function ($user) use (&$array) {
+            $names   = $user->employee ? $user->employee->formattedNames() : '-';
+
+            $array[] = [
+                'Nombre'  => $user->name,
+                'Email'   => $user->email,
+                'Perfil'  => $user->profile->desc,
+                'Nombres' => $names,
+            ];
+        });
+
+        return $array;
     }
 
     /**

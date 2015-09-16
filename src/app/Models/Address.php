@@ -29,6 +29,7 @@ use Illuminate\Database\Eloquent\Collection;
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Address whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Address whereCreatedBy($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Address whereUpdatedBy($value)
+ * @property-read mixed $formatted_details
  */
 class Address extends AbstractBaseModel
 {

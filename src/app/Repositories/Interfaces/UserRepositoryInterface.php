@@ -1,6 +1,7 @@
 <?php namespace PCI\Repositories\Interfaces;
 
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 use PCI\Models\User;
 
 interface UserRepositoryInterface
@@ -40,6 +41,11 @@ interface UserRepositoryInterface
      * @return Collection
      */
     public function getAll();
+
+    /**
+     * @return LengthAwarePaginator
+     */
+    public function getAllForTableWithPaginator();
 
     /**
      * @param array $data
