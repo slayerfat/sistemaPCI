@@ -31,7 +31,7 @@ class UsersController extends Controller
         $this->userRepo = $userRepo;
         $this->view     = $view;
 
-        $this->middleware('admin', ['except' => 'edit', 'update', 'show']);
+        $this->middleware('admin', ['except' => ['edit', 'update', 'show']]);
     }
 
     /**
