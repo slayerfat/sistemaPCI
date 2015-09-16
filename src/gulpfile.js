@@ -9,7 +9,8 @@ elixir.config.publicPath = '../public';
 var paths = {
     'public': elixir.config.publicPath,
     'jquery': './vendor/bower_components/jquery/',
-    'bootstrap': './node_modules/bootstrap-sass/assets/'
+    'bootstrap': './node_modules/bootstrap-sass/assets/',
+    'fontAwesome': './vendor/bower_components/font-awesome/'
 }
 
 // git bump (v0.1.2) <-- gulp release|feature|patch|pre
@@ -64,6 +65,7 @@ elixir(function (mix) {
         // copiamos los fonts de bootstrap para que no se queje.
         // otra opcion seria un symlink o algo asi.
         .copy(paths.bootstrap + 'fonts/bootstrap/**', paths.public + '/fonts')
+        .copy(paths.fontAwesome + 'fonts/**', paths.public + '/fonts')
 
         // le hace el amor y ejacula ~/sistemaPCI/public/js/all.js
         .scripts([
