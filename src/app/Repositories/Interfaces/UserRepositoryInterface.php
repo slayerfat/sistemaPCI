@@ -1,7 +1,6 @@
 <?php namespace PCI\Repositories\Interfaces;
 
 use Illuminate\Database\Eloquent\Collection;
-use PCI\Http\Requests\UserRequest;
 use PCI\Models\User;
 
 interface UserRepositoryInterface
@@ -41,6 +40,12 @@ interface UserRepositoryInterface
      * @return Collection
      */
     public function getAll();
+
+    /**
+     * @param array $data
+     * @return User
+     */
+    public function create(array $data);
 
     /**
      * actualiza al usuario y se le asigna el perfil de una vez,

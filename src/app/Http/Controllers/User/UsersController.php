@@ -1,6 +1,8 @@
 <?php namespace PCI\Http\Controllers\User;
 
+use Event;
 use Flash;
+use PCI\Events\NewUserRegistration;
 use Redirect;
 use PCI\Http\Requests;
 use PCI\Models\Profile;
@@ -65,9 +67,13 @@ class UsersController extends Controller
      */
     public function store(UserRequest $request)
     {
-        return $request->all();
+        $user = $this->userRepo->create($request->all());
 
-        // Redirect::route('users.show', $user->name);
+        Event::fire(new NewUserRegistration($user));
+
+        Flash::success('Usuario creado existosamente, correo de confirmación enviado.');
+
+        return Redirect::route('users.show', $user->name);
     }
 
     /**

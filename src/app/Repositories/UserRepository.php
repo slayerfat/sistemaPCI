@@ -1,8 +1,7 @@
 <?php namespace PCI\Repositories;
 
-use Illuminate\Database\Eloquent\Collection;
-use PCI\Http\Requests\UserRequest;
 use PCI\Models\User;
+use Illuminate\Database\Eloquent\Collection;
 use PCI\Repositories\Interfaces\UserRepositoryInterface;
 
 class UserRepository extends AbstractRepository implements UserRepositoryInterface
@@ -73,6 +72,25 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
         $users = $this->model->all();
 
         return $users;
+    }
+
+    /**
+     * @param array $data
+     * @return User
+     */
+    public function create(array $data)
+    {
+        $user = $this->getNewInstance();
+
+        $user->name       = $data['name'];
+        $user->email      = $data['email'];
+        $user->password   = bcrypt($data['password']);
+        $user->profile_id = $data['profile_id'];
+        $user->confirmation_code = str_random(32);
+
+        $user->save();
+
+        return $user;
     }
 
     /**
