@@ -1,6 +1,7 @@
 <?php namespace PCI\Repositories;
 
 use Illuminate\Database\Eloquent\Collection;
+use PCI\Http\Requests\UserRequest;
 use PCI\Models\User;
 use PCI\Repositories\Interfaces\UserRepositoryInterface;
 
@@ -72,5 +73,27 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
         $users = $this->model->all();
 
         return $users;
+    }
+
+    /**
+     * @param int   $id
+     * @param array $data
+     * @return User
+     */
+    public function update($id, array $data)
+    {
+        $user = $this->find($id);
+
+        if (trim($data['password']) != '') {
+            $user->password = bcrypt($data['password']);
+        }
+
+        $user->name       = $data['name'];
+        $user->email      = $data['email'];
+        $user->profile_id = $data['profile_id'];
+
+        $user->save();
+
+        return $user;
     }
 }

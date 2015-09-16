@@ -1,12 +1,15 @@
 <?php namespace PCI\Repositories\Interfaces;
 
 use Illuminate\Database\Eloquent\Collection;
+use PCI\Http\Requests\UserRequest;
 use PCI\Models\User;
 
 interface UserRepositoryInterface
 {
 
     /**
+     * Busca al usuario por nombre o id
+     *
      * @param  string|int $id
      *
      * @return User
@@ -20,11 +23,15 @@ interface UserRepositoryInterface
     public function getNewInstance(array $data = []);
 
     /**
+     * genera un codigo de 32 caracteres para validar
+     * al usuario por correo por primera vez.
      * @return User
      */
     public function generateConfirmationCode();
 
     /**
+     * confirma el codigo previamente creado.
+     *
      * @param string $code
      * @return bool
      */
@@ -34,4 +41,15 @@ interface UserRepositoryInterface
      * @return Collection
      */
     public function getAll();
+
+    /**
+     * actualiza al usuario y se le asigna el perfil de una vez,
+     * adicionalmente se chequea si hay o no contraseña
+     * y se actualiza adecuandamente.
+
+     * @param int   $id
+     * @param array $data
+     * @return User
+     */
+    public function update($id, array $data);
 }

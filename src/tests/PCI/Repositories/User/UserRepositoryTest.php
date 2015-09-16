@@ -77,4 +77,33 @@ class UserRepositoryTest extends BaseTestCase
     {
         $this->assertNotEmpty($this->repo->getAll());
     }
+
+
+    public function testUpdateShouldNotChangePasswordIfInputIsEmpty()
+    {
+        $data = [
+            'name'       => 'tester',
+            'email'      => 'tester@test.com',
+            'password'   => '',
+            'profile_id' => 1,
+        ];
+
+        $user = $this->repo->update($this->user->id, $data);
+
+        $this->assertEquals($this->user->password, $user->password);
+    }
+
+    public function testUpdateShouldChangeChangePasswordIfInputIsNotEmpty()
+    {
+        $data = [
+            'name'       => 'tester',
+            'email'      => 'tester@test.com',
+            'password'   => 'password',
+            'profile_id' => 1,
+        ];
+
+        $user = $this->repo->update($this->user->id, $data);
+
+        $this->assertNotEquals($this->user->password, $user->password);
+    }
 }

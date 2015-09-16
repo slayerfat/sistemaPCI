@@ -1,5 +1,6 @@
 <?php namespace PCI\Http\Controllers\User;
 
+use Flash;
 use Redirect;
 use PCI\Http\Requests;
 use PCI\Models\Profile;
@@ -109,11 +110,11 @@ class UsersController extends Controller
      */
     public function update(UserRequest $request, $id)
     {
-        $user = $this->userRepo->find($id);
+        $user = $this->userRepo->update($id, $request->all());
 
-        $user->fill($request->all());
+        Flash::success('Usuario actualizado correctamente.');
 
-        return $user;
+        return Redirect::route('users.show', $user->name);
     }
 
     /**
