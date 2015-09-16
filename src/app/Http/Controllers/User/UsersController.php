@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 
+use PCI\Models\Profile;
 use View;
 use PCI\Http\Requests;
 use PCI\Http\Controllers\Controller;
@@ -30,17 +31,21 @@ class UsersController extends Controller
     {
         $users = $this->userRepo->getAll();
 
-        return View::make('users::index', compact('users'));
+        return View::make('users.index', compact('users'));
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return Response
+     * @return \Illuminate\Contracts\View\View
      */
     public function create()
     {
-        //
+        $user = $this->userRepo->getNewInstance();
+
+        $profiles = Profile::lists('desc', 'id');
+
+        return View::make('users.create', compact('user', 'profiles'));
     }
 
     /**
@@ -51,7 +56,7 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return $request->all();
     }
 
     /**
@@ -71,11 +76,15 @@ class UsersController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return Response
+     * @return \Illuminate\Contracts\View\View
      */
     public function edit($id)
     {
-        //
+        $user = $this->userRepo->find($id);
+
+        $profiles = Profile::lists('desc', 'id');
+
+        return View::make('users.edit', compact('user', 'profiles'));
     }
 
     /**
@@ -87,7 +96,11 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = $this->userRepo->find($id);
+
+        $user->fill($request->all());
+
+        return $user;
     }
 
     /**
