@@ -6,19 +6,19 @@ php:
 
 before_script:
   - composer --working-dir=src/ install --no-interaction --prefer-source
-  - if [ $TRAVIS_PHP_VERSION != '7' ]; pyrus install pear/PHP_CodeSniffer; fi
-  - if [ $TRAVIS_PHP_VERSION != '7' ]; phpenv rehash; fi
-  - if [ $TRAVIS_PHP_VERSION != '7' ]; wget https://gist.githubusercontent.com/slayerfat/2b3cc4faf94d2863b505/raw/b958e68fa8886baac8880cdf381d1dfbc403270f/phpmd-ruleset.xml; fi
-  - if [ $TRAVIS_PHP_VERSION != '7' ]; wget -c http://static.phpmd.org/php/latest/phpmd.phar; fi
+  - if [ $TRAVIS_PHP_VERSION != '7' ]; then pyrus install pear/PHP_CodeSniffer; fi
+  - if [ $TRAVIS_PHP_VERSION != '7' ]; then phpenv rehash; fi
+  - if [ $TRAVIS_PHP_VERSION != '7' ]; then wget https://gist.githubusercontent.com/slayerfat/2b3cc4faf94d2863b505/raw/b958e68fa8886baac8880cdf381d1dfbc403270f/phpmd-ruleset.xml; fi
+  - if [ $TRAVIS_PHP_VERSION != '7' ]; then wget -c http://static.phpmd.org/php/latest/phpmd.phar; fi
 
 script:
   - phpunit --coverage-clover=coverage.clover
-  - if [ $TRAVIS_PHP_VERSION != '7' ]; phpcs -p --colors --standard=PSR2 --ignore=src/vendor/ src/app src/database/seeds/ src/config/; fi
+  - if [ $TRAVIS_PHP_VERSION != '7' ]; then phpcs -p --colors --standard=PSR2 --ignore=src/vendor/ src/app src/database/seeds/ src/config/; fi
   - if [ -e phpmd-ruleset.xml ] && [ $TRAVIS_PHP_VERSION != '7' ]; then php phpmd.phar src/app/ text phpmd-ruleset.xml; php phpmd.phar src/database/seeds/ text phpmd-ruleset.xml; php phpmd.phar src/config/ text phpmd-ruleset.xml; fi
 
 after_script:
-  - if [ $TRAVIS_PHP_VERSION != '7' ]; wget https://scrutinizer-ci.com/ocular.phar; fi
-  - if [ $TRAVIS_PHP_VERSION != '7' ]; php ocular.phar code-coverage:upload --format=php-clover coverage.clover; fi
+  - if [ $TRAVIS_PHP_VERSION != '7' ]; then wget https://scrutinizer-ci.com/ocular.phar; fi
+  - if [ $TRAVIS_PHP_VERSION != '7' ]; then php ocular.phar code-coverage:upload --format=php-clover coverage.clover; fi
 
 matrix:
   allow_failures:
