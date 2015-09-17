@@ -213,7 +213,7 @@ class User extends AbstractBaseModel implements
      */
     public function isOwner($id)
     {
-        if (!isset($id)) {
+        if (is_null($id)) {
             return false;
         }
 
