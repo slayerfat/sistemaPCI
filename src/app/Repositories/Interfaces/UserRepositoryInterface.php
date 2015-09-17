@@ -58,10 +58,15 @@ interface UserRepositoryInterface
      * actualiza al usuario y se le asigna el perfil de una vez,
      * adicionalmente se chequea si hay o no contraseña
      * y se actualiza adecuandamente.
-
      * @param int   $id
      * @param array $data
      * @return User
      */
     public function update($id, array $data);
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function delete($id);
 }

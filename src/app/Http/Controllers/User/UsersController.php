@@ -132,6 +132,12 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $result = $this->userRepo->delete($id);
+
+        if ($result === true) {
+            return Redirect::route('users.index');
+        }
+
+        return Redirect::route('users.show', $result->name);
     }
 }

@@ -208,4 +208,13 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
 
         return array_merge($partial, $defaults);
     }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function delete($id)
+    {
+        return $this->executeDelete($id, 'Usuario');
+    }
 }
