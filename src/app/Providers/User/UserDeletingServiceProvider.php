@@ -1,7 +1,9 @@
 <?php namespace PCI\Providers\User;
 
+use LogicException;
 use PCI\Models\User;
 use Illuminate\Support\ServiceProvider;
+use PCI\Providers\Exceptions\AdminCountException;
 
 class UserDeletingServiceProvider extends ServiceProvider
 {
@@ -19,13 +21,7 @@ class UserDeletingServiceProvider extends ServiceProvider
         User::deleting(function ($user) {
             // se chequea si es administrador para que el query no sea nulo.
             if ($user->profile_id == User::ADMIN_ID) {
-                $admins = User::whereProfileId(User::ADMIN_ID)->count();
-
-                // como este el usuario es el unico administrador en el sistema
-                // se regresa para que reviente por el Repositorio.
-                if ($admins <= 1) {
-                    return;
-                }
+                $this->checkAdminCount();
             }
 
             $id = $this->getAdminId();
@@ -52,17 +48,33 @@ class UserDeletingServiceProvider extends ServiceProvider
     }
 
     /**
+     * Si por alguna razon no existe administrador, se bota una excepcion.
      * @return int
-     * @throws \Exception
+     * @throws \LogicException
      */
     private function getAdminId()
     {
         $user = User::whereProfileId(User::ADMIN_ID)->first();
 
         if (!$user) {
-            throw new \Exception('El Sistema no tiene Administradores.');
+            throw new LogicException('El Sistema no tiene Administradores.');
         }
 
         return $user->id;
+    }
+
+    /**
+     * Se chequea la cantidad de administradores en el sistema.
+     * si es menor o igual a 1 se bota una excepcion.
+     * @return void
+     * @throws \PCI\Providers\Exceptions\AdminCountException
+     */
+    private function checkAdminCount()
+    {
+        $admins = User::whereProfileId(User::ADMIN_ID)->count();
+
+        if ($admins <= 1) {
+            throw new AdminCountException('El Sistema debe tener al menos un Administrador.');
+        }
     }
 }

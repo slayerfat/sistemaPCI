@@ -182,7 +182,7 @@ abstract class AbstractRepository
      * @param $child
      * @param $method
      * @return bool|Model
-     * @throws HttpException
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException
      */
     private function deleteDestroyPrototype(Model $model, $resource, $child, $method)
     {

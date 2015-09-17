@@ -133,6 +133,16 @@ class UserRepositoryTest extends BaseTestCase
 
     public function testDeleteShouldReturnBooleanWhenEverythingIsOk()
     {
-        $this->assertTrue($this->repo->delete(1));
+        $user = factory(User::class)->create();
+
+        $this->assertTrue($this->repo->delete($user->id));
+    }
+
+    /**
+     * @expectedException \Symfony\Component\HttpKernel\Exception\HttpException
+     */
+    public function testDeleteShouldThrowExceptionWhenNullGiven()
+    {
+        $this->assertTrue($this->repo->delete(null));
     }
 }
