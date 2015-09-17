@@ -1,16 +1,18 @@
-## v0.0.6
+## v0.0.6 17-09-15
 
 Features:
 
 - modulo esencial de usuario completado.
-- creado PhoneParser: manipula telefonos segun formato venezolano.
-- **Caimaneitor** posee sus propios **JIUNITESTS**.
+- creado PhoneParser: manipula telefonos segun formato venezolano, (`Mamarrachamente`).
+- **Caimaneitor** posee sus propios **JIUNITESS**.
 
 Mejoras:
 
 - restructurada carpeta de tests.
 - creadas pruebas adicionales.
-- creada polizas de usuario.
+- creada polizas de usuario: UserPolicy.
+- Middleware: creado RedirectIfNotAdmin, para chequear el perfil de adiministrador del usuario.
+- Providers: UserDeletingServiceProvider, para manipular de ser necesario al usuario cuando es eliminado.
 
 ## v0.0.5 14-09-15
 

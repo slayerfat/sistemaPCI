@@ -244,6 +244,13 @@ Dentro de este repositorio existen archivos complementarios que ayudaran en la d
 
 CHANGELOG.md, DATASTRUC.md, DEDCHANGE.md y TODO.md.
 
+## Ruta
+
+- [x] v0.1 Usuario
+- [ ] v0.2 Entidades Auxiliares
+- [ ] v0.3 Empleado
+- [ ] v0.4 Items
+
 ## Laravel PHP Framework
 
 Este sistema usa el framework Laravel de PHP [documentacion](http://laravel.com/docs/5.1)
