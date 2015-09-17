@@ -1,6 +1,6 @@
 <?php
 
-namespace PCI\Providers;
+namespace PCI\Providers\User;
 
 use Illuminate\Support\ServiceProvider;
 use PCI\Models\User;

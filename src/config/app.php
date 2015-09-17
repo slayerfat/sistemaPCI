@@ -157,7 +157,8 @@ return [
         PCI\Providers\RouteServiceProvider::class,
         PCI\Providers\ViewComposerServiceProvider::class,
         PCI\Providers\CaimaeitorServiceProvider::class,
-        PCI\Providers\UsersRepositoriesServiceProvider::class,
+        PCI\Providers\User\UsersRepositoriesServiceProvider::class,
+        PCI\Providers\User\UserDeletingServiceProvider::class,
     ],
 
     /*
