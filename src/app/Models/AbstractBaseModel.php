@@ -64,6 +64,8 @@ class AbstractBaseModel extends Eloquent
     }
 
     /**
+     * Cuando se pide la fecha de created_at se devuelve una
+     * instancia de Date en vez de Carbon\Carbon
      * @param $value
      * @return Date
      */
@@ -73,6 +75,8 @@ class AbstractBaseModel extends Eloquent
     }
 
     /**
+     * Cuando se pide la fecha de updated_at se devuelve una
+     * instancia de Date en vez de Carbon\Carbon
      * @param $value
      * @return Date
      */
@@ -91,6 +95,7 @@ class AbstractBaseModel extends Eloquent
     }
 
     /**
+     * Busca al usuario que creo a este modelo.
      * @return User
      */
     public function createdBy()
@@ -99,6 +104,7 @@ class AbstractBaseModel extends Eloquent
     }
 
     /**
+     * Busca al ultimo usuario que actualizo este modelo.
      * @return User
      */
     public function updatedBy()
@@ -107,6 +113,7 @@ class AbstractBaseModel extends Eloquent
     }
 
     /**
+     * Devuelve un usuario segun el atributo especificado del modelo.
      * @param string $key
      * @return User
      */
