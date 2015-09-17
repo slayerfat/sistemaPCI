@@ -2,8 +2,10 @@
 
 use PCI\Repositories\AbstractRepository;
 use PCI\Repositories\Interfaces\CategoryRepositoryInterface;
+use PCI\Repositories\Interfaces\ViewableInterface;
+use PCI\Repositories\ViewVariables;
 
-class CategoryRepository extends AbstractRepository implements CategoryRepositoryInterface
+class CategoryRepository extends AbstractRepository implements CategoryRepositoryInterface, ViewableInterface
 {
 
     /**
@@ -59,10 +61,13 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
      * regresa la informacion necesaria para generar la vista.
      * esta necesita el destino y el nombre de
      * la variable para el Model Binding.
-     * @return array
+     * @return \PCI\Repositories\ViewVariables
      */
-    public function viewVariables()
+    public function getViewVariables()
     {
-        // TODO: Implement viewVariables() method.
+        return new ViewVariables(
+            $this->newInstance(),
+            'cat'
+        );
     }
 }

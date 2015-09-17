@@ -210,15 +210,4 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
     {
         return $this->executeDelete($id, 'Usuario');
     }
-
-    /**
-     * regresa la informacion necesaria para generar la vista.
-     * esta necesita el destino y el nombre de
-     * la variable para el Model Binding.
-     * @return array
-     */
-    public function viewVariables()
-    {
-        // TODO: Implement viewVariables() method.
-    }
 }
