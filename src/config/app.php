@@ -158,6 +158,7 @@ return [
         PCI\Providers\ViewComposerServiceProvider::class,
         PCI\Providers\CaimaeitorServiceProvider::class,
         PCI\Providers\User\UsersRepositoriesServiceProvider::class,
+        PCI\Providers\Aux\AuxRepositoriesProvider::class,
         PCI\Providers\User\UserDeletingServiceProvider::class,
     ],
 

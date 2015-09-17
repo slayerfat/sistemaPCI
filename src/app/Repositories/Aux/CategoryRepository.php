@@ -1,6 +1,9 @@
-<?php namespace PCI\Repositories\Interfaces;
+<?php namespace PCI\Repositories\Aux;
 
-interface ModelRepositoryInterface
+use PCI\Repositories\AbstractRepository;
+use PCI\Repositories\Interfaces\CategoryRepositoryInterface;
+
+class CategoryRepository extends AbstractRepository implements CategoryRepositoryInterface
 {
 
     /**
@@ -8,33 +11,28 @@ interface ModelRepositoryInterface
      * @param  string|int $id
      * @return \Illuminate\Database\Eloquent\Model
      */
-    public function find($id);
-
-    /**
-     * Busca algun elemento segun su ID.
-     * @param  mixed $id
-     * @return \Illuminate\Database\Eloquent\Model
-     */
-    public function getById($id);
+    public function find($id)
+    {
+        // TODO: Implement find() method.
+    }
 
     /**
      * Consigue todos los elementos y devuelve una coleccion.
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function getAll();
-
-    /**
-     * Genera una nueva instancia Eloquent.
-     * @param array $data
-     * @return \Illuminate\Database\Eloquent\Model
-     */
-    public function newInstance(array $data = []);
+    public function getAll()
+    {
+        // TODO: Implement getAll() method.
+    }
 
     /**
      * @param array $data
      * @return \Illuminate\Database\Eloquent\Model
      */
-    public function create(array $data);
+    public function create(array $data)
+    {
+        // TODO: Implement create() method.
+    }
 
     /**
      * Actualiza algun moodelo.
@@ -42,14 +40,20 @@ interface ModelRepositoryInterface
      * @param array $data
      * @return \Illuminate\Database\Eloquent\Model
      */
-    public function update($id, array $data);
+    public function update($id, array $data)
+    {
+        // TODO: Implement update() method.
+    }
 
     /**
      * Elimina del sistema un modelo.
      * @param $id
      * @return bool|\Illuminate\Database\Eloquent\Model
      */
-    public function delete($id);
+    public function delete($id)
+    {
+        // TODO: Implement delete() method.
+    }
 
     /**
      * regresa la informacion necesaria para generar la vista.
@@ -57,5 +61,8 @@ interface ModelRepositoryInterface
      * la variable para el Model Binding.
      * @return array
      */
-    public function viewVariables();
+    public function viewVariables()
+    {
+        // TODO: Implement viewVariables() method.
+    }
 }
