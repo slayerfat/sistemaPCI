@@ -15,4 +15,10 @@ class CaimaneitorTest extends BaseTestCase
     {
         $this->assertNotEmpty(Caimaneitor::locaishon());
     }
+
+    public function testCaimaneitorNeedsToImplementMagicToString()
+    {
+        $caimanity = new \PCI\Mamarrachismo\Caimaneitor\Caimaneitor();
+        $this->assertInternalType('string', (string)$caimanity);
+    }
 }
