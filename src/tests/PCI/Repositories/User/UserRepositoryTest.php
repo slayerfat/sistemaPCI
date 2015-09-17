@@ -43,7 +43,7 @@ class UserRepositoryTest extends BaseTestCase
 
     public function testGetNewInstanceShouldReturnUser()
     {
-        $repoResults = $this->repo->getNewInstance(['name' => 'testing']);
+        $repoResults = $this->repo->newInstance(['name' => 'testing']);
 
         $this->assertInstanceOf(User::class, $repoResults);
         $this->assertEquals('testing', $repoResults->name);

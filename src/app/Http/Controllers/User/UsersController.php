@@ -54,7 +54,7 @@ class UsersController extends Controller
      */
     public function create(Profile $profile)
     {
-        $user = $this->userRepo->getNewInstance();
+        $user = $this->userRepo->newInstance();
 
         $profiles = $profile->lists('desc', 'id');
 

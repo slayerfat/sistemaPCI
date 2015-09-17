@@ -27,15 +27,6 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
     }
 
     /**
-     * @param array $data
-     * @return User
-     */
-    public function getNewInstance(array $data = [])
-    {
-        return $this->newInstance($data);
-    }
-
-    /**
      * @return User
      */
     public function generateConfirmationCode()
@@ -94,10 +85,12 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
     /**
      * @param array $data
      * @return User
+     * @internal nope.
      */
     public function create(array $data)
     {
-        $user = $this->getNewInstance();
+        /** @var User $user */
+        $user = $this->newInstance();
 
         $user->name       = $data['name'];
         $user->email      = $data['email'];

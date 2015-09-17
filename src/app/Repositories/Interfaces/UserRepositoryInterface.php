@@ -1,31 +1,12 @@
 <?php namespace PCI\Repositories\Interfaces;
 
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Pagination\LengthAwarePaginator;
-use PCI\Models\User;
-
-interface UserRepositoryInterface
+interface UserRepositoryInterface extends ModelRepositoryInterface
 {
-
-    /**
-     * Busca al usuario por nombre o id
-     *
-     * @param  string|int $id
-     *
-     * @return User
-     */
-    public function find($id);
-
-    /**
-     * @param array $data
-     * @return User
-     */
-    public function getNewInstance(array $data = []);
 
     /**
      * genera un codigo de 32 caracteres para validar
      * al usuario por correo por primera vez.
-     * @return User
+     * @return \PCI\Models\User
      */
     public function generateConfirmationCode();
 
@@ -38,35 +19,8 @@ interface UserRepositoryInterface
     public function confirm($code);
 
     /**
-     * @return Collection
-     */
-    public function getAll();
-
-    /**
      * @param int $quantity
-     * @return LengthAwarePaginator
+     * @return \Illuminate\Pagination\LengthAwarePaginator
      */
     public function getAllForTableWithPaginator($quantity = 25);
-
-    /**
-     * @param array $data
-     * @return User
-     */
-    public function create(array $data);
-
-    /**
-     * actualiza al usuario y se le asigna el perfil de una vez,
-     * adicionalmente se chequea si hay o no contraseña
-     * y se actualiza adecuandamente.
-     * @param int   $id
-     * @param array $data
-     * @return User
-     */
-    public function update($id, array $data);
-
-    /**
-     * @param $id
-     * @return bool|User
-     */
-    public function delete($id);
 }

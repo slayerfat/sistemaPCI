@@ -70,7 +70,7 @@ abstract class AbstractRepository
      *
      * @return Model
      */
-    protected function newInstance(array $data = [])
+    public function newInstance(array $data = [])
     {
         return $this->model->newInstance($data);
     }
