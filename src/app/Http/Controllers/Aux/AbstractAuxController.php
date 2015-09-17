@@ -37,7 +37,7 @@ abstract class AbstractAuxController extends Controller
         $results = $repo->getViewVariables();
 
         return $this->view->make(
-            $results->getViewName() . 'create',
+            $results->getViewName() . '.create',
             ['model' => $results->getModel()]
         );
     }

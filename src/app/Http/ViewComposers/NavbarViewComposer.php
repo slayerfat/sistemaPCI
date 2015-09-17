@@ -116,20 +116,29 @@ class NavbarViewComposer
                 [
                     [
                         'link'  => route('users.create'),
-                        'title' => 'Crear Usuario'
+                        'title' => trans('defaults.users.create')
                     ],
                     [
                         'link'  => route('users.index'),
-                        'title' => 'Consultar Usuarios'
+                        'title' => trans('defaults.users.index')
                     ],
                     Navigation::NAVIGATION_DIVIDER,
                     [
                         'link'  => '#',
-                        'title' => 'Crear Perfil'
+                        'title' => trans('defaults.profiles.create')
                     ],
                     [
                         'link'  => '#',
-                        'title' => 'Consultar Perfiles'
+                        'title' => trans('defaults.profiles.index')
+                    ],
+                    Navigation::NAVIGATION_DIVIDER,
+                    [
+                        'link'  => route('cats.create'),
+                        'title' => trans('defaults.cats.create')
+                    ],
+                    [
+                        'link'  => route('cats.index'),
+                        'title' => trans('defaults.cats.index')
                     ],
                 ]
             ];
