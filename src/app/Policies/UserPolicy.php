@@ -14,4 +14,13 @@ class UserPolicy
     {
         return $user->isOwnerOrAdmin($resource->id);
     }
+
+    /**
+     * @param \PCI\Models\User $user
+     * @return bool
+     */
+    public function destroy(User $user)
+    {
+        return $user->isAdmin();
+    }
 }

@@ -18,12 +18,6 @@ switch ($active) {
                 {{trans('defaults.users.show')}}
             </a>
         </li>
-
-        @if(Auth::user()->isOwnerOrAdmin($user->id))
-            <li {{isset($randVar) ? $randVar : null}}>
-                <a href="#">--</a>
-            </li>
-        @endif
     </ul>
 
     @if(Auth::user()->isOwnerOrAdmin($user->id))
@@ -44,6 +38,29 @@ switch ($active) {
             <li>
                 <a href="#">Mas pronto!</a>
             </li>
+
+            @can('destroy', $user)
+                <li class="sidebar-danger">
+                    {!!
+
+                    Form::open([
+                        'method' => 'DELETE',
+                        'route' => ['users.destroy', $user->id],
+                        'class' => 'hidden',
+                        'id' => "destroy-element-{$user->id}"
+                    ])
+
+                    !!}
+
+                    {!! Form::close() !!}
+
+                    <a href="#"
+                       onclick="deleteResourceFromAnchor('destroy-element-{{$user->id}}')"
+                        >
+                        {{trans('defaults.users.destroy')}}
+                    </a>
+                </li>
+            @endcan
         </ul>
     @endif
 </div>
