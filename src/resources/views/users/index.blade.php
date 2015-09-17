@@ -2,6 +2,9 @@
 
 @section('content')
 
-    @include('partials.genericTable', ['data' => $users])
+    @include('partials.genericTable', [
+        'data' => $users,
+        'title' => 'Usuarios en el sistema'
+    ])
 
 @stop
