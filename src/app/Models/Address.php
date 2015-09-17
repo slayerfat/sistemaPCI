@@ -29,6 +29,7 @@ use Illuminate\Database\Eloquent\Collection;
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Address whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Address whereCreatedBy($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Address whereUpdatedBy($value)
+ * @property-read mixed $formatted_details
  */
 class Address extends AbstractBaseModel
 {
@@ -43,6 +44,53 @@ class Address extends AbstractBaseModel
         'street',
         'av',
     ];
+
+    // -------------------------------------------------------------------------
+    // Accesors
+    // -------------------------------------------------------------------------
+
+    /**
+     * @return string
+     */
+    public function getFormattedDetailsAttribute()
+    {
+        $details = [];
+
+        $details[] = $this->formattedBuilding();
+
+        $details[] = $this->formattedStreet();
+
+        $details[] = $this->formattedAv();
+
+        $results = implode(', ', $details);
+
+        if (strlen($results) < 5) {
+            return '';
+        }
+
+        return $results;
+    }
+
+    public function getBuildingAttribute($value)
+    {
+        $value = $this->removeDotInString($value);
+
+        return $this->ucAndCleanString($value);
+    }
+
+    public function getStreetAttribute($value)
+    {
+        $value = $this->removeDotInString($value);
+
+        return $this->ucAndCleanString($value);
+    }
+
+    public function getAvAttribute($value)
+    {
+        $value = $this->removeDotInString($value);
+
+        return $this->ucAndCleanString($value);
+    }
 
     // -------------------------------------------------------------------------
     // Relaciones
@@ -69,5 +117,63 @@ class Address extends AbstractBaseModel
     public function employee()
     {
         return $this->hasMany(Employee::class);
+    }
+
+    /**
+     * @return string|null
+     */
+    public function formattedBuilding()
+    {
+        if (!isset($this->attributes['building'])) {
+            return null;
+        }
+
+        return 'Edf./Qta./Blq. '. $this->building;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function formattedStreet()
+    {
+        if (!isset($this->attributes['street'])) {
+            return null;
+        }
+
+        return 'Calle(s) '. $this->street;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function formattedAv()
+    {
+        if (!isset($this->attributes['av'])) {
+            return null;
+        }
+
+        return 'Av. '. $this->av;
+    }
+
+    /**
+     * @param $value
+     * @return mixed
+     */
+    private function removeDotInString($value)
+    {
+        if ($value[strlen($value) - 1] == '.') {
+            $value[strlen($value) - 1] = null;
+        }
+
+        return $value;
+    }
+
+    /**
+     * @param $value
+     * @return string
+     */
+    private function ucAndCleanString($value)
+    {
+        return ucfirst(trim($value));
     }
 }

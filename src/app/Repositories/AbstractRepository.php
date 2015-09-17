@@ -107,7 +107,9 @@ abstract class AbstractRepository
 
     /**
      * @param $id
-     *
+     * @internal Laravels Policies hacen esto irrelevante.
+     * @deprecated Laravels ACL.
+     * @todo remover.
      * @return bool
      */
     protected function canUserManipulate($id)
@@ -180,7 +182,7 @@ abstract class AbstractRepository
      * @param $child
      * @param $method
      * @return bool|Model
-     * @throws HttpException
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException
      */
     private function deleteDestroyPrototype(Model $model, $resource, $child, $method)
     {

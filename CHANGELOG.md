@@ -1,4 +1,31 @@
-## v0.0.4
+## v0.0.6 17-09-15
+
+Features:
+
+- modulo esencial de usuario completado.
+- creado PhoneParser: manipula telefonos segun formato venezolano, (`Mamarrachamente`).
+- **Caimaneitor** posee sus propios **JIUNITESS**.
+
+Mejoras:
+
+- restructurada carpeta de tests.
+- creadas pruebas adicionales.
+- creada polizas de usuario: UserPolicy.
+- Middleware: creado RedirectIfNotAdmin, para chequear el perfil de adiministrador del usuario.
+- Providers: UserDeletingServiceProvider, para manipular de ser necesario al usuario cuando es eliminado.
+
+## v0.0.5 14-09-15
+
+Features:
+
+- **Caimaneitor: ENJANST!**
+- implementacion parcial de modulo de usuarios.
+
+Mejoras:
+
+- añadidas algunas pruebas del repositorio de usuarios y el modelo de usuarios.
+
+## v0.0.4 13-09-15
 
 Features:
 

@@ -141,6 +141,7 @@ return [
          * Vendor
          */
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+        Barryvdh\Debugbar\ServiceProvider::class,
         Artesaos\SEOTools\Providers\SEOToolsServiceProvider::class,
         Laracasts\Flash\FlashServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
@@ -156,7 +157,8 @@ return [
         PCI\Providers\RouteServiceProvider::class,
         PCI\Providers\ViewComposerServiceProvider::class,
         PCI\Providers\CaimaeitorServiceProvider::class,
-        PCI\Providers\UsersRepositoriesServiceProvider::class,
+        PCI\Providers\User\UsersRepositoriesServiceProvider::class,
+        PCI\Providers\User\UserDeletingServiceProvider::class,
     ],
 
     /*

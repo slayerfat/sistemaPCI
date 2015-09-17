@@ -64,7 +64,7 @@ class NavbarViewComposer
                 [
                     [
                         'link'  => route('users.show', $this->user->name),
-                        'title' => 'Ver Perfil'
+                        'title' => trans('defaults.users.show')
                     ],
                     [
                         'link'  => route('auth.getLogout'),
@@ -119,7 +119,7 @@ class NavbarViewComposer
                         'title' => 'Crear Usuario'
                     ],
                     [
-                        'link'  => route('users.show'),
+                        'link'  => route('users.index'),
                         'title' => 'Consultar Usuarios'
                     ],
                     Navigation::NAVIGATION_DIVIDER,

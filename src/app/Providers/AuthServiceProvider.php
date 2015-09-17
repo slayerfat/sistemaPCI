@@ -2,18 +2,21 @@
 
 namespace PCI\Providers;
 
+use PCI\Models\User;
+use PCI\Policies\UserPolicy;
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
 {
+
     /**
      * The policy mappings for the application.
      *
      * @var array
      */
     protected $policies = [
-        'PCI\Model' => 'PCI\Policies\ModelPolicy',
+        User::class => UserPolicy::class,
     ];
 
     /**
@@ -25,7 +28,5 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(GateContract $gate)
     {
         parent::registerPolicies($gate);
-
-        //
     }
 }

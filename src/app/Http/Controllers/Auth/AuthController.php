@@ -9,6 +9,7 @@ use PCI\Models\User;
 use PCI\Events\NewUserRegistration;
 use PCI\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
+use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
 class AuthController extends Controller
@@ -24,7 +25,7 @@ class AuthController extends Controller
     |
     */
 
-    use AuthenticatesAndRegistersUsers, ThrottlesLogins;
+    use AuthenticatesAndRegistersUsers, ThrottlesLogins, ValidatesRequests;
 
     /**
      * el campo en la tabla usuario que es el seudonimo
@@ -93,7 +94,7 @@ class AuthController extends Controller
         Event::fire(new NewUserRegistration($user));
 
         Flash::info(
-            'Usuario creado exitosamene, un correo de confirmación '
+            'Usuario creado exitosamente, un correo de confirmación '
             .'ha sido enviado a '
             .$user->email
         );

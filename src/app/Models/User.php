@@ -45,6 +45,7 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\User whereUpdatedBy($value)
  * @property string $confirmation_code
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\User whereConfirmationCode($value)
+ * @property-read mixed $address
  */
 class User extends AbstractBaseModel implements
     AuthenticatableContract,
@@ -81,6 +82,18 @@ class User extends AbstractBaseModel implements
      * @var array
      */
     protected $hidden = ['password', 'remember_token', 'confirmation_code'];
+
+    // -------------------------------------------------------------------------
+    // Accessor
+    // -------------------------------------------------------------------------
+
+    /**
+     * @return \PCI\Models\Address
+     */
+    public function getAddressAttribute()
+    {
+        return $this->employee->address;
+    }
 
     // -------------------------------------------------------------------------
     // Relaciones
@@ -200,7 +213,7 @@ class User extends AbstractBaseModel implements
      */
     public function isOwner($id)
     {
-        if (!isset($id)) {
+        if (is_null($id)) {
             return false;
         }
 
