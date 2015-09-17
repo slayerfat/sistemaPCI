@@ -2,7 +2,7 @@
 
 use Illuminate\View\Factory;
 use PCI\Http\Controllers\Controller;
-use PCI\Repositories\Interfaces\CategoryRepositoryInterface;
+use PCI\Repositories\Interfaces\ViewableInterface;
 
 abstract class AbstractAuxController extends Controller
 {
@@ -26,28 +26,19 @@ abstract class AbstractAuxController extends Controller
     /**
      * Genera una vista para ser utilizada por algun
      * otro controlador concreto.
-     *
-     * @param \PCI\Repositories\Interfaces\CategoryRepositoryInterface $model
+     * @param \PCI\Repositories\Interfaces\ViewableInterface $repo
      * @return \Illuminate\Contracts\View\View
      */
-    protected function createPrototype(CategoryRepositoryInterface $model)
+    protected function createPrototype(ViewableInterface $repo)
     {
         // Como estas actividades son genericas para las entidades auxiliares
         // se decide generar este metodo para disminuir la duplicacion
         // que tendria si en dado caso, se hubiera hecho normal.
-        $variables = [];
+        $results = $repo->getViewVariables();
 
-        $results = $model->viewVariables();
-
-        /**
-         * el nombre que se le dara al modelo para
-         * alguna vista en particular.
-         * ej: 'mech => new MechanicalInfo',
-         * lo que implica:
-         * $variables['mech'] (instancia de MechanicalInfo)
-         */
-        $variables[$results['variableName']] = $model;
-
-        return $this->view->make($results['target'] . 'create')->with($variables);
+        return $this->view->make(
+            $results->getViewName() . 'create',
+            ['model' => $results->getModel()]
+        );
     }
 }
