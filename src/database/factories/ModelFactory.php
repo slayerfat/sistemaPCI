@@ -108,7 +108,7 @@ $factory->define(PCI\Models\Petition::class, function () use ($faker) {
 $factory->define(PCI\Models\User::class, function () use ($faker) {
     return [
         'profile_id'        => 2,
-        'name'              => $faker->word,
+        'name'              => $faker->userName,
         'email'             => $faker->email,
         'password'          => bcrypt(str_random(10)),
         'remember_token'    => str_random(10),
