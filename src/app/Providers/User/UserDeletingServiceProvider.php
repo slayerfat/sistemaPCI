@@ -28,7 +28,7 @@ class UserDeletingServiceProvider extends ServiceProvider
                 }
             }
 
-            $id = User::whereProfileId(User::ADMIN_ID)->first()->id;
+            $id = $this->getAdminId();
 
             // si alguno de estos es verdadero, revienta un
             // Integrity constraint violation
@@ -49,5 +49,20 @@ class UserDeletingServiceProvider extends ServiceProvider
     public function register()
     {
         //User::deleting no se registra aqui.
+    }
+
+    /**
+     * @return int
+     * @throws \Exception
+     */
+    private function getAdminId()
+    {
+        $user = User::whereProfileId(User::ADMIN_ID)->first();
+
+        if (!$user) {
+            throw new \Exception('El Sistema no tiene Administradores.');
+        }
+
+        return $user->id;
     }
 }

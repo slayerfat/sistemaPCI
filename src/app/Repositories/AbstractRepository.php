@@ -107,7 +107,9 @@ abstract class AbstractRepository
 
     /**
      * @param $id
-     *
+     * @internal Laravels Policies hacen esto irrelevante.
+     * @deprecated Laravels ACL.
+     * @todo remover.
      * @return bool
      */
     protected function canUserManipulate($id)

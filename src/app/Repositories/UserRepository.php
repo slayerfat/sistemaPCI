@@ -211,7 +211,7 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
 
     /**
      * @param $id
-     * @return mixed
+     * @return bool|User
      */
     public function delete($id)
     {

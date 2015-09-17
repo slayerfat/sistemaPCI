@@ -1,10 +1,11 @@
-<?php namespace Tests\PCI\Repositories;
+<?php namespace Tests\PCI\Repositories\User;
 
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Mockery;
 use PCI\Models\User;
 use Tests\BaseTestCase;
 use PCI\Repositories\UserRepository;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class UserRepositoryTest extends BaseTestCase
@@ -105,5 +106,33 @@ class UserRepositoryTest extends BaseTestCase
         $user = $this->repo->update($this->user->id, $data);
 
         $this->assertNotEquals($this->user->password, $user->password);
+    }
+
+    public function testCreateShouldReturnUser()
+    {
+        $data = [
+            'name'       => str_random(),
+            'email'      => str_random(),
+            'password'   => 'password',
+            'profile_id' => 1,
+        ];
+
+        $this->assertInstanceOf(
+            User::class,
+            $this->repo->create($data)
+        );
+    }
+
+    public function testgetAllForTableWithPaginator()
+    {
+        $this->assertInstanceOf(
+            LengthAwarePaginator::class,
+            $this->repo->getAllForTableWithPaginator()
+        );
+    }
+
+    public function testDeleteShouldReturnBooleanWhenEverythingIsOk()
+    {
+        $this->assertTrue($this->repo->delete(1));
     }
 }

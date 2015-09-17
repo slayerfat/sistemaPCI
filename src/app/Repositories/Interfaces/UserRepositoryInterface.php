@@ -66,7 +66,7 @@ interface UserRepositoryInterface
 
     /**
      * @param $id
-     * @return mixed
+     * @return bool|User
      */
     public function delete($id);
 }
