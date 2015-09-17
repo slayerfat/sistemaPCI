@@ -6,7 +6,7 @@ interface ModelRepositoryInterface
     /**
      * Busca algun Elemento segun Id u otra regla.
      * @param  string|int $id
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return \Illuminate\Database\Eloquent\Model|null
      */
     public function find($id);
 
@@ -19,7 +19,7 @@ interface ModelRepositoryInterface
 
     /**
      * Consigue todos los elementos y devuelve una coleccion.
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return \Illuminate\Database\Eloquent\Collection|null
      */
     public function getAll();
 
@@ -32,22 +32,22 @@ interface ModelRepositoryInterface
 
     /**
      * @param array $data
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return \Illuminate\Database\Eloquent\Model|null
      */
     public function create(array $data);
 
     /**
-     * Actualiza algun moodelo.
+     * Actualiza algun modelo.
      * @param int   $id
      * @param array $data
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return \Illuminate\Database\Eloquent\Model|null
      */
     public function update($id, array $data);
 
     /**
      * Elimina del sistema un modelo.
      * @param $id
-     * @return bool|\Illuminate\Database\Eloquent\Model
+     * @return boolean|\Illuminate\Database\Eloquent\Model|null
      */
     public function delete($id);
 }

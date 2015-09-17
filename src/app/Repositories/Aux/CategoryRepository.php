@@ -11,7 +11,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     /**
      * Busca algun Elemento segun Id u otra regla.
      * @param  string|int $id
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return \Illuminate\Database\Eloquent\Model|null
      */
     public function find($id)
     {
@@ -29,7 +29,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
 
     /**
      * @param array $data
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return \Illuminate\Database\Eloquent\Model|null
      */
     public function create(array $data)
     {
@@ -37,10 +37,10 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     }
 
     /**
-     * Actualiza algun moodelo.
+     * Actualiza algun modelo.
      * @param int   $id
      * @param array $data
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return \Illuminate\Database\Eloquent\Model|null
      */
     public function update($id, array $data)
     {
@@ -50,7 +50,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     /**
      * Elimina del sistema un modelo.
      * @param $id
-     * @return bool|\Illuminate\Database\Eloquent\Model
+     * @return boolean|\Illuminate\Database\Eloquent\Model|null
      */
     public function delete($id)
     {

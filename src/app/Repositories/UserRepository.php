@@ -17,7 +17,7 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
 
     /**
      * @param  string|int $id
-     * @return User
+     * @return User|null
      */
     public function find($id)
     {
@@ -84,8 +84,7 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
 
     /**
      * @param array $data
-     * @return User
-     * @internal nope.
+     * @return \Illuminate\Database\Eloquent\Model|null
      */
     public function create(array $data)
     {
@@ -104,9 +103,10 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
     }
 
     /**
+     * Actualiza algun modelo.
      * @param int   $id
      * @param array $data
-     * @return User
+     * @return \Illuminate\Database\Eloquent\Model|null
      */
     public function update($id, array $data)
     {
@@ -203,8 +203,9 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
     }
 
     /**
+     * Elimina del sistema un modelo.
      * @param $id
-     * @return bool|User
+     * @return boolean|\Illuminate\Database\Eloquent\Model|null
      */
     public function delete($id)
     {
