@@ -1,3 +1,14 @@
+## v0.1.1
+
+Features:
+
+- Recursos genericos/Auxiliares completos (gestion de Categoria, Perfiles, etc.).
+- creados Repositorios, Proveedores y otros necesarios para los recursos, exceptuando: ---
+
+Mejoras:
+
+- Mejorada interfaces de repos, un poco mas abstracto.
+
 ## v0.0.6 17-09-15
 
 Features:
