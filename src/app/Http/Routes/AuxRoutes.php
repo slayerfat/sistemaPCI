@@ -6,7 +6,19 @@ class AuxRoutes extends PCIRoutes
     /**
      * @var array
      */
-    protected $restfulOptions = [];
+    protected $restfulOptions = [
+        [
+            'routerOptions' => [
+                'prefix'     => 'categorias',
+                'middleware' => 'auth',
+            ],
+            'rtDetails'     => [
+                'uses'     => 'Aux\CategoryController',
+                'as'       => 'cats',
+                'resource' => '{cats}'
+            ]
+        ],
+    ];
 
     /**
      * @var array
