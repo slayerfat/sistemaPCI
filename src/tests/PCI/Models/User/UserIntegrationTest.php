@@ -4,6 +4,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use PCI\Models\Address;
 use PCI\Models\Employee;
+use PCI\Models\Profile;
 use PCI\Models\User;
 use Tests\BaseTestCase;
 
@@ -28,5 +29,22 @@ class UserIntegrationTest extends BaseTestCase
         $user->employee()->save($employee);
 
         $this->assertEquals($address->street, $user->address->street);
+    }
+
+    public function testUserProfileConstantsShouldMatchProfileIds()
+    {
+        // por alguna razon que no tengo tiempo de investgar
+        // si se utiliza un data provider, se queja
+        // porque no consigue a la clase Eloquent
+        // desde el AbstractModel
+        $array = [
+            [Profile::whereDesc('Administrador')->firstOrFail()->id, User::ADMIN_ID],
+            [Profile::whereDesc('Usuario')->firstOrFail()->id, User::USER_ID],
+            [Profile::whereDesc('Desactivado')->firstOrFail()->id, User::DISABLED_ID],
+        ];
+
+        foreach ($array as $data) {
+            $this->assertEquals($data[0], $data[1]);
+        }
     }
 }

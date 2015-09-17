@@ -77,7 +77,11 @@ Es importante destacar que cada branch puede tener diferentes dependencias, lo q
 
 ### Gulp
 
+**antes de ejecutar gulp es necesario instalar Bower!** `npm install --global bower` y luego ejecutar `bower install` para instalar dependencias adicionales.
+
 Se puede ejecutar simplemente `gulp` (dentro de la carpeta src) para copiar y compilar `sass` y otros archivos a la carpeta publica del sistema.
+
+**NOTA: verificar que tengan gulp instalado antes de ejecutar**
 
 se vera:
 
