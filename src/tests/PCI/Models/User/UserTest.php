@@ -28,6 +28,11 @@ class UserTest extends BaseTestCase
         $this->assertFalse($this->user->isUnverified());
     }
 
+    public function testIsUserShouldReturnFalseWhenProfileIsAdmin()
+    {
+        $this->assertFalse($this->user->isUser());
+    }
+
     public function testProfileShouldNotInterfereWithConfirmationStatus()
     {
         $this->user->profile_id = User::DISABLED_ID;
@@ -62,5 +67,17 @@ class UserTest extends BaseTestCase
 
         $this->assertFalse($this->user->isOwnerOrAdmin(9001));
         $this->asserttrue($this->user->isOwnerOrAdmin(9000));
+        $this->asserttrue($this->user->isUser());
+    }
+
+    public function testIsOwnerShouldReturnFalseIfNullInput()
+    {
+        $this->assertFalse($this->user->isOwner(null));
+    }
+
+    public function testIsOwnerShouldReturnFalseIfNoIdIsSet()
+    {
+        unset($this->user->id);
+        $this->assertFalse($this->user->isOwner(null));
     }
 }

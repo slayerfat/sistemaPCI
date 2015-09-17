@@ -18,38 +18,41 @@ class PhoneParserTest extends BaseTestCase
         $this->parser = new PhoneParser();
     }
 
-    public function testParseNumberShouldReturnValidFormat()
+    /**
+     * @dataProvider numberDataProvider
+     */
+    public function testParseNumberShouldReturnValidFormat($value, $expected)
     {
-        $number = '00001234455';
-
-        $this->assertEquals('(000)-123-4455', $this->parser->parseNumber($number));
-
-        $number = 1112221122;
-
-        $this->assertEquals('(111)-222-1122', $this->parser->parseNumber($number));
-
-        $number = 'not a valid phone';
-
-        $this->assertEquals('', $this->parser->parseNumber($number));
+        $this->assertEquals($expected, $this->parser->parseNumber($value));
     }
 
-    public function testParseStringShouldReturnValidFormat()
+    /**
+     * @dataProvider stringDataProvider
+     */
+    public function testParseStringShouldReturnValidFormat($value, $expected)
     {
-        $number = '00001234455';
+        $this->assertEquals($expected, $this->parser->parseString($value));
+    }
 
-        $this->assertEquals('00001234455', $this->parser->parseString($number));
+    public function numberDataProvider()
+    {
+        return [
+            'valid string'   => ['00001234455', '(000)-123-4455'],
+            'valid number'   => [1112221122, '(111)-222-1122'],
+            'invalid string' => ['not a valid phone', ''],
+            'null input'     => [null, ''],
+        ];
+    }
 
-        $number = 1112221122;
-
-        $this->assertEquals('1112221122', $this->parser->parseString($number));
-
-        $number = 'algo1232224455xzx';
-
-        $this->assertEquals('1232224455', $this->parser->parseString($number));
-
-
-        $number = 'invalid 111 23 number 123a';
-
-        $this->assertEquals('', $this->parser->parseString($number));
+    public function stringDataProvider()
+    {
+        return [
+            'valid string'               => ['00001234455', '00001234455'],
+            'valid number'               => [1112221122, '1112221122'],
+            'invalid string'             => ['not a valid phone', ''],
+            'valid string with random'   => ['algo1232224455xzx', '1232224455'],
+            'invalid string with random' => ['invalid 111 23 number 123a', ''],
+            'null input'                 => [null, ''],
+        ];
     }
 }
