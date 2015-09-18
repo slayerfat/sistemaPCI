@@ -11,6 +11,12 @@ class CategoryController extends AbstractAuxController
      */
     public function create(CategoryRepositoryInterface $catRepo)
     {
-        return $this->createPrototype($catRepo);
+        // Como estas actividades son genericas para las entidades auxiliares
+        // se decide generar este metodo para disminuir la duplicacion
+        // que tendria si en dado caso, se hubiera hecho normal.
+        $results = $catRepo->getViewVariables();
+        $results->setUsersGoal(trans('defaults.cats.create'));
+
+        return $this->createPrototype($results);
     }
 }

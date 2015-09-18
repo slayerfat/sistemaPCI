@@ -1,8 +1,8 @@
 <?php namespace PCI\Http\Controllers\Aux;
 
 use Illuminate\View\Factory;
+use PCI\Repositories\ViewVariables;
 use PCI\Http\Controllers\Controller;
-use PCI\Repositories\Interfaces\ViewableInterface;
 
 abstract class AbstractAuxController extends Controller
 {
@@ -26,19 +26,14 @@ abstract class AbstractAuxController extends Controller
     /**
      * Genera una vista para ser utilizada por algun
      * otro controlador concreto.
-     * @param \PCI\Repositories\Interfaces\ViewableInterface $repo
+     * @param \PCI\Repositories\ViewVariables $variables
      * @return \Illuminate\Contracts\View\View
      */
-    protected function createPrototype(ViewableInterface $repo)
+    protected function createPrototype(ViewVariables $variables)
     {
-        // Como estas actividades son genericas para las entidades auxiliares
-        // se decide generar este metodo para disminuir la duplicacion
-        // que tendria si en dado caso, se hubiera hecho normal.
-        $results = $repo->getViewVariables();
-
         return $this->view->make(
-            $results->getViewName() . '.create',
-            ['model' => $results->getModel()]
+            $variables->getViewName() . '.create',
+            ['variables' => $variables]
         );
     }
 }

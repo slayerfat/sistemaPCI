@@ -16,13 +16,20 @@ class ViewVariables
     private $viewName;
 
     /**
-     * @param \Illuminate\Database\Eloquent\Model $model
-     * @param string                              $viewName
+     * @var string
      */
-    public function __construct(Model $model = null, $viewName = null)
+    private $usersGoal;
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Model $model
+     * @param string $viewName
+     * @param string $usersGoal
+     */
+    public function __construct(Model $model = null, $viewName = '', $usersGoal = '')
     {
         $this->model = $model;
         $this->viewName = $viewName;
+        $this->usersGoal = $usersGoal;
     }
 
     /**
@@ -42,7 +49,7 @@ class ViewVariables
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getViewName()
     {
@@ -55,5 +62,30 @@ class ViewVariables
     public function setViewName($viewName)
     {
         $this->viewName = $viewName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUsersGoal()
+    {
+        return $this->usersGoal;
+    }
+
+    /**
+     * @param string $usersGoal
+     */
+    public function setUsersGoal($usersGoal)
+    {
+        $this->usersGoal = $usersGoal;
+    }
+
+    /**
+     * Regresa los objetivos del usuario para la vista por defecto.
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getUsersGoal();
     }
 }

@@ -1,11 +1,10 @@
 <?php namespace PCI\Repositories\Aux;
 
+use PCI\Repositories\ViewVariables;
 use PCI\Repositories\AbstractRepository;
 use PCI\Repositories\Interfaces\CategoryRepositoryInterface;
-use PCI\Repositories\Interfaces\ViewableInterface;
-use PCI\Repositories\ViewVariables;
 
-class CategoryRepository extends AbstractRepository implements CategoryRepositoryInterface, ViewableInterface
+class CategoryRepository extends AbstractRepository implements CategoryRepositoryInterface
 {
 
     /**
@@ -67,7 +66,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     {
         return new ViewVariables(
             $this->newInstance(),
-            'cat'
+            'cats'
         );
     }
 }
