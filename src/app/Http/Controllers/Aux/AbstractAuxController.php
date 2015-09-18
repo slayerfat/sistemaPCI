@@ -10,7 +10,7 @@ abstract class AbstractAuxController extends Controller
     /**
      * @var \Illuminate\View\Factory
      */
-    private $view;
+    protected $view;
 
     /**
      * Create a new controller instance.

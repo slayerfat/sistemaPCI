@@ -14,7 +14,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
      */
     public function find($id)
     {
-        // TODO: Implement find() method.
+        return $this->getById($id);
     }
 
     /**
@@ -32,7 +32,11 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
      */
     public function create(array $data)
     {
-        // TODO: Implement create() method.
+        $cat = $this->model->newInstance($data);
+
+        $cat->save();
+
+        return $cat;
     }
 
     /**
