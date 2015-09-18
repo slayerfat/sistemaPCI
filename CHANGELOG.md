@@ -1,8 +1,13 @@
-## v0.1.1
+## v0.1.1 19-07-15
 
 Features:
 
-- Recursos genericos/Auxiliares completos (gestion de Categoria, Perfiles, etc.).
+- Recursos genericos/Auxiliares completos (gestion de Categoria, Perfiles, etc.), todos estos pueden cumplir las actividades basicas:
+    1. consultar listado
+    1. consultar singular
+    1. crear
+    1. actualizar
+    1. eliminar
 - creados Repositorios, Proveedores y otros necesarios para los recursos, exceptuando: ---
 
 Mejoras:

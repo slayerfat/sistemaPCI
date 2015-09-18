@@ -1,7 +1,5 @@
 @extends('master')
 
-{{--{!!dd($variables)!!}--}}
-
 @section('content')
     @if(Auth::user() and Auth::user()->isAdmin())
         <div class="container">
