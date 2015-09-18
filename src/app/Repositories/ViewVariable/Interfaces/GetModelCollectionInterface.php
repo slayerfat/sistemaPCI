@@ -11,7 +11,8 @@ interface GetModelCollectionInterface
     public function getModel();
 
     /**
-     * @param \Illuminate\Database\Eloquent\Collection|null $model
+     * @param \Illuminate\Database\Eloquent\Collection|null $collection
+     * @return void
      */
-    public function setModel(Collection $model);
+    public function setModel(Collection $collection);
 }

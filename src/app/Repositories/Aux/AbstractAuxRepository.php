@@ -28,7 +28,7 @@ abstract class AbstractAuxRepository extends AbstractRepository
      * con una colecion de modelos.
      * @param \Illuminate\Database\Eloquent\Collection $model
      * @param string $resource
-     * @return \PCI\Repositories\ViewVariable\ViewModelVariable
+     * @return \PCI\Repositories\ViewVariable\ViewCollectionVariable
      */
     protected function generateViewCollectionVariable(Collection $model, $resource)
     {
@@ -40,7 +40,7 @@ abstract class AbstractAuxRepository extends AbstractRepository
      * con una colecion de modelos.
      * @param \Illuminate\Pagination\LengthAwarePaginator $paginator
      * @param string $resource
-     * @return \PCI\Repositories\ViewVariable\ViewModelVariable
+     * @return \PCI\Repositories\ViewVariable\ViewPaginatorVariable
      */
     protected function generateViewPaginatorVariable(LengthAwarePaginator $paginator, $resource)
     {

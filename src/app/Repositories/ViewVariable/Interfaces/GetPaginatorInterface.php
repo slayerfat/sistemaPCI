@@ -12,6 +12,7 @@ interface GetPaginatorInterface
 
     /**
      * @param \Illuminate\Pagination\LengthAwarePaginator $paginator
+     * @return void
      */
     public function setModel(LengthAwarePaginator $paginator);
 }

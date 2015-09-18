@@ -1,11 +1,10 @@
 <?php namespace PCI\Repositories;
 
 use Exception;
+use PCI\Models\AbstractBaseModel;
+use Illuminate\Database\QueryException;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
-use PCI\Models\AbstractBaseModel;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\QueryException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 abstract class AbstractRepository
@@ -130,7 +129,7 @@ abstract class AbstractRepository
     /**
      * @param $id
      * @param string $column
-     * @return mixed
+     * @return \PCI\Models\User
      */
     protected function getByIdOrAnother($id, $column)
     {
@@ -152,7 +151,7 @@ abstract class AbstractRepository
      * @param int $id
      * @param string $resource
      * @param string $child
-     * @return bool|Model
+     * @return bool||\PCI\Models\User
      */
     protected function executeDelete($id, $resource = 'Recurso', $child = 'Recursos')
     {
@@ -169,7 +168,7 @@ abstract class AbstractRepository
      * @param int $id
      * @param string $resource
      * @param string $child
-     * @return bool|Model
+     * @return bool|\Illuminate\Database\Eloquent\Model
      * @internal el sistema no deberia tener softdeletes. FIXME
      */
     protected function executeForceDestroy($id, $resource = 'Recurso', $child = 'Recursos')
@@ -185,7 +184,7 @@ abstract class AbstractRepository
      * @param $resource
      * @param $child
      * @param $method
-     * @return bool|Model
+     * @return bool||\PCI\Models\User
      * @throws \Symfony\Component\HttpKernel\Exception\HttpException
      */
     private function deleteDestroyPrototype(AbstractBaseModel $model, $resource, $child, $method)

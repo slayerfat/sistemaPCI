@@ -47,10 +47,10 @@ class ViewCollectionVariable extends AbstractViewVariable implements GetModelCol
     }
 
     /**
-     * @param \Illuminate\Database\Eloquent\Collection|null $model
+     * @param \Illuminate\Database\Eloquent\Collection|null $collection
      */
-    public function setModel(Collection $model)
+    public function setModel(Collection $collection)
     {
-        $this->model = $model;
+        $this->model = $collection;
     }
 }

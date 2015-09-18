@@ -47,6 +47,7 @@ class ViewModelVariable extends AbstractViewVariable implements GetModelInterfac
 
     /**
      * @param \PCI\Models\AbstractBaseModel $model
+     * @return void
      */
     public function setModel(AbstractBaseModel $model)
     {

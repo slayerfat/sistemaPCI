@@ -12,6 +12,7 @@ interface GetModelInterface
 
     /**
      * @param \PCI\Models\AbstractBaseModel $model
+     * @return void
      */
     public function setModel(AbstractBaseModel $model);
 }

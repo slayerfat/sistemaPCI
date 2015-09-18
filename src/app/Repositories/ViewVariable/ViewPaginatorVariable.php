@@ -44,6 +44,7 @@ class ViewPaginatorVariable extends AbstractViewVariable implements GetPaginator
 
     /**
      * @param \Illuminate\Pagination\LengthAwarePaginator $paginator
+     * @return void
      */
     public function setModel(LengthAwarePaginator $paginator)
     {
