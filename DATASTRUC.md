@@ -2,6 +2,10 @@
 
 En este documento se pretende mantener la bitacora de cambios significativos en la estructura de datos del sistema.
 
+## v0.1.1
+
+Todas las entidades exceptuando **----** poseen un campo Slug. Este campo sirve para generar enlaces bonitos en el sistema, ej: usuarios/512 -> usuarios/seudonimo
+
 ## v0.0.6
 
 ### 15-09-15

@@ -8,6 +8,7 @@ Features:
 Mejoras:
 
 - Mejorada interfaces de repos, un poco mas abstracto.
+- añadido slugs a las entidades y modelos.
 
 ## v0.0.6 17-09-15
 
