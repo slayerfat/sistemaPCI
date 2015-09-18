@@ -20,6 +20,16 @@ class AbstractBaseModel extends Eloquent
 {
 
     /**
+     * Los datos necesarios para generarar un slug
+     * en el modelo, por defecto es un array
+     * con  'build_from' => 'desc',
+     *      'save_to'    => 'slug',
+     *
+     * @var Array
+     */
+    protected $sluggable;
+
+    /**
      * Automaticamente manipula los campos de control
      * created/update
      *

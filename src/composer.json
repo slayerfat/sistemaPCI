@@ -13,7 +13,8 @@
         "jenssegers/date": "^3.0",
         "laracasts/flash": "^1.3",
         "laravelcollective/html": "^5.1",
-        "patricktalmadge/bootstrapper": "~5"
+        "patricktalmadge/bootstrapper": "~5",
+        "cviebrock/eloquent-sluggable": "^3.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

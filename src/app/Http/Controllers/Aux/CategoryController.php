@@ -26,7 +26,7 @@ class CategoryController extends AbstractAuxController
 
     public function show($id)
     {
-        return $this->catRepo->find($id);
+        return $this->catRepo->getBySlugOrId($id);
     }
 
     /**
@@ -50,6 +50,6 @@ class CategoryController extends AbstractAuxController
     {
         $cat = $this->catRepo->create($request->all());
 
-        return Redirect::route('cats.show', $cat->id);
+        return Redirect::route('cats.show', $cat->slug);
     }
 }

@@ -2,6 +2,12 @@
 
 En este documento se pretende mantener la bitacora de cambios significativos en la estructura de datos del sistema.
 
+## v0.1.1
+
+Las siguientes entidades poseen un campo Slug: Categoria, Departamento, Genero, Item, Maker, Movimiento, Nacionalidad, Tipo de Nota, Tipo de Peticion, Perfil, SubCategoria.
+
+Este campo sirve para generar enlaces bonitos en el sistema, ej: usuarios/512 -> usuarios/seudonimo
+
 ## v0.0.6
 
 ### 15-09-15

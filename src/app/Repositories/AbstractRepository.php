@@ -32,7 +32,7 @@ abstract class AbstractRepository
     }
 
     /**
-     * @param  mixed $id
+     * @param  string|int $id
      *
      * @return Model
      */
