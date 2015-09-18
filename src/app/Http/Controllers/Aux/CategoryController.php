@@ -69,6 +69,10 @@ class CategoryController extends AbstractAuxController
         return Redirect::route('cats.show', $cat->slug);
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\View\View
+     */
     public function edit($id)
     {
         $variables = $this->catRepo->getEditViewVariables($id);
@@ -78,10 +82,30 @@ class CategoryController extends AbstractAuxController
         return $this->makeView('aux.edit', $variables);
     }
 
+    /**
+     * @param $id
+     * @param \PCI\Http\Requests\Aux\CategoryRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function update($id, CategoryRequest $request)
     {
         $cat = $this->catRepo->update($id, $request->all());
 
         return Redirect::route('cats.show', $cat->slug);
+    }
+
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy($id)
+    {
+        $result = $this->catRepo->delete($id);
+
+        if ($result === true) {
+            return Redirect::route('cats.index');
+        }
+
+        return Redirect::route('cats.show', $result->desc);
     }
 }

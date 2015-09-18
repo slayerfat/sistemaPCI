@@ -63,7 +63,7 @@ class CategoryRepository extends AbstractAuxRepository implements CategoryReposi
      */
     public function delete($id)
     {
-        // TODO: Implement delete() method.
+        return $this->executeDelete($id, 'Categoria');
     }
 
     /**
