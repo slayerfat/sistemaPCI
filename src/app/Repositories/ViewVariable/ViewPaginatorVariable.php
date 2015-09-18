@@ -1,6 +1,5 @@
 <?php namespace PCI\Repositories\ViewVariable;
 
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 use PCI\Repositories\ViewVariable\Interfaces\GetPaginatorInterface;
 

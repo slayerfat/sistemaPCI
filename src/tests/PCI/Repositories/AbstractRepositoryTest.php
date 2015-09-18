@@ -3,7 +3,7 @@
 use Mockery;
 use PCI\Models\User;
 use Tests\BaseTestCase;
-use Illuminate\Database\Eloquent\Model;
+use PCI\Models\AbstractBaseModel;
 use PCI\Repositories\UserRepository as ConcreteClass;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -34,7 +34,7 @@ class AbstractRepositoryTest extends BaseTestCase
 
     public function testConstructShouldInitTheModel()
     {
-        $model = Mockery::mock(Model::class);
+        $model = Mockery::mock(AbstractBaseModel::class);
 
         $repo = new ConcreteClass($model);
 
