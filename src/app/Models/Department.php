@@ -2,6 +2,8 @@
 
 namespace PCI\Models;
 
+use Cviebrock\EloquentSluggable\SluggableInterface;
+use Cviebrock\EloquentSluggable\SluggableTrait;
 use Illuminate\Database\Eloquent\Collection;
 
 /** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
@@ -24,15 +26,28 @@ use Illuminate\Database\Eloquent\Collection;
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Department whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Department whereCreatedBy($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Department whereUpdatedBy($value)
+ * @property string $slug
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Department whereSlug($value)
  */
-class Department extends AbstractBaseModel
+class Department extends AbstractBaseModel implements SluggableInterface
 {
+
+    use SluggableTrait;
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = ['desc', 'phone'];
+
+    /**
+     * @var array
+     */
+    protected $sluggable = [
+        'build_from' => 'desc',
+        'save_to'    => 'slug',
+    ];
 
     // -------------------------------------------------------------------------
     // Relaciones

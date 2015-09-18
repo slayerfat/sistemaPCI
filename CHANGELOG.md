@@ -8,7 +8,7 @@ Features:
 Mejoras:
 
 - Mejorada interfaces de repos, un poco mas abstracto.
-- añadido slugs a las entidades y modelos.
+- Las siguientes entidades poseen un campo Slug: Categoria, Departamento, Genero, Item, Maker, Movimiento, Nacionalidad, Tipo de Nota, Tipo de Peticion, Perfil, SubCategoria.
 
 ## v0.0.6 17-09-15
 
