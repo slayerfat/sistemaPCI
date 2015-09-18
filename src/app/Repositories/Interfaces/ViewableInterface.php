@@ -30,7 +30,8 @@ interface ViewableInterface
      * Regresa variable con un modelo y datos
      * adicionales necesarios para generar la
      * vista con el proposito de Model Binding.
+     * @param string|int $id
      * @return \PCI\Repositories\ViewVariable\ViewModelVariable
      */
-    public function getEditViewVariables();
+    public function getEditViewVariables($id);
 }

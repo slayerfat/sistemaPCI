@@ -1,4 +1,4 @@
-@if(!$data)
+@if($data)
     <div class="container">
         @if($title)
             <h3>{{$title}}</h3>

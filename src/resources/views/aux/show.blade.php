@@ -33,7 +33,3 @@
         </div>
     </div>
 @stop
-
-@section('js')
-    <script src="{!! asset('js/show/deleteResourceConfirm.js') !!}"></script>
-@stop

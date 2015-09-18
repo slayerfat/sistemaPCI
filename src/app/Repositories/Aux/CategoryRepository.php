@@ -46,7 +46,14 @@ class CategoryRepository extends AbstractAuxRepository implements CategoryReposi
      */
     public function update($id, array $data)
     {
-        // TODO: Implement update() method.
+        /** @var \PCI\Models\Category $cat */
+        $cat = $this->find($id);
+
+        $cat->desc = $data['desc'];
+
+        $cat->save();
+
+        return $cat;
     }
 
     /**
@@ -111,11 +118,14 @@ class CategoryRepository extends AbstractAuxRepository implements CategoryReposi
      * Regresa variable con un modelo y datos
      * adicionales necesarios para generar la
      * vista con el proposito de Model Binding.
+     * @param string|int $id
      * @return \PCI\Repositories\ViewVariable\ViewModelVariable
      */
-    public function getEditViewVariables()
+    public function getEditViewVariables($id)
     {
-        // TODO: Implement getEditViewVariables() method.
+        $cat = $this->getBySlugOrId($id);
+
+        return $this->generateViewVariable($cat, 'cats');
     }
 
     /**

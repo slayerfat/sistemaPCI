@@ -26,9 +26,10 @@ class CategoryController extends AbstractAuxController
 
     public function index()
     {
-        $variables = $this->catRepo->getIndexViewVariables();
-
-        return $this->makeView('aux.index', $variables);
+        return $this->makeView(
+            'aux.index',
+            $this->catRepo->getIndexViewVariables()
+        );
     }
 
     /**
@@ -65,6 +66,22 @@ class CategoryController extends AbstractAuxController
     {
         $cat = $this->catRepo->create($request->all());
 
-        return Redirect::route('aux.show', $cat->slug);
+        return Redirect::route('cats.show', $cat->slug);
+    }
+
+    public function edit($id)
+    {
+        $variables = $this->catRepo->getEditViewVariables($id);
+
+        $variables->setUsersGoal('Actualizar Categoria');
+
+        return $this->makeView('aux.edit', $variables);
+    }
+
+    public function update($id, CategoryRequest $request)
+    {
+        $cat = $this->catRepo->update($id, $request->all());
+
+        return Redirect::route('cats.show', $cat->slug);
     }
 }

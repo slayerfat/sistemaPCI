@@ -69,6 +69,7 @@ elixir(function (mix) {
 
         // le hace el amor y ejacula ~/sistemaPCI/public/js/all.js
         .scripts([
+            'deleteResourceConfirm.js',
             'deleteResourceFromAnchor.js',
             paths.jquery + "dist/jquery.js",
             paths.bootstrap + "javascripts/bootstrap.js"
