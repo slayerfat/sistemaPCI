@@ -1,6 +1,7 @@
 <?php namespace Tests\PCI\Repositories\User;
 
 use Mockery;
+use PCI\Models\Employee;
 use PCI\Models\User;
 use Tests\BaseTestCase;
 use PCI\Repositories\UserRepository;
@@ -123,12 +124,24 @@ class UserRepositoryTest extends BaseTestCase
         );
     }
 
-    public function testgetAllForTableWithPaginator()
+    public function testGetAllForTableWithPaginator()
     {
         $this->assertInstanceOf(
             LengthAwarePaginator::class,
             $this->repo->getTablePaginator()
         );
+    }
+
+    public function testPaginatorShouldReturnEmplyeeDayaIfUserHas()
+    {
+        $employee = factory(Employee::class)->make();
+
+        $this->user->employee()->save($employee);
+
+        $results = $this->repo->getTablePaginator();
+
+        $this->assertFalse($results->isEmpty());
+        $this->assertArrayHasKey('Nombres', $results->getCollection()->first());
     }
 
     public function testDeleteShouldReturnBooleanWhenEverythingIsOk()

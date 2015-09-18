@@ -66,4 +66,13 @@ class AbstractRepositoryTest extends BaseTestCase
     {
         $this->repo->getById(null);
     }
+
+    /**
+     * @expectedException \Symfony\Component\HttpKernel\Exception\HttpException
+     * @expectedExceptionMessage No se pudo eliminar al Usuario, error inesperado.
+     */
+    public function testDeleteShouldThrowExceptionWhenOnlyAdmin()
+    {
+        $this->repo->delete(1);
+    }
 }
