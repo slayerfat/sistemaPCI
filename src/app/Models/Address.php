@@ -128,7 +128,7 @@ class Address extends AbstractBaseModel
             return null;
         }
 
-        return 'Edf./Qta./Blq. '. $this->building;
+        return 'Edf./Qta./Blq. ' . $this->building;
     }
 
     /**
@@ -140,7 +140,7 @@ class Address extends AbstractBaseModel
             return null;
         }
 
-        return 'Calle(s) '. $this->street;
+        return 'Calle(s) ' . $this->street;
     }
 
     /**
@@ -152,7 +152,7 @@ class Address extends AbstractBaseModel
             return null;
         }
 
-        return 'Av. '. $this->av;
+        return 'Av. ' . $this->av;
     }
 
     /**

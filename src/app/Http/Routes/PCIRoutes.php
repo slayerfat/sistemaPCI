@@ -85,10 +85,10 @@ abstract class PCIRoutes
                 'index'   => ['get', '/'],
                 'create'  => ['get', '/crear'],
                 'store'   => ['post', '/'],
-                'show'    => ['get', '/'.$details['resource']],
-                'edit'    => ['get', '/'.$details['resource'].'/editar'],
-                'update'  => ['patch', '/'.$details['resource']],
-                'destroy' => ['delete', '/'.$details['resource']],
+                'show'    => ['get', '/' . $details['resource']],
+                'edit'    => ['get', '/' . $details['resource'] . '/editar'],
+                'update'  => ['patch', '/' . $details['resource']],
+                'destroy' => ['delete', '/' . $details['resource']],
             ];
 
             // si en los detalles hay ignore, se salta.
@@ -108,8 +108,8 @@ abstract class PCIRoutes
                 Route::$rule[0](
                     $rule[1],
                     [
-                        'uses' => $details['uses'].'@'.$name,
-                        'as'   => $details['as'].'.'.$name
+                        'uses' => $details['uses'] . '@' . $name,
+                        'as'   => $details['as'] . '.' . $name
                     ]
                 );
             }
