@@ -12,6 +12,12 @@ use PCI\Repositories\ViewVariable\Interfaces\ViewVariableInterface;
 abstract class AbstractViewVariable implements ViewVariableInterface
 {
 
+
+    /**
+     * El Modelo a manipular
+     */
+    protected $model;
+
     /**
      * @var string
      */
@@ -258,5 +264,17 @@ abstract class AbstractViewVariable implements ViewVariableInterface
     {
         $this->initialView = "{$this->resource}.index";
         $this->destView    = "{$this->resource}.show";
+    }
+
+    /**
+     * @param $resource
+     */
+    protected function setDefaults($resource)
+    {
+        $this->resource = $resource;
+
+        $this->setViews();
+        $this->setRoutes();
+        $this->setNames();
     }
 }

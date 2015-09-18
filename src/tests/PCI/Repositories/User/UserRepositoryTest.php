@@ -127,7 +127,7 @@ class UserRepositoryTest extends BaseTestCase
     {
         $this->assertInstanceOf(
             LengthAwarePaginator::class,
-            $this->repo->getAllForTableWithPaginator()
+            $this->repo->getTablePaginator()
         );
     }
 

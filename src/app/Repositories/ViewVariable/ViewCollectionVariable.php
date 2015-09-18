@@ -10,7 +10,7 @@ class ViewCollectionVariable extends AbstractViewVariable implements GetModelCol
      * El Modelo a manipular
      * @var \PCI\Models\AbstractBaseModel
      */
-    private $model;
+    protected $model;
 
     /**
      * Genera una instancia de ViewModelVariable, que sirve para generar

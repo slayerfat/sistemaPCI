@@ -1,35 +1,19 @@
 <?php namespace PCI\Repositories\Aux;
 
 use PCI\Models\AbstractBaseModel;
-use PCI\Repositories\AbstractRepository;
-use PCI\Repositories\ViewVariable\ViewModelVariable;
 use PCI\Repositories\Interfaces\CategoryRepositoryInterface;
 
-class CategoryRepository extends AbstractRepository implements CategoryRepositoryInterface
+class CategoryRepository extends AbstractAuxRepository implements CategoryRepositoryInterface
 {
 
     /**
      * Busca algun Elemento segun Id u otra regla.
      * @param  string|int $id
-     * @return \PCI\Repositories\AbstractRepository
+     * @return \PCI\Models\AbstractBaseModel
      */
     public function find($id)
     {
         return $this->getById($id);
-    }
-
-    /**
-     * @param string|int $id
-     * @return \PCI\Repositories\ViewVariable\ViewModelVariable
-     */
-    public function getBySlugOrId($id)
-    {
-        $cat = parent::getBySlugOrId($id);
-
-        $variable = $this->generateViewVariable($cat, 'cats');
-        $variable->setDestView('cats.show');
-
-        return $variable;
     }
 
     /**
@@ -38,12 +22,12 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
      */
     public function getAll()
     {
-        // TODO: Implement getAll() method.
+        return $this->model->all();
     }
 
     /**
      * @param array $data
-     * @return \PCI\Repositories\AbstractRepository
+     * @return \PCI\Models\AbstractBaseModel
      */
     public function create(array $data)
     {
@@ -58,7 +42,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
      * Actualiza algun modelo.
      * @param int   $id
      * @param array $data
-     * @return \PCI\Repositories\AbstractRepository
+     * @return \PCI\Models\AbstractBaseModel
      */
     public function update($id, array $data)
     {
@@ -68,11 +52,43 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     /**
      * Elimina del sistema un modelo.
      * @param $id
-     * @return boolean|\PCI\Repositories\AbstractRepository
+     * @return boolean|\PCI\Models\AbstractBaseModel
      */
     public function delete($id)
     {
         // TODO: Implement delete() method.
+    }
+
+    /**
+     * Regresa variable con una coleccion y datos
+     * adicionales necesarios para generar la vista.
+     * @return \PCI\Repositories\ViewVariable\ViewModelVariable
+     */
+    public function getIndexViewVariables()
+    {
+        $collection = $this->getAll();
+
+        $results = $this->generatePaginator($collection);
+
+        $variable = $this->generateViewPaginatorVariable($results, 'cats');
+
+        return $variable;
+    }
+
+    /**
+     * Regresa variable con un modelo y datos
+     * adicionales necesarios para generar la vista.
+     * @param string|int $id
+     * @return \PCI\Repositories\ViewVariable\ViewModelVariable
+     */
+    public function getShowViewVariables($id)
+    {
+        $cat = $this->getBySlugOrId($id);
+
+        $variable = $this->generateViewVariable($cat, 'cats');
+        $variable->setDestView('cats.show');
+
+        return $variable;
     }
 
     /**
@@ -92,14 +108,27 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     }
 
     /**
-     * Genera una instancia de ViewModelVariable
-     * dandole una instancia de Category.
-     * @param \PCI\Models\AbstractBaseModel $model
-     * @param string $resource
+     * Regresa variable con un modelo y datos
+     * adicionales necesarios para generar la
+     * vista con el proposito de Model Binding.
      * @return \PCI\Repositories\ViewVariable\ViewModelVariable
      */
-    private function generateViewVariable(AbstractBaseModel $model, $resource)
+    public function getEditViewVariables()
     {
-        return new ViewModelVariable($model, $resource);
+        // TODO: Implement getEditViewVariables() method.
+    }
+
+    /**
+     * genera la data necesaria que utilizara el paginator.
+     *
+     * @param \PCI\Models\AbstractBaseModel|\PCI\Models\Category $cat
+     * @return array
+     */
+    protected function makePaginatorData(AbstractBaseModel $cat)
+    {
+        return [
+            'uid'         => $cat->desc,
+            'Descripción' => $cat->desc,
+        ];
     }
 }

@@ -1,6 +1,6 @@
 <?php namespace PCI\Repositories\Interfaces;
 
-interface UserRepositoryInterface extends ModelRepositoryInterface
+interface UserRepositoryInterface extends ModelRepositoryInterface, RepositoryPaginatorInterface
 {
 
     /**
@@ -17,10 +17,4 @@ interface UserRepositoryInterface extends ModelRepositoryInterface
      * @return bool
      */
     public function confirm($code);
-
-    /**
-     * @param int $quantity
-     * @return \Illuminate\Pagination\LengthAwarePaginator
-     */
-    public function getAllForTableWithPaginator($quantity = 25);
 }

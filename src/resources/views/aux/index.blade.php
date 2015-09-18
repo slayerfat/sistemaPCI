@@ -4,7 +4,7 @@
 
     @include('partials.genericTable', [
         'data' => $variables,
-        'title' => $variables->usersGoal()
+        'title' => $variables->getUsersGoal()
     ])
 
 @stop

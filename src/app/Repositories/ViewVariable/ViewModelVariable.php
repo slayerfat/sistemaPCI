@@ -10,7 +10,7 @@ class ViewModelVariable extends AbstractViewVariable implements GetModelInterfac
      * El Modelo a manipular
      * @var \PCI\Models\AbstractBaseModel
      */
-    private $model;
+    protected $model;
 
     /**
      * Genera una instancia de ViewModelVariable, que sirve para generar

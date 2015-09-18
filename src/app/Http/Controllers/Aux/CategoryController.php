@@ -24,17 +24,24 @@ class CategoryController extends AbstractAuxController
         $this->catRepo = $catRepo;
     }
 
+    public function index()
+    {
+        $variables = $this->catRepo->getIndexViewVariables();
+
+        return $this->makeView('aux.index', $variables);
+    }
+
     /**
      * @param string|int $id
      * @return \Illuminate\Contracts\View\View
      */
     public function show($id)
     {
-        $variables = $this->catRepo->getBySlugOrId($id);
+        $variables = $this->catRepo->getShowViewVariables($id);
 
         $variables->setUsersGoal('Categorias en el sistema');
 
-        return $this->showPrototype($variables);
+        return $this->makeView('aux.show', $variables);
     }
 
     /**
@@ -47,7 +54,7 @@ class CategoryController extends AbstractAuxController
         // que tendria si en dado caso, se hubiera hecho normal.
         $results = $this->catRepo->getCreateViewVariables();
 
-        return $this->createPrototype($results);
+        return $this->makeView('aux.create', $results);
     }
 
     /**
@@ -58,6 +65,6 @@ class CategoryController extends AbstractAuxController
     {
         $cat = $this->catRepo->create($request->all());
 
-        return Redirect::route('cats.show', $cat->slug);
+        return Redirect::route('aux.show', $cat->slug);
     }
 }
