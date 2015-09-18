@@ -46,8 +46,8 @@ class AbstractBaseModel extends Eloquent
             );
         } elseif (is_null($id) && ($env == 'local' || $env == 'testing')) {
             Log::critical(
-                __CLASS__.' no pudo encontrar en '
-                .__METHOD__.' ID para la manipulacion.'
+                __CLASS__ . ' no pudo encontrar en '
+                .__METHOD__ . ' ID para la manipulacion.'
             );
 
             $id = 1;
