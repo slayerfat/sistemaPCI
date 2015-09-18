@@ -1,51 +1,50 @@
-<?php namespace PCI\Repositories;
+<?php namespace PCI\Repositories\ViewVariable;
 
 use StdClass;
 use PCI\Models\AbstractBaseModel;
-use Illuminate\Database\Eloquent\Model;
+use PCI\Repositories\ViewVariable\Interfaces\ViewVariableInterface;
 
-class ViewVariables
+/**
+ * Class AbstractViewVariable
+ * @package PCI\Repositories\ViewVariable
+ * @link http://i.imgur.com/xVyoSl.jpg
+ */
+abstract class AbstractViewVariable implements ViewVariableInterface
 {
 
     /**
-     * El Modelo a manipular
-     * @var \PCI\Models\AbstractBaseModel
+     * @var string
      */
-    private $model;
+    protected $destView;
 
     /**
      * @var string
      */
-    private $destView;
-
-    /**
-     * @var string
-     */
-    private $initialView;
+    protected $initialView;
 
     /**
      * El objetivo del usuario descrito en una
      * frase corta, Ej: Crear Perfil
      * @var string
      */
-    private $usersGoal;
+    protected $usersGoal;
 
     /**
      * @var string
      */
-    private $foreignKey;
+    protected $foreignKey;
 
     /**
      * @var \PCI\Models\AbstractBaseModel
      */
-    private $parent;
+    protected $parent;
 
     /**
      * El titulo del padre es la descripcion textual formateada
      * para algun formulario u otro elemento.
      * @var string
      */
-    private $parentTitle;
+    protected $parentTitle;
 
     /**
      * El identificador users, notes, etc
@@ -53,60 +52,19 @@ class ViewVariables
      * user.show, users.index, etc.
      * @var string
      */
-    private $resource;
+    protected $resource;
 
     /**
      * Contiene las rutas, routes->show, routes->index
      * @var \StdClass
      */
-    private $routes;
+    protected $routes;
 
     /**
      * Contiene los nombres formales en sigular y plural
      * @var \StdClass
      */
-    private $names;
-
-    /**
-     * Genera una instancia de ViewVariables, que sirve para generar
-     * formularios genericos de entidades secundarias.
-     * @param \PCI\Models\AbstractBaseModel $model
-     * @param string $resource
-     */
-    public function __construct(AbstractBaseModel $model, $resource)
-    {
-        $this->model    = $model;
-        $this->resource = $resource;
-
-        $this->setViews();
-        $this->setRoutes();
-        $this->setNames();
-    }
-
-    /**
-     * Regresa el modelo en json.
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->getModel()->toJson();
-    }
-
-    /**
-     * @return \PCI\Models\AbstractBaseModel
-     */
-    public function getModel()
-    {
-        return $this->model;
-    }
-
-    /**
-     * @param \PCI\Models\AbstractBaseModel $model
-     */
-    public function setModel(AbstractBaseModel $model)
-    {
-        $this->model = $model;
-    }
+    protected $names;
 
     /**
      * @return string
@@ -173,7 +131,7 @@ class ViewVariables
     }
 
     /**
-     * @return Model
+     * @return \PCI\Models\AbstractBaseModel
      */
     public function getParent()
     {
@@ -194,7 +152,7 @@ class ViewVariables
     }
 
     /**
-     * @param Model $parent
+     * @param \PCI\Models\AbstractBaseModel $parent
      */
     public function setParent($parent)
     {
@@ -247,7 +205,7 @@ class ViewVariables
      * Genera las rutas necesarias para manipular al
      * modelo en las vistas y controladores
      */
-    private function setRoutes()
+    protected function setRoutes()
     {
         $this->routes = new StdClass;
         $routes       = [
@@ -260,7 +218,7 @@ class ViewVariables
     }
 
     /**
-     * @return StdClass
+     * @return \StdClass
      */
     public function getRoutes()
     {
@@ -268,17 +226,9 @@ class ViewVariables
     }
 
     /**
-     * @return \StdClass
-     */
-    public function getNames()
-    {
-        return $this->names;
-    }
-
-    /**
      * Genera los nombres formales.
      */
-    private function setNames()
+    protected function setNames()
     {
         $this->names = new StdClass;
         $types       = [
@@ -292,10 +242,19 @@ class ViewVariables
     }
 
     /**
+     * @return \StdClass
+     */
+    public function getNames()
+    {
+        return $this->names;
+    }
+
+
+    /**
      * genera la vista inicial (a donde se va inicialmente) y la
      * vista de destino (a donde se pretende ir, si aplica)
      */
-    private function setViews()
+    protected function setViews()
     {
         $this->initialView = "{$this->resource}.index";
         $this->destView    = "{$this->resource}.show";

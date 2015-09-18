@@ -5,7 +5,7 @@ interface CategoryRepositoryInterface extends ModelRepositoryInterface, Viewable
 
     /**
      * @param string|int $id
-     * @return \PCI\Repositories\ViewVariables
+     * @return \PCI\Repositories\ViewVariable\ViewModelVariable
      */
     public function getBySlugOrId($id);
 }

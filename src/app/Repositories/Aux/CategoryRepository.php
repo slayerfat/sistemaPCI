@@ -1,9 +1,8 @@
 <?php namespace PCI\Repositories\Aux;
 
 use PCI\Models\AbstractBaseModel;
-use PCI\Repositories\ViewVariables;
-use Illuminate\Database\Eloquent\Model;
 use PCI\Repositories\AbstractRepository;
+use PCI\Repositories\ViewVariable\ViewModelVariable;
 use PCI\Repositories\Interfaces\CategoryRepositoryInterface;
 
 class CategoryRepository extends AbstractRepository implements CategoryRepositoryInterface
@@ -12,7 +11,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     /**
      * Busca algun Elemento segun Id u otra regla.
      * @param  string|int $id
-     * @return \Illuminate\Database\Eloquent\Model|null
+     * @return \PCI\Repositories\AbstractRepository
      */
     public function find($id)
     {
@@ -21,14 +20,14 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
 
     /**
      * @param string|int $id
-     * @return \PCI\Repositories\ViewVariables
+     * @return \PCI\Repositories\ViewVariable\ViewModelVariable
      */
     public function getBySlugOrId($id)
     {
         $cat = parent::getBySlugOrId($id);
 
         $variable = $this->generateViewVariable($cat, 'cats');
-        $variable->getDestView('cats.show');
+        $variable->setDestView('cats.show');
 
         return $variable;
     }
@@ -44,7 +43,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
 
     /**
      * @param array $data
-     * @return \Illuminate\Database\Eloquent\Model|null
+     * @return \PCI\Repositories\AbstractRepository
      */
     public function create(array $data)
     {
@@ -59,7 +58,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
      * Actualiza algun modelo.
      * @param int   $id
      * @param array $data
-     * @return \Illuminate\Database\Eloquent\Model|null
+     * @return \PCI\Repositories\AbstractRepository
      */
     public function update($id, array $data)
     {
@@ -69,7 +68,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     /**
      * Elimina del sistema un modelo.
      * @param $id
-     * @return boolean|\Illuminate\Database\Eloquent\Model|null
+     * @return boolean|\PCI\Repositories\AbstractRepository
      */
     public function delete($id)
     {
@@ -80,7 +79,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
      * regresa la informacion necesaria para generar la vista.
      * esta necesita el destino y el nombre de
      * la variable para el Model Binding.
-     * @return \PCI\Repositories\ViewVariables
+     * @return \PCI\Repositories\ViewVariable\ViewModelVariable
      */
     public function getCreateViewVariables()
     {
@@ -93,14 +92,14 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     }
 
     /**
-     * Genera una instancia de ViewVariable
+     * Genera una instancia de ViewModelVariable
      * dandole una instancia de Category.
      * @param \PCI\Models\AbstractBaseModel $model
      * @param string $resource
-     * @return \PCI\Repositories\ViewVariables
+     * @return \PCI\Repositories\ViewVariable\ViewModelVariable
      */
     private function generateViewVariable(AbstractBaseModel $model, $resource)
     {
-        return new ViewVariables($model, $resource);
+        return new ViewModelVariable($model, $resource);
     }
 }

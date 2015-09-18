@@ -1,7 +1,7 @@
 <?php namespace PCI\Http\Controllers\Aux;
 
 use Illuminate\View\Factory;
-use PCI\Repositories\ViewVariables;
+use PCI\Repositories\ViewVariable\ViewModelVariable;
 use PCI\Http\Controllers\Controller;
 
 abstract class AbstractAuxController extends Controller
@@ -26,10 +26,10 @@ abstract class AbstractAuxController extends Controller
     /**
      * Genera una vista para ser utilizada por algun
      * otro controlador concreto.
-     * @param \PCI\Repositories\ViewVariables $variables
+     * @param \PCI\Repositories\ViewVariable\ViewModelVariable $variables
      * @return \Illuminate\Contracts\View\View
      */
-    protected function showPrototype(ViewVariables $variables)
+    protected function showPrototype(ViewModelVariable $variables)
     {
         return $this->view->make(
             'aux.show',
@@ -40,10 +40,10 @@ abstract class AbstractAuxController extends Controller
     /**
      * Genera una vista para ser utilizada por algun
      * otro controlador concreto.
-     * @param \PCI\Repositories\ViewVariables $variables
+     * @param \PCI\Repositories\ViewVariable\ViewModelVariable $variables
      * @return \Illuminate\Contracts\View\View
      */
-    protected function createPrototype(ViewVariables $variables)
+    protected function createPrototype(ViewModelVariable $variables)
     {
         return $this->view->make(
             'aux.create',

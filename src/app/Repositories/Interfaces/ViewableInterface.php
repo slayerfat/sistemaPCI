@@ -7,7 +7,7 @@ interface ViewableInterface
      * regresa la informacion necesaria para generar la vista.
      * esta necesita el destino y el nombre de
      * la variable para el Model Binding.
-     * @return \PCI\Repositories\ViewVariables
+     * @return \PCI\Repositories\ViewVariable\ViewModelVariable
      */
     public function getCreateViewVariables();
 }

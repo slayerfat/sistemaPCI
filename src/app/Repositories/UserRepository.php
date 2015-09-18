@@ -11,13 +11,13 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
 {
 
     /**
-     * @var User
+     * @var \PCI\Models\User
      */
     protected $model;
 
     /**
      * @param  string|int $id
-     * @return User|null
+     * @return \PCI\Models\User
      */
     public function find($id)
     {
@@ -27,7 +27,7 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
     }
 
     /**
-     * @return User
+     * @return \PCI\Models\User
      */
     public function generateConfirmationCode()
     {
@@ -42,7 +42,7 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
 
     /**
      * @param string $code
-     * @return bool
+     * @return boolean
      */
     public function confirm($code)
     {
@@ -84,11 +84,11 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
 
     /**
      * @param array $data
-     * @return \Illuminate\Database\Eloquent\Model|null
+     * @return \PCI\Repositories\AbstractRepository|null
      */
     public function create(array $data)
     {
-        /** @var User $user */
+        /** @var \PCI\Models\User $user */
         $user = $this->newInstance();
 
         $user->name       = $data['name'];
@@ -106,7 +106,7 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
      * Actualiza algun modelo.
      * @param int   $id
      * @param array $data
-     * @return \Illuminate\Database\Eloquent\Model|null
+     * @return \PCI\Repositories\AbstractRepository|null
      */
     public function update($id, array $data)
     {
@@ -205,7 +205,7 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
     /**
      * Elimina del sistema un modelo.
      * @param $id
-     * @return boolean|\Illuminate\Database\Eloquent\Model|null
+     * @return boolean|\PCI\Repositories\AbstractRepository
      */
     public function delete($id)
     {
