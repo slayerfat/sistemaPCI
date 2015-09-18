@@ -4,8 +4,8 @@ interface CategoryRepositoryInterface extends ModelRepositoryInterface, Viewable
 {
 
     /**
-     * @param mixed $id
-     * @return \PCI\Models\Category
+     * @param string|int $id
+     * @return \PCI\Repositories\ViewVariables
      */
     public function getBySlugOrId($id);
 }

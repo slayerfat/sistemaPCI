@@ -1,6 +1,8 @@
 <?php namespace PCI\Repositories\Aux;
 
+use PCI\Models\AbstractBaseModel;
 use PCI\Repositories\ViewVariables;
+use Illuminate\Database\Eloquent\Model;
 use PCI\Repositories\AbstractRepository;
 use PCI\Repositories\Interfaces\CategoryRepositoryInterface;
 
@@ -15,6 +17,20 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     public function find($id)
     {
         return $this->getById($id);
+    }
+
+    /**
+     * @param string|int $id
+     * @return \PCI\Repositories\ViewVariables
+     */
+    public function getBySlugOrId($id)
+    {
+        $cat = parent::getBySlugOrId($id);
+
+        $variable = $this->generateViewVariable($cat, 'cats');
+        $variable->getDestView('cats.show');
+
+        return $variable;
     }
 
     /**
@@ -68,7 +84,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
      */
     public function getCreateViewVariables()
     {
-        $results = $this->generateViewVariable();
+        $results = $this->generateViewVariable($this->newInstance(), 'cats');
 
         $results->setUsersGoal(trans('defaults.cats.create'));
         $results->setDestView('cats.store');
@@ -79,14 +95,12 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     /**
      * Genera una instancia de ViewVariable
      * dandole una instancia de Category.
+     * @param \PCI\Models\AbstractBaseModel $model
+     * @param string $resource
      * @return \PCI\Repositories\ViewVariables
      */
-    private function generateViewVariable()
+    private function generateViewVariable(AbstractBaseModel $model, $resource)
     {
-        $variables = new ViewVariables(
-            $this->newInstance()
-        );
-
-        return $variables;
+        return new ViewVariables($model, $resource);
     }
 }

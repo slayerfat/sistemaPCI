@@ -1,9 +1,9 @@
 <?php namespace PCI\Http\Controllers\Aux;
 
+use Redirect;
 use Illuminate\View\Factory;
 use PCI\Http\Requests\Aux\CategoryRequest;
 use PCI\Repositories\Interfaces\CategoryRepositoryInterface;
-use Redirect;
 
 class CategoryController extends AbstractAuxController
 {
@@ -24,9 +24,17 @@ class CategoryController extends AbstractAuxController
         $this->catRepo = $catRepo;
     }
 
+    /**
+     * @param string|int $id
+     * @return \Illuminate\Contracts\View\View
+     */
     public function show($id)
     {
-        return $this->catRepo->getBySlugOrId($id);
+        $variables = $this->catRepo->getBySlugOrId($id);
+
+        $variables->setUsersGoal('Categorias en el sistema');
+
+        return $this->showPrototype($variables);
     }
 
     /**

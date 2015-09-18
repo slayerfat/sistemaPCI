@@ -1,5 +1,7 @@
 <?php namespace PCI\Repositories;
 
+use StdClass;
+use PCI\Models\AbstractBaseModel;
 use Illuminate\Database\Eloquent\Model;
 
 class ViewVariables
@@ -7,7 +9,7 @@ class ViewVariables
 
     /**
      * El Modelo a manipular
-     * @var \Illuminate\Database\Eloquent\Model
+     * @var \PCI\Models\AbstractBaseModel
      */
     private $model;
 
@@ -15,6 +17,11 @@ class ViewVariables
      * @var string
      */
     private $destView;
+
+    /**
+     * @var string
+     */
+    private $initialView;
 
     /**
      * El objetivo del usuario descrito en una
@@ -29,7 +36,7 @@ class ViewVariables
     private $foreignKey;
 
     /**
-     * @var \Illuminate\Database\Eloquent\Model
+     * @var \PCI\Models\AbstractBaseModel
      */
     private $parent;
 
@@ -41,33 +48,52 @@ class ViewVariables
     private $parentTitle;
 
     /**
+     * El identificador users, notes, etc
+     * para generar las vistas y enlaces
+     * user.show, users.index, etc.
+     * @var string
+     */
+    private $resource;
+
+    /**
+     * Contiene las rutas, routes->show, routes->index
+     * @var \StdClass
+     */
+    private $routes;
+
+    /**
+     * Contiene los nombres formales en sigular y plural
+     * @var \StdClass
+     */
+    private $names;
+
+    /**
      * Genera una instancia de ViewVariables, que sirve para generar
      * formularios genericos de entidades secundarias.
-     *
-     * de ser necesario se puede especificar el padre, la llave foranea
-     * y el titulo del padre para generar un formulario con foreign key.
-     * @param \Illuminate\Database\Eloquent\Model $model
-     * @param string $usersGoal
-     * @param string $destView
+     * @param \PCI\Models\AbstractBaseModel $model
+     * @param string $resource
      */
-    public function __construct(Model $model = null, $usersGoal = '', $destView = '')
+    public function __construct(AbstractBaseModel $model, $resource)
     {
-        $this->model     = $model;
-        $this->usersGoal = $usersGoal;
-        $this->destView  = $destView;
+        $this->model    = $model;
+        $this->resource = $resource;
+
+        $this->setViews();
+        $this->setRoutes();
+        $this->setNames();
     }
 
     /**
-     * Regresa los objetivos del usuario para la vista por defecto.
+     * Regresa el modelo en json.
      * @return string
      */
     public function __toString()
     {
-        return $this->getUsersGoal();
+        return $this->getModel()->toJson();
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return \PCI\Models\AbstractBaseModel
      */
     public function getModel()
     {
@@ -75,9 +101,9 @@ class ViewVariables
     }
 
     /**
-     * @param \Illuminate\Database\Eloquent\Model $model
+     * @param \PCI\Models\AbstractBaseModel $model
      */
-    public function setModel(Model $model)
+    public function setModel(AbstractBaseModel $model)
     {
         $this->model = $model;
     }
@@ -117,6 +143,22 @@ class ViewVariables
     /**
      * @return string
      */
+    public function getInitialView()
+    {
+        return $this->initialView;
+    }
+
+    /**
+     * @param string $initialView
+     */
+    public function setInitialView($initialView)
+    {
+        $this->initialView = $initialView;
+    }
+
+    /**
+     * @return string
+     */
     public function getForeignKey()
     {
         return $this->foreignKey;
@@ -145,6 +187,7 @@ class ViewVariables
      */
     public function getParentLists($field = 'desc', $id = 'id')
     {
+        /** @var AbstractBaseModel $parent */
         $parent = new $this->parent;
 
         return $parent->lists($field, $id);
@@ -182,5 +225,79 @@ class ViewVariables
     public function setParentTitle($parentTitle)
     {
         $this->parentTitle = $parentTitle;
+    }
+
+    /**
+     * @return string
+     */
+    public function getResource()
+    {
+        return $this->resource;
+    }
+
+    /**
+     * @param string $resource
+     */
+    public function setResource($resource)
+    {
+        $this->resource = $resource;
+    }
+
+    /**
+     * Genera las rutas necesarias para manipular al
+     * modelo en las vistas y controladores
+     */
+    private function setRoutes()
+    {
+        $this->routes = new StdClass;
+        $routes       = [
+            'index', 'show', 'create', 'store', 'edit', 'update', 'destroy'
+        ];
+
+        foreach ($routes as $route) {
+            $this->routes->$route = "{$this->resource}.$route";
+        }
+    }
+
+    /**
+     * @return StdClass
+     */
+    public function getRoutes()
+    {
+        return $this->routes;
+    }
+
+    /**
+     * @return \StdClass
+     */
+    public function getNames()
+    {
+        return $this->names;
+    }
+
+    /**
+     * Genera los nombres formales.
+     */
+    private function setNames()
+    {
+        $this->names = new StdClass;
+        $types       = [
+            'singular' => trans("defaults.{$this->resource}.singular"),
+            'plural'   => trans("defaults.{$this->resource}.plural"),
+        ];
+
+        foreach ($types as $type => $def) {
+            $this->names->$type = $def;
+        }
+    }
+
+    /**
+     * genera la vista inicial (a donde se va inicialmente) y la
+     * vista de destino (a donde se pretende ir, si aplica)
+     */
+    private function setViews()
+    {
+        $this->initialView = "{$this->resource}.index";
+        $this->destView    = "{$this->resource}.show";
     }
 }

@@ -29,6 +29,20 @@ abstract class AbstractAuxController extends Controller
      * @param \PCI\Repositories\ViewVariables $variables
      * @return \Illuminate\Contracts\View\View
      */
+    protected function showPrototype(ViewVariables $variables)
+    {
+        return $this->view->make(
+            'aux.show',
+            ['variables' => $variables]
+        );
+    }
+
+    /**
+     * Genera una vista para ser utilizada por algun
+     * otro controlador concreto.
+     * @param \PCI\Repositories\ViewVariables $variables
+     * @return \Illuminate\Contracts\View\View
+     */
     protected function createPrototype(ViewVariables $variables)
     {
         return $this->view->make(
