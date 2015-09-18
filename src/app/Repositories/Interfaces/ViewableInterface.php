@@ -9,5 +9,5 @@ interface ViewableInterface
      * la variable para el Model Binding.
      * @return \PCI\Repositories\ViewVariables
      */
-    public function getViewVariables();
+    public function getCreateViewVariables();
 }

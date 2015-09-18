@@ -32,7 +32,7 @@ abstract class AbstractAuxController extends Controller
     protected function createPrototype(ViewVariables $variables)
     {
         return $this->view->make(
-            $variables->getViewName() . '.create',
+            'aux.create',
             ['variables' => $variables]
         );
     }

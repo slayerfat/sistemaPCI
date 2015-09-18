@@ -62,11 +62,27 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
      * la variable para el Model Binding.
      * @return \PCI\Repositories\ViewVariables
      */
-    public function getViewVariables()
+    public function getCreateViewVariables()
     {
-        return new ViewVariables(
-            $this->newInstance(),
-            'cats'
+        $results = $this->generateViewVariable();
+
+        $results->setUsersGoal(trans('defaults.cats.create'));
+        $results->setDestView('cats.store');
+
+        return $results;
+    }
+
+    /**
+     * Genera una instancia de ViewVariable
+     * dandole una instancia de Category.
+     * @return \PCI\Repositories\ViewVariables
+     */
+    private function generateViewVariable()
+    {
+        $variables = new ViewVariables(
+            $this->newInstance()
         );
+
+        return $variables;
     }
 }

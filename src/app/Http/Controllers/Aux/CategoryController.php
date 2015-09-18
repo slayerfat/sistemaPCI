@@ -1,5 +1,6 @@
 <?php namespace PCI\Http\Controllers\Aux;
 
+use PCI\Http\Requests\Aux\CategoryRequest;
 use PCI\Repositories\Interfaces\CategoryRepositoryInterface;
 
 class CategoryController extends AbstractAuxController
@@ -14,9 +15,13 @@ class CategoryController extends AbstractAuxController
         // Como estas actividades son genericas para las entidades auxiliares
         // se decide generar este metodo para disminuir la duplicacion
         // que tendria si en dado caso, se hubiera hecho normal.
-        $results = $catRepo->getViewVariables();
-        $results->setUsersGoal(trans('defaults.cats.create'));
+        $results = $catRepo->getCreateViewVariables();
 
         return $this->createPrototype($results);
+    }
+
+    public function store(CategoryRequest $request)
+    {
+        return $request->all();
     }
 }
