@@ -72,6 +72,7 @@ class CreateUsersTable extends Migration
             $obj = new Profile;
 
             $obj->desc       = $profile;
+            $obj->slug       = str_slug($profile);
             $obj->created_by = 1;
             $obj->updated_by = 1;
 
