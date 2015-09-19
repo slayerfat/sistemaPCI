@@ -68,7 +68,7 @@ abstract class AbstractAuxRepository extends AbstractRepository
     protected function makePaginatorData(AbstractBaseModel $model)
     {
         return [
-            'uid'         => $model->desc,
+            'uid'         => $model->slug,
             'Descripción' => $model->desc,
         ];
     }
