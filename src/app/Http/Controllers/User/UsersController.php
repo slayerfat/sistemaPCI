@@ -9,7 +9,7 @@ use PCI\Models\Profile;
 use PCI\Http\Requests\UserRequest;
 use PCI\Http\Controllers\Controller;
 use Illuminate\View\Factory as View;
-use PCI\Repositories\Interfaces\UserRepositoryInterface;
+use PCI\Repositories\Interfaces\User\UserRepositoryInterface;
 
 class UsersController extends Controller
 {
@@ -25,8 +25,8 @@ class UsersController extends Controller
     private $view;
 
     /**
-     * @param UserRepositoryInterface $userRepo
-     * @param View                    $view
+     * @param \PCI\Repositories\Interfaces\User\UserRepositoryInterface $userRepo
+     * @param View $view
      */
     public function __construct(UserRepositoryInterface $userRepo, View $view)
     {

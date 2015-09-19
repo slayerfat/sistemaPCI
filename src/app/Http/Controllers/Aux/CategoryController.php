@@ -3,19 +3,19 @@
 use Redirect;
 use Illuminate\View\Factory;
 use PCI\Http\Requests\Aux\CategoryRequest;
-use PCI\Repositories\Interfaces\CategoryRepositoryInterface;
+use PCI\Repositories\Interfaces\Aux\CategoryRepositoryInterface;
 
 class CategoryController extends AbstractAuxController
 {
 
     /**
-     * @var \PCI\Repositories\Interfaces\CategoryRepositoryInterface
+     * @var \PCI\Repositories\Interfaces\Aux\CategoryRepositoryInterface
      */
     private $catRepo;
 
     /**
      * @param \Illuminate\View\Factory $view
-     * @param \PCI\Repositories\Interfaces\CategoryRepositoryInterface $catRepo
+     * @param \PCI\Repositories\Interfaces\Aux\CategoryRepositoryInterface $catRepo
      */
     public function __construct(Factory $view, CategoryRepositoryInterface $catRepo)
     {

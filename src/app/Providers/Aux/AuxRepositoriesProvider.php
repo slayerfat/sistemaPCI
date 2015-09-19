@@ -3,7 +3,7 @@
 use Illuminate\Support\ServiceProvider;
 use PCI\Models\Category;
 use PCI\Repositories\Aux\CategoryRepository;
-use PCI\Repositories\Interfaces\CategoryRepositoryInterface;
+use PCI\Repositories\Interfaces\Aux\CategoryRepositoryInterface;
 
 class AuxRepositoriesProvider extends ServiceProvider
 {

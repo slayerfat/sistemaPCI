@@ -2,10 +2,10 @@
 
 namespace PCI\Providers\User;
 
-use Illuminate\Support\ServiceProvider;
 use PCI\Models\User;
-use PCI\Repositories\Interfaces\UserRepositoryInterface;
 use PCI\Repositories\UserRepository;
+use Illuminate\Support\ServiceProvider;
+use PCI\Repositories\Interfaces\User\UserRepositoryInterface;
 
 class UsersRepositoriesServiceProvider extends ServiceProvider
 {

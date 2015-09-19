@@ -1,60 +1,9 @@
 <?php namespace PCI\Repositories\Aux;
 
-use PCI\Models\AbstractBaseModel;
-use PCI\Repositories\Interfaces\CategoryRepositoryInterface;
+use PCI\Repositories\Interfaces\Aux\CategoryRepositoryInterface;
 
 class CategoryRepository extends AbstractAuxRepository implements CategoryRepositoryInterface
 {
-
-    /**
-     * Busca algun Elemento segun Id u otra regla.
-     * @param  string|int $id
-     * @return \PCI\Models\AbstractBaseModel
-     */
-    public function find($id)
-    {
-        return $this->getById($id);
-    }
-
-    /**
-     * Consigue todos los elementos y devuelve una coleccion.
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
-    public function getAll()
-    {
-        return $this->model->all();
-    }
-
-    /**
-     * @param array $data
-     * @return \PCI\Models\AbstractBaseModel
-     */
-    public function create(array $data)
-    {
-        $cat = $this->model->newInstance($data);
-
-        $cat->save();
-
-        return $cat;
-    }
-
-    /**
-     * Actualiza algun modelo.
-     * @param int   $id
-     * @param array $data
-     * @return \PCI\Models\AbstractBaseModel
-     */
-    public function update($id, array $data)
-    {
-        /** @var \PCI\Models\Category $cat */
-        $cat = $this->find($id);
-
-        $cat->desc = $data['desc'];
-
-        $cat->save();
-
-        return $cat;
-    }
 
     /**
      * Elimina del sistema un modelo.
@@ -126,19 +75,5 @@ class CategoryRepository extends AbstractAuxRepository implements CategoryReposi
         $cat = $this->getBySlugOrId($id);
 
         return $this->generateViewVariable($cat, 'cats');
-    }
-
-    /**
-     * genera la data necesaria que utilizara el paginator.
-     *
-     * @param \PCI\Models\AbstractBaseModel|\PCI\Models\Category $cat
-     * @return array
-     */
-    protected function makePaginatorData(AbstractBaseModel $cat)
-    {
-        return [
-            'uid'         => $cat->desc,
-            'Descripción' => $cat->desc,
-        ];
     }
 }

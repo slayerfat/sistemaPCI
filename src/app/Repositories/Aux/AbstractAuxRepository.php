@@ -12,6 +12,68 @@ abstract class AbstractAuxRepository extends AbstractRepository
 {
 
     /**
+     * Busca algun Elemento segun Id u otra regla.
+     * @param  string|int $id
+     * @return \PCI\Models\AbstractBaseModel
+     */
+    public function find($id)
+    {
+        return $this->getById($id);
+    }
+
+    /**
+     * Consigue todos los elementos y devuelve una coleccion.
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getAll()
+    {
+        return $this->model->all();
+    }
+
+    /**
+     * @param array $data
+     * @return \PCI\Models\AbstractBaseModel
+     */
+    public function create(array $data)
+    {
+        $model = $this->model->newInstance($data);
+
+        $model->save();
+
+        return $model;
+    }
+
+    /**
+     * Actualiza algun modelo.
+     * @param int   $id
+     * @param array $data
+     * @return \PCI\Models\AbstractBaseModel
+     */
+    public function update($id, array $data)
+    {
+        $model = $this->find($id);
+
+        $model->desc = $data['desc'];
+
+        $model->save();
+
+        return $model;
+    }
+
+    /**
+     * genera la data necesaria que utilizara el paginator.
+     * @param \PCI\Models\AbstractBaseModel $model
+     * @return array
+     */
+    protected function makePaginatorData(AbstractBaseModel $model)
+    {
+        return [
+            'uid'         => $model->desc,
+            'Descripción' => $model->desc,
+        ];
+    }
+
+    /**
      * Genera una instancia de ViewModelVariable
      * dandole una implementacion de AbstractBaseModel.
      * @param \PCI\Models\AbstractBaseModel $model

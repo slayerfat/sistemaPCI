@@ -3,9 +3,8 @@
 use PCI\Models\AbstractBaseModel;
 use PCI\Mamarrachismo\PhoneParser\PhoneParser;
 use Illuminate\Pagination\LengthAwarePaginator;
-use PCI\Repositories\Interfaces\UserRepositoryInterface;
-use PCI\Repositories\Interfaces\Viewable\GetIndexViewableInterface;
 use PCI\Repositories\ViewVariable\ViewPaginatorVariable;
+use PCI\Repositories\Interfaces\User\UserRepositoryInterface;
 
 class UserRepository extends AbstractRepository implements UserRepositoryInterface
 {

@@ -1,7 +1,7 @@
 <?php namespace PCI\Http\Requests;
 
 use Gate;
-use PCI\Repositories\Interfaces\UserRepositoryInterface;
+use PCI\Repositories\Interfaces\User\UserRepositoryInterface;
 
 class UserRequest extends Request
 {
