@@ -111,40 +111,58 @@ class NavbarViewComposer
 
         // enlaces de mantenimiento (administrador)
         if ($this->user && $this->user->isAdmin()) {
-            $links[] = [
-                'Mant.',
-                [
-                    [
-                        'link'  => route('users.create'),
-                        'title' => trans('models.users.create')
-                    ],
-                    [
-                        'link'  => route('users.index'),
-                        'title' => trans('models.users.index')
-                    ],
-                    Navigation::NAVIGATION_DIVIDER,
-                    [
-                        'link'  => '#',
-                        'title' => trans('aux.profiles.create')
-                    ],
-                    [
-                        'link'  => '#',
-                        'title' => trans('aux.profiles.index')
-                    ],
-                    Navigation::NAVIGATION_DIVIDER,
-                    [
-                        'link'  => route('cats.create'),
-                        'title' => trans('aux.cats.create')
-                    ],
-                    [
-                        'link'  => route('cats.index'),
-                        'title' => trans('aux.cats.index')
-                    ],
-                ]
-            ];
-
-            return $links;
+            return $this->makeAdminLinks($links);
         }
+
+        return $links;
+    }
+
+    /**
+     * @param $links
+     * @return array
+     */
+    private function makeAdminLinks($links)
+    {
+        $links[] = [
+            'Mant.',
+            [
+                [
+                    'link'  => route('users.create'),
+                    'title' => trans('models.users.create')
+                ],
+                [
+                    'link'  => route('users.index'),
+                    'title' => trans('models.users.index')
+                ],
+                Navigation::NAVIGATION_DIVIDER,
+                [
+                    'link'  => '#',
+                    'title' => trans('aux.profiles.create')
+                ],
+                [
+                    'link'  => '#',
+                    'title' => trans('aux.profiles.index')
+                ],
+                Navigation::NAVIGATION_DIVIDER,
+                [
+                    'link'  => route('cats.create'),
+                    'title' => trans('aux.cats.create')
+                ],
+                [
+                    'link'  => route('cats.index'),
+                    'title' => trans('aux.cats.index')
+                ],
+                Navigation::NAVIGATION_DIVIDER,
+                [
+                    'link'  => route('depts.create'),
+                    'title' => trans('aux.depts.create')
+                ],
+                [
+                    'link'  => route('depts.index'),
+                    'title' => trans('aux.depts.index')
+                ],
+            ]
+        ];
 
         return $links;
     }

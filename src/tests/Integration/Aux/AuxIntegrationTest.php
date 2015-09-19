@@ -1,6 +1,7 @@
 <?php namespace Tests\Integration\Aux;
 
 use PCI\Models\Category;
+use PCI\Models\Department;
 
 class AuxIntegrationTest extends AbstractAuxTest
 {
@@ -14,7 +15,8 @@ class AuxIntegrationTest extends AbstractAuxTest
         // ($model[1]) y la clase para crear nuevos
         // registros y objetos ($model[2])
         $modelData = [
-            ['categorias', 'cats', Category::class]
+            ['categorias', 'cats', Category::class],
+            ['departamentos', 'depts', Department::class],
         ];
 
         foreach ($modelData as $model) {
@@ -22,7 +24,7 @@ class AuxIntegrationTest extends AbstractAuxTest
         }
     }
 
-    public function testCategoryIndexShouldHaveTableWithValidInfo()
+    public function testAuxIndexShouldHaveTableWithValidInfo()
     {
         foreach ($this->data as $data) {
             $this->actingAs($this->user)
@@ -37,13 +39,18 @@ class AuxIntegrationTest extends AbstractAuxTest
         }
     }
 
-    public function testCreateCategoryShouldReturnAForm()
+    public function testUserShouldSeeCreateAuxOptions()
     {
         foreach ($this->data as $data) {
             $this->actingAs($this->user)
-                ->visit($data->index)
-                ->see('No hay información que mostrar.');
+                ->visit('/')
+                ->see(trans("aux.{$data->alias}.create"));
+        }
+    }
 
+    public function testCreateAuxShouldReturnAForm()
+    {
+        foreach ($this->data as $data) {
             $this->actingAs($this->user)
                 ->visit('/')
                 ->click(trans("aux.{$data->alias}.create"))

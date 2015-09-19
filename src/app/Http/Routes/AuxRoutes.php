@@ -18,6 +18,17 @@ class AuxRoutes extends PCIRoutes
                 'resource' => '{cats}'
             ]
         ],
+        [
+            'routerOptions' => [
+                'prefix'     => 'departamentos',
+                'middleware' => 'auth',
+            ],
+            'rtDetails'     => [
+                'uses'     => 'Aux\DepartmentsController',
+                'as'       => 'depts',
+                'resource' => '{depts}'
+            ]
+        ],
     ];
 
     /**

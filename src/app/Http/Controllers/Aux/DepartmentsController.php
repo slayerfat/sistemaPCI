@@ -1,39 +1,39 @@
 <?php namespace PCI\Http\Controllers\Aux;
 
+use PCI\Repositories\Interfaces\Aux\DepartmentRepositoryInterface;
 use Redirect;
 use Illuminate\View\Factory;
 use PCI\Http\Requests\Aux\CategoryRequest;
-use PCI\Repositories\Interfaces\Aux\CategoryRepositoryInterface;
 
-class CategoryController extends AbstractAuxController
+class DepartmentsController extends AbstractAuxController
 {
 
     /**
-     * @var \PCI\Repositories\Interfaces\Aux\CategoryRepositoryInterface
+     * @var \PCI\Repositories\Interfaces\Aux\DepartmentRepositoryInterface
      */
-    private $catRepo;
+    private $repo;
 
     /**
-     * @var \PCI\Models\Category
+     * @var \PCI\Models\Department
      */
     private $model;
 
     /**
      * @param \Illuminate\View\Factory $view
-     * @param \PCI\Repositories\Interfaces\Aux\CategoryRepositoryInterface $catRepo
+     * @param \PCI\Repositories\Interfaces\Aux\DepartmentRepositoryInterface $repo
      */
-    public function __construct(Factory $view, CategoryRepositoryInterface $catRepo)
+    public function __construct(Factory $view, DepartmentRepositoryInterface $repo)
     {
         parent::__construct($view);
 
-        $this->catRepo = $catRepo;
+        $this->repo = $repo;
     }
 
     public function index()
     {
         return $this->makeView(
             'aux.index',
-            $this->catRepo->getIndexViewVariables()
+            $this->repo->getIndexViewVariables()
         );
     }
 
@@ -43,9 +43,9 @@ class CategoryController extends AbstractAuxController
      */
     public function show($id)
     {
-        $variables = $this->catRepo->getShowViewVariables($id);
+        $variables = $this->repo->getShowViewVariables($id);
 
-        $variables->setUsersGoal('Categorias en el sistema');
+        $variables->setUsersGoal('Departamentos en el sistema');
 
         return $this->makeView('aux.show', $variables);
     }
@@ -58,7 +58,7 @@ class CategoryController extends AbstractAuxController
         // Como estas actividades son genericas para las entidades auxiliares
         // se decide generar este metodo para disminuir la duplicacion
         // que tendria si en dado caso, se hubiera hecho normal.
-        $results = $this->catRepo->getCreateViewVariables();
+        $results = $this->repo->getCreateViewVariables();
 
         return $this->makeView('aux.create', $results);
     }
@@ -69,9 +69,9 @@ class CategoryController extends AbstractAuxController
      */
     public function store(CategoryRequest $request)
     {
-        $this->model = $this->catRepo->create($request->all());
+        $this->model = $this->repo->create($request->all());
 
-        return Redirect::route('cats.show', $this->model->slug);
+        return Redirect::route('depts.show', $this->model->slug);
     }
 
     /**
@@ -80,9 +80,9 @@ class CategoryController extends AbstractAuxController
      */
     public function edit($id)
     {
-        $variables = $this->catRepo->getEditViewVariables($id);
+        $variables = $this->repo->getEditViewVariables($id);
 
-        $variables->setUsersGoal('Actualizar Categoria');
+        $variables->setUsersGoal('Actualizar Departamento');
 
         return $this->makeView('aux.edit', $variables);
     }
@@ -94,9 +94,9 @@ class CategoryController extends AbstractAuxController
      */
     public function update($id, CategoryRequest $request)
     {
-        $this->model = $this->catRepo->update($id, $request->all());
+        $this->model = $this->repo->update($id, $request->all());
 
-        return Redirect::route('cats.show', $this->model->slug);
+        return Redirect::route('depts.show', $this->model->slug);
     }
 
     /**
@@ -105,12 +105,12 @@ class CategoryController extends AbstractAuxController
      */
     public function destroy($id)
     {
-        $this->model = $this->catRepo->delete($id);
+        $this->model = $this->repo->delete($id);
 
         if ($this->model === true) {
             return Redirect::route('aux.index');
         }
 
-        return Redirect::route('cats.show', $this->model->desc);
+        return Redirect::route('depts.show', $this->model->desc);
     }
 }

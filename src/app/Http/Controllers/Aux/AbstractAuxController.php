@@ -2,7 +2,6 @@
 
 use Illuminate\View\Factory;
 use PCI\Repositories\ViewVariable\Interfaces\ViewVariableInterface;
-use PCI\Repositories\ViewVariable\ViewModelVariable;
 use PCI\Http\Controllers\Controller;
 
 abstract class AbstractAuxController extends Controller
