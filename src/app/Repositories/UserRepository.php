@@ -4,6 +4,8 @@ use PCI\Models\AbstractBaseModel;
 use PCI\Mamarrachismo\PhoneParser\PhoneParser;
 use Illuminate\Pagination\LengthAwarePaginator;
 use PCI\Repositories\Interfaces\UserRepositoryInterface;
+use PCI\Repositories\Interfaces\Viewable\GetIndexViewableInterface;
+use PCI\Repositories\ViewVariable\ViewPaginatorVariable;
 
 class UserRepository extends AbstractRepository implements UserRepositoryInterface
 {
@@ -170,5 +172,19 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
     public function delete($id)
     {
         return $this->executeDelete($id, 'Usuario');
+    }
+
+    /**
+     * Regresa variable con una coleccion y datos
+     * adicionales necesarios para generar la vista.
+     * @return \PCI\Repositories\ViewVariable\ViewPaginatorVariable
+     */
+    public function getIndexViewVariables()
+    {
+        $results  = $this->getTablePaginator();
+
+        $variable = new ViewPaginatorVariable($results, 'users');
+
+        return $variable;
     }
 }

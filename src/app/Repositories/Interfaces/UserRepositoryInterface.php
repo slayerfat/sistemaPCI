@@ -1,6 +1,11 @@
 <?php namespace PCI\Repositories\Interfaces;
 
-interface UserRepositoryInterface extends ModelRepositoryInterface, RepositoryPaginatorInterface
+use PCI\Repositories\Interfaces\Viewable\GetIndexViewableInterface;
+
+interface UserRepositoryInterface extends
+    ModelRepositoryInterface,
+    RepositoryPaginatorInterface,
+    GetIndexViewableInterface
 {
 
     /**

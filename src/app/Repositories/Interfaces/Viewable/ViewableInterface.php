@@ -1,14 +1,7 @@
-<?php namespace PCI\Repositories\Interfaces;
+<?php namespace PCI\Repositories\Interfaces\Viewable;
 
-interface ViewableInterface
+interface ViewableInterface extends GetIndexViewableInterface
 {
-
-    /**
-     * Regresa variable con una coleccion y datos
-     * adicionales necesarios para generar la vista.
-     * @return \PCI\Repositories\ViewVariable\ViewPaginatorVariable
-     */
-    public function getIndexViewVariables();
 
     /**
      * Regresa variable con un modelo y datos

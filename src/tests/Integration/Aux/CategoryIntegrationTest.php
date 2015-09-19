@@ -3,8 +3,9 @@
 class CategoryIntegrationTest extends AbstractAuxTest
 {
 
-    public function testTodo()
+    public function testTodoNewRequirements()
     {
-        $this->markTestIncomplete('faltan detalles');
+        $this->visit('categorias')
+            ->assertResponseOk();
     }
 }

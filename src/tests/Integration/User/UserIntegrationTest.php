@@ -23,7 +23,6 @@ class UserIntegrationTest extends AbstractIntegrationTest
 
     public function testGenericTableShouldBeACollectionVariable()
     {
-        $this->markTestIncomplete('falta ajustar');
         $this->actingAs($this->user)
             ->visit('usuarios')
             ->see($this->user->name);
