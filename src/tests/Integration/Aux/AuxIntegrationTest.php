@@ -46,7 +46,7 @@ class AuxIntegrationTest extends AbstractAuxTest
 
             $this->actingAs($this->user)
                 ->visit('/')
-                ->click(trans("defaults.{$data->alias}.create"))
+                ->click(trans("aux.{$data->alias}.create"))
                 ->seePageIs($data->create);
         }
     }

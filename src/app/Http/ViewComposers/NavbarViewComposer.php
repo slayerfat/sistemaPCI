@@ -64,7 +64,7 @@ class NavbarViewComposer
                 [
                     [
                         'link'  => route('users.show', $this->user->name),
-                        'title' => trans('defaults.users.show')
+                        'title' => trans('models.users.show')
                     ],
                     [
                         'link'  => route('auth.getLogout'),
@@ -116,29 +116,29 @@ class NavbarViewComposer
                 [
                     [
                         'link'  => route('users.create'),
-                        'title' => trans('defaults.users.create')
+                        'title' => trans('models.users.create')
                     ],
                     [
                         'link'  => route('users.index'),
-                        'title' => trans('defaults.users.index')
+                        'title' => trans('models.users.index')
                     ],
                     Navigation::NAVIGATION_DIVIDER,
                     [
                         'link'  => '#',
-                        'title' => trans('defaults.profiles.create')
+                        'title' => trans('aux.profiles.create')
                     ],
                     [
                         'link'  => '#',
-                        'title' => trans('defaults.profiles.index')
+                        'title' => trans('aux.profiles.index')
                     ],
                     Navigation::NAVIGATION_DIVIDER,
                     [
                         'link'  => route('cats.create'),
-                        'title' => trans('defaults.cats.create')
+                        'title' => trans('aux.cats.create')
                     ],
                     [
                         'link'  => route('cats.index'),
-                        'title' => trans('defaults.cats.index')
+                        'title' => trans('aux.cats.index')
                     ],
                 ]
             ];
