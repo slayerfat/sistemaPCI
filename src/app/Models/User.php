@@ -55,11 +55,22 @@ class User extends AbstractBaseModel implements
     use Authenticatable, Authorizable, CanResetPassword;
 
     /**
-     * Valores que no deberian cambiar en el futuro inmediato
+     * Administrador del sistema
+     * @var int
      */
-    const ADMIN_ID    = 1;
-    const USER_ID     = 2;
-    const DISABLED_ID = 3;
+    const ADMIN_ID = Profile::ADMIN_ID;
+
+    /**
+     * Usuario del sistema
+     * @var int
+     */
+    const USER_ID = Profile::USER_ID;
+
+    /**
+     * Usuario desactivado
+     * @var int
+     */
+    const DISABLED_ID = Profile::DISABLED_ID;
 
     /**
      * The database table used by the model.

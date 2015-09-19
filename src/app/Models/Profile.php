@@ -33,6 +33,24 @@ class Profile extends AbstractBaseModel implements SluggableInterface
     use SluggableTrait;
 
     /**
+     * Administrador del sistema
+     * @var int
+     */
+    const ADMIN_ID    = 1;
+
+    /**
+     * Usuario del sistema
+     * @var int
+     */
+    const USER_ID     = 2;
+
+    /**
+     * Usuario desactivado
+     * @var int
+     */
+    const DISABLED_ID = 3;
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
