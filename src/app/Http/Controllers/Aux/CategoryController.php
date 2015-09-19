@@ -103,7 +103,7 @@ class CategoryController extends AbstractAuxController
         $result = $this->catRepo->delete($id);
 
         if ($result === true) {
-            return Redirect::route('cats.index');
+            return Redirect::route('aux.index');
         }
 
         return Redirect::route('cats.show', $result->desc);
