@@ -26,15 +26,6 @@ class ViewPaginatorVariable extends AbstractViewVariable implements GetPaginator
     }
 
     /**
-     * Regresa el modelo en json.
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->getModel()->toJson();
-    }
-
-    /**
      * @return \Illuminate\Pagination\LengthAwarePaginator
      */
     public function getModel()

@@ -29,15 +29,6 @@ class ViewModelVariable extends AbstractViewVariable implements GetModelInterfac
     }
 
     /**
-     * Regresa el modelo en json.
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->getModel()->toJson();
-    }
-
-    /**
      * @return \PCI\Models\AbstractBaseModel
      */
     public function getModel()

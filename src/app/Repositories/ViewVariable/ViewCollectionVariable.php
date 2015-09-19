@@ -30,15 +30,6 @@ class ViewCollectionVariable extends AbstractViewVariable implements GetModelCol
     }
 
     /**
-     * Regresa el modelo en json.
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->getModel()->toJson();
-    }
-
-    /**
      * @return \Illuminate\Database\Eloquent\Collection|null
      */
     public function getModel()

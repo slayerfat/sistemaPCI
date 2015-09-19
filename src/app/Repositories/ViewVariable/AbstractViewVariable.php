@@ -12,7 +12,6 @@ use PCI\Repositories\ViewVariable\Interfaces\ViewVariableInterface;
 abstract class AbstractViewVariable implements ViewVariableInterface
 {
 
-
     /**
      * El Modelo a manipular
      */
@@ -276,5 +275,14 @@ abstract class AbstractViewVariable implements ViewVariableInterface
         $this->setViews();
         $this->setRoutes();
         $this->setNames();
+    }
+
+    /**
+     * Regresa el modelo en json.
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getModel()->toJson();
     }
 }
