@@ -15,6 +15,7 @@ before_script:
 
   - composer --working-dir=src/ install --no-interaction --prefer-source
   - npm install -g npm@2
+  - npm install -g bower
   - (cd src/ && npm install && bower install && gulp)
   - pyrus install pear/PHP_CodeSniffer
   - phpenv rehash
