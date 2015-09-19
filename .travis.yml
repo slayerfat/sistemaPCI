@@ -6,6 +6,7 @@ php:
 
 before_script:
   - if [ $TRAVIS_PHP_VERSION != '7' ]; then composer --working-dir=src/ install --no-interaction --prefer-source; else composer --working-dir=src/ install --no-interaction --prefer-source --no-scripts; fi
+  - if [ $TRAVIS_PHP_VERSION != '7' ]; then (cd src/ && npm install && bower install && gulp); fi
   - if [ $TRAVIS_PHP_VERSION != '7' ]; then pyrus install pear/PHP_CodeSniffer; fi
   - if [ $TRAVIS_PHP_VERSION != '7' ]; then phpenv rehash; fi
   - if [ $TRAVIS_PHP_VERSION != '7' ]; then wget https://gist.githubusercontent.com/slayerfat/2b3cc4faf94d2863b505/raw/b958e68fa8886baac8880cdf381d1dfbc403270f/phpmd-ruleset.xml; fi
