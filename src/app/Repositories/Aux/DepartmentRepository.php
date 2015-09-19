@@ -1,8 +1,8 @@
 <?php namespace PCI\Repositories\Aux;
 
-use PCI\Repositories\Interfaces\Aux\CategoryRepositoryInterface;
+use PCI\Repositories\Interfaces\Aux\DepartmentRepositoryInterface;
 
-class CategoryRepository extends AbstractAuxRepository implements CategoryRepositoryInterface
+class DepartmentRepository extends AbstractAuxRepository implements DepartmentRepositoryInterface
 {
 
     /**
@@ -12,7 +12,7 @@ class CategoryRepository extends AbstractAuxRepository implements CategoryReposi
      */
     public function delete($id)
     {
-        return $this->executeDelete($id, 'Categoria');
+        return $this->executeDelete($id, 'Departamento');
     }
 
     /**
@@ -24,7 +24,7 @@ class CategoryRepository extends AbstractAuxRepository implements CategoryReposi
     {
         $results = $this->getPaginator();
 
-        $variable = $this->generateViewPaginatorVariable($results, 'cats');
+        $variable = $this->generateViewPaginatorVariable($results, 'depts');
 
         return $variable;
     }
@@ -37,10 +37,10 @@ class CategoryRepository extends AbstractAuxRepository implements CategoryReposi
      */
     public function getShowViewVariables($id)
     {
-        $cat = $this->getBySlugOrId($id);
+        $dept = $this->getBySlugOrId($id);
 
-        $variable = $this->generateViewVariable($cat, 'cats');
-        $variable->setDestView('cats.show');
+        $variable = $this->generateViewVariable($dept, 'depts');
+        $variable->setDestView('depts.show');
 
         return $variable;
     }
@@ -53,10 +53,10 @@ class CategoryRepository extends AbstractAuxRepository implements CategoryReposi
      */
     public function getCreateViewVariables()
     {
-        $results = $this->generateViewVariable($this->newInstance(), 'cats');
+        $results = $this->generateViewVariable($this->newInstance(), 'depts');
 
-        $results->setUsersGoal(trans('aux.cats.create'));
-        $results->setDestView('cats.store');
+        $results->setUsersGoal(trans('aux.depts.create'));
+        $results->setDestView('depts.store');
 
         return $results;
     }
@@ -70,8 +70,8 @@ class CategoryRepository extends AbstractAuxRepository implements CategoryReposi
      */
     public function getEditViewVariables($id)
     {
-        $cat = $this->getBySlugOrId($id);
+        $dept = $this->getBySlugOrId($id);
 
-        return $this->generateViewVariable($cat, 'cats');
+        return $this->generateViewVariable($dept, 'depts');
     }
 }

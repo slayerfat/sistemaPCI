@@ -108,4 +108,17 @@ abstract class AbstractAuxRepository extends AbstractRepository
     {
         return new ViewPaginatorVariable($paginator, $resource);
     }
+
+    /**
+     * Busca todos los modelos y regresa un paginator.
+     * @return \Illuminate\Pagination\LengthAwarePaginator
+     */
+    protected function getPaginator()
+    {
+        $collection = $this->getAll();
+
+        $results = $this->generatePaginator($collection);
+
+        return $results;
+    }
 }
