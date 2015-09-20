@@ -2,14 +2,17 @@
 
 use PCI\Models\Gender;
 use PCI\Models\Category;
+use PCI\Models\ItemType;
 use PCI\Models\Department;
 use Illuminate\Support\ServiceProvider;
 use PCI\Repositories\Aux\GendersRepository;
 use PCI\Repositories\Aux\CategoryRepository;
 use PCI\Repositories\Aux\DepartmentRepository;
+use PCI\Repositories\Aux\ItemTypesRepository;
 use PCI\Repositories\Interfaces\Aux\GendersRepositoryInterface;
 use PCI\Repositories\Interfaces\Aux\CategoryRepositoryInterface;
 use PCI\Repositories\Interfaces\Aux\DepartmentRepositoryInterface;
+use PCI\Repositories\Interfaces\Aux\ItemTypesRepositoryInterface;
 
 class AuxRepositoriesProvider extends ServiceProvider
 {
@@ -31,6 +34,10 @@ class AuxRepositoriesProvider extends ServiceProvider
 
         $this->app->bind(GendersRepositoryInterface::class, function ($app) {
             return new GendersRepository($app[Gender::class]);
+        });
+
+        $this->app->bind(ItemTypesRepositoryInterface::class, function ($app) {
+            return new ItemTypesRepository($app[ItemType::class]);
         });
     }
 }

@@ -50,6 +50,19 @@ return [
     'genders.fa-icon'   => 'venus-mars',
 
     /**
+     * Tipos de Item
+     */
+    'itemTypes.index'        => 'Ver Tipos de Items',
+    'itemTypes.show'         => 'Ver Tipo de Item',
+    'itemTypes.create'       => 'Crear Tipo de Item',
+    'itemTypes.edit'         => 'Editar Tipo de Item',
+    'itemTypes.destroy'      => 'Eliminar Tipo de Item',
+    'itemTypes.plural'       => 'Tipos de Item',
+    'itemTypes.singular'     => 'Tipo de Item',
+    'itemTypes.fa-icon'      => 'random',
+
+
+    /**
      * Perfil
      */
     'profiles.index'    => 'Ver Perfiles',

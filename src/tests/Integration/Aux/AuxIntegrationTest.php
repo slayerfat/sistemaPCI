@@ -3,6 +3,7 @@
 use PCI\Models\Category;
 use PCI\Models\Department;
 use PCI\Models\Gender;
+use PCI\Models\ItemType;
 
 class AuxIntegrationTest extends AbstractAuxTest
 {
@@ -19,6 +20,7 @@ class AuxIntegrationTest extends AbstractAuxTest
             ['categorias', 'cats', Category::class],
             ['departamentos', 'depts', Department::class],
             ['generos', 'genders', Gender::class],
+            ['tipos-item', 'itemTypes', ItemType::class],
         ];
 
         foreach ($modelData as $model) {

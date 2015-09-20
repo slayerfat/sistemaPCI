@@ -12,7 +12,7 @@ class GendersRepository extends AbstractAuxRepository implements GendersReposito
      */
     public function delete($id)
     {
-        return $this->executeDelete($id, 'Genero');
+        return $this->executeDelete($id, trans('aux.genders.singular'));
     }
 
     /**

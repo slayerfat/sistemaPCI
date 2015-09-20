@@ -174,6 +174,16 @@ class NavbarViewComposer
                 ],
                 Navigation::NAVIGATION_DIVIDER,
                 [
+                    'link'  => route('itemTypes.create'),
+                    'title' => Icon::create('plus-circle') . trans('aux.itemTypes.create')
+                ],
+                [
+                    'link'  => route('itemTypes.index'),
+                    'title' => Icon::create(trans('aux.itemTypes.fa-icon'))
+                        . trans('aux.itemTypes.index')
+                ],
+                Navigation::NAVIGATION_DIVIDER,
+                [
                     'link'  => route('genders.create'),
                     'title' => Icon::create('plus-circle') . trans('aux.genders.create')
                 ],
@@ -192,7 +202,6 @@ class NavbarViewComposer
                     'title' => Icon::create(trans('aux.depts.fa-icon'))
                         . trans('aux.depts.index')
                 ],
-
                 Navigation::NAVIGATION_DIVIDER,
                 [
                     'link'  => '#',

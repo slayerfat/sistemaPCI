@@ -40,6 +40,17 @@ class AuxRoutes extends AbstractPciRoutes
                 'resource' => '{depts}'
             ]
         ],
+        [
+            'routerOptions' => [
+                'prefix'     => 'tipos-item',
+                'middleware' => 'auth',
+            ],
+            'rtDetails'     => [
+                'uses'     => 'Aux\ItemTypesController',
+                'as'       => 'itemTypes',
+                'resource' => '{itemTypes}'
+            ]
+        ],
     ];
 
     /**

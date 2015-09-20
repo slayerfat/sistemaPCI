@@ -1,8 +1,8 @@
 <?php namespace PCI\Repositories\Aux;
 
-use PCI\Repositories\Interfaces\Aux\DepartmentRepositoryInterface;
+use PCI\Repositories\Interfaces\Aux\ItemTypesRepositoryInterface;
 
-class DepartmentRepository extends AbstractAuxRepository implements DepartmentRepositoryInterface
+class ItemTypesRepository extends AbstractAuxRepository implements ItemTypesRepositoryInterface
 {
 
     /**
@@ -12,7 +12,7 @@ class DepartmentRepository extends AbstractAuxRepository implements DepartmentRe
      */
     public function delete($id)
     {
-        return $this->executeDelete($id, trans('aux.depts.singular'));
+        return $this->executeDelete($id, trans('aux.itemType.singular'));
     }
 
     /**
@@ -24,7 +24,7 @@ class DepartmentRepository extends AbstractAuxRepository implements DepartmentRe
     {
         $results = $this->getPaginator();
 
-        $variable = $this->generateViewPaginatorVariable($results, 'depts');
+        $variable = $this->generateViewPaginatorVariable($results, 'itemTypes');
 
         return $variable;
     }
@@ -39,8 +39,8 @@ class DepartmentRepository extends AbstractAuxRepository implements DepartmentRe
     {
         $dept = $this->getBySlugOrId($id);
 
-        $variable = $this->generateViewVariable($dept, 'depts');
-        $variable->setDestView('depts.show');
+        $variable = $this->generateViewVariable($dept, 'itemTypes');
+        $variable->setDestView('itemTypes.show');
 
         return $variable;
     }
@@ -53,10 +53,10 @@ class DepartmentRepository extends AbstractAuxRepository implements DepartmentRe
      */
     public function getCreateViewVariables()
     {
-        $results = $this->generateViewVariable($this->newInstance(), 'depts');
+        $results = $this->generateViewVariable($this->newInstance(), 'itemTypes');
 
-        $results->setUsersGoal(trans('aux.depts.create'));
-        $results->setDestView('depts.store');
+        $results->setUsersGoal(trans('aux.itemTypes.create'));
+        $results->setDestView('itemTypes.store');
 
         return $results;
     }
@@ -72,6 +72,6 @@ class DepartmentRepository extends AbstractAuxRepository implements DepartmentRe
     {
         $dept = $this->getBySlugOrId($id);
 
-        return $this->generateViewVariable($dept, 'depts');
+        return $this->generateViewVariable($dept, 'itemTypes');
     }
 }

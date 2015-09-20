@@ -1,15 +1,15 @@
 <?php namespace PCI\Http\Controllers\Aux;
 
-use PCI\Repositories\Interfaces\Aux\GendersRepositoryInterface;
+use PCI\Repositories\Interfaces\Aux\ItemTypesRepositoryInterface;
 use Redirect;
 use Illuminate\View\Factory;
-use PCI\Http\Requests\Aux\GenderRequest;
+use PCI\Http\Requests\Aux\ItemTypeRequest;
 
-class GendersController extends AbstractAuxController
+class ItemTypesController extends AbstractAuxController
 {
 
     /**
-     * @var \PCI\Repositories\Interfaces\Aux\GendersRepositoryInterface
+     * @var \PCI\Repositories\Interfaces\Aux\ItemTypesRepositoryInterface
      */
     private $repo;
 
@@ -20,9 +20,9 @@ class GendersController extends AbstractAuxController
 
     /**
      * @param \Illuminate\View\Factory $view
-     * @param \PCI\Repositories\Interfaces\Aux\GendersRepositoryInterface $repo
+     * @param \PCI\Repositories\Interfaces\Aux\ItemTypesRepositoryInterface $repo
      */
-    public function __construct(Factory $view, GendersRepositoryInterface $repo)
+    public function __construct(Factory $view, ItemTypesRepositoryInterface $repo)
     {
         parent::__construct($view);
 
@@ -45,7 +45,7 @@ class GendersController extends AbstractAuxController
     {
         $variables = $this->repo->getShowViewVariables($id);
 
-        $variables->setUsersGoal('Generos en el sistema');
+        $variables->setUsersGoal('Tipos de Item en el sistema');
 
         return $this->makeView('aux.show', $variables);
     }
@@ -64,14 +64,14 @@ class GendersController extends AbstractAuxController
     }
 
     /**
-     * @param \PCI\Http\Requests\Aux\GenderRequest $request
+     * @param \PCI\Http\Requests\Aux\ItemTypeRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(GenderRequest $request)
+    public function store(ItemTypeRequest $request)
     {
         $this->model = $this->repo->create($request->all());
 
-        return Redirect::route('genders.show', $this->model->slug);
+        return Redirect::route('itemTypes.show', $this->model->slug);
     }
 
     /**
@@ -82,21 +82,21 @@ class GendersController extends AbstractAuxController
     {
         $variables = $this->repo->getEditViewVariables($id);
 
-        $variables->setUsersGoal(trans('aux.genders.edit'));
+        $variables->setUsersGoal(trans('aux.itemTypes.edit'));
 
         return $this->makeView('aux.edit', $variables);
     }
 
     /**
      * @param $id
-     * @param \PCI\Http\Requests\Aux\GenderRequest $request
+     * @param \PCI\Http\Requests\Aux\ItemTypeRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update($id, GenderRequest $request)
+    public function update($id, ItemTypeRequest $request)
     {
         $this->model = $this->repo->update($id, $request->all());
 
-        return Redirect::route('genders.show', $this->model->slug);
+        return Redirect::route('itemTypes.show', $this->model->slug);
     }
 
     /**
@@ -108,9 +108,9 @@ class GendersController extends AbstractAuxController
         $this->model = $this->repo->delete($id);
 
         if ($this->model === true) {
-            return Redirect::route('genders.index');
+            return Redirect::route('itemTypes.index');
         }
 
-        return Redirect::route('genders.show', $this->model->desc);
+        return Redirect::route('itemTypes.show', $this->model->desc);
     }
 }
