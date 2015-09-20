@@ -57,4 +57,54 @@ class AuxIntegrationTest extends AbstractAuxTest
                 ->seePageIs($data->create);
         }
     }
+
+    public function testCreatingAuxShouldReturnAShowView()
+    {
+        foreach ($this->data as $data) {
+            $this->actingAs($this->user)
+                ->visit($data->create)
+                ->type('testing', 'desc')
+                ->press(trans("aux.{$data->alias}.create"))
+                ->seePageIs($data->show . 'testing');
+        }
+    }
+
+    public function testEditAuxShouldReturnAForm()
+    {
+        foreach ($this->data as $data) {
+            $model = factory($data->class)->create(['desc' => 'testing']);
+
+            $this->actingAs($this->user)
+                ->visit($data->show . $model->desc)
+                ->click('Editar')
+                ->seePageIs($data->edit . $model->id . '/editar');
+        }
+    }
+
+    public function testEditingAuxShouldReturnAShowView()
+    {
+        foreach ($this->data as $data) {
+            $model = factory($data->class)->create(
+                ['desc' => 'another']
+            );
+
+            $this->actingAs($this->user)
+                ->visit($data->edit . $model->id . '/editar')
+                ->type('check', 'desc')
+                ->press(trans("aux.{$data->alias}.edit"))
+                ->seePageIs($data->show . 'check');
+        }
+    }
+
+    public function testEditAuxShouldDeleteWithWarning()
+    {
+        foreach ($this->data as $data) {
+            $model = factory($data->class)->create(['desc' => 'testing']);
+
+            $this->actingAs($this->user)
+                ->visit($data->show . $model->desc)
+                ->press('Eliminar')
+                ->seePageIs($data->index);
+        }
+    }
 }

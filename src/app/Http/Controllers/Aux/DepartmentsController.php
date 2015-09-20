@@ -82,7 +82,7 @@ class DepartmentsController extends AbstractAuxController
     {
         $variables = $this->repo->getEditViewVariables($id);
 
-        $variables->setUsersGoal('Actualizar Departamento');
+        $variables->setUsersGoal(trans('aux.depts.edit'));
 
         return $this->makeView('aux.edit', $variables);
     }

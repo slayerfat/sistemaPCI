@@ -82,7 +82,7 @@ class CategoryController extends AbstractAuxController
     {
         $variables = $this->catRepo->getEditViewVariables($id);
 
-        $variables->setUsersGoal('Actualizar Categoria');
+        $variables->setUsersGoal(trans('aux.cats.edit'));
 
         return $this->makeView('aux.edit', $variables);
     }
@@ -108,7 +108,7 @@ class CategoryController extends AbstractAuxController
         $this->model = $this->catRepo->delete($id);
 
         if ($this->model === true) {
-            return Redirect::route('depts.index');
+            return Redirect::route('cats.index');
         }
 
         return Redirect::route('cats.show', $this->model->desc);
