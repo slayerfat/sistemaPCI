@@ -38,43 +38,6 @@ class CategoryRepositoryTest extends AbstractTestCase
         ];
     }
 
-    public function testFind()
-    {
-        $cat = $this->catRepo->find(1);
-
-        $this->assertNotEmpty($cat);
-        $this->assertInstanceOf(Category::class, $cat);
-    }
-
-    public function testGetAll()
-    {
-        $cat = $this->catRepo->getAll();
-
-        $this->assertNotEmpty($cat);
-    }
-
-    /**
-     * @dataProvider createUpdatedataProvider
-     */
-    public function testCreate($value)
-    {
-        $cat = $this->catRepo->create(['desc' => $value]);
-
-        $this->assertNotEmpty($cat);
-        $this->assertInstanceOf(Category::class, $cat);
-    }
-
-    /**
-     * @dataProvider createUpdatedataProvider
-     */
-    public function testUpdate($value)
-    {
-        $cat = $this->catRepo->update(1, ['desc' => $value]);
-
-        $this->assertNotEmpty($cat);
-        $this->assertInstanceOf(Category::class, $cat);
-    }
-
     public function testDelete()
     {
         $this->assertTrue($this->catRepo->delete(1));
