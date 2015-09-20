@@ -21,6 +21,10 @@ class NavbarViewComposer
         $this->user = $auth->user();
     }
 
+    /**
+     * @param \Illuminate\View\View $view
+     * @return void
+     */
     public function compose(View $view)
     {
         // enlaces de usuario general

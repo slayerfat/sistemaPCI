@@ -2,7 +2,7 @@
 
 use DB;
 
-class StateSeederAbstract extends AbstractBaseSeeder
+class StateSeeder extends AbstractSeeder
 {
     /**
      * Run the database seeds.

@@ -5,7 +5,7 @@ use Faker\Factory;
 /**
  * @todo: a espera de @Phantom66 para la especificacion real de algunas entidades.
  */
-class AuxEntitiesSeederAbstract extends AbstractBaseSeeder
+class AuxEntitiesSeeder extends AbstractSeeder
 {
 
     /**
@@ -137,7 +137,7 @@ class AuxEntitiesSeederAbstract extends AbstractBaseSeeder
 
     /**
      * Arreglo de Entidades secundarias o auxiliares en el sistema.
-     * @return array
+     * @return string[]
      */
     public static function getModels()
     {

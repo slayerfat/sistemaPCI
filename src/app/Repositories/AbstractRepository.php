@@ -151,7 +151,7 @@ abstract class AbstractRepository
      * @param int $id
      * @param string $resource
      * @param string $child
-     * @return bool||\PCI\Models\User
+     * @return bool|\PCI\Models\User
      */
     protected function executeDelete($id, $resource = 'Recurso', $child = 'Recursos')
     {
@@ -184,7 +184,7 @@ abstract class AbstractRepository
      * @param $resource
      * @param $child
      * @param $method
-     * @return bool||\PCI\Models\User
+     * @return bool|\PCI\Models\User
      * @throws \Symfony\Component\HttpKernel\Exception\HttpException
      */
     private function deleteDestroyPrototype(AbstractBaseModel $model, $resource, $child, $method)

@@ -2,7 +2,7 @@
 
 use DB;
 
-class ParishSeederAbstract extends AbstractBaseSeeder
+class ParishSeeder extends AbstractSeeder
 {
 
     /**

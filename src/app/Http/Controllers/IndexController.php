@@ -10,6 +10,9 @@ class IndexController extends Controller
         return view('index');
     }
 
+    /**
+     * @return \Illuminate\View\View
+     */
     public function unverified()
     {
         $user = auth()->user();

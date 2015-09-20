@@ -6,7 +6,7 @@ use PCI\Models\Employee;
 use PCI\Models\User;
 use PCI\Models\WorkDetail;
 
-class UserRelatedSeederAbstract extends AbstractBaseSeeder
+class UserRelatedSeeder extends AbstractSeeder
 {
 
     public function run()

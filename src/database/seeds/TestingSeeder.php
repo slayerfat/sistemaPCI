@@ -7,7 +7,7 @@ class TestingSeeder extends AbstractTableSeeder
     {
         $this->toggleModelGuard();
 
-        $this->call(AuxEntitiesSeederAbstract::class);
+        $this->call(AuxEntitiesSeeder::class);
 
         $this->toggleModelGuard();
     }

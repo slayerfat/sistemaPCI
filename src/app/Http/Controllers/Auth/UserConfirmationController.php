@@ -33,7 +33,7 @@ class UserConfirmationController extends Controller
 
     /**
      * @param $code
-     * @return \Illuminate\Http\RedirectResponse;
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function confirm($code)
     {
@@ -53,7 +53,7 @@ class UserConfirmationController extends Controller
     }
 
     /**
-     * @return \Illuminate\Http\RedirectResponse;
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function create()
     {
