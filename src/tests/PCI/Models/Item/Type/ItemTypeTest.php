@@ -2,9 +2,9 @@
 
 use PCI\Models\Item;
 use PCI\Models\ItemType;
-use Tests\BaseTestCase;
+use Tests\AbstractTestCase;
 
-class ItemTypeTest extends BaseTestCase
+class ItemTypeTest extends AbstractTestCase
 {
 
     public function testItems()

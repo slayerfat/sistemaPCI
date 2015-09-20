@@ -6,9 +6,9 @@ use PCI\Events\NewUserRegistration;
 use PCI\Listeners\EmailUserConfirmation;
 use PCI\Models\User;
 use stdClass;
-use Tests\BaseTestCase;
+use Tests\AbstractTestCase;
 
-class EmailUserConfirmationTest extends BaseTestCase
+class EmailUserConfirmationTest extends AbstractTestCase
 {
 
     private $event;

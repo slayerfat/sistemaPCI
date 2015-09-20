@@ -18,12 +18,12 @@ class DatabaseSeeder extends AbstractTableSeeder
 
         $this->truncateDb();
 
-        $this->call(AuxEntitiesSeeder::class);
-        $this->call(StateSeeder::class);
-        $this->call(TownSeeder::class);
-        $this->call(ParishSeeder::class);
-        $this->call(UserRelatedSeeder::class);
-        $this->call(ItemSeeder::class);
+        $this->call(AuxEntitiesSeederAbstract::class);
+        $this->call(StateSeederAbstract::class);
+        $this->call(TownSeederAbstract::class);
+        $this->call(ParishSeederAbstract::class);
+        $this->call(UserRelatedSeederAbstract::class);
+        $this->call(ItemSeederAbstract::class);
 
         $this->toggleModelGuard();
 

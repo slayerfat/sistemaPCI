@@ -2,7 +2,7 @@
 
 // se decidio hacerlo de esta forma porque
 // tienen la misma estructura
-$models = PCI\Database\AuxEntitiesSeeder::getModels();
+$models = PCI\Database\AuxEntitiesSeederAbstract::getModels();
 
 $faker = Faker\Factory::create('es_ES');
 

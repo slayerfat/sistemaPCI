@@ -7,7 +7,7 @@ use PCI\Models\Movement;
 use PCI\Models\Note;
 use PCI\Models\Petition;
 
-class ItemSeeder extends BaseSeeder
+class ItemSeederAbstract extends AbstractBaseSeeder
 {
 
     public function run()

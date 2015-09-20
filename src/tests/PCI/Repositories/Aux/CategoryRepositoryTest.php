@@ -1,12 +1,12 @@
 <?php namespace Tests\PCI\Repositories\Aux;
 
-use Tests\BaseTestCase;
+use Tests\AbstractTestCase;
 use PCI\Models\Category;
 use PCI\Repositories\Aux\CategoryRepository;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class CategoryRepositoryTest extends BaseTestCase
+class CategoryRepositoryTest extends AbstractTestCase
 {
     use DatabaseMigrations, DatabaseTransactions;
 

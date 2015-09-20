@@ -1,6 +1,6 @@
 <?php namespace PCI\Http\Routes;
 
-class AuxRoutes extends PCIRoutes
+class AuxRoutes extends AbstractPciRoutes
 {
 
     /**

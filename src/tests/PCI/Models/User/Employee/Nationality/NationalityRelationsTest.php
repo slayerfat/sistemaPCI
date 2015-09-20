@@ -3,9 +3,9 @@
 use Mockery;
 use PCI\Models\Nationality;
 use PCI\Models\Employee;
-use Tests\BaseTestCase;
+use Tests\AbstractTestCase;
 
-class NationalityRelationsTest extends BaseTestCase
+class NationalityRelationsTest extends AbstractTestCase
 {
     public function testUserDetails()
     {

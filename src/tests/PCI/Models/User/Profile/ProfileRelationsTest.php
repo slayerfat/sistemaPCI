@@ -2,9 +2,9 @@
 
 use PCI\Models\Profile;
 use PCI\Models\User;
-use Tests\BaseTestCase;
+use Tests\AbstractTestCase;
 
-class ProfileRelationsTest extends BaseTestCase
+class ProfileRelationsTest extends AbstractTestCase
 {
 
     public function testUsers()

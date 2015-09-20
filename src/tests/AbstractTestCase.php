@@ -4,7 +4,7 @@ use Mockery;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Foundation\Testing\TestCase;
 
-abstract class BaseTestCase extends TestCase
+abstract class AbstractTestCase extends TestCase
 {
     /**
      * The base URL to use while testing the application.

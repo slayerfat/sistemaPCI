@@ -1,9 +1,9 @@
 <?php namespace Tests\PCI\Mamarrachismo\PhoneParser;
 
 use PCI\Mamarrachismo\PhoneParser\PhoneParser;
-use Tests\BaseTestCase;
+use Tests\AbstractTestCase;
 
-class PhoneParserTest extends BaseTestCase
+class PhoneParserTest extends AbstractTestCase
 {
 
     /**

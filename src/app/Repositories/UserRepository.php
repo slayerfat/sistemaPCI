@@ -43,7 +43,7 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
      * @param string $code
      * @return boolean
      */
-    public function confirm($code)
+    public function confirmCode($code)
     {
         $user = $this->model->whereConfirmationCode($code)->first();
 

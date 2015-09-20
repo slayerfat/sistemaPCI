@@ -1,9 +1,9 @@
 <?php namespace Tests\PCI\Models\User\Employee;
 
 use PCI\Models\Employee;
-use Tests\BaseTestCase;
+use Tests\AbstractTestCase;
 
-class EmployeeTest extends BaseTestCase
+class EmployeeTest extends AbstractTestCase
 {
 
     /**

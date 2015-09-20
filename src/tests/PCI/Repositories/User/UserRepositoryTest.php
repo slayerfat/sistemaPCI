@@ -3,13 +3,13 @@
 use Mockery;
 use PCI\Models\Employee;
 use PCI\Models\User;
-use Tests\BaseTestCase;
+use Tests\AbstractTestCase;
 use PCI\Repositories\UserRepository;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class UserRepositoryTest extends BaseTestCase
+class UserRepositoryTest extends AbstractTestCase
 {
 
     use DatabaseTransactions, DatabaseMigrations;
@@ -63,14 +63,14 @@ class UserRepositoryTest extends BaseTestCase
 
     public function testConfirmShouldNotPersistAndReturnFalse()
     {
-        $repoResults = $this->repo->confirm('invalid code');
+        $repoResults = $this->repo->confirmCode('invalid code');
 
         $this->assertFalse($repoResults);
     }
 
     public function testConfirmShouldPersistIfCorrectCodeIsGiven()
     {
-        $repoResults = $this->repo->confirm($this->user->confirmation_code);
+        $repoResults = $this->repo->confirmCode($this->user->confirmation_code);
 
         $this->assertTrue($repoResults);
     }

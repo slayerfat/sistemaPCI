@@ -5,7 +5,7 @@ use Faker\Factory;
 /**
  * @todo: a espera de @Phantom66 para la especificacion real de algunas entidades.
  */
-class AuxEntitiesSeeder extends BaseSeeder
+class AuxEntitiesSeederAbstract extends AbstractBaseSeeder
 {
 
     /**

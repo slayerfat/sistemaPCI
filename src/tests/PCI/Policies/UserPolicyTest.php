@@ -1,11 +1,11 @@
 <?php namespace Tests\PCI\Policies;
 
 use PCI\Models\User;
-use Tests\BaseTestCase;
+use Tests\AbstractTestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class UserPolicyTest extends BaseTestCase
+class UserPolicyTest extends AbstractTestCase
 {
 
     use DatabaseTransactions, DatabaseMigrations;

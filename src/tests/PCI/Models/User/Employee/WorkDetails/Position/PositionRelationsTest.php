@@ -3,9 +3,9 @@
 use Mockery;
 use PCI\Models\Position;
 use PCI\Models\WorkDetail;
-use Tests\BaseTestCase;
+use Tests\AbstractTestCase;
 
-class PositionRelationsTest extends BaseTestCase
+class PositionRelationsTest extends AbstractTestCase
 {
 
     public function testWorkDetails()

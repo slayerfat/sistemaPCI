@@ -137,7 +137,7 @@ class Item extends AbstractBaseModel implements SluggableInterface
     public function dependsOn()
     {
         return $this->belongsToMany(
-            Item::class,
+            self::class,
             'item_item',
             'item_id',
             'depends_on_id'

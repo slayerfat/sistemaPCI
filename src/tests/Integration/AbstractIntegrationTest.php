@@ -2,9 +2,9 @@
 
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Tests\BaseTestCase;
+use Tests\AbstractTestCase;
 
-abstract class AbstractIntegrationTest extends BaseTestCase
+abstract class AbstractIntegrationTest extends AbstractTestCase
 {
 
     use DatabaseTransactions, DatabaseMigrations;

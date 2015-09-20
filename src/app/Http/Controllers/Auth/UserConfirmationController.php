@@ -41,7 +41,7 @@ class UserConfirmationController extends Controller
             return Redirect::route('index');
         }
 
-        if (!$this->userRepo->confirm($code)) {
+        if (!$this->userRepo->confirmCode($code)) {
             return Redirect::route('index');
         }
 

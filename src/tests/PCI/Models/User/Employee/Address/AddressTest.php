@@ -1,9 +1,9 @@
 <?php namespace Tests\PCI\Models\User\Employee\Address;
 
 use PCI\Models\Address;
-use Tests\BaseTestCase;
+use Tests\AbstractTestCase;
 
-class AddressTest extends BaseTestCase
+class AddressTest extends AbstractTestCase
 {
 
     /**

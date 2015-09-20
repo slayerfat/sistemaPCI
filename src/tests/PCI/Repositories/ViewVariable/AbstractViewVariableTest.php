@@ -3,13 +3,13 @@
 use stdClass;
 use Mockery;
 use PCI\Models\User;
-use Tests\BaseTestCase;
+use Tests\AbstractTestCase;
 use PCI\Models\Employee;
 use PCI\Repositories\ViewVariable\ViewModelVariable;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class AbstractViewVariableTest extends BaseTestCase
+class AbstractViewVariableTest extends AbstractTestCase
 {
 
     use DatabaseTransactions, DatabaseMigrations;
