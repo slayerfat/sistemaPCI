@@ -15,6 +15,7 @@ class CreateMakersTable extends Migration
         Schema::create('makers', function (Blueprint $table) {
             $table->increments('id');
             $table->string('desc', 30);
+            $table->string('slug', 30);
             $table->timestamps();
             $table->unsignedInteger('created_by');
             $table->foreign('created_by')->references('id')->on('users');

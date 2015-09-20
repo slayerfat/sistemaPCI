@@ -15,6 +15,7 @@ class CreateGendersTable extends Migration
         Schema::create('genders', function (Blueprint $table) {
             $table->increments('id');
             $table->string('desc', 30)->unique();
+            $table->string('slug', 30)->unique();
             $table->timestamps();
             $table->unsignedInteger('created_by');
             $table->foreign('created_by')->references('id')->on('users');

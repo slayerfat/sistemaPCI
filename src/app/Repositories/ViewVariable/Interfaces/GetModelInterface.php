@@ -1,0 +1,18 @@
+<?php namespace PCI\Repositories\ViewVariable\Interfaces;
+
+use PCI\Models\AbstractBaseModel;
+
+interface GetModelInterface
+{
+
+    /**
+     * @return \PCI\Models\AbstractBaseModel
+     */
+    public function getModel();
+
+    /**
+     * @param \PCI\Models\AbstractBaseModel $model
+     * @return void
+     */
+    public function setModel(AbstractBaseModel $model);
+}

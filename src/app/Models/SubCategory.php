@@ -2,6 +2,8 @@
 
 namespace PCI\Models;
 
+use Cviebrock\EloquentSluggable\SluggableInterface;
+use Cviebrock\EloquentSluggable\SluggableTrait;
 use Illuminate\Database\Eloquent\Collection;
 
 /** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
@@ -25,9 +27,13 @@ use Illuminate\Database\Eloquent\Collection;
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\SubCategory whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\SubCategory whereCreatedBy($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\SubCategory whereUpdatedBy($value)
+ * @property string $slug
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\SubCategory whereSlug($value)
  */
-class SubCategory extends AbstractBaseModel
+class SubCategory extends AbstractBaseModel implements SluggableInterface
 {
+
+    use SluggableTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -35,6 +41,14 @@ class SubCategory extends AbstractBaseModel
      * @var array
      */
     protected $fillable = ['desc'];
+
+    /**
+     * @var array
+     */
+    protected $sluggable = [
+        'build_from' => 'desc',
+        'save_to'    => 'slug',
+    ];
 
     // -------------------------------------------------------------------------
     // Relaciones

@@ -6,6 +6,12 @@ En este archivo estaran los cambios pertinentes en el DED y el Documento de Espe
 
 Detalles, observaciones u otros:
 
+#### 17-09-15
+
+Las entidades no poseen un campo que ayude a generar urls. (slugs).
+
+Las siguientes entidades poseen un campo Slug: Categoria, Departamento, Genero, Item, Maker, Movimiento, Nacionalidad, Tipo de Nota, Tipo de Peticion, Perfil, SubCategoria.
+
 #### 13-09-15
 
 La entidad Usuario posee un campo status que parece redundante con Perfil: Desactivado.

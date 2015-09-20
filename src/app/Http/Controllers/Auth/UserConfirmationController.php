@@ -6,7 +6,7 @@ use Redirect;
 use Illuminate\Auth\Guard;
 use PCI\Http\Controllers\Controller;
 use PCI\Events\ConfirmationCodeRequest;
-use PCI\Repositories\Interfaces\UserRepositoryInterface;
+use PCI\Repositories\Interfaces\User\UserRepositoryInterface;
 
 class UserConfirmationController extends Controller
 {
@@ -23,7 +23,7 @@ class UserConfirmationController extends Controller
 
     /**
      * @param Guard $auth
-     * @param UserRepositoryInterface $userRepo
+     * @param \PCI\Repositories\Interfaces\User\UserRepositoryInterface $userRepo
      */
     public function __construct(Guard $auth, UserRepositoryInterface $userRepo)
     {

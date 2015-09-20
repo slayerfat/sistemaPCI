@@ -15,7 +15,7 @@ switch ($active) {
     <ul class="nav nav-sidebar">
         <li {{$show or null}}>
             <a href="{{isset($show) ? '#' : route('users.show')}}">
-                {{trans('defaults.users.show')}}
+                {{trans('models.users.show')}}
             </a>
         </li>
     </ul>
@@ -57,7 +57,7 @@ switch ($active) {
                     <a href="#"
                        onclick="deleteResourceFromAnchor('destroy-element-{{$user->id}}')"
                         >
-                        {{trans('defaults.users.destroy')}}
+                        {{trans('models.users.destroy')}}
                     </a>
                 </li>
             @endcan

@@ -2,6 +2,8 @@
 
 namespace PCI\Models;
 
+use Cviebrock\EloquentSluggable\SluggableInterface;
+use Cviebrock\EloquentSluggable\SluggableTrait;
 use Illuminate\Database\Eloquent\Collection;
 
 /** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
@@ -22,15 +24,46 @@ use Illuminate\Database\Eloquent\Collection;
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Profile whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Profile whereCreatedBy($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Profile whereUpdatedBy($value)
+ * @property string $slug
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Profile whereSlug($value)
  */
-class Profile extends AbstractBaseModel
+class Profile extends AbstractBaseModel implements SluggableInterface
 {
+
+    use SluggableTrait;
+
+    /**
+     * Administrador del sistema
+     * @var int
+     */
+    const ADMIN_ID    = 1;
+
+    /**
+     * Usuario del sistema
+     * @var int
+     */
+    const USER_ID     = 2;
+
+    /**
+     * Usuario desactivado
+     * @var int
+     */
+    const DISABLED_ID = 3;
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = ['desc'];
+
+    /**
+     * @var array
+     */
+    protected $sluggable = [
+        'build_from' => 'desc',
+        'save_to'    => 'slug',
+    ];
 
     // -------------------------------------------------------------------------
     // Relaciones

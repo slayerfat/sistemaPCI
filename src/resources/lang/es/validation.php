@@ -66,6 +66,7 @@ return [
         'title'            => 'Titulo',
         'body'             => 'Cuerpo o Descripción',
         'description'      => 'Descripción',
+        'desc'             => 'Descripción',
         'event_type_id'    => 'Tipo de Evento',
         'message_type_id'  => 'Tipo de Mensaje',
         'building_id'      => 'Edificio',

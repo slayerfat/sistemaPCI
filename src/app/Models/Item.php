@@ -2,6 +2,8 @@
 
 namespace PCI\Models;
 
+use Cviebrock\EloquentSluggable\SluggableInterface;
+use Cviebrock\EloquentSluggable\SluggableTrait;
 use Illuminate\Database\Eloquent\Collection;
 
 /** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
@@ -45,9 +47,14 @@ use Illuminate\Database\Eloquent\Collection;
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Item whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Item whereCreatedBy($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Item whereUpdatedBy($value)
+ * @property string $slug
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Item whereSlug($value)
  */
-class Item extends AbstractBaseModel
+class Item extends AbstractBaseModel implements SluggableInterface
 {
+
+    use SluggableTrait;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -60,6 +67,14 @@ class Item extends AbstractBaseModel
         'stock',
         'minimun',
         'due',
+    ];
+
+    /**
+     * @var array
+     */
+    protected $sluggable = [
+        'build_from' => 'desc',
+        'save_to'    => 'slug',
     ];
 
     /**

@@ -3,12 +3,12 @@
 use Route;
 
 /**
- * Class PCIRoute
+ * Class PCIRoutes
  * @package PCI\Http\Routes
  * @see http://i.imgur.com/xVyoSl.jpg
  * Poderoso copypasta de https://github.com/slayerfat/orbiagro.com.ve/blob/master/app/Http/Routes/Routes.php
  */
-abstract class PCIRoute
+abstract class PCIRoutes
 {
     /**
      * Las opciones para crear un grupo RESTful de rutas.
@@ -85,10 +85,10 @@ abstract class PCIRoute
                 'index'   => ['get', '/'],
                 'create'  => ['get', '/crear'],
                 'store'   => ['post', '/'],
-                'show'    => ['get', '/'.$details['resource']],
-                'edit'    => ['get', '/'.$details['resource'].'/editar'],
-                'update'  => ['patch', '/'.$details['resource']],
-                'destroy' => ['delete', '/'.$details['resource']],
+                'show'    => ['get', '/' . $details['resource']],
+                'edit'    => ['get', '/' . $details['resource'] . '/editar'],
+                'update'  => ['patch', '/' . $details['resource']],
+                'destroy' => ['delete', '/' . $details['resource']],
             ];
 
             // si en los detalles hay ignore, se salta.
@@ -108,8 +108,8 @@ abstract class PCIRoute
                 Route::$rule[0](
                     $rule[1],
                     [
-                        'uses' => $details['uses'].'@'.$name,
-                        'as'   => $details['as'].'.'.$name
+                        'uses' => $details['uses'] . '@' . $name,
+                        'as'   => $details['as'] . '.' . $name
                     ]
                 );
             }

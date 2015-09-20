@@ -2,20 +2,37 @@ language: php
 php:
   - 5.6
   - 5.5.9
-  - 7
+  #- 7 hasta que phpunit gets to 5.0
 
 before_script:
+  # - if [ $TRAVIS_PHP_VERSION != '7' ]; then composer --working-dir=src/ install --no-interaction --prefer-source; else composer --working-dir=src/ install --no-interaction --prefer-source --no-scripts; fi
+  # - if [ $TRAVIS_PHP_VERSION != '7' ]; then npm install -g npm@2; fi
+  # - if [ $TRAVIS_PHP_VERSION != '7' ]; then (cd src/ && npm install && bower install && gulp); fi
+  # - if [ $TRAVIS_PHP_VERSION != '7' ]; then pyrus install pear/PHP_CodeSniffer; fi
+  # - if [ $TRAVIS_PHP_VERSION != '7' ]; then phpenv rehash; fi
+  # - if [ $TRAVIS_PHP_VERSION != '7' ]; then wget https://gist.githubusercontent.com/slayerfat/2b3cc4faf94d2863b505/raw/b958e68fa8886baac8880cdf381d1dfbc403270f/phpmd-ruleset.xml; fi
+  # - if [ $TRAVIS_PHP_VERSION != '7' ]; then wget -c http://static.phpmd.org/php/latest/phpmd.phar; fi
+
   - composer --working-dir=src/ install --no-interaction --prefer-source
+  - npm install -g npm@2
+  - npm install -g bower
+  - (cd src/ && npm install && bower install && gulp)
   - pyrus install pear/PHP_CodeSniffer
   - phpenv rehash
   - wget https://gist.githubusercontent.com/slayerfat/2b3cc4faf94d2863b505/raw/b958e68fa8886baac8880cdf381d1dfbc403270f/phpmd-ruleset.xml
   - wget -c http://static.phpmd.org/php/latest/phpmd.phar
 
 script:
-  - phpunit
+  - phpunit --coverage-clover=coverage.clover
   - phpcs -p --colors --standard=PSR2 --ignore=src/vendor/ src/app src/database/seeds/ src/config/
-  - if [ -e phpmd-ruleset.xml ]; then php phpmd.phar src/app/ text phpmd-ruleset.xml; php phpmd.phar src/database/seeds/ text phpmd-ruleset.xml; php phpmd.phar src/config/ text phpmd-ruleset.xml; fi;
+  - if [ -e phpmd-ruleset.xml ]; then php phpmd.phar src/app/ text phpmd-ruleset.xml; php phpmd.phar src/database/seeds/ text phpmd-ruleset.xml; php phpmd.phar src/config/ text phpmd-ruleset.xml; fi
 
-matrix:
-  allow_failures:
-    - php: 7
+  # - if [ $TRAVIS_PHP_VERSION != '7' ]; then phpcs -p --colors --standard=PSR2 --ignore=src/vendor/ src/app src/database/seeds/ src/config/; fi
+  # - if [ -e phpmd-ruleset.xml ] && [ $TRAVIS_PHP_VERSION != '7' ]; then php phpmd.phar src/app/ text phpmd-ruleset.xml; php phpmd.phar src/database/seeds/ text phpmd-ruleset.xml; php phpmd.phar src/config/ text phpmd-ruleset.xml; fi
+
+after_script:
+  - wget https://scrutinizer-ci.com/ocular.phar
+  - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
+
+  # - if [ $TRAVIS_PHP_VERSION != '7' ]; then wget https://scrutinizer-ci.com/ocular.phar; fi
+  # - if [ $TRAVIS_PHP_VERSION != '7' ]; then php ocular.phar code-coverage:upload --format=php-clover coverage.clover; fi

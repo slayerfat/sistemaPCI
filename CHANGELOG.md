@@ -1,3 +1,22 @@
+## v0.1.1 19-07-15
+
+Features:
+
+- Recursos genericos/Auxiliares completos (gestion de Categoria, Perfiles, etc.), todos estos pueden cumplir las actividades basicas:
+    1. consultar listado
+    1. consultar singular
+    1. crear
+    1. actualizar
+    1. eliminar
+- creados Repositorios, Proveedores y otros necesarios para los recursos, exceptuando: ---
+- creadas algunas pruebas de integracion.
+
+Mejoras:
+
+- Mejorada interfaces de repos, un poco mas abstracto.
+- creada funcion mamarrachamente que genera el directorio publico de la aplicacion.
+- Las siguientes entidades poseen un campo Slug: Categoria, Departamento, Genero, Item, Maker, Movimiento, Nacionalidad, Tipo de Nota, Tipo de Peticion, Perfil, SubCategoria.
+
 ## v0.0.6 17-09-15
 
 Features:

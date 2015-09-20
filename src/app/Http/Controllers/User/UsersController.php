@@ -9,7 +9,7 @@ use PCI\Models\Profile;
 use PCI\Http\Requests\UserRequest;
 use PCI\Http\Controllers\Controller;
 use Illuminate\View\Factory as View;
-use PCI\Repositories\Interfaces\UserRepositoryInterface;
+use PCI\Repositories\Interfaces\User\UserRepositoryInterface;
 
 class UsersController extends Controller
 {
@@ -25,8 +25,8 @@ class UsersController extends Controller
     private $view;
 
     /**
-     * @param UserRepositoryInterface $userRepo
-     * @param View                    $view
+     * @param \PCI\Repositories\Interfaces\User\UserRepositoryInterface $userRepo
+     * @param View $view
      */
     public function __construct(UserRepositoryInterface $userRepo, View $view)
     {
@@ -41,8 +41,8 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $users = $this->userRepo->getAllForTableWithPaginator();
-        $users->setPath(route('users.index'));
+        $users = $this->userRepo->getIndexViewVariables();
+        $users->getModel()->setPath(route('users.index'));
 
         return $this->view->make('users.index', compact('users'));
     }
@@ -54,7 +54,7 @@ class UsersController extends Controller
      */
     public function create(Profile $profile)
     {
-        $user = $this->userRepo->getNewInstance();
+        $user = $this->userRepo->newInstance();
 
         $profiles = $profile->lists('desc', 'id');
 

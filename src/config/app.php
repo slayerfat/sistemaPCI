@@ -147,6 +147,7 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         Bootstrapper\BootstrapperL5ServiceProvider::class,
         Jenssegers\Date\DateServiceProvider::class,
+        Cviebrock\EloquentSluggable\SluggableServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -158,6 +159,7 @@ return [
         PCI\Providers\ViewComposerServiceProvider::class,
         PCI\Providers\CaimaeitorServiceProvider::class,
         PCI\Providers\User\UsersRepositoriesServiceProvider::class,
+        PCI\Providers\Aux\AuxRepositoriesProvider::class,
         PCI\Providers\User\UserDeletingServiceProvider::class,
     ],
 

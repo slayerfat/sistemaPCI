@@ -29,6 +29,7 @@ class CreateItemsTable extends Migration
             $table->char('asoc', 1); //ABC
             $table->unsignedInteger('priority')->nullable(); // 1-100%
             $table->string('desc')->index();
+            $table->string('slug')->index();
             $table->unsignedInteger('stock');
             $table->unsignedInteger('minimum');
             $table->date('due')->nullable();
