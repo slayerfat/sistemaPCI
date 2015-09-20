@@ -72,6 +72,11 @@ abstract class AbstractViewVariable implements ViewVariableInterface
     protected $names;
 
     /**
+     * @return mixed
+     */
+    abstract public function getModel();
+
+    /**
      * @return string
      */
     public function getUsersGoal()
