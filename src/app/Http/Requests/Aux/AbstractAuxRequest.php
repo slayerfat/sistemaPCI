@@ -3,7 +3,7 @@
 use Illuminate\Auth\Guard;
 use PCI\Http\Requests\Request;
 
-class CategoryRequest extends Request
+class AbstractAuxRequest extends Request
 {
 
     /**
@@ -14,17 +14,5 @@ class CategoryRequest extends Request
     public function authorize(Guard $auth)
     {
         return $auth->user()->isAdmin();
-    }
-
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
-    public function rules()
-    {
-        return [
-            'desc' => 'required|string|max:255|unique:categories'
-        ];
     }
 }

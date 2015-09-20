@@ -3,7 +3,7 @@
 use PCI\Repositories\Interfaces\Aux\DepartmentRepositoryInterface;
 use Redirect;
 use Illuminate\View\Factory;
-use PCI\Http\Requests\Aux\CategoryRequest;
+use PCI\Http\Requests\Aux\DepartmentRequest;
 
 class DepartmentsController extends AbstractAuxController
 {
@@ -64,10 +64,10 @@ class DepartmentsController extends AbstractAuxController
     }
 
     /**
-     * @param \PCI\Http\Requests\Aux\CategoryRequest $request
+     * @param \PCI\Http\Requests\Aux\DepartmentRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(CategoryRequest $request)
+    public function store(DepartmentRequest $request)
     {
         $this->model = $this->repo->create($request->all());
 
@@ -89,10 +89,10 @@ class DepartmentsController extends AbstractAuxController
 
     /**
      * @param $id
-     * @param \PCI\Http\Requests\Aux\CategoryRequest $request
+     * @param \PCI\Http\Requests\Aux\DepartmentRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update($id, CategoryRequest $request)
+    public function update($id, DepartmentRequest $request)
     {
         $this->model = $this->repo->update($id, $request->all());
 
@@ -108,7 +108,7 @@ class DepartmentsController extends AbstractAuxController
         $this->model = $this->repo->delete($id);
 
         if ($this->model === true) {
-            return Redirect::route('aux.index');
+            return Redirect::route('depts.index');
         }
 
         return Redirect::route('depts.show', $this->model->desc);

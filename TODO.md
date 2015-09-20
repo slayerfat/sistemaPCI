@@ -8,11 +8,11 @@ el recurso es la combinacion de Rutas + Vistas + Controladores para brindar un R
 
 Completados:
 
-~~Status~~ *THX CAIMANEITOR*, **Index**, ~~User~~, Category. 
+~~Status~~ *THX CAIMANEITOR*, **Index**, ~~User~~, ~~Category~~, ~~Department~~. 
 
 Faltantes:
 
-Address, Attendant, Deparment, Depot, Employee, Gender, Item, ItemType, Maker, Movement, MovementType, Nationality, Note, NoteType, Parish, Petitino, PetitionType, Position, Porfile, State, SubCategory, Town, WorkDetails.
+Address, Attendant, Depot, Employee, Gender, Item, ItemType, Maker, Movement, MovementType, Nationality, Note, NoteType, Parish, Petitino, PetitionType, Position, Porfile, State, SubCategory, Town, WorkDetails.
 
 ## Migrations
 
