@@ -158,6 +158,15 @@ class NavbarViewComposer
                 ],
                 Navigation::NAVIGATION_DIVIDER,
                 [
+                    'link'  => route('genders.create'),
+                    'title' => trans('aux.genders.create')
+                ],
+                [
+                    'link'  => route('genders.index'),
+                    'title' => trans('aux.genders.index')
+                ],
+                Navigation::NAVIGATION_DIVIDER,
+                [
                     'link'  => route('depts.create'),
                     'title' => trans('aux.depts.create')
                 ],

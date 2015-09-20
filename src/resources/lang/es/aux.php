@@ -20,8 +20,19 @@ return [
     'depts.create'    => 'Crear Departamento',
     'depts.edit'      => 'Editar Departamento',
     'depts.destroy'   => 'Eliminar Departamento',
-    'depts.plural'    => 'Departamentoes',
+    'depts.plural'    => 'Departamentos',
     'depts.singular'  => 'Departamento',
+
+    /**
+     * Genero
+     */
+    'genders.index'     => 'Ver Generos',
+    'genders.show'      => 'Ver Genero',
+    'genders.create'    => 'Crear Genero',
+    'genders.edit'      => 'Editar Genero',
+    'genders.destroy'   => 'Eliminar Genero',
+    'genders.plural'    => 'Generos',
+    'genders.singular'  => 'Genero',
 
     /**
      * Perfil
