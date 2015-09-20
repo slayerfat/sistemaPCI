@@ -66,6 +66,9 @@ elixir(function (mix) {
         // otra opcion seria un symlink o algo asi.
         .copy(paths.bootstrap + 'fonts/bootstrap/**', paths.public + '/fonts')
         .copy(paths.fontAwesome + 'fonts/**', paths.public + '/fonts')
+        // i dont even know
+        .copy(paths.bootstrap + 'fonts/bootstrap/**', paths.public + '/build/fonts')
+        .copy(paths.fontAwesome + 'fonts/**', paths.public + '/build/fonts')
 
         // le hace el amor y ejacula ~/sistemaPCI/public/js/all.js
         .scripts([
