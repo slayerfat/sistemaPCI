@@ -47,8 +47,8 @@ class AuxIntegrationTest extends AbstractAuxTest
     {
         foreach ($this->data as $data) {
             $this->actingAs($this->user)
-                ->visit('/')
-                ->see(trans("aux.{$data->alias}.create"));
+                ->visit(route('index'))
+                ->see(trans("models.{$data->alias}.index"));
         }
     }
 
@@ -56,8 +56,11 @@ class AuxIntegrationTest extends AbstractAuxTest
     {
         foreach ($this->data as $data) {
             $this->actingAs($this->user)
-                ->visit('/')
-                ->click(trans("aux.{$data->alias}.create"))
+                ->visit(route('index'))
+                ->click(trans("models.{$data->alias}.index"))
+                ->seePageIs($data->index)
+                ->see(trans("models.{$data->alias}.create"))
+                ->click(trans("models.{$data->alias}.create"))
                 ->seePageIs($data->create);
         }
     }
@@ -68,7 +71,7 @@ class AuxIntegrationTest extends AbstractAuxTest
             $this->actingAs($this->user)
                 ->visit($data->create)
                 ->type('testing', 'desc')
-                ->press(trans("aux.{$data->alias}.create"))
+                ->press(trans("models.{$data->alias}.create"))
                 ->seePageIs($data->show . 'testing');
         }
     }
@@ -95,7 +98,7 @@ class AuxIntegrationTest extends AbstractAuxTest
             $this->actingAs($this->user)
                 ->visit($data->edit . $model->id . '/editar')
                 ->type('check', 'desc')
-                ->press(trans("aux.{$data->alias}.edit"))
+                ->press(trans("models.{$data->alias}.edit"))
                 ->seePageIs($data->show . 'check');
         }
     }

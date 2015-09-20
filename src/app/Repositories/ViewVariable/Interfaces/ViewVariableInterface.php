@@ -68,5 +68,5 @@ interface ViewVariableInterface
     /**
      * @return \StdClass
      */
-    public function getNames();
+    public function getTrans();
 }

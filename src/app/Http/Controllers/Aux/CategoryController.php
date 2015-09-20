@@ -82,7 +82,7 @@ class CategoryController extends AbstractAuxController
     {
         $variables = $this->catRepo->getEditViewVariables($id);
 
-        $variables->setUsersGoal(trans('aux.cats.edit'));
+        $variables->setUsersGoal(trans('models.cats.edit'));
 
         return $this->makeView('aux.edit', $variables);
     }

@@ -12,7 +12,7 @@ class ItemTypesRepository extends AbstractAuxRepository implements ItemTypesRepo
      */
     public function delete($id)
     {
-        return $this->executeDelete($id, trans('aux.itemType.singular'));
+        return $this->executeDelete($id, trans('models.itemType.singular'));
     }
 
     /**
@@ -55,7 +55,7 @@ class ItemTypesRepository extends AbstractAuxRepository implements ItemTypesRepo
     {
         $results = $this->generateViewVariable($this->newInstance(), 'itemTypes');
 
-        $results->setUsersGoal(trans('aux.itemTypes.create'));
+        $results->setUsersGoal(trans('models.itemTypes.create'));
         $results->setDestView('itemTypes.store');
 
         return $results;

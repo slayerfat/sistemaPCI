@@ -82,7 +82,7 @@ class ItemTypesController extends AbstractAuxController
     {
         $variables = $this->repo->getEditViewVariables($id);
 
-        $variables->setUsersGoal(trans('aux.itemTypes.edit'));
+        $variables->setUsersGoal(trans('models.itemTypes.edit'));
 
         return $this->makeView('aux.edit', $variables);
     }

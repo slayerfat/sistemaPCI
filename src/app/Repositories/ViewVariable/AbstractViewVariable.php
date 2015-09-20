@@ -69,7 +69,7 @@ abstract class AbstractViewVariable implements ViewVariableInterface
      * Contiene los nombres formales en sigular y plural
      * @var \StdClass
      */
-    protected $names;
+    protected $trans;
 
     /**
      * @return mixed
@@ -238,27 +238,32 @@ abstract class AbstractViewVariable implements ViewVariableInterface
     /**
      * Genera los nombres formales.
      */
-    protected function setNames()
+    protected function setTrans()
     {
-        $this->names = new StdClass;
+        $this->trans = new StdClass;
         $types       = [
-            'singular' => trans("defaults.{$this->resource}.singular"),
-            'plural'   => trans("defaults.{$this->resource}.plural"),
+            'singular' => trans("models.{$this->resource}.singular"),
+            'plural'   => trans("models.{$this->resource}.plural"),
+            'index'    => trans("models.{$this->resource}.index"),
+            'show'     => trans("models.{$this->resource}.show"),
+            'create'   => trans("models.{$this->resource}.create"),
+            'edit'     => trans("models.{$this->resource}.edit"),
+            'update'   => trans("models.{$this->resource}.update"),
+            'fa-icon'  => trans("models.{$this->resource}.fa-icon"),
         ];
 
         foreach ($types as $type => $def) {
-            $this->names->$type = $def;
+            $this->trans->$type = $def;
         }
     }
 
     /**
      * @return \StdClass
      */
-    public function getNames()
+    public function getTrans()
     {
-        return $this->names;
+        return $this->trans;
     }
-
 
     /**
      * genera la vista inicial (a donde se va inicialmente) y la
@@ -279,7 +284,7 @@ abstract class AbstractViewVariable implements ViewVariableInterface
 
         $this->setViews();
         $this->setRoutes();
-        $this->setNames();
+        $this->setTrans();
     }
 
     /**

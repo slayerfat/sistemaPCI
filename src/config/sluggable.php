@@ -86,22 +86,22 @@ return [
     'on_update' => true,
 
     /**
-     * An array of slug names that can never be used for this model,
+     * An array of slug trans that can never be used for this model,
      * e.g. to prevent collisions with existing routes or controller methods, etc..
-     * Defaults to null (i.e. no reserved names).
+     * Defaults to null (i.e. no reserved trans).
      * Can be a static array, e.g.:
      *
      *    'reserved' => array('add', 'delete'),
      *
-     * or a closure that returns an array of reserved names.
+     * or a closure that returns an array of reserved trans.
      * If using a closure, it will accept one parameter: the model itself, and should
-     * return an array of reserved names, or null. e.g.
+     * return an array of reserved trans, or null. e.g.
      *
      *    'reserved' => function( Model $model) {
      *      return $model->some_method_that_returns_an_array();
      *    }
      *
-     * In the case of a slug that gets generated with one of these reserved names,
+     * In the case of a slug that gets generated with one of these reserved trans,
      * we will do:
      *
      *    $slug .= $seperator + "1"

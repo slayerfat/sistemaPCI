@@ -1,9 +1,7 @@
 @if($data && !$data->getModel()->isEmpty())
     <div class="container">
-        @if($title)
-            <h3>{{$title}}</h3>
-        @endif
 
+        @include('partials.tables.title')
         {!!
 
         Table::withContents($data->getModel()->getCollection()->toArray())
@@ -19,6 +17,9 @@
     </div>
 @else
     <div class="container">
+
+        @include('partials.tables.title')
+
         {!!
 
         Table::withContents([['Informacion' => 'No hay información que mostrar.']])

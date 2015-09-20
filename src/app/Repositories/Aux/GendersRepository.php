@@ -12,7 +12,7 @@ class GendersRepository extends AbstractAuxRepository implements GendersReposito
      */
     public function delete($id)
     {
-        return $this->executeDelete($id, trans('aux.genders.singular'));
+        return $this->executeDelete($id, trans('models.genders.singular'));
     }
 
     /**
@@ -55,7 +55,7 @@ class GendersRepository extends AbstractAuxRepository implements GendersReposito
     {
         $results = $this->generateViewVariable($this->newInstance(), 'genders');
 
-        $results->setUsersGoal(trans('aux.genders.create'));
+        $results->setUsersGoal(trans('models.genders.create'));
         $results->setDestView('genders.store');
 
         return $results;

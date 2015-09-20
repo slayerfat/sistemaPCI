@@ -1,10 +1,10 @@
 <?php namespace PCI\Http\ViewComposers;
 
-use Icon;
 use PCI\Models\User;
 use Illuminate\View\View;
 use Illuminate\Auth\Guard;
 use Bootstrapper\Navigation;
+use PCI\Mamarrachismo\Bootstrapper\IconPCI;
 
 class NavbarViewComposer
 {
@@ -20,6 +20,7 @@ class NavbarViewComposer
     public function __construct(Guard $auth)
     {
         $this->user = $auth->user();
+        $this->icon = new IconPCI;
     }
 
     /**
@@ -54,11 +55,11 @@ class NavbarViewComposer
             return [
                 [
                     'link'  => route('auth.getLogin'),
-                    'title' => Icon::create('sign-in') . 'Entrar'
+                    'title' => $this->icon->create('sign-in') . 'Entrar'
                 ],
                 [
                     'link'  => route('auth.getRegister'),
-                    'title' => Icon::create('check-square-o') . 'Registrarse'
+                    'title' => $this->icon->create('check-square-o') . 'Registrarse'
                 ],
             ];
         }
@@ -69,11 +70,11 @@ class NavbarViewComposer
                 [
                     [
                         'link'  => route('users.show', $this->user->name),
-                        'title' => Icon::create('eye') . trans('models.users.show')
+                        'title' => $this->icon->create('eye') . trans('models.users.show')
                     ],
                     [
                         'link'  => route('auth.getLogout'),
-                        'title' => Icon::create('sign-out') . 'Salir'
+                        'title' => $this->icon->create('sign-out') . 'Salir'
                     ],
                 ]
             ]
@@ -88,29 +89,29 @@ class NavbarViewComposer
         $links = [
             [
                 'link'  => '#',
-                'title' => Icon::create(trans('models.petitions.fa-icon'))
+                'title' => $this->icon->create(trans('models.petitions.fa-icon'))
                     . trans('models.petitions.plural')
             ],
             [
                 'link'  => '#',
-                'title' => Icon::create(trans('models.notes.fa-icon'))
+                'title' => $this->icon->create(trans('models.notes.fa-icon'))
                     . trans('models.notes.plural')
             ],
             [
-                Icon::create('archive') . 'Items',
+                $this->icon->create('archive') . 'Items',
                 [
                     [
                         'link'  => '#',
-                        'title' => Icon::create('plus-circle') . 'Crear'
+                        'title' => $this->icon->create('plus-circle') . 'Crear'
                     ],
                     [
                         'link'  => '#',
-                        'title' => Icon::create('eye') . 'Consultar'
+                        'title' => $this->icon->create('eye') . 'Consultar'
                     ],
                     Navigation::NAVIGATION_DIVIDER,
                     [
                         'link'  => '#',
-                        'title' => Icon::create('plus') . '...'
+                        'title' => $this->icon->create('plus') . '...'
                     ],
                 ]
             ],
@@ -131,81 +132,42 @@ class NavbarViewComposer
     private function makeAdminLinks($links)
     {
         $links[] = [
-            Icon::create('wrench') . 'Mant.',
+            $this->icon->create('wrench') . 'Mant.',
             [
                 [
-                    'link'  => route('users.create'),
-                    'title' => Icon::create('plus-circle') . trans('models.users.create')
-                ],
-                [
                     'link'  => route('users.index'),
-                    'title' => Icon::create(trans('models.users.fa-icon'))
+                    'title' => $this->icon->create(trans('models.users.fa-icon'))
                         . trans('models.users.index')
                 ],
-                Navigation::NAVIGATION_DIVIDER,
                 [
                     'link'  => '#',
-                    'title' => Icon::create('plus-circle') . trans('aux.profiles.create')
-                ],
-                [
-                    'link'  => '#',
-                    'title' => Icon::create(trans('aux.profiles.fa-icon'))
-                        . trans('aux.profiles.index')
-                ],
-                Navigation::NAVIGATION_DIVIDER,
-                [
-                    'link'  => route('cats.create'),
-                    'title' => Icon::create('plus-circle') . trans('aux.cats.create')
+                    'title' => $this->icon->create(trans('models.profiles.fa-icon'))
+                        . trans('models.profiles.index')
                 ],
                 [
                     'link'  => route('cats.index'),
-                    'title' => Icon::create(trans('aux.cats.fa-icon'))
-                        . trans('aux.cats.index')
-                ],
-                Navigation::NAVIGATION_DIVIDER,
-                [
-                    'link'  => '#',
-                    'title' => Icon::create('plus-circle') . trans('aux.subCats.create')
+                    'title' => $this->icon->create(trans('models.cats.fa-icon'))
+                        . trans('models.cats.index')
                 ],
                 [
                     'link'  => '#',
-                    'title' => Icon::create(trans('aux.subCats.fa-icon'))
-                        . trans('aux.subCats.index')
-                ],
-                Navigation::NAVIGATION_DIVIDER,
-                [
-                    'link'  => route('itemTypes.create'),
-                    'title' => Icon::create('plus-circle') . trans('aux.itemTypes.create')
+                    'title' => $this->icon->create(trans('models.subCats.fa-icon'))
+                        . trans('models.subCats.index')
                 ],
                 [
                     'link'  => route('itemTypes.index'),
-                    'title' => Icon::create(trans('aux.itemTypes.fa-icon'))
-                        . trans('aux.itemTypes.index')
-                ],
-                Navigation::NAVIGATION_DIVIDER,
-                [
-                    'link'  => route('genders.create'),
-                    'title' => Icon::create('plus-circle') . trans('aux.genders.create')
+                    'title' => $this->icon->create(trans('models.itemTypes.fa-icon'))
+                        . trans('models.itemTypes.index')
                 ],
                 [
                     'link'  => route('genders.index'),
-                    'title' => Icon::create(trans('aux.genders.fa-icon'))
-                        . trans('aux.genders.index')
-                ],
-                Navigation::NAVIGATION_DIVIDER,
-                [
-                    'link'  => route('depts.create'),
-                    'title' => Icon::create('plus-circle') . trans('aux.depts.create')
+                    'title' => $this->icon->create(trans('models.genders.fa-icon'))
+                        . trans('models.genders.index')
                 ],
                 [
                     'link'  => route('depts.index'),
-                    'title' => Icon::create(trans('aux.depts.fa-icon'))
-                        . trans('aux.depts.index')
-                ],
-                Navigation::NAVIGATION_DIVIDER,
-                [
-                    'link'  => '#',
-                    'title' => Icon::create('list') . 'Ver todo'
+                    'title' => $this->icon->create(trans('models.depts.fa-icon'))
+                        . trans('models.depts.index')
                 ],
             ]
         ];

@@ -82,7 +82,7 @@ class GendersController extends AbstractAuxController
     {
         $variables = $this->repo->getEditViewVariables($id);
 
-        $variables->setUsersGoal(trans('aux.genders.edit'));
+        $variables->setUsersGoal(trans('models.genders.edit'));
 
         return $this->makeView('aux.edit', $variables);
     }

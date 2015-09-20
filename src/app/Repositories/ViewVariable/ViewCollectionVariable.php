@@ -26,7 +26,7 @@ class ViewCollectionVariable extends AbstractViewVariable implements GetModelCol
 
         $this->setViews();
         $this->setRoutes();
-        $this->setNames();
+        $this->setTrans();
     }
 
     /**
