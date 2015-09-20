@@ -2,6 +2,7 @@
 
 use PCI\Models\Category;
 use PCI\Models\Department;
+use PCI\Models\Gender;
 
 class AuxIntegrationTest extends AbstractAuxTest
 {
@@ -17,6 +18,7 @@ class AuxIntegrationTest extends AbstractAuxTest
         $modelData = [
             ['categorias', 'cats', Category::class],
             ['departamentos', 'depts', Department::class],
+            ['generos', 'genders', Gender::class],
         ];
 
         foreach ($modelData as $model) {
@@ -31,11 +33,11 @@ class AuxIntegrationTest extends AbstractAuxTest
                 ->visit($data->index)
                 ->see('No hay información que mostrar.');
 
-            $cat = factory($data->class)->create();
+            $model = factory($data->class)->create();
 
             $this->actingAs($this->user)
                 ->visit($data->index)
-                ->see($cat->desc);
+                ->see($model->desc);
         }
     }
 

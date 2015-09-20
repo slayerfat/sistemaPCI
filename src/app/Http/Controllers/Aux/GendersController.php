@@ -4,7 +4,7 @@ use PCI\Repositories\Interfaces\Aux\DepartmentRepositoryInterface;
 use PCI\Repositories\Interfaces\Aux\GendersRepositoryInterface;
 use Redirect;
 use Illuminate\View\Factory;
-use PCI\Http\Requests\Aux\DepartmentRequest;
+use PCI\Http\Requests\Aux\GenderRequest;
 
 class GendersController extends AbstractAuxController
 {
@@ -65,10 +65,10 @@ class GendersController extends AbstractAuxController
     }
 
     /**
-     * @param \PCI\Http\Requests\Aux\DepartmentRequest $request
+     * @param \PCI\Http\Requests\Aux\GenderRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(DepartmentRequest $request)
+    public function store(GenderRequest $request)
     {
         $this->model = $this->repo->create($request->all());
 
@@ -90,10 +90,10 @@ class GendersController extends AbstractAuxController
 
     /**
      * @param $id
-     * @param \PCI\Http\Requests\Aux\DepartmentRequest $request
+     * @param \PCI\Http\Requests\Aux\GenderRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update($id, DepartmentRequest $request)
+    public function update($id, GenderRequest $request)
     {
         $this->model = $this->repo->update($id, $request->all());
 
