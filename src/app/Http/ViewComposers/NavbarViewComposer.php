@@ -88,11 +88,13 @@ class NavbarViewComposer
         $links = [
             [
                 'link'  => '#',
-                'title' => Icon::create('check') . 'Pedidos'
+                'title' => Icon::create(trans('models.petitions.fa-icon'))
+                    . trans('models.petitions.plural')
             ],
             [
                 'link'  => '#',
-                'title' => Icon::create('pencil-square-o') . 'Notas'
+                'title' => Icon::create(trans('models.notes.fa-icon'))
+                    . trans('models.notes.plural')
             ],
             [
                 Icon::create('archive') . 'Items',
@@ -103,12 +105,12 @@ class NavbarViewComposer
                     ],
                     [
                         'link'  => '#',
-                        'title' => 'Consultar'
+                        'title' => Icon::create('eye') . 'Consultar'
                     ],
                     Navigation::NAVIGATION_DIVIDER,
                     [
                         'link'  => '#',
-                        'title' => '...'
+                        'title' => Icon::create('plus') . '...'
                     ],
                 ]
             ],
@@ -137,7 +139,8 @@ class NavbarViewComposer
                 ],
                 [
                     'link'  => route('users.index'),
-                    'title' => Icon::create('users') . trans('models.users.index')
+                    'title' => Icon::create(trans('models.users.fa-icon'))
+                        . trans('models.users.index')
                 ],
                 Navigation::NAVIGATION_DIVIDER,
                 [
@@ -146,7 +149,8 @@ class NavbarViewComposer
                 ],
                 [
                     'link'  => '#',
-                    'title' => Icon::create('user-md') . trans('aux.profiles.index')
+                    'title' => Icon::create(trans('aux.profiles.fa-icon'))
+                        . trans('aux.profiles.index')
                 ],
                 Navigation::NAVIGATION_DIVIDER,
                 [
@@ -155,7 +159,8 @@ class NavbarViewComposer
                 ],
                 [
                     'link'  => route('cats.index'),
-                    'title' => Icon::create('th-large') . trans('aux.cats.index')
+                    'title' => Icon::create(trans('aux.cats.fa-icon'))
+                        . trans('aux.cats.index')
                 ],
                 Navigation::NAVIGATION_DIVIDER,
                 [
@@ -164,7 +169,8 @@ class NavbarViewComposer
                 ],
                 [
                     'link'  => '#',
-                    'title' => Icon::create('th') . trans('aux.subCats.index')
+                    'title' => Icon::create(trans('aux.subCats.fa-icon'))
+                        . trans('aux.subCats.index')
                 ],
                 Navigation::NAVIGATION_DIVIDER,
                 [
@@ -173,7 +179,8 @@ class NavbarViewComposer
                 ],
                 [
                     'link'  => route('genders.index'),
-                    'title' => Icon::create('venus-mars') . trans('aux.genders.index')
+                    'title' => Icon::create(trans('aux.genders.fa-icon'))
+                        . trans('aux.genders.index')
                 ],
                 Navigation::NAVIGATION_DIVIDER,
                 [
@@ -182,7 +189,8 @@ class NavbarViewComposer
                 ],
                 [
                     'link'  => route('depts.index'),
-                    'title' => Icon::create('puzzle-piece') . trans('aux.depts.index')
+                    'title' => Icon::create(trans('aux.depts.fa-icon'))
+                        . trans('aux.depts.index')
                 ],
 
                 Navigation::NAVIGATION_DIVIDER,

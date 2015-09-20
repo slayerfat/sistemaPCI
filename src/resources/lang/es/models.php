@@ -11,6 +11,7 @@ return [
     'items.destroy'      => 'Eliminar Item',
     'items.plural'       => 'Items',
     'items.singular'     => 'Item',
+    'items.fa-icon'      => 'archive',
 
     /**
      * Nota
@@ -22,6 +23,7 @@ return [
     'notes.destroy'      => 'Eliminar Nota',
     'notes.plural'       => 'Notas',
     'notes.singular'     => 'Nota',
+    'notes.fa-icon'      => 'pencil-square-o',
 
     /**
      * Usuario
@@ -33,15 +35,17 @@ return [
     'users.destroy'      => 'Eliminar Cuenta',
     'users.plural'       => 'Cuentas',
     'users.singular'     => 'Cuenta',
+    'users.fa-icon'      => 'users',
 
     /**
      * Pedidos
      */
-    'Petitions.index'    => 'Ver Pedidos',
-    'Petitions.show'     => 'Ver Pedido',
-    'Petitions.create'   => 'Crear Pedido',
-    'Petitions.edit'     => 'Editar Pedido',
-    'Petitions.destroy'  => 'Eliminar Pedido',
-    'Petitions.plural'   => 'Pedidos',
-    'Petitions.singular' => 'Pedido',
+    'petitions.index'    => 'Ver Pedidos',
+    'petitions.show'     => 'Ver Pedido',
+    'petitions.create'   => 'Crear Pedido',
+    'petitions.edit'     => 'Editar Pedido',
+    'petitions.destroy'  => 'Eliminar Pedido',
+    'petitions.plural'   => 'Pedidos',
+    'petitions.singular' => 'Pedido',
+    'petitions.fa-icon'  => 'check',
 ];
