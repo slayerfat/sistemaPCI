@@ -1,5 +1,6 @@
 <?php namespace PCI\Http\ViewComposers;
 
+use Icon;
 use PCI\Models\User;
 use Illuminate\View\View;
 use Illuminate\Auth\Guard;
@@ -53,11 +54,11 @@ class NavbarViewComposer
             return [
                 [
                     'link'  => route('auth.getLogin'),
-                    'title' => 'Entrar'
+                    'title' => Icon::create('sign-in') . 'Entrar'
                 ],
                 [
                     'link'  => route('auth.getRegister'),
-                    'title' => 'Registrarse'
+                    'title' => Icon::create('check-square-o') . 'Registrarse'
                 ],
             ];
         }
@@ -68,11 +69,11 @@ class NavbarViewComposer
                 [
                     [
                         'link'  => route('users.show', $this->user->name),
-                        'title' => trans('models.users.show')
+                        'title' => Icon::create('eye') . trans('models.users.show')
                     ],
                     [
                         'link'  => route('auth.getLogout'),
-                        'title' => 'Salir'
+                        'title' => Icon::create('sign-out') . 'Salir'
                     ],
                 ]
             ]
@@ -87,18 +88,18 @@ class NavbarViewComposer
         $links = [
             [
                 'link'  => '#',
-                'title' => 'Pedidos'
+                'title' => Icon::create('check') . 'Pedidos'
             ],
             [
                 'link'  => '#',
-                'title' => 'Notas'
+                'title' => Icon::create('pencil-square-o') . 'Notas'
             ],
             [
-                'Items',
+                Icon::create('archive') . 'Items',
                 [
                     [
                         'link'  => '#',
-                        'title' => 'Crear'
+                        'title' => Icon::create('plus-circle') . 'Crear'
                     ],
                     [
                         'link'  => '#',
@@ -128,51 +129,66 @@ class NavbarViewComposer
     private function makeAdminLinks($links)
     {
         $links[] = [
-            'Mant.',
+            Icon::create('wrench') . 'Mant.',
             [
                 [
                     'link'  => route('users.create'),
-                    'title' => trans('models.users.create')
+                    'title' => Icon::create('plus-circle') . trans('models.users.create')
                 ],
                 [
                     'link'  => route('users.index'),
-                    'title' => trans('models.users.index')
+                    'title' => Icon::create('users') . trans('models.users.index')
                 ],
                 Navigation::NAVIGATION_DIVIDER,
                 [
                     'link'  => '#',
-                    'title' => trans('aux.profiles.create')
+                    'title' => Icon::create('plus-circle') . trans('aux.profiles.create')
                 ],
                 [
                     'link'  => '#',
-                    'title' => trans('aux.profiles.index')
+                    'title' => Icon::create('user-md') . trans('aux.profiles.index')
                 ],
                 Navigation::NAVIGATION_DIVIDER,
                 [
                     'link'  => route('cats.create'),
-                    'title' => trans('aux.cats.create')
+                    'title' => Icon::create('plus-circle') . trans('aux.cats.create')
                 ],
                 [
                     'link'  => route('cats.index'),
-                    'title' => trans('aux.cats.index')
+                    'title' => Icon::create('th-large') . trans('aux.cats.index')
+                ],
+                Navigation::NAVIGATION_DIVIDER,
+                [
+                    'link'  => '#',
+                    'title' => Icon::create('plus-circle') . trans('aux.subCats.create')
+                ],
+                [
+                    'link'  => '#',
+                    'title' => Icon::create('th') . trans('aux.subCats.index')
                 ],
                 Navigation::NAVIGATION_DIVIDER,
                 [
                     'link'  => route('genders.create'),
-                    'title' => trans('aux.genders.create')
+                    'title' => Icon::create('plus-circle') . trans('aux.genders.create')
                 ],
                 [
                     'link'  => route('genders.index'),
-                    'title' => trans('aux.genders.index')
+                    'title' => Icon::create('venus-mars') . trans('aux.genders.index')
                 ],
                 Navigation::NAVIGATION_DIVIDER,
                 [
                     'link'  => route('depts.create'),
-                    'title' => trans('aux.depts.create')
+                    'title' => Icon::create('plus-circle') . trans('aux.depts.create')
                 ],
                 [
                     'link'  => route('depts.index'),
-                    'title' => trans('aux.depts.index')
+                    'title' => Icon::create('puzzle-piece') . trans('aux.depts.index')
+                ],
+
+                Navigation::NAVIGATION_DIVIDER,
+                [
+                    'link'  => '#',
+                    'title' => Icon::create('list') . 'Ver todo'
                 ],
             ]
         ];

@@ -13,6 +13,17 @@ return [
     'cats.singular'      => 'Categoria',
 
     /**
+     * Sub-Categoria
+     */
+    'subCats.index'         => 'Ver Sub-Categorias',
+    'subCats.show'          => 'Ver Sub-Categoria',
+    'subCats.create'        => 'Crear Sub-Categoria',
+    'subCats.edit'          => 'Editar Sub-Categoria',
+    'subCats.destroy'       => 'Eliminar Sub-Categoria',
+    'subCats.plural'        => 'Sub-Categorias',
+    'subCats.singular'      => 'Sub-Categoria',
+
+    /**
      * Departamento
      */
     'depts.index'     => 'Ver Departamentos',
