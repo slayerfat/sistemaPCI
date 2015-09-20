@@ -31,13 +31,6 @@ class CategoryRepositoryTest extends AbstractTestCase
         $this->cat = factory(Category::class)->create();
     }
 
-    public function createUpdatedataProvider()
-    {
-        return [
-            ['ayy',]
-        ];
-    }
-
     public function testDelete()
     {
         $this->assertTrue($this->catRepo->delete(1));
