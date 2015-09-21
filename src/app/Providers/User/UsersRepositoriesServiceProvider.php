@@ -25,11 +25,13 @@ class UsersRepositoriesServiceProvider extends ServiceProvider
         });
 
         $this->app->bind(
-            EmployeeRepositoryInterface::class, function ($app) {
-            return new EmployeeRepository(
-                $app[Employee::class],
-                new UserRepository($app[User::class])
-            );
-        });
+            EmployeeRepositoryInterface::class,
+            function ($app) {
+                return new EmployeeRepository(
+                    $app[Employee::class],
+                    new UserRepository($app[User::class])
+                );
+            }
+        );
     }
 }

@@ -1,6 +1,7 @@
-<?php namespace PCI\Http\Requests;
+<?php namespace PCI\Http\Requests\User;
 
 use Gate;
+use PCI\Http\Requests\Request;
 use PCI\Repositories\Interfaces\User\UserRepositoryInterface;
 
 class UserRequest extends Request

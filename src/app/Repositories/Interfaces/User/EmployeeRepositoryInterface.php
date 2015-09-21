@@ -7,7 +7,7 @@ interface EmployeeRepositoryInterface extends ModelRepositoryInterface
 
     /**
      * @param string|int $id
-     * @return \PCI\Models\AbstractBaseModel
+     * @return \PCI\Models\User
      */
     public function findUser($id);
 }

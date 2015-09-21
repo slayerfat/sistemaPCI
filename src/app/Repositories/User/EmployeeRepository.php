@@ -1,5 +1,6 @@
 <?php namespace PCI\Repositories\User;
 
+use Gate;
 use PCI\Models\AbstractBaseModel;
 use PCI\Repositories\AbstractRepository;
 use PCI\Repositories\Interfaces\User\EmployeeRepositoryInterface;
@@ -26,7 +27,7 @@ class EmployeeRepository extends AbstractRepository implements EmployeeRepositor
 
     /**
      * @param string|int $id
-     * @return \PCI\Models\AbstractBaseModel
+     * @return \PCI\Models\User
      */
     public function findUser($id)
     {
@@ -94,5 +95,25 @@ class EmployeeRepository extends AbstractRepository implements EmployeeRepositor
     protected function makePaginatorData(AbstractBaseModel $model)
     {
         // TODO: Implement makePaginatorData() method.
+    }
+
+    /**
+     * @param string $policyName el nombre de la poliza a ejecutar
+     * @param string|int $id el identificador del modelo a ser manipulado.
+     * @return bool verdadero si puede manipular.
+     */
+    public function canUser($policyName, $id)
+    {
+        return Gate::allows($policyName, $this->model->findOrNew($id));
+    }
+
+    /**
+     * @param string $policyName el nombre de la poliza a ejecutar
+     * @param  string|int $id el identificador del modelo a ser manipulado.
+     * @return bool verdadero si NO puede manipular.
+     */
+    public function cantUser($policyName, $id)
+    {
+        return Gate::denies($policyName, $this->find($id));
     }
 }

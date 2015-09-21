@@ -4,7 +4,7 @@
     @include('partials.errors')
 
     <div class="container">
-        {!! BSForm::horizontalModel($employee, ['route' => 'employees.store']) !!}
+        {!! BSForm::horizontalModel($employee, ['route' => ['employees.store', $user->name]]) !!}
 
         <legend>{{trans('models.employees.create')}}</legend>
 

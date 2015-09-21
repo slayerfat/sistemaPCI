@@ -38,7 +38,13 @@ class UserRoutes extends AbstractPciRoutes
                 'uses'     => 'User\EmployeesController',
                 'as'       => 'employees',
                 'resource' => '{employees}',
-                'ignore'   => ['create']
+                'ignore'   => [
+                    'create',
+                    'store',
+                    'index',
+                    'show',
+                    'destroy'
+                ]
             ]
         ],
     ];
@@ -58,6 +64,16 @@ class UserRoutes extends AbstractPciRoutes
             'data'   => [
                 'uses' => 'User\EmployeesController@create',
                 'as'   => 'employees.create',
+                'middleware' => 'auth'
+            ]
+        ],
+        [
+            'method' => 'post',
+            'url'    => 'informacion-personal/{users}',
+            'data'   => [
+                'uses' => 'User\EmployeesController@store',
+                'as'   => 'employees.store',
+                'middleware' => 'auth'
             ]
         ],
     ];

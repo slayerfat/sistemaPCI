@@ -6,7 +6,7 @@ use PCI\Events\NewUserRegistration;
 use Redirect;
 use PCI\Http\Requests;
 use PCI\Models\Profile;
-use PCI\Http\Requests\UserRequest;
+use PCI\Http\Requests\User\UserRequest;
 use PCI\Http\Controllers\Controller;
 use Illuminate\View\Factory as View;
 use PCI\Repositories\Interfaces\User\UserRepositoryInterface;
@@ -63,7 +63,7 @@ class UsersController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     * @param \PCI\Http\Requests\UserRequest $request
+     * @param \PCI\Http\Requests\User\UserRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(UserRequest $request)
@@ -111,7 +111,7 @@ class UsersController extends Controller
 
     /**
      * Update the specified resource in storage.
-     * @param UserRequest $request
+     * @param \PCI\Http\Requests\User\UserRequest $request
      * @param             $id
      * @return \Illuminate\Http\RedirectResponse
      */
