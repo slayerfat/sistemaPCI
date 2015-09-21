@@ -29,6 +29,17 @@ class UserRoutes extends AbstractPciRoutes
                 'resource' => '{profiles}'
             ]
         ],
+        [
+            'routerOptions' => [
+                'prefix'     => 'informacion-personal',
+                'middleware' => 'auth',
+            ],
+            'rtDetails'     => [
+                'uses'     => 'User\EmployeesController',
+                'as'       => 'employees',
+                'resource' => '{employees}'
+            ]
+        ],
     ];
 
     /**
