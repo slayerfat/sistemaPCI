@@ -140,7 +140,7 @@ class NavbarViewComposer
                         . trans('models.users.index')
                 ],
                 [
-                    'link'  => '#',
+                    'link'  => route('profiles.index'),
                     'title' => $this->icon->create(trans('models.profiles.fa-icon'))
                         . trans('models.profiles.index')
                 ],

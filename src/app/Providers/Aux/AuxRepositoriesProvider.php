@@ -2,16 +2,18 @@
 
 use PCI\Models\Maker;
 use PCI\Models\Gender;
+use PCI\Models\Profile;
 use PCI\Models\Category;
 use PCI\Models\ItemType;
 use PCI\Models\NoteType;
 use PCI\Models\Department;
-use PCI\Models\MovementType;
 use PCI\Models\Nationality;
+use PCI\Models\MovementType;
 use PCI\Models\PetitionType;
 use Illuminate\Support\ServiceProvider;
 use PCI\Repositories\Aux\MakerRepository;
 use PCI\Repositories\Aux\GenderRepository;
+use PCI\Repositories\Aux\ProfileRepository;
 use PCI\Repositories\Aux\NoteTypeRepository;
 use PCI\Repositories\Aux\CategoryRepository;
 use PCI\Repositories\Aux\ItemTypesRepository;
@@ -21,6 +23,7 @@ use PCI\Repositories\Aux\MovementTypeRepository;
 use PCI\Repositories\Aux\PetitionTypeRepository;
 use PCI\Repositories\Interfaces\Aux\MakerRepositoryInterface;
 use PCI\Repositories\Interfaces\Aux\GenderRepositoryInterface;
+use PCI\Repositories\Interfaces\Aux\ProfileRepositoryInterface;
 use PCI\Repositories\Interfaces\Aux\CategoryRepositoryInterface;
 use PCI\Repositories\Interfaces\Aux\NoteTypeRepositoryInterface;
 use PCI\Repositories\Interfaces\Aux\ItemTypesRepositoryInterface;
@@ -75,6 +78,10 @@ class AuxRepositoriesProvider extends ServiceProvider
 
         $this->app->bind(PetitionTypeRepositoryInterface::class, function ($app) {
             return new PetitionTypeRepository($app[PetitionType::class]);
+        });
+
+        $this->app->bind(ProfileRepositoryInterface::class, function ($app) {
+            return new ProfileRepository($app[Profile::class]);
         });
     }
 }

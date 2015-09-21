@@ -1,28 +1,28 @@
 <?php namespace PCI\Http\Controllers\Aux;
 
-use PCI\Repositories\Interfaces\Aux\PetitionTypeRepositoryInterface;
+use PCI\Repositories\Interfaces\Aux\ProfileRepositoryInterface;
 use Redirect;
 use Illuminate\View\Factory;
-use PCI\Http\Requests\Aux\PetitionTypeRequest;
+use PCI\Http\Requests\Aux\ProfileRequest;
 
-class PetitionTypesController extends AbstractAuxController
+class ProfilesController extends AbstractAuxController
 {
 
     /**
-     * @var \PCI\Repositories\Interfaces\Aux\PetitionTypeRepositoryInterface
+     * @var \PCI\Repositories\Interfaces\Aux\ProfileRepositoryInterface
      */
     private $repo;
 
     /**
-     * @var \PCI\Models\PetitionType
+     * @var \PCI\Models\Profile
      */
     private $model;
 
     /**
      * @param \Illuminate\View\Factory $view
-     * @param \PCI\Repositories\Interfaces\Aux\PetitionTypeRepositoryInterface $repo
+     * @param \PCI\Repositories\Interfaces\Aux\ProfileRepositoryInterface $repo
      */
-    public function __construct(Factory $view, PetitionTypeRepositoryInterface $repo)
+    public function __construct(Factory $view, ProfileRepositoryInterface $repo)
     {
         parent::__construct($view);
 
@@ -45,7 +45,7 @@ class PetitionTypesController extends AbstractAuxController
     {
         $variables = $this->repo->getShowViewVariables($id);
 
-        $variables->setUsersGoal('Tipo de Pedidos en el sistema');
+        $variables->setUsersGoal('Pefiles en el sistema');
 
         return $this->makeView('aux.show', $variables);
     }
@@ -64,14 +64,14 @@ class PetitionTypesController extends AbstractAuxController
     }
 
     /**
-     * @param \PCI\Http\Requests\Aux\PetitionTypeRequest $request
+     * @param \PCI\Http\Requests\Aux\ProfileRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(PetitionTypeRequest $request)
+    public function store(ProfileRequest $request)
     {
         $this->model = $this->repo->create($request->all());
 
-        return Redirect::route('petitionTypes.show', $this->model->slug);
+        return Redirect::route('profiles.show', $this->model->slug);
     }
 
     /**
@@ -82,21 +82,21 @@ class PetitionTypesController extends AbstractAuxController
     {
         $variables = $this->repo->getEditViewVariables($id);
 
-        $variables->setUsersGoal(trans('models.petitionTypes.edit'));
+        $variables->setUsersGoal(trans('models.profiles.edit'));
 
         return $this->makeView('aux.edit', $variables);
     }
 
     /**
      * @param $id
-     * @param \PCI\Http\Requests\Aux\PetitionTypeRequest $request
+     * @param \PCI\Http\Requests\Aux\ProfileRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update($id, PetitionTypeRequest $request)
+    public function update($id, ProfileRequest $request)
     {
         $this->model = $this->repo->update($id, $request->all());
 
-        return Redirect::route('petitionTypes.show', $this->model->slug);
+        return Redirect::route('profiles.show', $this->model->slug);
     }
 
     /**
@@ -108,9 +108,9 @@ class PetitionTypesController extends AbstractAuxController
         $this->model = $this->repo->delete($id);
 
         if ($this->model === true) {
-            return Redirect::route('petitionTypes.index');
+            return Redirect::route('profiles.index');
         }
 
-        return Redirect::route('petitionTypes.show', $this->model->desc);
+        return Redirect::route('profiles.show', $this->model->desc);
     }
 }

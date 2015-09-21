@@ -18,6 +18,17 @@ class UserRoutes extends AbstractPciRoutes
                 'resource' => '{users}'
             ]
         ],
+        [
+            'routerOptions' => [
+                'prefix'     => 'perfiles',
+                'middleware' => 'auth',
+            ],
+            'rtDetails'     => [
+                'uses'     => 'Aux\ProfilesController',
+                'as'       => 'profiles',
+                'resource' => '{profiles}'
+            ]
+        ],
     ];
 
     /**

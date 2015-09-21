@@ -9,6 +9,7 @@ use PCI\Models\MovementType;
 use PCI\Models\Nationality;
 use PCI\Models\NoteType;
 use PCI\Models\PetitionType;
+use PCI\Models\Profile;
 
 class AuxIntegrationTest extends AbstractAuxTest
 {

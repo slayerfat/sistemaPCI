@@ -76,19 +76,19 @@ return [
     /**
      * Tipo de Movimiento
      */
-    'movementTypes.index'        => 'Ver Tipo de Movimientos',
+    'movementTypes.index'        => 'Ver Tipos de Movimiento',
     'movementTypes.show'         => 'Ver Tipo de Movimiento',
     'movementTypes.create'       => 'Crear Tipo de Movimiento',
     'movementTypes.edit'         => 'Editar Tipo de Movimiento',
     'movementTypes.destroy'      => 'Eliminar Tipo de Movimiento',
-    'movementTypes.plural'       => 'Tipo de Movimientos',
+    'movementTypes.plural'       => 'Tipos de Movimiento',
     'movementTypes.singular'     => 'Tipo de Movimiento',
     'movementTypes.fa-icon'      => 'angle-double-right',
 
     /**
      * Tipos de Item
      */
-    'itemTypes.index'        => 'Ver Tipos de Items',
+    'itemTypes.index'        => 'Ver Tipos de Item',
     'itemTypes.show'         => 'Ver Tipo de Item',
     'itemTypes.create'       => 'Crear Tipo de Item',
     'itemTypes.edit'         => 'Editar Tipo de Item',
@@ -100,7 +100,7 @@ return [
     /**
      * Tipos de Nota
      */
-    'noteTypes.index'        => 'Ver Tipos de Notas',
+    'noteTypes.index'        => 'Ver Tipos de Nota',
     'noteTypes.show'         => 'Ver Tipo de Nota',
     'noteTypes.create'       => 'Crear Tipo de Nota',
     'noteTypes.edit'         => 'Editar Tipo de Nota',
@@ -112,7 +112,7 @@ return [
     /**
      * Tipos de Pedido
      */
-    'petitionTypes.index'        => 'Ver Tipos de Pedidos',
+    'petitionTypes.index'        => 'Ver Tipos de Pedido',
     'petitionTypes.show'         => 'Ver Tipo de Pedido',
     'petitionTypes.create'       => 'Crear Tipo de Pedido',
     'petitionTypes.edit'         => 'Editar Tipo de Pedido',
