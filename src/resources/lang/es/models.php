@@ -97,6 +97,19 @@ return [
     'itemTypes.singular'     => 'Tipo de Item',
     'itemTypes.fa-icon'      => 'random',
 
+    /**
+     * Tipos de Nota
+     */
+    'noteTypes.index'        => 'Ver Tipos de Notas',
+    'noteTypes.show'         => 'Ver Tipo de Nota',
+    'noteTypes.create'       => 'Crear Tipo de Nota',
+    'noteTypes.edit'         => 'Editar Tipo de Nota',
+    'noteTypes.destroy'      => 'Eliminar Tipo de Nota',
+    'noteTypes.plural'       => 'Tipos de Nota',
+    'noteTypes.singular'     => 'Tipo de Nota',
+    'noteTypes.fa-icon'      => 'envelope-o',
+
+
 
     /**
      * Perfil
@@ -132,7 +145,7 @@ return [
     'notes.destroy'      => 'Eliminar Nota',
     'notes.plural'       => 'Notas',
     'notes.singular'     => 'Nota',
-    'notes.fa-icon'      => 'pencil-square-o',
+    'notes.fa-icon'      => 'envelope',
 
     /**
      * Usuario

@@ -84,6 +84,17 @@ class AuxRoutes extends AbstractPciRoutes
                 'resource' => '{nats}'
             ]
         ],
+        [
+            'routerOptions' => [
+                'prefix'     => 'tipos-nota',
+                'middleware' => 'auth',
+            ],
+            'rtDetails'     => [
+                'uses'     => 'Aux\NoteTypesController',
+                'as'       => 'noteTypes',
+                'resource' => '{noteTypes}'
+            ]
+        ],
     ];
 
     /**

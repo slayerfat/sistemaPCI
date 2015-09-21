@@ -186,6 +186,11 @@ class NavbarViewComposer
                     'title' => $this->icon->create(trans('models.movementTypes.fa-icon'))
                         . trans('models.movementTypes.index')
                 ],
+                [
+                    'link'  => route('noteTypes.index'),
+                    'title' => $this->icon->create(trans('models.noteTypes.fa-icon'))
+                        . trans('models.noteTypes.index')
+                ],
             ]
         ];
 
