@@ -4,7 +4,7 @@ use Mockery;
 use PCI\Models\Employee;
 use PCI\Models\User;
 use Tests\AbstractTestCase;
-use PCI\Repositories\UserRepository;
+use PCI\Repositories\User\UserRepository;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -15,7 +15,7 @@ class UserRepositoryTest extends AbstractTestCase
     use DatabaseTransactions, DatabaseMigrations;
 
     /**
-     * @var UserRepository
+     * @var \PCI\Repositories\User\UserRepository
      */
     private $repo;
 

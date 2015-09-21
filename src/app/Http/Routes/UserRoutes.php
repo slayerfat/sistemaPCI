@@ -37,7 +37,8 @@ class UserRoutes extends AbstractPciRoutes
             'rtDetails'     => [
                 'uses'     => 'User\EmployeesController',
                 'as'       => 'employees',
-                'resource' => '{employees}'
+                'resource' => '{employees}',
+                'ignore'   => ['create']
             ]
         ],
     ];
@@ -45,7 +46,21 @@ class UserRoutes extends AbstractPciRoutes
     /**
      * @var array
      */
-    protected $nonRestfulOptions = [];
+    protected $nonRestfulOptions = [
+        /**
+         * Employee create
+         * se hace asi porque se necesita el id o nombre
+         * del usuario asociado a este elemento.
+         */
+        [
+            'method' => 'get',
+            'url'    => 'informacion-personal/{users}/crear',
+            'data'   => [
+                'uses' => 'User\EmployeesController@create',
+                'as'   => 'employees.create',
+            ]
+        ],
+    ];
 
     /**
      * Genera todas las rutas relacionadas con esta clase

@@ -1,8 +1,9 @@
-<?php namespace PCI\Repositories;
+<?php namespace PCI\Repositories\User;
 
 use PCI\Models\AbstractBaseModel;
 use PCI\Mamarrachismo\PhoneParser\PhoneParser;
 use Illuminate\Pagination\LengthAwarePaginator;
+use PCI\Repositories\AbstractRepository;
 use PCI\Repositories\ViewVariable\ViewPaginatorVariable;
 use PCI\Repositories\Interfaces\User\UserRepositoryInterface;
 
@@ -13,17 +14,6 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
      * @var \PCI\Models\User
      */
     protected $model;
-
-    /**
-     * @param  string|int $id
-     * @return \PCI\Models\AbstractBaseModel
-     */
-    public function find($id)
-    {
-        $user = $this->getByNameOrId($id);
-
-        return $user;
-    }
 
     /**
      * @return \PCI\Models\User
@@ -55,30 +45,6 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
         $user->save();
 
         return true;
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
-    public function getAll()
-    {
-        $users = $this->model->all();
-
-        return $users;
-    }
-
-    /**
-     * Genera un objeto LengthAwarePaginator con todos los
-     * usuarios en el sistema y con eager loading.
-     * @param int $quantity
-     * @return LengthAwarePaginator
-     */
-    public function getTablePaginator($quantity = 25)
-    {
-        $users = $this->getAll();
-        $users->load('profile', 'employee');
-
-        return $this->generatePaginator($users, $quantity);
     }
 
     /**
@@ -126,6 +92,65 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
     }
 
     /**
+     * @param  string|int $id
+     * @return \PCI\Models\AbstractBaseModel
+     */
+    public function find($id)
+    {
+        $user = $this->getByNameOrId($id);
+
+        return $user;
+    }
+
+    /**
+     * Elimina del sistema un modelo.
+     * @param $id
+     * @return boolean|\PCI\Models\AbstractBaseModel
+     */
+    public function delete($id)
+    {
+        return $this->executeDelete($id, 'Usuario');
+    }
+
+    /**
+     * Regresa variable con una coleccion y datos
+     * adicionales necesarios para generar la vista.
+     * @return \PCI\Repositories\ViewVariable\ViewPaginatorVariable
+     */
+    public function getIndexViewVariables()
+    {
+        $results = $this->getTablePaginator();
+
+        $variable = new ViewPaginatorVariable($results, 'users');
+
+        return $variable;
+    }
+
+    /**
+     * Genera un objeto LengthAwarePaginator con todos los
+     * usuarios en el sistema y con eager loading.
+     * @param int $quantity
+     * @return LengthAwarePaginator
+     */
+    public function getTablePaginator($quantity = 25)
+    {
+        $users = $this->getAll();
+        $users->load('profile', 'employee');
+
+        return $this->generatePaginator($users, $quantity);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getAll()
+    {
+        $users = $this->model->all();
+
+        return $users;
+    }
+
+    /**
      * genera la data necesaria que utilizara el paginator.
      *
      * @param \PCI\Models\AbstractBaseModel|\PCI\Models\User $user
@@ -161,29 +186,5 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
         ];
 
         return array_merge($partial, $defaults);
-    }
-
-    /**
-     * Elimina del sistema un modelo.
-     * @param $id
-     * @return boolean|\PCI\Models\AbstractBaseModel
-     */
-    public function delete($id)
-    {
-        return $this->executeDelete($id, 'Usuario');
-    }
-
-    /**
-     * Regresa variable con una coleccion y datos
-     * adicionales necesarios para generar la vista.
-     * @return \PCI\Repositories\ViewVariable\ViewPaginatorVariable
-     */
-    public function getIndexViewVariables()
-    {
-        $results  = $this->getTablePaginator();
-
-        $variable = new ViewPaginatorVariable($results, 'users');
-
-        return $variable;
     }
 }

@@ -16,7 +16,7 @@
 
         !!}
 
-        <legend>Editar Cuenta de {{$user->name}}</legend>
+        <legend>{{trans('models.users.edit')}}</legend>
 
         @include('users.partials.form', ['btnMsg' => 'Actualizar Cuenta'])
 

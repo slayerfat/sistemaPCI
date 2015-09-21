@@ -31,7 +31,7 @@ switch ($active) {
             </li>
 
             <li>
-                <a href="{{route($user->person ? 'employees.edit' : 'employees.create')}}">
+                <a href="{{route($user->person ? 'employees.edit' : 'employees.create', $user->name)}}">
                     {{trans('models.employees.singular')}}
                 </a>
             </li>
