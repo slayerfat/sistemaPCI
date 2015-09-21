@@ -95,6 +95,17 @@ class AuxRoutes extends AbstractPciRoutes
                 'resource' => '{noteTypes}'
             ]
         ],
+        [
+            'routerOptions' => [
+                'prefix'     => 'tipos-pedido',
+                'middleware' => 'auth',
+            ],
+            'rtDetails'     => [
+                'uses'     => 'Aux\PetitionTypesController',
+                'as'       => 'petitionTypes',
+                'resource' => '{petitionTypes}'
+            ]
+        ],
     ];
 
     /**

@@ -1,28 +1,28 @@
 <?php namespace PCI\Http\Controllers\Aux;
 
-use PCI\Repositories\Interfaces\Aux\NationalityRepositoryInterface;
+use PCI\Repositories\Interfaces\Aux\PetitionTypeRepositoryInterface;
 use Redirect;
 use Illuminate\View\Factory;
-use PCI\Http\Requests\Aux\NationalityRequest;
+use PCI\Http\Requests\Aux\PetitionTypeRequest;
 
-class NationalitiesController extends AbstractAuxController
+class PetitionTypesController extends AbstractAuxController
 {
 
     /**
-     * @var \PCI\Repositories\Interfaces\Aux\NationalityRepositoryInterface
+     * @var \PCI\Repositories\Interfaces\Aux\PetitionTypeRepositoryInterface
      */
     private $repo;
 
     /**
-     * @var \PCI\Models\Nationality
+     * @var \PCI\Models\Petition
      */
     private $model;
 
     /**
      * @param \Illuminate\View\Factory $view
-     * @param \PCI\Repositories\Interfaces\Aux\NationalityRepositoryInterface $repo
+     * @param \PCI\Repositories\Interfaces\Aux\PetitionTypeRepositoryInterface $repo
      */
-    public function __construct(Factory $view, NationalityRepositoryInterface $repo)
+    public function __construct(Factory $view, PetitionTypeRepositoryInterface $repo)
     {
         parent::__construct($view);
 
@@ -45,7 +45,7 @@ class NationalitiesController extends AbstractAuxController
     {
         $variables = $this->repo->getShowViewVariables($id);
 
-        $variables->setUsersGoal('Nacionalidades en el sistema');
+        $variables->setUsersGoal('Tipo de Pedidos en el sistema');
 
         return $this->makeView('aux.show', $variables);
     }
@@ -64,14 +64,14 @@ class NationalitiesController extends AbstractAuxController
     }
 
     /**
-     * @param \PCI\Http\Requests\Aux\NationalityRequest $request
+     * @param \PCI\Http\Requests\Aux\PetitionTypeRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(NationalityRequest $request)
+    public function store(PetitionTypeRequest $request)
     {
         $this->model = $this->repo->create($request->all());
 
-        return Redirect::route('nats.show', $this->model->slug);
+        return Redirect::route('petitionTypes.show', $this->model->slug);
     }
 
     /**
@@ -82,21 +82,21 @@ class NationalitiesController extends AbstractAuxController
     {
         $variables = $this->repo->getEditViewVariables($id);
 
-        $variables->setUsersGoal(trans('models.nats.edit'));
+        $variables->setUsersGoal(trans('models.petitionTypes.edit'));
 
         return $this->makeView('aux.edit', $variables);
     }
 
     /**
      * @param $id
-     * @param \PCI\Http\Requests\Aux\NationalityRequest $request
+     * @param \PCI\Http\Requests\Aux\PetitionTypeRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update($id, NationalityRequest $request)
+    public function update($id, PetitionTypeRequest $request)
     {
         $this->model = $this->repo->update($id, $request->all());
 
-        return Redirect::route('nats.show', $this->model->slug);
+        return Redirect::route('petitionTypes.show', $this->model->slug);
     }
 
     /**
@@ -108,9 +108,9 @@ class NationalitiesController extends AbstractAuxController
         $this->model = $this->repo->delete($id);
 
         if ($this->model === true) {
-            return Redirect::route('nats.index');
+            return Redirect::route('petitionTypes.index');
         }
 
-        return Redirect::route('nats.show', $this->model->desc);
+        return Redirect::route('petitionTypes.show', $this->model->desc);
     }
 }

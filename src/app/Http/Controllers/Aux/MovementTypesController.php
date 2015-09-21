@@ -14,7 +14,7 @@ class MovementTypesController extends AbstractAuxController
     private $repo;
 
     /**
-     * @var \PCI\Models\Maker
+     * @var \PCI\Models\MovementType
      */
     private $model;
 

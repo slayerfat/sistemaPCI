@@ -109,7 +109,17 @@ return [
     'noteTypes.singular'     => 'Tipo de Nota',
     'noteTypes.fa-icon'      => 'envelope-o',
 
-
+    /**
+     * Tipos de Pedido
+     */
+    'petitionTypes.index'        => 'Ver Tipos de Pedidos',
+    'petitionTypes.show'         => 'Ver Tipo de Pedido',
+    'petitionTypes.create'       => 'Crear Tipo de Pedido',
+    'petitionTypes.edit'         => 'Editar Tipo de Pedido',
+    'petitionTypes.destroy'      => 'Eliminar Tipo de Pedido',
+    'petitionTypes.plural'       => 'Tipos de Pedido',
+    'petitionTypes.singular'     => 'Tipo de Pedido',
+    'petitionTypes.fa-icon'      => 'hand-scissors-o',
 
     /**
      * Perfil

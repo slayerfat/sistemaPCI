@@ -8,6 +8,7 @@ use PCI\Models\Maker;
 use PCI\Models\MovementType;
 use PCI\Models\Nationality;
 use PCI\Models\NoteType;
+use PCI\Models\PetitionType;
 
 class AuxIntegrationTest extends AbstractAuxTest
 {
@@ -29,6 +30,7 @@ class AuxIntegrationTest extends AbstractAuxTest
             ['tipos-movimiento', 'movementTypes', MovementType::class],
             ['nacionalidades', 'nats', Nationality::class],
             ['tipos-nota', 'noteTypes', NoteType::class],
+            ['tipos-pedido', 'petitionTypes', PetitionType::class],
         ];
 
         foreach ($modelData as $model) {

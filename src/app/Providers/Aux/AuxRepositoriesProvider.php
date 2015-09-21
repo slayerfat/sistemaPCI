@@ -8,6 +8,7 @@ use PCI\Models\NoteType;
 use PCI\Models\Department;
 use PCI\Models\MovementType;
 use PCI\Models\Nationality;
+use PCI\Models\PetitionType;
 use Illuminate\Support\ServiceProvider;
 use PCI\Repositories\Aux\MakerRepository;
 use PCI\Repositories\Aux\GenderRepository;
@@ -17,6 +18,7 @@ use PCI\Repositories\Aux\ItemTypesRepository;
 use PCI\Repositories\Aux\DepartmentRepository;
 use PCI\Repositories\Aux\NationalityRepository;
 use PCI\Repositories\Aux\MovementTypeRepository;
+use PCI\Repositories\Aux\PetitionTypeRepository;
 use PCI\Repositories\Interfaces\Aux\MakerRepositoryInterface;
 use PCI\Repositories\Interfaces\Aux\GenderRepositoryInterface;
 use PCI\Repositories\Interfaces\Aux\CategoryRepositoryInterface;
@@ -25,6 +27,7 @@ use PCI\Repositories\Interfaces\Aux\ItemTypesRepositoryInterface;
 use PCI\Repositories\Interfaces\Aux\DepartmentRepositoryInterface;
 use PCI\Repositories\Interfaces\Aux\NationalityRepositoryInterface;
 use PCI\Repositories\Interfaces\Aux\MovementTypeRepositoryInterface;
+use PCI\Repositories\Interfaces\Aux\PetitionTypeRepositoryInterface;
 
 /** @SuppressWarnings(PHPMD.CouplingBetweenObjects) */
 
@@ -68,6 +71,10 @@ class AuxRepositoriesProvider extends ServiceProvider
 
         $this->app->bind(NoteTypeRepositoryInterface::class, function ($app) {
             return new NoteTypeRepository($app[NoteType::class]);
+        });
+
+        $this->app->bind(PetitionTypeRepositoryInterface::class, function ($app) {
+            return new PetitionTypeRepository($app[PetitionType::class]);
         });
     }
 }
