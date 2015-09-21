@@ -51,6 +51,28 @@ class AuxRoutes extends AbstractPciRoutes
                 'resource' => '{itemTypes}'
             ]
         ],
+        [
+            'routerOptions' => [
+                'prefix'     => 'fabricantes',
+                'middleware' => 'auth',
+            ],
+            'rtDetails'     => [
+                'uses'     => 'Aux\MakersController',
+                'as'       => 'makers',
+                'resource' => '{makers}'
+            ]
+        ],
+        [
+            'routerOptions' => [
+                'prefix'     => 'tipos-movimiento',
+                'middleware' => 'auth',
+            ],
+            'rtDetails'     => [
+                'uses'     => 'Aux\MovementTypesController',
+                'as'       => 'movementTypes',
+                'resource' => '{movementTypes}'
+            ]
+        ],
     ];
 
     /**

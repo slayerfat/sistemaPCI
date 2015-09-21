@@ -1,28 +1,28 @@
 <?php namespace PCI\Http\Controllers\Aux;
 
-use PCI\Repositories\Interfaces\Aux\ItemTypesRepositoryInterface;
+use PCI\Repositories\Interfaces\Aux\MovementTypeRepositoryInterface;
 use Redirect;
 use Illuminate\View\Factory;
-use PCI\Http\Requests\Aux\ItemTypeRequest;
+use PCI\Http\Requests\Aux\MovementTypeRequest;
 
-class ItemTypesController extends AbstractAuxController
+class MovementTypesController extends AbstractAuxController
 {
 
     /**
-     * @var \PCI\Repositories\Interfaces\Aux\ItemTypesRepositoryInterface
+     * @var \PCI\Repositories\Interfaces\Aux\MovementTypeRepositoryInterface
      */
     private $repo;
 
     /**
-     * @var \PCI\Models\ItemType
+     * @var \PCI\Models\Maker
      */
     private $model;
 
     /**
      * @param \Illuminate\View\Factory $view
-     * @param \PCI\Repositories\Interfaces\Aux\ItemTypesRepositoryInterface $repo
+     * @param \PCI\Repositories\Interfaces\Aux\MovementTypeRepositoryInterface $repo
      */
-    public function __construct(Factory $view, ItemTypesRepositoryInterface $repo)
+    public function __construct(Factory $view, MovementTypeRepositoryInterface $repo)
     {
         parent::__construct($view);
 
@@ -45,7 +45,7 @@ class ItemTypesController extends AbstractAuxController
     {
         $variables = $this->repo->getShowViewVariables($id);
 
-        $variables->setUsersGoal('Tipos de Item en el sistema');
+        $variables->setUsersGoal('Tipos de Movimiento en el sistema');
 
         return $this->makeView('aux.show', $variables);
     }
@@ -64,14 +64,14 @@ class ItemTypesController extends AbstractAuxController
     }
 
     /**
-     * @param \PCI\Http\Requests\Aux\ItemTypeRequest $request
+     * @param \PCI\Http\Requests\Aux\MovementTypeRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(ItemTypeRequest $request)
+    public function store(MovementTypeRequest $request)
     {
         $this->model = $this->repo->create($request->all());
 
-        return Redirect::route('itemTypes.show', $this->model->slug);
+        return Redirect::route('movementTypes.show', $this->model->slug);
     }
 
     /**
@@ -82,21 +82,21 @@ class ItemTypesController extends AbstractAuxController
     {
         $variables = $this->repo->getEditViewVariables($id);
 
-        $variables->setUsersGoal(trans('models.itemTypes.edit'));
+        $variables->setUsersGoal(trans('models.movementTypes.edit'));
 
         return $this->makeView('aux.edit', $variables);
     }
 
     /**
      * @param $id
-     * @param \PCI\Http\Requests\Aux\ItemTypeRequest $request
+     * @param \PCI\Http\Requests\Aux\MovementTypeRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update($id, ItemTypeRequest $request)
+    public function update($id, MovementTypeRequest $request)
     {
         $this->model = $this->repo->update($id, $request->all());
 
-        return Redirect::route('itemTypes.show', $this->model->slug);
+        return Redirect::route('movementTypes.show', $this->model->slug);
     }
 
     /**
@@ -108,9 +108,9 @@ class ItemTypesController extends AbstractAuxController
         $this->model = $this->repo->delete($id);
 
         if ($this->model === true) {
-            return Redirect::route('itemTypes.index');
+            return Redirect::route('movementTypes.index');
         }
 
-        return Redirect::route('itemTypes.show', $this->model->desc);
+        return Redirect::route('movementTypes.show', $this->model->desc);
     }
 }

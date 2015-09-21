@@ -38,6 +38,18 @@ return [
     'depts.fa-icon'     => 'puzzle-piece',
 
     /**
+     * Fabricante
+     */
+    'makers.index'        => 'Ver Fabricantes',
+    'makers.show'         => 'Ver Fabricante',
+    'makers.create'       => 'Crear Fabricante',
+    'makers.edit'         => 'Editar Fabricante',
+    'makers.destroy'      => 'Eliminar Fabricante',
+    'makers.plural'       => 'Fabricantes',
+    'makers.singular'     => 'Fabricante',
+    'makers.fa-icon'      => 'industry',
+
+    /**
      * Genero
      */
     'genders.index'     => 'Ver Generos',
@@ -48,6 +60,18 @@ return [
     'genders.plural'    => 'Generos',
     'genders.singular'  => 'Genero',
     'genders.fa-icon'   => 'venus-mars',
+
+    /**
+     * Tipo de Movimiento
+     */
+    'movementTypes.index'        => 'Ver Tipo de Movimientos',
+    'movementTypes.show'         => 'Ver Tipo de Movimiento',
+    'movementTypes.create'       => 'Crear Tipo de Movimiento',
+    'movementTypes.edit'         => 'Editar Tipo de Movimiento',
+    'movementTypes.destroy'      => 'Eliminar Tipo de Movimiento',
+    'movementTypes.plural'       => 'Tipo de Movimientos',
+    'movementTypes.singular'     => 'Tipo de Movimiento',
+    'movementTypes.fa-icon'      => 'angle-double-right',
 
     /**
      * Tipos de Item

@@ -1,8 +1,8 @@
 <?php namespace PCI\Repositories\Aux;
 
-use PCI\Repositories\Interfaces\Aux\GendersRepositoryInterface;
+use PCI\Repositories\Interfaces\Aux\MovementTypeRepositoryInterface;
 
-class GendersRepository extends AbstractAuxRepository implements GendersRepositoryInterface
+class MovementTypeRepository extends AbstractAuxRepository implements MovementTypeRepositoryInterface
 {
 
     /**
@@ -12,7 +12,7 @@ class GendersRepository extends AbstractAuxRepository implements GendersReposito
      */
     public function delete($id)
     {
-        return $this->executeDelete($id, trans('models.genders.singular'));
+        return $this->executeDelete($id, trans('models.movementType.singular'));
     }
 
     /**
@@ -24,7 +24,7 @@ class GendersRepository extends AbstractAuxRepository implements GendersReposito
     {
         $results = $this->getPaginator();
 
-        $variable = $this->generateViewPaginatorVariable($results, 'genders');
+        $variable = $this->generateViewPaginatorVariable($results, 'movementTypes');
 
         return $variable;
     }
@@ -39,8 +39,8 @@ class GendersRepository extends AbstractAuxRepository implements GendersReposito
     {
         $dept = $this->getBySlugOrId($id);
 
-        $variable = $this->generateViewVariable($dept, 'genders');
-        $variable->setDestView('genders.show');
+        $variable = $this->generateViewVariable($dept, 'movementTypes');
+        $variable->setDestView('movementTypes.show');
 
         return $variable;
     }
@@ -53,10 +53,10 @@ class GendersRepository extends AbstractAuxRepository implements GendersReposito
      */
     public function getCreateViewVariables()
     {
-        $results = $this->generateViewVariable($this->newInstance(), 'genders');
+        $results = $this->generateViewVariable($this->newInstance(), 'movementTypes');
 
-        $results->setUsersGoal(trans('models.genders.create'));
-        $results->setDestView('genders.store');
+        $results->setUsersGoal(trans('models.movementTypes.create'));
+        $results->setDestView('movementTypes.store');
 
         return $results;
     }
@@ -72,6 +72,6 @@ class GendersRepository extends AbstractAuxRepository implements GendersReposito
     {
         $dept = $this->getBySlugOrId($id);
 
-        return $this->generateViewVariable($dept, 'genders');
+        return $this->generateViewVariable($dept, 'movementTypes');
     }
 }

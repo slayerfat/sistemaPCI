@@ -1,6 +1,6 @@
 <?php namespace PCI\Http\Controllers\Aux;
 
-use PCI\Repositories\Interfaces\Aux\GendersRepositoryInterface;
+use PCI\Repositories\Interfaces\Aux\GenderRepositoryInterface;
 use Redirect;
 use Illuminate\View\Factory;
 use PCI\Http\Requests\Aux\GenderRequest;
@@ -9,7 +9,7 @@ class GendersController extends AbstractAuxController
 {
 
     /**
-     * @var \PCI\Repositories\Interfaces\Aux\GendersRepositoryInterface
+     * @var \PCI\Repositories\Interfaces\Aux\GenderRepositoryInterface
      */
     private $repo;
 
@@ -20,9 +20,9 @@ class GendersController extends AbstractAuxController
 
     /**
      * @param \Illuminate\View\Factory $view
-     * @param \PCI\Repositories\Interfaces\Aux\GendersRepositoryInterface $repo
+     * @param \PCI\Repositories\Interfaces\Aux\GenderRepositoryInterface $repo
      */
-    public function __construct(Factory $view, GendersRepositoryInterface $repo)
+    public function __construct(Factory $view, GenderRepositoryInterface $repo)
     {
         parent::__construct($view);
 

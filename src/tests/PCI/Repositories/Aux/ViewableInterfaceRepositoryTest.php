@@ -3,7 +3,7 @@
 use PCI\Models\Department;
 use PCI\Models\Gender;
 use PCI\Repositories\Aux\DepartmentRepository;
-use PCI\Repositories\Aux\GendersRepository;
+use PCI\Repositories\Aux\GenderRepository;
 use Tests\AbstractTestCase;
 use PCI\Models\Category;
 use PCI\Repositories\Aux\CategoryRepository;
@@ -33,7 +33,7 @@ class ViewableInterfaceRepositoryTest extends AbstractTestCase
         $array = [
             [CategoryRepository::class, Category::class],
             [DepartmentRepository::class, Department::class],
-            [GendersRepository::class, Gender::class],
+            [GenderRepository::class, Gender::class],
         ];
 
         foreach ($array as $data) {

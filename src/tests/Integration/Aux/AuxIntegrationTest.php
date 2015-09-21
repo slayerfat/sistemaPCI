@@ -4,6 +4,8 @@ use PCI\Models\Category;
 use PCI\Models\Department;
 use PCI\Models\Gender;
 use PCI\Models\ItemType;
+use PCI\Models\Maker;
+use PCI\Models\MovementType;
 
 class AuxIntegrationTest extends AbstractAuxTest
 {
@@ -21,6 +23,8 @@ class AuxIntegrationTest extends AbstractAuxTest
             ['departamentos', 'depts', Department::class],
             ['generos', 'genders', Gender::class],
             ['tipos-item', 'itemTypes', ItemType::class],
+            ['fabricantes', 'makers', Maker::class],
+            ['tipos-movimiento', 'movementTypes', MovementType::class],
         ];
 
         foreach ($modelData as $model) {

@@ -145,6 +145,17 @@ class NavbarViewComposer
                         . trans('models.profiles.index')
                 ],
                 [
+                    'link'  => route('genders.index'),
+                    'title' => $this->icon->create(trans('models.genders.fa-icon'))
+                        . trans('models.genders.index')
+                ],
+                [
+                    'link'  => route('depts.index'),
+                    'title' => $this->icon->create(trans('models.depts.fa-icon'))
+                        . trans('models.depts.index')
+                ],
+                Navigation::NAVIGATION_DIVIDER,
+                [
                     'link'  => route('cats.index'),
                     'title' => $this->icon->create(trans('models.cats.fa-icon'))
                         . trans('models.cats.index')
@@ -159,15 +170,16 @@ class NavbarViewComposer
                     'title' => $this->icon->create(trans('models.itemTypes.fa-icon'))
                         . trans('models.itemTypes.index')
                 ],
+                Navigation::NAVIGATION_DIVIDER,
                 [
-                    'link'  => route('genders.index'),
-                    'title' => $this->icon->create(trans('models.genders.fa-icon'))
-                        . trans('models.genders.index')
+                    'link'  => route('makers.index'),
+                    'title' => $this->icon->create(trans('models.makers.fa-icon'))
+                        . trans('models.makers.index')
                 ],
                 [
-                    'link'  => route('depts.index'),
-                    'title' => $this->icon->create(trans('models.depts.fa-icon'))
-                        . trans('models.depts.index')
+                    'link'  => route('movementTypes.index'),
+                    'title' => $this->icon->create(trans('models.movementTypes.fa-icon'))
+                        . trans('models.movementTypes.index')
                 ],
             ]
         ];
