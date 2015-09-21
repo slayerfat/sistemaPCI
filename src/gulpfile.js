@@ -72,11 +72,16 @@ elixir(function (mix) {
 
         // le hace el amor y ejacula ~/sistemaPCI/public/js/all.js
         .scripts([
-            'deleteResourceConfirm.js',
-            'deleteResourceFromAnchor.js',
+            '', //asqueroso, pero funciona
             paths.jquery + "dist/jquery.js",
             paths.bootstrap + "javascripts/bootstrap.js"
         ])
+        .scripts([
+            '../ajax/address/getAddress.js'
+        ], paths.public + '/js/getAddress.js')
+        .scripts([
+            '../ajax/address/setAddress.js'
+        ], paths.public + '/js/setAddress.js')
 
         // 'versiona' los archivos para obtener copias actualizadas
         // y no versiones de cache del explorador (firefox es el peor)
