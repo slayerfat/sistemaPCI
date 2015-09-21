@@ -4,9 +4,9 @@ use Mockery;
 use PCI\Models\Address;
 use PCI\Models\Parish;
 use PCI\Models\Town;
-use Tests\BaseTestCase;
+use Tests\AbstractTestCase;
 
-class ParishRelationsTest extends BaseTestCase
+class ParishRelationsTest extends AbstractTestCase
 {
 
     public function testAddresses()

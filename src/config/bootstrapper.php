@@ -4,5 +4,5 @@
  * Default config values
  */
 return [
-    'icon_prefix' => 'glyphicon'
+    'icon_prefix' => 'fa'
 ];

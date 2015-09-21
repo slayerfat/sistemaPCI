@@ -6,9 +6,9 @@ use PCI\Models\Note;
 use PCI\Models\Petition;
 use PCI\Models\PetitionType;
 use PCI\Models\User;
-use Tests\BaseTestCase;
+use Tests\AbstractTestCase;
 
-class PetitionRelationsTest extends BaseTestCase
+class PetitionRelationsTest extends AbstractTestCase
 {
 
     public function testType()

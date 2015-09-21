@@ -3,13 +3,13 @@
 use stdClass;
 use Mockery;
 use PCI\Models\User;
-use Tests\BaseTestCase;
+use Tests\AbstractTestCase;
 use PCI\Models\Employee;
 use PCI\Repositories\ViewVariable\ViewModelVariable;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class AbstractViewVariableTest extends BaseTestCase
+class AbstractViewVariableTest extends AbstractTestCase
 {
 
     use DatabaseTransactions, DatabaseMigrations;
@@ -58,11 +58,10 @@ class AbstractViewVariableTest extends BaseTestCase
 
     public function testParent()
     {
-        $parent = new Employee;
+        $this->var->setParent(Employee::class);
 
-        $this->var->setParent($parent);
-
-        $this->assertSame($parent, $this->var->getParent());
+        $this->assertTrue($this->var->hasParent());
+        $this->assertTrue(is_a($this->var->getParent(), Employee::class));
     }
 
     public function testParentLists()

@@ -4,7 +4,7 @@ use Storage;
 use PCI\Models\User;
 use Illuminate\Database\Seeder;
 
-abstract class BaseSeeder extends Seeder
+abstract class AbstractSeeder extends Seeder
 {
 
     /**

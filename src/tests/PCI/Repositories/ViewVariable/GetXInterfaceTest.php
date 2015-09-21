@@ -3,12 +3,12 @@
 use PCI\Models\User;
 use PCI\Repositories\ViewVariable\ViewModelVariable;
 use PCI\Repositories\ViewVariable\ViewPaginatorVariable;
-use Tests\BaseTestCase;
+use Tests\AbstractTestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use PCI\Repositories\ViewVariable\ViewCollectionVariable;
 
-class GetXInterfaceTest extends BaseTestCase
+class GetXInterfaceTest extends AbstractTestCase
 {
 
     use DatabaseTransactions, DatabaseMigrations;

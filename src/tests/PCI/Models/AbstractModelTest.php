@@ -1,9 +1,9 @@
 <?php namespace Tests\PCI\Models;
 
 use PCI\Models\User;
-use Tests\BaseTestCase;
+use Tests\AbstractTestCase;
 
-class AbstractModelTest extends BaseTestCase
+class AbstractModelTest extends AbstractTestCase
 {
     /**
      * @var User

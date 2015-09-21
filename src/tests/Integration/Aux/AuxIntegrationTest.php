@@ -2,109 +2,171 @@
 
 use PCI\Models\Category;
 use PCI\Models\Department;
+use PCI\Models\Gender;
+use PCI\Models\ItemType;
+use PCI\Models\Maker;
+use PCI\Models\MovementType;
+use PCI\Models\Nationality;
+use PCI\Models\NoteType;
+use PCI\Models\PetitionType;
 
 class AuxIntegrationTest extends AbstractAuxTest
 {
 
-    public function setUp()
+    /**
+     * como estas entidades son tan genericas, solo se necesita
+     * saber el nombre en la ruta , el alias y la clase para
+     * crear nuevos registros y objetos en las vistas
+     * @return array<string, string, \PCI\Models\AbstractBaseModel>
+     */
+    public function dataProvider()
     {
-        parent::setUp();
-
-        // como estas entidades son tan genericas, solo se necesita
-        // saber el nombre en la ruta ($model[0]), el alias
-        // ($model[1]) y la clase para crear nuevos
-        // registros y objetos ($model[2])
-        $modelData = [
-            ['categorias', 'cats', Category::class],
-            ['departamentos', 'depts', Department::class],
+        return [
+            'test_0_cats'          => [
+                'categorias', 'cats', Category::class
+            ],
+            'test_1_depts'         => [
+                'departamentos', 'depts', Department::class
+            ],
+            'test_2_genders'       => [
+                'generos', 'genders', Gender::class
+            ],
+            'test_3_itemTypes'     => [
+                'tipos-item', 'itemTypes', ItemType::class
+            ],
+            'test_4_makers'        => [
+                'fabricantes', 'makers', Maker::class
+            ],
+            'test_5_movementTypes' => [
+                'tipos-movimiento', 'movementTypes', MovementType::class
+            ],
+            'test_6_nats'          => [
+                'nacionalidades', 'nats', Nationality::class
+            ],
+            'test_7_noteTypes'     => [
+                'tipos-nota', 'noteTypes', NoteType::class
+            ],
+            'test_8_petitionTypes' => [
+                'tipos-pedido', 'petitionTypes', PetitionType::class
+            ],
         ];
-
-        foreach ($modelData as $model) {
-            $this->setData($model[0], $model[1], $model[2]);
-        }
     }
 
-    public function testAuxIndexShouldHaveTableWithValidInfo()
+    /**
+     * @param $route
+     * @param $alias
+     * @param $class
+     * @dataProvider dataProvider
+     */
+    public function testAuxIndexShouldHaveTableWithValidInfo($route, $alias, $class)
     {
-        foreach ($this->data as $data) {
-            $this->actingAs($this->user)
-                ->visit($data->index)
-                ->see('No hay información que mostrar.');
+        $this->actingAs($this->user)
+            ->visit(route("$alias.index"))
+            ->seePageIs("/$route")
+            ->see('No hay información que mostrar.');
 
-            $cat = factory($data->class)->create();
+        $model = factory($class)->create();
 
-            $this->actingAs($this->user)
-                ->visit($data->index)
-                ->see($cat->desc);
-        }
+        $this->actingAs($this->user)
+            ->visit(route("$alias.index"))
+            ->see($model->desc);
     }
 
-    public function testUserShouldSeeCreateAuxOptions()
+    /**
+     * @param $route
+     * @param $alias
+     * @param $class
+     * @dataProvider dataProvider
+     */
+    public function testUserShouldSeeCreateAuxOptions($route, $alias, $class)
     {
-        foreach ($this->data as $data) {
-            $this->actingAs($this->user)
-                ->visit('/')
-                ->see(trans("aux.{$data->alias}.create"));
-        }
+        unset($route);
+        unset($class);
+        $this->actingAs($this->user)
+            ->visit(route('index'))
+            ->see(trans("models.{$alias}.index"));
     }
 
-    public function testCreateAuxShouldReturnAForm()
+    /**
+     * @param $route
+     * @param $alias
+     * @dataProvider dataProvider
+     */
+    public function testCreateAuxShouldReturnAForm($route, $alias)
     {
-        foreach ($this->data as $data) {
-            $this->actingAs($this->user)
-                ->visit('/')
-                ->click(trans("aux.{$data->alias}.create"))
-                ->seePageIs($data->create);
-        }
+        $this->actingAs($this->user)
+            ->visit(route('index'))
+            ->click(trans("models.{$alias}.index"))
+            ->seePageIs("/{$route}")
+            ->see(trans("models.{$alias}.create"))
+            ->click(trans("models.{$alias}.create"))
+            ->seePageIs("{$route}/crear");
     }
 
-    public function testCreatingAuxShouldReturnAShowView()
+    /**
+     * @param $route
+     * @param $alias
+     * @dataProvider dataProvider
+     */
+    public function testCreatingAuxShouldReturnAShowView($route, $alias)
     {
-        foreach ($this->data as $data) {
-            $this->actingAs($this->user)
-                ->visit($data->create)
-                ->type('testing', 'desc')
-                ->press(trans("aux.{$data->alias}.create"))
-                ->seePageIs($data->show . 'testing');
-        }
+        $this->actingAs($this->user)
+            ->visit("{$route}/crear")
+            ->type('testing', 'desc')
+            ->press(trans("models.{$alias}.create"))
+            ->seePageIs("{$route}/testing");
     }
 
-    public function testEditAuxShouldReturnAForm()
+    /**
+     * @param $route
+     * @param $alias
+     * @param $class
+     * @dataProvider dataProvider
+     */
+    public function testEditAuxShouldReturnAForm($route, $alias, $class)
     {
-        foreach ($this->data as $data) {
-            $model = factory($data->class)->create(['desc' => 'testing']);
+        $model = factory($class)->create(['desc' => 'testing']);
 
-            $this->actingAs($this->user)
-                ->visit($data->show . $model->desc)
-                ->click('Editar')
-                ->seePageIs($data->edit . $model->id . '/editar');
-        }
+        $this->actingAs($this->user)
+            ->visit("{$route}/{$model->desc}")
+            ->click('Editar')
+            ->seePageIs("{$route}/{$model->id}/editar")
+            ->see(trans("models.$alias.edit"));
     }
 
-    public function testEditingAuxShouldReturnAShowView()
+    /**
+     * @param $route
+     * @param $alias
+     * @param $class
+     * @dataProvider dataProvider
+     */
+    public function testEditingAuxShouldReturnAShowView($route, $alias, $class)
     {
-        foreach ($this->data as $data) {
-            $model = factory($data->class)->create(
-                ['desc' => 'another']
-            );
+        $model = factory($class)->create(
+            ['desc' => 'another']
+        );
 
-            $this->actingAs($this->user)
-                ->visit($data->edit . $model->id . '/editar')
-                ->type('check', 'desc')
-                ->press(trans("aux.{$data->alias}.edit"))
-                ->seePageIs($data->show . 'check');
-        }
+        $this->actingAs($this->user)
+            ->visit("{$route}/{$model->id}/editar")
+            ->type('check', 'desc')
+            ->press(trans("models.$alias.edit"))
+            ->seePageIs("{$route}/check");
     }
 
-    public function testEditAuxShouldDeleteWithWarning()
+    /**
+     * @param $route
+     * @param $alias
+     * @param $class
+     * @dataProvider dataProvider
+     */
+    public function testEditAuxShouldDeleteWithWarning($route, $alias, $class)
     {
-        foreach ($this->data as $data) {
-            $model = factory($data->class)->create(['desc' => 'testing']);
+        unset($alias);
+        $model = factory($class)->create(['desc' => 'testing']);
 
-            $this->actingAs($this->user)
-                ->visit($data->show . $model->desc)
-                ->press('Eliminar')
-                ->seePageIs($data->index);
-        }
+        $this->actingAs($this->user)
+            ->visit("{$route}/{$model->desc}")
+            ->press('Eliminar')
+            ->seePageIs("/{$route}");
     }
 }

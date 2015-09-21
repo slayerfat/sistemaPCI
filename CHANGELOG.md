@@ -1,3 +1,14 @@
+## v0.1.2
+
+Features:
+
+- navbar mejorado
+- implementados a la lsita de recursos genericos: Genero, Tipo de Item
+
+Mejoras:
+
+- Las siguientes entidades poseen un campo Slug: Cargo
+
 ## v0.1.1 19-07-15
 
 Features:
@@ -8,7 +19,7 @@ Features:
     1. crear
     1. actualizar
     1. eliminar
-- creados Repositorios, Proveedores y otros necesarios para los recursos, exceptuando: ---
+- creados Repositorios, Proveedores y otros necesarios para: Categoria, Departamento
 - creadas algunas pruebas de integracion.
 
 Mejoras:

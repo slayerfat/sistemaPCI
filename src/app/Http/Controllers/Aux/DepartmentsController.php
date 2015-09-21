@@ -55,12 +55,7 @@ class DepartmentsController extends AbstractAuxController
      */
     public function create()
     {
-        // Como estas actividades son genericas para las entidades auxiliares
-        // se decide generar este metodo para disminuir la duplicacion
-        // que tendria si en dado caso, se hubiera hecho normal.
-        $results = $this->repo->getCreateViewVariables();
-
-        return $this->makeView('aux.create', $results);
+        return $this->makeView('aux.create', $this->repo->getCreateViewVariables());
     }
 
     /**
@@ -82,7 +77,7 @@ class DepartmentsController extends AbstractAuxController
     {
         $variables = $this->repo->getEditViewVariables($id);
 
-        $variables->setUsersGoal(trans('aux.depts.edit'));
+        $variables->setUsersGoal(trans('models.depts.edit'));
 
         return $this->makeView('aux.edit', $variables);
     }
@@ -105,12 +100,6 @@ class DepartmentsController extends AbstractAuxController
      */
     public function destroy($id)
     {
-        $this->model = $this->repo->delete($id);
-
-        if ($this->model === true) {
-            return Redirect::route('depts.index');
-        }
-
-        return Redirect::route('depts.show', $this->model->desc);
+        return $this->destroyPrototype($this->repo->delete($id), 'depts');
     }
 }

@@ -1,12 +1,12 @@
 <?php namespace Tests\PCI\Repositories\Aux;
 
-use Tests\BaseTestCase;
+use Tests\AbstractTestCase;
 use PCI\Models\Category;
 use PCI\Repositories\Aux\CategoryRepository;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class CategoryRepositoryTest extends BaseTestCase
+class CategoryRepositoryTest extends AbstractTestCase
 {
     use DatabaseMigrations, DatabaseTransactions;
 
@@ -29,50 +29,6 @@ class CategoryRepositoryTest extends BaseTestCase
         $this->catRepo = new CategoryRepository(new Category());
 
         $this->cat = factory(Category::class)->create();
-    }
-
-    public function createUpdatedataProvider()
-    {
-        return [
-            ['ayy',]
-        ];
-    }
-
-    public function testFind()
-    {
-        $cat = $this->catRepo->find(1);
-
-        $this->assertNotEmpty($cat);
-        $this->assertInstanceOf(Category::class, $cat);
-    }
-
-    public function testGetAll()
-    {
-        $cat = $this->catRepo->getAll();
-
-        $this->assertNotEmpty($cat);
-    }
-
-    /**
-     * @dataProvider createUpdatedataProvider
-     */
-    public function testCreate($value)
-    {
-        $cat = $this->catRepo->create(['desc' => $value]);
-
-        $this->assertNotEmpty($cat);
-        $this->assertInstanceOf(Category::class, $cat);
-    }
-
-    /**
-     * @dataProvider createUpdatedataProvider
-     */
-    public function testUpdate($value)
-    {
-        $cat = $this->catRepo->update(1, ['desc' => $value]);
-
-        $this->assertNotEmpty($cat);
-        $this->assertInstanceOf(Category::class, $cat);
     }
 
     public function testDelete()

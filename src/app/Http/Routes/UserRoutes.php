@@ -1,6 +1,6 @@
 <?php namespace PCI\Http\Routes;
 
-class UserRoutes extends PCIRoutes
+class UserRoutes extends AbstractPciRoutes
 {
 
     /**
@@ -16,6 +16,17 @@ class UserRoutes extends PCIRoutes
                 'uses'     => 'User\UsersController',
                 'as'       => 'users',
                 'resource' => '{users}'
+            ]
+        ],
+        [
+            'routerOptions' => [
+                'prefix'     => 'perfiles',
+                'middleware' => 'auth',
+            ],
+            'rtDetails'     => [
+                'uses'     => 'Aux\ProfilesController',
+                'as'       => 'profiles',
+                'resource' => '{profiles}'
             ]
         ],
     ];

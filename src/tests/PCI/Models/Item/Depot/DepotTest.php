@@ -4,9 +4,9 @@ use Mockery;
 use PCI\Models\Depot;
 use PCI\Models\Employee;
 use PCI\Models\Item;
-use Tests\BaseTestCase;
+use Tests\AbstractTestCase;
 
-class DepotTest extends BaseTestCase
+class DepotTest extends AbstractTestCase
 {
 
     public function testOwner()

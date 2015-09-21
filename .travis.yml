@@ -23,16 +23,16 @@ before_script:
   - wget -c http://static.phpmd.org/php/latest/phpmd.phar
 
 script:
-  - phpunit --coverage-clover=coverage.clover
+  - phpunit
   - phpcs -p --colors --standard=PSR2 --ignore=src/vendor/ src/app src/database/seeds/ src/config/
   - if [ -e phpmd-ruleset.xml ]; then php phpmd.phar src/app/ text phpmd-ruleset.xml; php phpmd.phar src/database/seeds/ text phpmd-ruleset.xml; php phpmd.phar src/config/ text phpmd-ruleset.xml; fi
-
+  #- phpunit --coverage-clover=coverage.clover 45min de run, lol
   # - if [ $TRAVIS_PHP_VERSION != '7' ]; then phpcs -p --colors --standard=PSR2 --ignore=src/vendor/ src/app src/database/seeds/ src/config/; fi
   # - if [ -e phpmd-ruleset.xml ] && [ $TRAVIS_PHP_VERSION != '7' ]; then php phpmd.phar src/app/ text phpmd-ruleset.xml; php phpmd.phar src/database/seeds/ text phpmd-ruleset.xml; php phpmd.phar src/config/ text phpmd-ruleset.xml; fi
 
-after_script:
-  - wget https://scrutinizer-ci.com/ocular.phar
-  - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
-
+# se desactivo el cover por tardarse demasiado, sin embargo es bueno hacer de cuando en vez
+#after_script:
+#  - wget https://scrutinizer-ci.com/ocular.phar
+#  - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
   # - if [ $TRAVIS_PHP_VERSION != '7' ]; then wget https://scrutinizer-ci.com/ocular.phar; fi
   # - if [ $TRAVIS_PHP_VERSION != '7' ]; then php ocular.phar code-coverage:upload --format=php-clover coverage.clover; fi

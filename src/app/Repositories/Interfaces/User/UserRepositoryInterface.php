@@ -23,5 +23,5 @@ interface UserRepositoryInterface extends
      * @param string $code
      * @return bool
      */
-    public function confirm($code);
+    public function confirmCode($code);
 }

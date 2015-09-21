@@ -1,9 +1,9 @@
 <?php namespace Tests\PCI\Mamarrachismo\Caimaneitor;
 
 use Caimaneitor;
-use Tests\BaseTestCase;
+use Tests\AbstractTestCase;
 
-class CaimaneitorTest extends BaseTestCase
+class CaimaneitorTest extends AbstractTestCase
 {
 
     public function testCaimaneitorShouldCaimanais()

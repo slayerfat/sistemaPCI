@@ -7,13 +7,13 @@ class UserRequest extends Request
 {
 
     /**
-     * @var UserRepositoryInterface
+     * @var \PCI\Repositories\Interfaces\User\UserRepositoryInterface
      */
     private $userRepo;
 
     /**
      * Genera la instancia del user request dandole el repositorio de usuarios.
-     * @param UserRepositoryInterface $userRepo
+     * @param \PCI\Repositories\Interfaces\User\UserRepositoryInterface $userRepo
      */
     public function __construct(UserRepositoryInterface $userRepo)
     {
@@ -41,7 +41,7 @@ class UserRequest extends Request
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array
+     * @return array<string, string>
      */
     public function rules()
     {

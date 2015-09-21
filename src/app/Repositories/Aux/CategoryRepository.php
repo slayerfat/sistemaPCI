@@ -12,7 +12,7 @@ class CategoryRepository extends AbstractAuxRepository implements CategoryReposi
      */
     public function delete($id)
     {
-        return $this->executeDelete($id, 'Categoria');
+        return $this->executeDelete($id, trans('models.cats.singular'));
     }
 
     /**
@@ -55,7 +55,7 @@ class CategoryRepository extends AbstractAuxRepository implements CategoryReposi
     {
         $results = $this->generateViewVariable($this->newInstance(), 'cats');
 
-        $results->setUsersGoal(trans('aux.cats.create'));
+        $results->setUsersGoal(trans('models.cats.create'));
         $results->setDestView('cats.store');
 
         return $results;

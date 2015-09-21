@@ -3,12 +3,12 @@
 use Route;
 
 /**
- * Class PCIRoutes
+ * Class AbstractPciRoutes
  * @package PCI\Http\Routes
  * @see http://i.imgur.com/xVyoSl.jpg
  * Poderoso copypasta de https://github.com/slayerfat/orbiagro.com.ve/blob/master/app/Http/Routes/Routes.php
  */
-abstract class PCIRoutes
+abstract class AbstractPciRoutes
 {
     /**
      * Las opciones para crear un grupo RESTful de rutas.

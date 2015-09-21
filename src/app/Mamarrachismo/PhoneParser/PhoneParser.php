@@ -66,7 +66,7 @@ class PhoneParser implements PhoneParserInterface
     /**
      * @param $regex
      * @param $data
-     * @return array
+     * @return string[]
      */
     private function execute($regex, $data)
     {

@@ -1,6 +1,6 @@
 <?php namespace PCI\Http\Routes;
 
-class AuxRoutes extends PCIRoutes
+class AuxRoutes extends AbstractPciRoutes
 {
 
     /**
@@ -20,6 +20,28 @@ class AuxRoutes extends PCIRoutes
         ],
         [
             'routerOptions' => [
+                'prefix'     => 'rubros',
+                'middleware' => 'auth',
+            ],
+            'rtDetails'     => [
+                'uses'     => 'Aux\SubCategoriesController',
+                'as'       => 'subCats',
+                'resource' => '{subCats}'
+            ]
+        ],
+        [
+            'routerOptions' => [
+                'prefix'     => 'generos',
+                'middleware' => 'auth',
+            ],
+            'rtDetails'     => [
+                'uses'     => 'Aux\GendersController',
+                'as'       => 'genders',
+                'resource' => '{genders}'
+            ]
+        ],
+        [
+            'routerOptions' => [
                 'prefix'     => 'departamentos',
                 'middleware' => 'auth',
             ],
@@ -27,6 +49,72 @@ class AuxRoutes extends PCIRoutes
                 'uses'     => 'Aux\DepartmentsController',
                 'as'       => 'depts',
                 'resource' => '{depts}'
+            ]
+        ],
+        [
+            'routerOptions' => [
+                'prefix'     => 'tipos-item',
+                'middleware' => 'auth',
+            ],
+            'rtDetails'     => [
+                'uses'     => 'Aux\ItemTypesController',
+                'as'       => 'itemTypes',
+                'resource' => '{itemTypes}'
+            ]
+        ],
+        [
+            'routerOptions' => [
+                'prefix'     => 'fabricantes',
+                'middleware' => 'auth',
+            ],
+            'rtDetails'     => [
+                'uses'     => 'Aux\MakersController',
+                'as'       => 'makers',
+                'resource' => '{makers}'
+            ]
+        ],
+        [
+            'routerOptions' => [
+                'prefix'     => 'tipos-movimiento',
+                'middleware' => 'auth',
+            ],
+            'rtDetails'     => [
+                'uses'     => 'Aux\MovementTypesController',
+                'as'       => 'movementTypes',
+                'resource' => '{movementTypes}'
+            ]
+        ],
+        [
+            'routerOptions' => [
+                'prefix'     => 'nacionalidades',
+                'middleware' => 'auth',
+            ],
+            'rtDetails'     => [
+                'uses'     => 'Aux\NationalitiesController',
+                'as'       => 'nats',
+                'resource' => '{nats}'
+            ]
+        ],
+        [
+            'routerOptions' => [
+                'prefix'     => 'tipos-nota',
+                'middleware' => 'auth',
+            ],
+            'rtDetails'     => [
+                'uses'     => 'Aux\NoteTypesController',
+                'as'       => 'noteTypes',
+                'resource' => '{noteTypes}'
+            ]
+        ],
+        [
+            'routerOptions' => [
+                'prefix'     => 'tipos-pedido',
+                'middleware' => 'auth',
+            ],
+            'rtDetails'     => [
+                'uses'     => 'Aux\PetitionTypesController',
+                'as'       => 'petitionTypes',
+                'resource' => '{petitionTypes}'
             ]
         ],
     ];

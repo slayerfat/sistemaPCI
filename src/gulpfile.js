@@ -66,14 +66,22 @@ elixir(function (mix) {
         // otra opcion seria un symlink o algo asi.
         .copy(paths.bootstrap + 'fonts/bootstrap/**', paths.public + '/fonts')
         .copy(paths.fontAwesome + 'fonts/**', paths.public + '/fonts')
+        // i dont even know
+        .copy(paths.bootstrap + 'fonts/bootstrap/**', paths.public + '/build/fonts')
+        .copy(paths.fontAwesome + 'fonts/**', paths.public + '/build/fonts')
 
         // le hace el amor y ejacula ~/sistemaPCI/public/js/all.js
         .scripts([
-            'deleteResourceConfirm.js',
-            'deleteResourceFromAnchor.js',
+            '', //asqueroso, pero funciona
             paths.jquery + "dist/jquery.js",
             paths.bootstrap + "javascripts/bootstrap.js"
         ])
+        .scripts([
+            '../ajax/address/getAddress.js'
+        ], paths.public + '/js/getAddress.js')
+        .scripts([
+            '../ajax/address/setAddress.js'
+        ], paths.public + '/js/setAddress.js')
 
         // 'versiona' los archivos para obtener copias actualizadas
         // y no versiones de cache del explorador (firefox es el peor)

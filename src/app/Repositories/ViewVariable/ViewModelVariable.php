@@ -25,7 +25,7 @@ class ViewModelVariable extends AbstractViewVariable implements GetModelInterfac
 
         $this->setViews();
         $this->setRoutes();
-        $this->setNames();
+        $this->setTrans();
     }
 
     /**

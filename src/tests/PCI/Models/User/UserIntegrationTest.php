@@ -6,9 +6,9 @@ use PCI\Models\Address;
 use PCI\Models\Employee;
 use PCI\Models\Profile;
 use PCI\Models\User;
-use Tests\BaseTestCase;
+use Tests\AbstractTestCase;
 
-class UserIntegrationTest extends BaseTestCase
+class UserIntegrationTest extends AbstractTestCase
 {
 
     use DatabaseTransactions, DatabaseMigrations;

@@ -43,7 +43,7 @@
                 Usuario creado
                 {{$user->created_at->diffForHumans()}}
                 <small>
-                    {{$user->created_at}} por
+                    por
                     <a href="{{route('users.show', $user->createdBy()->name)}}">
                         {{$user->createdBy()->name}}
                     </a>
@@ -54,7 +54,7 @@
                 Usuario actualizado
                 {{$user->created_at->diffForHumans()}}
                 <small>
-                    {{$user->updated_at}} por
+                    por
                     <a href="{{route('users.show', $user->updatedBy()->name)}}">
                         {{$user->updatedBy()->name}}
                     </a>

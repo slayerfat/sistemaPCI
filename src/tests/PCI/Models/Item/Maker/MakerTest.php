@@ -3,9 +3,9 @@
 use Mockery;
 use PCI\Models\Item;
 use PCI\Models\Maker;
-use Tests\BaseTestCase;
+use Tests\AbstractTestCase;
 
-class MakerTest extends BaseTestCase
+class MakerTest extends AbstractTestCase
 {
 
     public function testItems()

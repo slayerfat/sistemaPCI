@@ -12,7 +12,7 @@ class DepartmentRepository extends AbstractAuxRepository implements DepartmentRe
      */
     public function delete($id)
     {
-        return $this->executeDelete($id, 'Departamento');
+        return $this->executeDelete($id, trans('models.depts.singular'));
     }
 
     /**
@@ -55,7 +55,7 @@ class DepartmentRepository extends AbstractAuxRepository implements DepartmentRe
     {
         $results = $this->generateViewVariable($this->newInstance(), 'depts');
 
-        $results->setUsersGoal(trans('aux.depts.create'));
+        $results->setUsersGoal(trans('models.depts.create'));
         $results->setDestView('depts.store');
 
         return $results;

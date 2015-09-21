@@ -11,7 +11,14 @@
     </p>
 
     <p class="footer-centered-text footer-authors">slayerfat © 2015</p>
+
     <p class="footer-centered-text footer-authors">
         <a href="{{route('status')}}">status</a>
+    </p>
+
+    <p class="text-center">
+        <a href="https://github.com/slayerfat/sistemaPCI" data-toggle="tooltip" title="Ver codigo fuente">
+            <i class="fa fa-4x fa-github"></i>
+        </a>
     </p>
 </footer>

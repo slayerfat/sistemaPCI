@@ -6,7 +6,7 @@
             @include('users.partials.sidebar', ['active' => '.show'])
 
             {{-- user info --}}
-            <div class="col-sm-4">
+            <div class="col-sm-6">
                 <h1>
                     {{$user->name}}
 
@@ -21,8 +21,8 @@
             </div>
 
             {{-- pedidos --}}
-            <div class="col-sm-6">
-                <h1>Ultimos Pedidos generados</h1>
+            <div class="col-sm-4">
+                <h1>Ultimos Pedidos</h1>
             </div>
         </div>
     </div>

@@ -1,8 +1,8 @@
 <?php namespace Tests\Integration\Misc;
 
-use Tests\BaseTestCase;
+use Tests\AbstractTestCase;
 
-class StatusIntegrationTest extends BaseTestCase
+class StatusIntegrationTest extends AbstractTestCase
 {
 
     public function testStatusIsOk()

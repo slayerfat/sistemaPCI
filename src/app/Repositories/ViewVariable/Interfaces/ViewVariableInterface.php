@@ -50,11 +50,13 @@ interface ViewVariableInterface
 
     /**
      * @param string $parentTitle
+     * @return void
      */
     public function setParentTitle($parentTitle);
 
     /**
      * @param string $resource
+     * @return void
      */
     public function setResource($resource);
 
@@ -66,5 +68,5 @@ interface ViewVariableInterface
     /**
      * @return \StdClass
      */
-    public function getNames();
+    public function getTrans();
 }

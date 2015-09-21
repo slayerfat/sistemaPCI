@@ -3,9 +3,9 @@
 use Mockery;
 use PCI\Models\Gender;
 use PCI\Models\Employee;
-use Tests\BaseTestCase;
+use Tests\AbstractTestCase;
 
-class GenderRelationsTest extends BaseTestCase
+class GenderRelationsTest extends AbstractTestCase
 {
 
     public function testUserDetails()

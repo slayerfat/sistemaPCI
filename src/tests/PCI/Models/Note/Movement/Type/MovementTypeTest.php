@@ -2,9 +2,9 @@
 
 use PCI\Models\Movement;
 use PCI\Models\MovementType;
-use Tests\BaseTestCase;
+use Tests\AbstractTestCase;
 
-class MovementTypeTest extends BaseTestCase
+class MovementTypeTest extends AbstractTestCase
 {
 
     public function testMovements()

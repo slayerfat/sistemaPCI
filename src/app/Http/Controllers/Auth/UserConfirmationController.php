@@ -33,7 +33,7 @@ class UserConfirmationController extends Controller
 
     /**
      * @param $code
-     * @return \Illuminate\Http\RedirectResponse;
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function confirm($code)
     {
@@ -41,7 +41,7 @@ class UserConfirmationController extends Controller
             return Redirect::route('index');
         }
 
-        if (!$this->userRepo->confirm($code)) {
+        if (!$this->userRepo->confirmCode($code)) {
             return Redirect::route('index');
         }
 
@@ -53,7 +53,7 @@ class UserConfirmationController extends Controller
     }
 
     /**
-     * @return \Illuminate\Http\RedirectResponse;
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function create()
     {

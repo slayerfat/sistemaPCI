@@ -2,13 +2,13 @@
 
 use Mockery;
 use PCI\Models\User;
-use Tests\BaseTestCase;
+use Tests\AbstractTestCase;
 use PCI\Models\AbstractBaseModel;
 use PCI\Repositories\UserRepository as ConcreteClass;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class AbstractRepositoryTest extends BaseTestCase
+class AbstractRepositoryTest extends AbstractTestCase
 {
     use DatabaseTransactions, DatabaseMigrations;
 

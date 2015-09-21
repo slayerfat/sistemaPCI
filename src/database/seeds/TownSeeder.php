@@ -2,7 +2,7 @@
 
 use DB;
 
-class TownSeeder extends BaseSeeder
+class TownSeeder extends AbstractSeeder
 {
 
     /**

@@ -3,9 +3,9 @@
 use PCI\Models\Address;
 use PCI\Models\Parish;
 use PCI\Models\Employee;
-use Tests\BaseTestCase;
+use Tests\AbstractTestCase;
 
-class AddressRelationsTest extends BaseTestCase
+class AddressRelationsTest extends AbstractTestCase
 {
 
     public function testParish()

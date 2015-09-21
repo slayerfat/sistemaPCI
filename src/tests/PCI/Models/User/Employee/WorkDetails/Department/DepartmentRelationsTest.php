@@ -3,9 +3,9 @@
 use Mockery;
 use PCI\Models\Department;
 use PCI\Models\WorkDetail;
-use Tests\BaseTestCase;
+use Tests\AbstractTestCase;
 
-class DepartmentRelationsTest extends BaseTestCase
+class DepartmentRelationsTest extends AbstractTestCase
 {
 
     public function testWorkDetails()
