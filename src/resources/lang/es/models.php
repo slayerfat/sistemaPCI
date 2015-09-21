@@ -62,6 +62,18 @@ return [
     'genders.fa-icon'   => 'venus-mars',
 
     /**
+     * Nacionalidad
+     */
+    'nats.index'        => 'Ver Nacionalidades',
+    'nats.show'         => 'Ver Nacionalidad',
+    'nats.create'       => 'Crear Nacionalidad',
+    'nats.edit'         => 'Editar Nacionalidad',
+    'nats.destroy'      => 'Eliminar Nacionalidad',
+    'nats.plural'       => 'Nacionalidades',
+    'nats.singular'     => 'Nacionalidad',
+    'nats.fa-icon'      => 'flag-o',
+
+    /**
      * Tipo de Movimiento
      */
     'movementTypes.index'        => 'Ver Tipo de Movimientos',

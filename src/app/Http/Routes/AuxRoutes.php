@@ -73,6 +73,17 @@ class AuxRoutes extends AbstractPciRoutes
                 'resource' => '{movementTypes}'
             ]
         ],
+        [
+            'routerOptions' => [
+                'prefix'     => 'nacionalidades',
+                'middleware' => 'auth',
+            ],
+            'rtDetails'     => [
+                'uses'     => 'Aux\NationalitiesController',
+                'as'       => 'nats',
+                'resource' => '{nats}'
+            ]
+        ],
     ];
 
     /**

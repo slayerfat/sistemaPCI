@@ -7,18 +7,21 @@ use PCI\Models\ItemType;
 use PCI\Models\Department;
 use PCI\Models\MovementType;
 use Illuminate\Support\ServiceProvider;
+use PCI\Models\Nationality;
 use PCI\Repositories\Aux\MakerRepository;
 use PCI\Repositories\Aux\GenderRepository;
 use PCI\Repositories\Aux\CategoryRepository;
 use PCI\Repositories\Aux\ItemTypesRepository;
 use PCI\Repositories\Aux\DepartmentRepository;
 use PCI\Repositories\Aux\MovementTypeRepository;
+use PCI\Repositories\Aux\NationalityRepository;
 use PCI\Repositories\Interfaces\Aux\MakerRepositoryInterface;
 use PCI\Repositories\Interfaces\Aux\GenderRepositoryInterface;
 use PCI\Repositories\Interfaces\Aux\CategoryRepositoryInterface;
 use PCI\Repositories\Interfaces\Aux\ItemTypesRepositoryInterface;
 use PCI\Repositories\Interfaces\Aux\DepartmentRepositoryInterface;
 use PCI\Repositories\Interfaces\Aux\MovementTypeRepositoryInterface;
+use PCI\Repositories\Interfaces\Aux\NationalityRepositoryInterface;
 
 /**  * @SuppressWarnings(PHPMD.CouplingBetweenObjects) */
 
@@ -54,6 +57,10 @@ class AuxRepositoriesProvider extends ServiceProvider
 
         $this->app->bind(MovementTypeRepositoryInterface::class, function ($app) {
             return new MovementTypeRepository($app[MovementType::class]);
+        });
+
+        $this->app->bind(NationalityRepositoryInterface::class, function ($app) {
+            return new NationalityRepository($app[Nationality::class]);
         });
     }
 }

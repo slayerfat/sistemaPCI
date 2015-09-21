@@ -154,6 +154,11 @@ class NavbarViewComposer
                     'title' => $this->icon->create(trans('models.depts.fa-icon'))
                         . trans('models.depts.index')
                 ],
+                [
+                    'link'  => route('nats.index'),
+                    'title' => $this->icon->create(trans('models.nats.fa-icon'))
+                        . trans('models.nats.index')
+                ],
                 Navigation::NAVIGATION_DIVIDER,
                 [
                     'link'  => route('cats.index'),
