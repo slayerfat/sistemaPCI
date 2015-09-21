@@ -2,7 +2,6 @@
 
 [![Build Status](https://travis-ci.org/slayerfat/sistemaPCI.svg)](https://travis-ci.org/slayerfat/sistemaPCI)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/slayerfat/sistemaPCI/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/slayerfat/sistemaPCI/?branch=develop)
-[![Code Coverage](https://scrutinizer-ci.com/g/slayerfat/sistemaPCI/badges/coverage.png?b=develop)](https://scrutinizer-ci.com/g/slayerfat/sistemaPCI/?branch=develop)
 
 Sistema de Gestion de Inventario Para la Division de Rehabilitacion Ocupacional.
 
