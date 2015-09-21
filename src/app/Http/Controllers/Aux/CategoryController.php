@@ -55,12 +55,7 @@ class CategoryController extends AbstractAuxController
      */
     public function create()
     {
-        // Como estas actividades son genericas para las entidades auxiliares
-        // se decide generar este metodo para disminuir la duplicacion
-        // que tendria si en dado caso, se hubiera hecho normal.
-        $results = $this->catRepo->getCreateViewVariables();
-
-        return $this->makeView('aux.create', $results);
+        return $this->makeView('aux.create', $this->catRepo->getCreateViewVariables());
     }
 
     /**
@@ -105,12 +100,6 @@ class CategoryController extends AbstractAuxController
      */
     public function destroy($id)
     {
-        $this->model = $this->catRepo->delete($id);
-
-        if ($this->model === true) {
-            return Redirect::route('cats.index');
-        }
-
-        return Redirect::route('cats.show', $this->model->desc);
+        return $this->destroyPrototype($this->catRepo->delete($id), 'cats');
     }
 }

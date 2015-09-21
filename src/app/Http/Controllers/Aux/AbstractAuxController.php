@@ -3,6 +3,7 @@
 use Illuminate\View\Factory;
 use PCI\Repositories\ViewVariable\Interfaces\ViewVariableInterface;
 use PCI\Http\Controllers\Controller;
+use Redirect;
 
 abstract class AbstractAuxController extends Controller
 {
@@ -32,6 +33,23 @@ abstract class AbstractAuxController extends Controller
      */
     protected function makeView($view, ViewVariableInterface $variables)
     {
+        // Como estas actividades son genericas para las entidades auxiliares
+        // se decide generar este metodo para disminuir la duplicacion
+        // que tendria si en dado caso, se hubiera hecho normal.
         return $this->view->make($view, ['variables' => $variables]);
+    }
+
+    /**
+     * @param boolean|\PCI\Models\AbstractBaseModel $model
+     * @param $alias
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    protected function destroyPrototype($model, $alias)
+    {
+        if ($model === true) {
+            return Redirect::route("{$alias}.index");
+        }
+
+        return Redirect::route("{$alias}.show", $model->desc);
     }
 }
