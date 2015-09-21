@@ -58,11 +58,10 @@ class AbstractViewVariableTest extends AbstractTestCase
 
     public function testParent()
     {
-        $parent = new Employee;
+        $this->var->setParent(Employee::class);
 
-        $this->var->setParent($parent);
-
-        $this->assertSame($parent, $this->var->getParent());
+        $this->assertTrue($this->var->hasParent());
+        $this->assertTrue(is_a($this->var->getParent(), Employee::class));
     }
 
     public function testParentLists()

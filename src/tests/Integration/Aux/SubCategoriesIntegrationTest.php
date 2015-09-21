@@ -1,17 +1,22 @@
 <?php namespace Tests\Integration\Aux;
 
 use PCI\Models\Category;
-use PCI\Models\Department;
-use PCI\Models\Gender;
-use PCI\Models\ItemType;
-use PCI\Models\Maker;
-use PCI\Models\MovementType;
-use PCI\Models\Nationality;
-use PCI\Models\NoteType;
-use PCI\Models\PetitionType;
+use PCI\Models\SubCategory;
 
-class AuxIntegrationTest extends AbstractAuxTest
+class SubCategoriesIntegrationTest extends AuxIntegrationTest
 {
+
+    /**
+     * @var \PCI\Models\Category
+     */
+    private $cat;
+
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->cat = factory(Category::class)->create();
+    }
 
     /**
      * como estas entidades son tan genericas, solo se necesita
@@ -22,37 +27,14 @@ class AuxIntegrationTest extends AbstractAuxTest
     public function dataProvider()
     {
         return [
-            'test_0_cats'          => [
-                'categorias', 'cats', Category::class
-            ],
-            'test_1_depts'         => [
-                'departamentos', 'depts', Department::class
-            ],
-            'test_2_genders'       => [
-                'generos', 'genders', Gender::class
-            ],
-            'test_3_itemTypes'     => [
-                'tipos-item', 'itemTypes', ItemType::class
-            ],
-            'test_4_makers'        => [
-                'fabricantes', 'makers', Maker::class
-            ],
-            'test_5_movementTypes' => [
-                'tipos-movimiento', 'movementTypes', MovementType::class
-            ],
-            'test_6_nats'          => [
-                'nacionalidades', 'nats', Nationality::class
-            ],
-            'test_7_noteTypes'     => [
-                'tipos-nota', 'noteTypes', NoteType::class
-            ],
-            'test_8_petitionTypes' => [
-                'tipos-pedido', 'petitionTypes', PetitionType::class
+            'test_0_subCats' => [
+                'rubros', 'subCats', SubCategory::class
             ],
         ];
     }
 
     /**
+     * Los rubros tienen cat_id
      * @param $route
      * @param $alias
      * @param $class
@@ -65,42 +47,11 @@ class AuxIntegrationTest extends AbstractAuxTest
             ->seePageIs("/$route")
             ->see('No hay información que mostrar.');
 
-        $model = factory($class)->create();
+        $model = factory($class)->create(['category_id' => $this->cat->id]);
 
         $this->actingAs($this->user)
             ->visit(route("$alias.index"))
             ->see($model->desc);
-    }
-
-    /**
-     * @param $route
-     * @param $alias
-     * @param $class
-     * @dataProvider dataProvider
-     */
-    public function testUserShouldSeeCreateAuxOptions($route, $alias, $class)
-    {
-        unset($route);
-        unset($class);
-        $this->actingAs($this->user)
-            ->visit(route('index'))
-            ->see(trans("models.{$alias}.index"));
-    }
-
-    /**
-     * @param $route
-     * @param $alias
-     * @dataProvider dataProvider
-     */
-    public function testCreateAuxShouldReturnAForm($route, $alias)
-    {
-        $this->actingAs($this->user)
-            ->visit(route('index'))
-            ->click(trans("models.{$alias}.index"))
-            ->seePageIs("/{$route}")
-            ->see(trans("models.{$alias}.create"))
-            ->click(trans("models.{$alias}.create"))
-            ->seePageIs("{$route}/crear");
     }
 
     /**
@@ -112,7 +63,8 @@ class AuxIntegrationTest extends AbstractAuxTest
     {
         $this->actingAs($this->user)
             ->visit("{$route}/crear")
-            ->type('testing', 'desc')
+            ->type($this->cat->id, 'category_id')
+            ->select('testing', 'desc')
             ->press(trans("models.{$alias}.create"))
             ->seePageIs("{$route}/testing");
     }
@@ -125,7 +77,10 @@ class AuxIntegrationTest extends AbstractAuxTest
      */
     public function testEditAuxShouldReturnAForm($route, $alias, $class)
     {
-        $model = factory($class)->create(['desc' => 'testing']);
+        $model = factory($class)->create([
+            'desc' => 'testing',
+            'category_id' => $this->cat->id
+        ]);
 
         $this->actingAs($this->user)
             ->visit("{$route}/{$model->desc}")
@@ -142,9 +97,10 @@ class AuxIntegrationTest extends AbstractAuxTest
      */
     public function testEditingAuxShouldReturnAShowView($route, $alias, $class)
     {
-        $model = factory($class)->create(
-            ['desc' => 'another']
-        );
+        $model = factory($class)->create([
+                'desc' => 'another',
+                'category_id' => $this->cat->id
+        ]);
 
         $this->actingAs($this->user)
             ->visit("{$route}/{$model->id}/editar")
@@ -162,7 +118,10 @@ class AuxIntegrationTest extends AbstractAuxTest
     public function testEditAuxShouldDeleteWithWarning($route, $alias, $class)
     {
         unset($alias);
-        $model = factory($class)->create(['desc' => 'testing']);
+        $model = factory($class)->create([
+            'desc' => 'testing',
+            'category_id' => $this->cat->id
+        ]);
 
         $this->actingAs($this->user)
             ->visit("{$route}/{$model->desc}")

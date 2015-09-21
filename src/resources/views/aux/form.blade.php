@@ -14,7 +14,7 @@ ControlGroup::generate(
 
     ControlGroup::generate(
         BSForm::label($variables->getForeignKey(), $variables->getParentTitle()),
-        BSForm::select($variables->getForeignKey(), $variables->getParentLists('name')),
+        BSForm::select($variables->getForeignKey(), $variables->getParentLists('desc')),
         BSForm::help('&nbsp;'),
         2
     )

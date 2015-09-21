@@ -20,6 +20,17 @@ class AuxRoutes extends AbstractPciRoutes
         ],
         [
             'routerOptions' => [
+                'prefix'     => 'rubros',
+                'middleware' => 'auth',
+            ],
+            'rtDetails'     => [
+                'uses'     => 'Aux\SubCategoriesController',
+                'as'       => 'subCats',
+                'resource' => '{subCats}'
+            ]
+        ],
+        [
+            'routerOptions' => [
                 'prefix'     => 'generos',
                 'middleware' => 'auth',
             ],

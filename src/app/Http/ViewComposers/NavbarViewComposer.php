@@ -166,7 +166,7 @@ class NavbarViewComposer
                         . trans('models.cats.index')
                 ],
                 [
-                    'link'  => '#',
+                    'link'  => route('subCats.index'),
                     'title' => $this->icon->create(trans('models.subCats.fa-icon'))
                         . trans('models.subCats.index')
                 ],

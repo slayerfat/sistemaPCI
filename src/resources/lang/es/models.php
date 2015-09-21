@@ -14,15 +14,15 @@ return [
     'cats.fa-icon'      => 'th-large',
 
     /**
-     * Sub-Categoria
+     * Rubro
      */
-    'subCats.index'     => 'Ver Sub-Categorias',
-    'subCats.show'      => 'Ver Sub-Categoria',
-    'subCats.create'    => 'Crear Sub-Categoria',
-    'subCats.edit'      => 'Editar Sub-Categoria',
-    'subCats.destroy'   => 'Eliminar Sub-Categoria',
-    'subCats.plural'    => 'Sub-Categorias',
-    'subCats.singular'  => 'Sub-Categoria',
+    'subCats.index'     => 'Ver Rubros',
+    'subCats.show'      => 'Ver Rubro',
+    'subCats.create'    => 'Crear Rubro',
+    'subCats.edit'      => 'Editar Rubro',
+    'subCats.destroy'   => 'Eliminar Rubro',
+    'subCats.plural'    => 'Rubros',
+    'subCats.singular'  => 'Rubro',
     'subCats.fa-icon'   => 'th',
 
     /**

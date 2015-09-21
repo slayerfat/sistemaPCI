@@ -145,7 +145,7 @@ abstract class AbstractViewVariable implements ViewVariableInterface
      */
     public function getParent()
     {
-        return $this->parent;
+        return new $this->parent;
     }
 
     /**
@@ -162,6 +162,7 @@ abstract class AbstractViewVariable implements ViewVariableInterface
     }
 
     /**
+     * el string de forma ::class del padre relacionado.
      * @param \PCI\Models\AbstractBaseModel $parent
      */
     public function setParent($parent)

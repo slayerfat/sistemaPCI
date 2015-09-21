@@ -8,6 +8,7 @@ use PCI\Models\ItemType;
 use PCI\Models\NoteType;
 use PCI\Models\Department;
 use PCI\Models\Nationality;
+use PCI\Models\SubCategory;
 use PCI\Models\MovementType;
 use PCI\Models\PetitionType;
 use Illuminate\Support\ServiceProvider;
@@ -18,6 +19,7 @@ use PCI\Repositories\Aux\NoteTypeRepository;
 use PCI\Repositories\Aux\CategoryRepository;
 use PCI\Repositories\Aux\ItemTypesRepository;
 use PCI\Repositories\Aux\DepartmentRepository;
+use PCI\Repositories\Aux\SubCategoryRepository;
 use PCI\Repositories\Aux\NationalityRepository;
 use PCI\Repositories\Aux\MovementTypeRepository;
 use PCI\Repositories\Aux\PetitionTypeRepository;
@@ -28,6 +30,7 @@ use PCI\Repositories\Interfaces\Aux\CategoryRepositoryInterface;
 use PCI\Repositories\Interfaces\Aux\NoteTypeRepositoryInterface;
 use PCI\Repositories\Interfaces\Aux\ItemTypesRepositoryInterface;
 use PCI\Repositories\Interfaces\Aux\DepartmentRepositoryInterface;
+use PCI\Repositories\Interfaces\Aux\SubCategoryRepositoryInterface;
 use PCI\Repositories\Interfaces\Aux\NationalityRepositoryInterface;
 use PCI\Repositories\Interfaces\Aux\MovementTypeRepositoryInterface;
 use PCI\Repositories\Interfaces\Aux\PetitionTypeRepositoryInterface;
@@ -46,6 +49,10 @@ class AuxRepositoriesProvider extends ServiceProvider
     {
         $this->app->bind(CategoryRepositoryInterface::class, function ($app) {
             return new CategoryRepository($app[Category::class]);
+        });
+
+        $this->app->bind(SubCategoryRepositoryInterface::class, function ($app) {
+            return new SubCategoryRepository($app[SubCategory::class]);
         });
 
         $this->app->bind(DepartmentRepositoryInterface::class, function ($app) {

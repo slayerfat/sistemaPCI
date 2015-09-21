@@ -24,7 +24,7 @@
         <div class="row">
             <div class="col-xs-12">
                 <h1>{{$variables->getModel()->desc}}</h1>
-                @if($variables->getParent())
+                @if($variables->hasParent())
                     <h2>{{$variables->getParent()->count()}}</h2>
                 @endif
             </div>
