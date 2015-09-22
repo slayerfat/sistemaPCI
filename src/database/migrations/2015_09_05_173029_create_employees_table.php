@@ -23,7 +23,7 @@ class CreateEmployeesTable extends Migration
             $table->foreign('address_id')
                 ->references('id')
                 ->on('addresses');
-            $table->unsignedInteger('nationality_id');
+            $table->unsignedInteger('nationality_id')->nullable();
             $table->foreign('nationality_id')
                 ->references('id')
                 ->on('nationalities');
@@ -31,7 +31,7 @@ class CreateEmployeesTable extends Migration
             $table->foreign('gender_id')
                 ->references('id')
                 ->on('genders');
-            $table->unsignedInteger('ci')->unique()->index();
+            $table->unsignedInteger('ci')->unique()->nullable()->index();
             $table->string('first_name', 20);
             $table->string('last_name', 20)->nullable();
             $table->string('first_surname', 20);
