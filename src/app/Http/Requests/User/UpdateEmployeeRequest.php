@@ -40,7 +40,8 @@ class UpdateEmployeeRequest extends Request
     public function rules()
     {
         return [
-            'ci'             => 'numeric|between:999999,99999999|unique:employees,ci,' . (int) $this->route('employees'),
+            'ci' => 'numeric|between:999999,99999999|unique:employees,ci,'
+                . (int) $this->route('employees'),
             'first_name'     => 'required|string|max:20',
             'last_name'      => 'string|max:20',
             'first_surname'  => 'required|string|max:20',
