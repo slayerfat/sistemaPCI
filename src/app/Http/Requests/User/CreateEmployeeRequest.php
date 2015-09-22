@@ -1,9 +1,7 @@
 <?php namespace PCI\Http\Requests\User;
 
-use Illuminate\Auth\Guard;
 use PCI\Http\Requests\Request;
 use PCI\Models\Employee;
-use PCI\Models\User;
 use PCI\Repositories\Interfaces\User\EmployeeRepositoryInterface;
 
 class CreateEmployeeRequest extends Request
@@ -15,21 +13,14 @@ class CreateEmployeeRequest extends Request
     private $empRepo;
 
     /**
-     * @var \Illuminate\Auth\Guard
-     */
-    private $auth;
-
-    /**
      * Genera la instancia del user request dandole el repositorio de usuarios.
      * @param \PCI\Repositories\Interfaces\User\EmployeeRepositoryInterface $empRepo
-     * @param \Illuminate\Auth\Guard $auth
      */
-    public function __construct(EmployeeRepositoryInterface $empRepo, Guard $auth)
+    public function __construct(EmployeeRepositoryInterface $empRepo)
     {
         parent::__construct();
 
         $this->empRepo = $empRepo;
-        $this->auth = $auth;
     }
 
     /**
@@ -41,11 +32,7 @@ class CreateEmployeeRequest extends Request
     {
         $user = $this->empRepo->findUser($this->route('users'));
 
-
-        /** @var User $currentUser */
-        $currentUser = $this->auth->user();
-
-        return $currentUser->can('create', [Employee::class, $user]);
+        return $this->user()->can('create', [Employee::class, $user]);
     }
 
     /**
