@@ -31,12 +31,22 @@ switch ($active) {
             </li>
 
             <li>
-                <a href="#">--</a>
-                {{-- link_to_action($user->person ? 'PeopleController@edit':'PeopleController@create', 'Información Personal', $user->name) --}}
-            </li>
+                <?php
+                switch (is_null($user->employee)) {
+                    case true:
+                        $route = 'employees.create';
+                        $id    = $user->name;
+                        break;
 
-            <li>
-                <a href="#">Mas pronto!</a>
+                    default:
+                        $route = 'employees.edit';
+                        $id    = $user->employee->id;
+                        break;
+                }
+                ?>
+                <a href="{{route($route, $id)}}">
+                    {{trans('models.employees.singular')}}
+                </a>
             </li>
 
             @can('destroy', $user)
@@ -61,6 +71,10 @@ switch ($active) {
                     </a>
                 </li>
             @endcan
+
+            <li class="disabled">
+                <a href="#">Mas pronto!</a>
+            </li>
         </ul>
     @endif
 </div>

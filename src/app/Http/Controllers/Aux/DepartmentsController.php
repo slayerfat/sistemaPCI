@@ -1,9 +1,10 @@
 <?php namespace PCI\Http\Controllers\Aux;
 
-use PCI\Repositories\Interfaces\Aux\DepartmentRepositoryInterface;
-use Redirect;
+use Flash;
 use Illuminate\View\Factory;
 use PCI\Http\Requests\Aux\DepartmentRequest;
+use PCI\Repositories\Interfaces\Aux\DepartmentRepositoryInterface;
+use Redirect;
 
 class DepartmentsController extends AbstractAuxController
 {
@@ -66,6 +67,8 @@ class DepartmentsController extends AbstractAuxController
     {
         $this->model = $this->repo->create($request->all());
 
+        Flash::success(trans('models.depts.store.success'));
+
         return Redirect::route('depts.show', $this->model->slug);
     }
 
@@ -90,6 +93,8 @@ class DepartmentsController extends AbstractAuxController
     public function update($id, DepartmentRequest $request)
     {
         $this->model = $this->repo->update($id, $request->all());
+
+        Flash::success(trans('models.depts.update.success'));
 
         return Redirect::route('depts.show', $this->model->slug);
     }

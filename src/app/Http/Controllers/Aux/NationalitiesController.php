@@ -1,9 +1,10 @@
 <?php namespace PCI\Http\Controllers\Aux;
 
-use PCI\Repositories\Interfaces\Aux\NationalityRepositoryInterface;
-use Redirect;
+use Flash;
 use Illuminate\View\Factory;
 use PCI\Http\Requests\Aux\NationalityRequest;
+use PCI\Repositories\Interfaces\Aux\NationalityRepositoryInterface;
+use Redirect;
 
 class NationalitiesController extends AbstractAuxController
 {
@@ -66,6 +67,8 @@ class NationalitiesController extends AbstractAuxController
     {
         $this->model = $this->repo->create($request->all());
 
+        Flash::success(trans('models.nats.store.success'));
+
         return Redirect::route('nats.show', $this->model->slug);
     }
 
@@ -90,6 +93,8 @@ class NationalitiesController extends AbstractAuxController
     public function update($id, NationalityRequest $request)
     {
         $this->model = $this->repo->update($id, $request->all());
+
+        Flash::success(trans('models.nats.update.success'));
 
         return Redirect::route('nats.show', $this->model->slug);
     }

@@ -1,9 +1,10 @@
 <?php namespace PCI\Http\Controllers\Aux;
 
-use PCI\Repositories\Interfaces\Aux\SubCategoryRepositoryInterface;
-use Redirect;
+use Flash;
 use Illuminate\View\Factory;
 use PCI\Http\Requests\Aux\SubCategoryRequest;
+use PCI\Repositories\Interfaces\Aux\SubCategoryRepositoryInterface;
+use Redirect;
 
 class SubCategoriesController extends AbstractAuxController
 {
@@ -66,6 +67,8 @@ class SubCategoriesController extends AbstractAuxController
     {
         $this->model = $this->repo->create($request->all());
 
+        Flash::success(trans('models.subCats.store.success'));
+
         return Redirect::route('subCats.show', $this->model->slug);
     }
 
@@ -90,6 +93,8 @@ class SubCategoriesController extends AbstractAuxController
     public function update($id, SubCategoryRequest $request)
     {
         $this->model = $this->repo->update($id, $request->all());
+
+        Flash::success(trans('models.subCats.update.success'));
 
         return Redirect::route('subCats.show', $this->model->slug);
     }

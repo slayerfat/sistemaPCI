@@ -1,9 +1,10 @@
 <?php namespace PCI\Http\Controllers\Aux;
 
-use PCI\Repositories\Interfaces\Aux\ProfileRepositoryInterface;
-use Redirect;
+use Flash;
 use Illuminate\View\Factory;
 use PCI\Http\Requests\Aux\ProfileRequest;
+use PCI\Repositories\Interfaces\Aux\ProfileRepositoryInterface;
+use Redirect;
 
 class ProfilesController extends AbstractAuxController
 {
@@ -66,6 +67,8 @@ class ProfilesController extends AbstractAuxController
     {
         $this->model = $this->repo->create($request->all());
 
+        Flash::success(trans('models.profiles.store.success'));
+
         return Redirect::route('profiles.show', $this->model->slug);
     }
 
@@ -90,6 +93,8 @@ class ProfilesController extends AbstractAuxController
     public function update($id, ProfileRequest $request)
     {
         $this->model = $this->repo->update($id, $request->all());
+
+        Flash::success(trans('models.profiles.update.success'));
 
         return Redirect::route('profiles.show', $this->model->slug);
     }

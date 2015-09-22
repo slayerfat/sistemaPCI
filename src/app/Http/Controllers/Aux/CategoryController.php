@@ -1,9 +1,10 @@
 <?php namespace PCI\Http\Controllers\Aux;
 
-use Redirect;
+use Flash;
 use Illuminate\View\Factory;
 use PCI\Http\Requests\Aux\CategoryRequest;
 use PCI\Repositories\Interfaces\Aux\CategoryRepositoryInterface;
+use Redirect;
 
 class CategoryController extends AbstractAuxController
 {
@@ -66,6 +67,8 @@ class CategoryController extends AbstractAuxController
     {
         $this->model = $this->catRepo->create($request->all());
 
+        Flash::success(trans('models.cats.store.success'));
+
         return Redirect::route('cats.show', $this->model->slug);
     }
 
@@ -90,6 +93,8 @@ class CategoryController extends AbstractAuxController
     public function update($id, CategoryRequest $request)
     {
         $this->model = $this->catRepo->update($id, $request->all());
+
+        Flash::success(trans('models.cats.update.success'));
 
         return Redirect::route('cats.show', $this->model->slug);
     }

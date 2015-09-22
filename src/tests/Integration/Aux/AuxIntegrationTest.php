@@ -114,7 +114,8 @@ class AuxIntegrationTest extends AbstractAuxTest
             ->visit("{$route}/crear")
             ->type('testing', 'desc')
             ->press(trans("models.{$alias}.create"))
-            ->seePageIs("{$route}/testing");
+            ->seePageIs("{$route}/testing")
+            ->see(trans("models.{$alias}.store.success"));
     }
 
     /**
@@ -150,7 +151,8 @@ class AuxIntegrationTest extends AbstractAuxTest
             ->visit("{$route}/{$model->id}/editar")
             ->type('check', 'desc')
             ->press(trans("models.$alias.edit"))
-            ->seePageIs("{$route}/check");
+            ->seePageIs("{$route}/check")
+            ->see(trans("models.{$alias}.update.success"));
     }
 
     /**

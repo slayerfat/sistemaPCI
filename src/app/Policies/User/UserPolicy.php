@@ -1,4 +1,4 @@
-<?php namespace PCI\Policies;
+<?php namespace PCI\Policies\User;
 
 use PCI\Models\User;
 

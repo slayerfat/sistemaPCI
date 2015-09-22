@@ -4,7 +4,7 @@ use Mockery;
 use PCI\Models\User;
 use Tests\AbstractTestCase;
 use PCI\Models\AbstractBaseModel;
-use PCI\Repositories\UserRepository as ConcreteClass;
+use PCI\Repositories\User\UserRepository as ConcreteClass;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 

@@ -3,7 +3,7 @@
 use DB;
 use PCI\Models\User;
 use Tests\AbstractTestCase;
-use PCI\Repositories\UserRepository;
+use PCI\Repositories\User\UserRepository;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
@@ -13,7 +13,7 @@ class UserDeletingServiceProviderTest extends AbstractTestCase
     use DatabaseTransactions, DatabaseMigrations;
 
     /**
-     * @var UserRepository
+     * @var \PCI\Repositories\User\UserRepository
      */
     private $repo;
 

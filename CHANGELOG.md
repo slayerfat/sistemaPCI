@@ -1,9 +1,15 @@
-## v0.1.2
+## v0.2.0
+
+Features:
+
+- creado recurso de Empleados.
+
+## v0.1.2 21-09-15
 
 Features:
 
 - navbar mejorado
-- implementados a la lsita de recursos genericos: Genero, Tipo de Item
+- implementados a la lista de recursos genericos: todos excepto Estado, Municipio, Parroquia
 
 Mejoras:
 

@@ -6,7 +6,7 @@
     <div class="container">
         {!! BSForm::horizontalModel($user, ['route' => 'users.store']) !!}
 
-        <legend>Crear Usuario</legend>
+        <legend>{{trans('models.users.create')}}</legend>
 
         @include('users.partials.form', ['btnMsg' => 'Crear Usuario'])
 

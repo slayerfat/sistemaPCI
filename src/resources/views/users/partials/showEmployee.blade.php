@@ -6,14 +6,18 @@
 
     <h2>
         @if(Auth::user()->isOwnerOrAdmin($user->id))
-            <small>{{$user->employee->nationality->desc}}</small>
+            @if($user->employee->nationality)
+                <small>{{$user->employee->nationality->desc}}</small>
+            @endif
 
             <small>C.I. {{$user->employee->ci}}</small>
 
             <br/>
         @endif
 
-        <small>Genero {{$user->employee->gender->desc}}</small>
+        @if($user->employee->gender)
+            <small>Genero {{$user->employee->gender->desc}}</small>
+        @endif
     </h2>
 
     <h3>
@@ -27,16 +31,18 @@
     </h3>
 
     @if(Auth::user()->isOwnerOrAdmin($user->id))
-        <h2>
-            Direccion
-        </h2>
-        <h3>
-            {{$user->address->formattedDetails}}
+        @if($user->address)
+            <h2>
+                Direccion
+            </h2>
+            <h3>
+                {{$user->address->formattedDetails}}
 
-            <br/>
+                <br/>
 
-            Parroquia {{$user->address->parish->desc}}
-        </h3>
+                Parroquia {{$user->address->parish->desc}}
+            </h3>
+        @endif
 
         @if(Auth::user()->isAdmin())
             <h4>

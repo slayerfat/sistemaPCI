@@ -2,11 +2,16 @@
 
 [![Build Status](https://travis-ci.org/slayerfat/sistemaPCI.svg)](https://travis-ci.org/slayerfat/sistemaPCI)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/slayerfat/sistemaPCI/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/slayerfat/sistemaPCI/?branch=develop)
-[![Code Coverage](https://scrutinizer-ci.com/g/slayerfat/sistemaPCI/badges/coverage.png?b=develop)](https://scrutinizer-ci.com/g/slayerfat/sistemaPCI/?branch=develop)
 
 Sistema de Gestion de Inventario Para la Division de Rehabilitacion Ocupacional.
 
 Misión Alma Mater, Programa Nacional de Formación: Informatica, Trayecto 3, IUTOMS.
+
+- [x] v0.1 Usuario
+- [x] v0.1.x Entidades Auxiliares
+- [x] v0.2 Empleado
+- [ ] v0.2.x Direccion con Estado Municipio y Parroquia
+- [ ] v0.3 Almacen e Items
 
 ## Dependencias del Sistema
 
@@ -63,6 +68,27 @@ Para ello deberan:
 `sudo apt-get install php5-mysql`
 
 `sudo apt-get install php5-gd`
+
+**Es de suma importancia chequear capacidad de rewrite si se pretende usar apache:** 
+
+para usar links amigables [es necesario configurar apache u otro servidor:](http://laraveles.com/docs/5.1/ "Documentacion")
+
+> El framework viene con un archivo public/.htaccess que se utiliza para permitir URLs sin index.php. 
+
+> Si utilizas Apache para servir tu aplicación Laravel, asegúrate de activar el módulo mod_rewrite. Si el archivo .htaccess que viene con Laravel no funciona con tu instalación de Apache, prueba con éste:
+
+> ```apache
+> Options +FollowSymLinks
+> RewriteEngine On
+> 
+> RewriteCond %{REQUEST_FILENAME} !-d
+> RewriteCond %{REQUEST_FILENAME} !-f
+> RewriteRule ^ index.php [L]
+> ```
+
+solucion sencilla: `sudo a2enmod rewrite`
+
+solucion complicada: [este enlace es de ayuda](http://www.google.com "lo lamento")
 
 Si usan xampp, wampp, lampp, deberan referirse a la documentacion de php para esos paquetes, puesto que, si falla composer, es muy probable que sea debido a los binarios de PHP utilizados por su computadora.
 
@@ -150,6 +176,12 @@ y listo, la base de datos esta localmente en el sistema.
 
 Si falla pueden hacer un `composer dump-autoload` y reintentarlo, si vuelve a falla puden crear un [problema (issue) en github](https://github.com/slayerfat/sistemaPCI/issues) con el error y la descripcion del mismo.
 
+### Migrations
+
+```
+php src/artisan migrate:reset && php src/artisan migrate && php src/artisan db:seed --class="PCI\Database\DatabaseSeeder"
+```
+
 ## Homestead
 
 El sistema funciona por medio de [Homestead](http://laravel.com/docs/5.1/homestead) o por medio de apache/nginx u otro.
@@ -217,7 +249,7 @@ sistemaPCI
 
 _ADVERTENCIA: ESTE COGIDO FUENTE GENERA MIGRAÑA_
 
-## Artisan Inspirar
+## Caimaneitor::caimanais()
 
 Se creo un mega comando por medio de `Caimaneitor` se puede usar directamente en artisan con: `php src/artisan inspirar`.
 
@@ -243,18 +275,25 @@ o por medio de blade: `{{ Caimaneitor::caimanais() }}`
 
 Esta compleja implementacion fue inspirada por la inspiradora `Inspire: Inspired by Illuminate\Foundation\Inspiring`
 
+## Situacion Bio-Psico-Social
+
+[@slayerfat:](https://github.com/slayerfat)
+
+![@slayerfat](http://www.careerrocketeer.com/wp-content/uploads/Weary-Job-Search.png "completamente normal")
+
+[@Phantom66:](https://github.com/Phantom66)
+
+![@Phantom66](http://i.imgur.com/in7VByo.png "sudo su rm -rf /bin")
+
+[@githubbt:](https://github.com/githubbt)
+
+![@githubbt](http://www.grammarly.com/blog/wp-content/uploads/2015/01/Silhouette-question-mark.jpeg "im helping")
+
 ## Documentacion adicional
 
 Dentro de este repositorio existen archivos complementarios que ayudaran en la documentacion del mismo, estos son:
 
 CHANGELOG.md, DATASTRUC.md, DEDCHANGE.md y TODO.md.
-
-## Ruta
-
-- [x] v0.1 Usuario
-- [ ] v0.2 Entidades Auxiliares
-- [ ] v0.3 Empleado
-- [ ] v0.4 Items
 
 ## Laravel PHP Framework
 

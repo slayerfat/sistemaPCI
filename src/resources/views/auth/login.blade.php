@@ -33,6 +33,21 @@
 
         !!}
 
+        {!!
+            ControlGroup::generate(
+                BSForm::label('control', '&nbsp;'),
+                    [
+                        [
+                            'label' => ['remember', 'Recuerdame'],
+                            'input' => ['type' => 'checkbox', 'remember', null]
+                        ],
+                    ],
+                BSForm::help('&nbsp;'),
+                2
+            )
+
+        !!}
+
         {!! Button::primary($text)->block()->submit() !!}
 
         {!! BSForm::close() !!}

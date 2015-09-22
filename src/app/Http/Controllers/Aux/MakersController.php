@@ -1,9 +1,10 @@
 <?php namespace PCI\Http\Controllers\Aux;
 
-use PCI\Repositories\Interfaces\Aux\MakerRepositoryInterface;
-use Redirect;
+use Flash;
 use Illuminate\View\Factory;
 use PCI\Http\Requests\Aux\MakerRequest;
+use PCI\Repositories\Interfaces\Aux\MakerRepositoryInterface;
+use Redirect;
 
 class MakersController extends AbstractAuxController
 {
@@ -66,6 +67,8 @@ class MakersController extends AbstractAuxController
     {
         $this->model = $this->repo->create($request->all());
 
+        Flash::success(trans('models.makers.store.success'));
+
         return Redirect::route('makers.show', $this->model->slug);
     }
 
@@ -90,6 +93,8 @@ class MakersController extends AbstractAuxController
     public function update($id, MakerRequest $request)
     {
         $this->model = $this->repo->update($id, $request->all());
+
+        Flash::success(trans('models.makers.update.success'));
 
         return Redirect::route('makers.show', $this->model->slug);
     }
