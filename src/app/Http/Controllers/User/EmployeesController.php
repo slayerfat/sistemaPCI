@@ -2,9 +2,11 @@
 
 namespace PCI\Http\Controllers\User;
 
+use Illuminate\Auth\Guard;
 use PCI\Http\Requests\User\CreateEmployeeRequest;
 use PCI\Models\Gender;
 use PCI\Models\Nationality;
+use Redirect;
 use View;
 use Illuminate\Http\Request;
 use PCI\Http\Requests;
@@ -20,11 +22,19 @@ class EmployeesController extends Controller
     private $empRepo;
 
     /**
-     * @param \PCI\Repositories\Interfaces\User\EmployeeRepositoryInterface $empRepo
+     * @var \PCI\Models\User
      */
-    public function __construct(EmployeeRepositoryInterface $empRepo)
+    private $currentUser;
+
+    /**
+     * @param \PCI\Repositories\Interfaces\User\EmployeeRepositoryInterface $empRepo
+     * @param \Illuminate\Auth\Guard $auth
+     */
+    public function __construct(EmployeeRepositoryInterface $empRepo, Guard $auth)
     {
         $this->empRepo = $empRepo;
+
+        $this->currentUser = $auth->user();
     }
 
     /**
@@ -37,6 +47,11 @@ class EmployeesController extends Controller
         $user = $this->empRepo->findUser($id);
         $employee = $this->empRepo->newInstance();
 
+        // necesitamos saber si el usuario puede o no editar este recurso.
+        if ($this->currentUser->cant('create', [$employee, $user])) {
+            return $this->redirectBack();
+        }
+
         //TODO abstraer esto a un repo
         $genders = Gender::lists('desc', 'id');
         $nats    = Nationality::lists('desc', 'id');
@@ -46,6 +61,7 @@ class EmployeesController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     * @param string|int $id
      * @param \PCI\Http\Requests\User\CreateEmployeeRequest $request
      * @return \Illuminate\Http\Response
      */
@@ -59,7 +75,9 @@ class EmployeesController extends Controller
 
         $user = $this->empRepo->create($data);
 
-        return View::make('users.show', compact('user'));
+        // TODO: crear flashes
+
+        return Redirect::route('users.show', $user->name);
     }
 
     /**

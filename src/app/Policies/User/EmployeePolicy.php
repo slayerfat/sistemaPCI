@@ -29,7 +29,7 @@ class EmployeePolicy
      */
     public function create(User $user, $employee, User $relatedEmployeeUser)
     {
-        if ($employee !== Employee::class) {
+        if (!($employee == Employee::class || $employee instanceof Employee)) {
             throw new \LogicException;
         }
 

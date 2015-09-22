@@ -8,7 +8,7 @@
 
         <legend>{{trans('models.employees.create')}}</legend>
 
-        @include('employees.partials.form', ['btnMsg' => 'Crear Usuario'])
+        @include('employees.partials.form', ['btnMsg' => trans('models.employees.create')])
 
         {!! BSForm::close() !!}
     </div>
