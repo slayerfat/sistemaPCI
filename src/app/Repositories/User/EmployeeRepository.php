@@ -26,27 +26,6 @@ class EmployeeRepository extends AbstractRepository implements EmployeeRepositor
     }
 
     /**
-     * @param string|int $id
-     * @return \PCI\Models\User
-     */
-    public function findUser($id)
-    {
-        return $this->userRepo->find($id);
-    }
-
-    /**
-     * Busca algun Elemento segun Id u otra regla.
-     * @param  string|int $id
-     * @return \PCI\Models\AbstractBaseModel
-     */
-    public function find($id)
-    {
-        $employee = $this->getByNameOrId($id);
-
-        return $employee;
-    }
-
-    /**
      * Consigue todos los elementos y devuelve una coleccion.
      * @return \Illuminate\Database\Eloquent\Collection|null
      */
@@ -57,11 +36,31 @@ class EmployeeRepository extends AbstractRepository implements EmployeeRepositor
 
     /**
      * @param array $data
-     * @return \PCI\Models\AbstractBaseModel
+     * @return \PCI\Models\User
      */
     public function create(array $data)
     {
-        // TODO: Implement create() method.
+        /** @var \PCI\Models\Employee $employee */
+        $employee = $this->newInstance($data);
+
+        $user = $this->findUser($data['user_id']);
+
+        $employee->user_id        = $user->id;
+        $employee->gender_id      = $data['gender_id'];
+        $employee->nationality_id = $data['nacionality_id'];
+
+        $user->employee()->save($employee);
+
+        return $user;
+    }
+
+    /**
+     * @param string|int $id
+     * @return \PCI\Models\User
+     */
+    public function findUser($id)
+    {
+        return $this->userRepo->find($id);
     }
 
     /**
@@ -86,18 +85,6 @@ class EmployeeRepository extends AbstractRepository implements EmployeeRepositor
     }
 
     /**
-     * Genera la data necesaria que utilizara el paginator,
-     * contiene los datos relevantes para la tabla, esta
-     * informacion debe ser un array asociativo.
-     * @param \PCI\Models\AbstractBaseModel $model
-     * @return array<string, string> En donde el key es el titulo legible del campo.
-     */
-    protected function makePaginatorData(AbstractBaseModel $model)
-    {
-        // TODO: Implement makePaginatorData() method.
-    }
-
-    /**
      * @param string $policyName el nombre de la poliza a ejecutar
      * @param string|int $id el identificador del modelo a ser manipulado.
      * @return bool verdadero si puede manipular.
@@ -115,5 +102,29 @@ class EmployeeRepository extends AbstractRepository implements EmployeeRepositor
     public function cantUser($policyName, $id)
     {
         return Gate::denies($policyName, $this->find($id));
+    }
+
+    /**
+     * Busca algun Elemento segun Id u otra regla.
+     * @param  string|int $id
+     * @return \PCI\Models\AbstractBaseModel
+     */
+    public function find($id)
+    {
+        $employee = $this->getByNameOrId($id);
+
+        return $employee;
+    }
+
+    /**
+     * Genera la data necesaria que utilizara el paginator,
+     * contiene los datos relevantes para la tabla, esta
+     * informacion debe ser un array asociativo.
+     * @param \PCI\Models\AbstractBaseModel $model
+     * @return array<string, string> En donde el key es el titulo legible del campo.
+     */
+    protected function makePaginatorData(AbstractBaseModel $model)
+    {
+        // TODO: Implement makePaginatorData() method.
     }
 }

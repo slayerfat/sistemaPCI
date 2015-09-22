@@ -3,6 +3,8 @@
 namespace PCI\Http\Controllers\User;
 
 use PCI\Http\Requests\User\CreateEmployeeRequest;
+use PCI\Models\Gender;
+use PCI\Models\Nationality;
 use View;
 use Illuminate\Http\Request;
 use PCI\Http\Requests;
@@ -33,10 +35,13 @@ class EmployeesController extends Controller
     public function create($id)
     {
         $user = $this->empRepo->findUser($id);
-
         $employee = $this->empRepo->newInstance();
 
-        return View::make('employees.create', compact('user', 'employee'));
+        //TODO abstraer esto a un repo
+        $genders = Gender::lists('desc', 'id');
+        $nats    = Nationality::lists('desc', 'id');
+
+        return View::make('employees.create', compact('user', 'employee', 'genders', 'nats'));
     }
 
     /**
@@ -46,7 +51,15 @@ class EmployeesController extends Controller
      */
     public function store($id, CreateEmployeeRequest $request)
     {
-        return $request->all();
+        $data = $request->all();
+
+        // solucion mamarracha, pero asi nos
+        // ahorramos modificar la interface
+        $data['user_id'] = $id;
+
+        $user = $this->empRepo->create($data);
+
+        return View::make('users.show', compact('user'));
     }
 
     /**

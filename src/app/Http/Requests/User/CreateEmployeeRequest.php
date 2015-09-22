@@ -33,30 +33,38 @@ class CreateEmployeeRequest extends Request
     }
 
     /**
-     * Determine if the user is authorized to make this request.
-     *
+     * Determina si el usuario esta autorizado a hacer esta peticion.
+
      * @return bool
      */
     public function authorize()
     {
         $user = $this->empRepo->findUser($this->route('users'));
 
+
         /** @var User $currentUser */
         $currentUser = $this->auth->user();
 
-        return $currentUser
-            ->can('create', Employee::class, $user);
+        return $currentUser->can('create', [Employee::class, $user]);
     }
 
     /**
-     * Get the validation rules that apply to the request.
-     *
+     * Obtiene las reglas de validacion que seran aplicadas a esta peticion.
+
      * @return array
      */
     public function rules()
     {
         return [
-            //
+            'ci'             => 'numeric|between:999999,99999999|unique:employees',
+            'first_name'     => 'required|string|max:20',
+            'last_name'      => 'string|max:20',
+            'first_surname'  => 'required|string|max:20',
+            'last_surname'   => 'string|max:20',
+            'phone'          => 'max:15',
+            'cellphone'      => 'max:15',
+            'gender_id'      => 'numeric',
+            'nationality_id' => 'required_with:identity_card|numeric',
         ];
     }
 }

@@ -8,31 +8,32 @@ class EmployeePolicy
 {
 
     /**
-     * @var \Illuminate\Contracts\Auth\Guard
+     * @var \PCI\Models\User
      */
-    private $auth;
+    private $user;
 
     /**
      * @param \Illuminate\Contracts\Auth\Guard $auth
      */
     public function __construct(Guard $auth)
     {
-        $this->auth = $auth;
+        $this->user = $auth->user();
     }
 
     /**
      * @param \PCI\Models\User $user
      * @param string $employee
+     * @param \PCI\Models\User $relatedEmployeeUser
      * @return bool
      * @throws \LogicException
      */
-    public function create(User $user, $employee)
+    public function create(User $user, $employee, User $relatedEmployeeUser)
     {
         if ($employee !== Employee::class) {
             throw new \LogicException;
         }
 
-        if ($user->employee) {
+        if ($relatedEmployeeUser->employee) {
             return false;
         }
 
@@ -40,7 +41,7 @@ class EmployeePolicy
             return true;
         }
 
-        return $this->auth->user()->id == $user->id;
+        return $this->user->id == $relatedEmployeeUser->id;
     }
 
     /**
@@ -49,6 +50,6 @@ class EmployeePolicy
      */
     public function update(Employee $employee)
     {
-        return $this->auth->user()->isOwnerOrAdmin($employee->user_id);
+        return $this->user->isOwnerOrAdmin($employee->user_id);
     }
 }

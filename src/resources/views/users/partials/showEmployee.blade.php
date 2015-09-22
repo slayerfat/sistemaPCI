@@ -27,16 +27,18 @@
     </h3>
 
     @if(Auth::user()->isOwnerOrAdmin($user->id))
-        <h2>
-            Direccion
-        </h2>
-        <h3>
-            {{$user->address->formattedDetails}}
+        @if($user->address)
+            <h2>
+                Direccion
+            </h2>
+            <h3>
+                {{$user->address->formattedDetails}}
 
-            <br/>
+                <br/>
 
-            Parroquia {{$user->address->parish->desc}}
-        </h3>
+                Parroquia {{$user->address->parish->desc}}
+            </h3>
+        @endif
 
         @if(Auth::user()->isAdmin())
             <h4>

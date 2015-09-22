@@ -64,6 +64,26 @@ class Employee extends AbstractBaseModel
     ];
 
     // -------------------------------------------------------------------------
+    // Mutators
+    // -------------------------------------------------------------------------
+
+    /**
+     * Muta la cedula de identidad: si no hay cedula,
+     * la convierte a nulo para que sea guardada
+     * correctamente en la base de datos.
+     * @param int $value
+     * @return int|null|string
+     */
+    public function setCiAttribute($value)
+    {
+        if (is_string($value) && trim($value) == '') {
+            return $this->attributes['ci'] = null;
+        }
+
+        return $this->attributes['ci'] = (int) $value;
+    }
+
+    // -------------------------------------------------------------------------
     // Relaciones
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
