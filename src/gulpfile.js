@@ -85,5 +85,5 @@ elixir(function (mix) {
 
         // 'versiona' los archivos para obtener copias actualizadas
         // y no versiones de cache del explorador (firefox es el peor)
-        .version(['css/app.css', 'js/all.js']);
+        .version(['css/app.css', 'js/all.js', 'js/setAddress.js', 'js/getAddress.js']);
 });

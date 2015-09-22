@@ -24,6 +24,7 @@ Route::get('/home', ['as' => 'home', function () {
 $routes = collect();
 
 // El orden importa.
+$routes->push(new \PCI\Http\Routes\AddressRoutes);
 $routes->push(new \PCI\Http\Routes\MiscRoutes);
 $routes->push(new \PCI\Http\Routes\UserRoutes);
 $routes->push(new \PCI\Http\Routes\AuxRoutes);
