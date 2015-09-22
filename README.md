@@ -7,6 +7,12 @@ Sistema de Gestion de Inventario Para la Division de Rehabilitacion Ocupacional.
 
 Misión Alma Mater, Programa Nacional de Formación: Informatica, Trayecto 3, IUTOMS.
 
+- [x] v0.1 Usuario
+- [x] v0.1.x Entidades Auxiliares
+- [x] v0.2 Empleado
+- [ ] v0.2.x Direccion con Estado Municipio y Parroquia
+- [ ] v0.3 Almacen e Items
+
 ## Dependencias del Sistema
 
 Para poder usar el software adecuadamente, es necesario instalar los siguientes paquetes de sofware y sus dependencias expresadas a continuacion.
@@ -243,7 +249,7 @@ sistemaPCI
 
 _ADVERTENCIA: ESTE COGIDO FUENTE GENERA MIGRAÑA_
 
-## Artisan Inspirar
+## Caimaneitor::caimanais()
 
 Se creo un mega comando por medio de `Caimaneitor` se puede usar directamente en artisan con: `php src/artisan inspirar`.
 
@@ -269,18 +275,25 @@ o por medio de blade: `{{ Caimaneitor::caimanais() }}`
 
 Esta compleja implementacion fue inspirada por la inspiradora `Inspire: Inspired by Illuminate\Foundation\Inspiring`
 
+## Situacion Bio-Psico-Social
+
+[@slayerfat:](https://github.com/slayerfat)
+
+![@slayerfat](http://www.careerrocketeer.com/wp-content/uploads/Weary-Job-Search.png "completamente normal")
+
+[@Phantom66:](https://github.com/Phantom66)
+
+![@Phantom66](http://i.imgur.com/in7VByo.png "sudo su rm -rf /bin")
+
+[@githubbt:](https://github.com/githubbt)
+
+![@githubbt](http://www.grammarly.com/blog/wp-content/uploads/2015/01/Silhouette-question-mark.jpeg "im helping")
+
 ## Documentacion adicional
 
 Dentro de este repositorio existen archivos complementarios que ayudaran en la documentacion del mismo, estos son:
 
 CHANGELOG.md, DATASTRUC.md, DEDCHANGE.md y TODO.md.
-
-## Ruta
-
-- [x] v0.1 Usuario
-- [ ] v0.2 Entidades Auxiliares
-- [ ] v0.3 Empleado
-- [ ] v0.4 Items
 
 ## Laravel PHP Framework
 
