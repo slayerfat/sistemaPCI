@@ -174,8 +174,8 @@ return [
      */
     'employees.index'        => 'Ver Datos',
     'employees.show'         => 'Ver Información Personal',
-    'employees.create'       => 'Crear Información Persona',
-    'employees.edit'         => 'Editar Información Persona',
+    'employees.create' => 'Crear Información Personal',
+    'employees.edit'   => 'Editar Información Personal',
     'employees.destroy'      => 'Eliminar Datos',
     'employees.plural'       => 'Datos',
     'employees.singular'     => 'Información Personal',
