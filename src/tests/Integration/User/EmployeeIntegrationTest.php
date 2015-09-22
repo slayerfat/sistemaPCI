@@ -77,4 +77,38 @@ class EmployeeIntegrationTest extends AbstractIntegrationTest
             ->see(trans('defaults.auth.error'))
             ->seePageIs(route('index'));
     }
+
+    public function testUserShouldBeAbleToEditIfAdmin()
+    {
+        $randomUser = factory(User::class)->create();
+        $employee   = factory(Employee::class)->create(['user_id' => $randomUser->id]);
+
+        $this->actingAs($this->user)
+            ->visit(route('users.show', $randomUser->name))
+            ->seePageIs(route('users.show', $randomUser->name))
+            ->see(trans('models.employees.singular'))
+            ->click(trans('models.employees.singular'))
+            ->seePageIs(route('employees.edit', $employee->id))
+            ->type('testing', 'first_name')
+            ->type('again', 'first_surname')
+            ->press(trans('models.employees.edit'))
+            ->seePageIs(route('users.show', $randomUser->name))
+            ->see('testing')
+            ->see('again');
+    }
+
+    public function testNonAdminShouldntBeAbleToEditEmployee()
+    {
+        $anotherUser = factory(User::class)->create(['confirmation_code' => null]);
+
+        $randomUser = factory(User::class)->create();
+        $employee   = factory(Employee::class)->create(['user_id' => $randomUser->id]);
+
+        $this->actingAs($anotherUser)
+            ->visit(route('index'))
+            ->seePageIs(route('index'))
+            ->visit(route('employees.edit', $employee->id))
+            ->see(trans('defaults.auth.error'))
+            ->seePageIs(route('index'));
+    }
 }

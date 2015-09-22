@@ -6,14 +6,18 @@
 
     <h2>
         @if(Auth::user()->isOwnerOrAdmin($user->id))
-            <small>{{$user->employee->nationality->desc}}</small>
+            @if($user->employee->nationality)
+                <small>{{$user->employee->nationality->desc}}</small>
+            @endif
 
             <small>C.I. {{$user->employee->ci}}</small>
 
             <br/>
         @endif
 
-        <small>Genero {{$user->employee->gender->desc}}</small>
+        @if($user->employee->gender)
+            <small>Genero {{$user->employee->gender->desc}}</small>
+        @endif
     </h2>
 
     <h3>

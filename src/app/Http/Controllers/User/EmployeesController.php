@@ -3,15 +3,15 @@
 namespace PCI\Http\Controllers\User;
 
 use Illuminate\Auth\Guard;
+use PCI\Http\Controllers\Controller;
+use PCI\Http\Requests;
 use PCI\Http\Requests\User\CreateEmployeeRequest;
+use PCI\Http\Requests\User\UpdateEmployeeRequest;
 use PCI\Models\Gender;
 use PCI\Models\Nationality;
+use PCI\Repositories\Interfaces\User\EmployeeRepositoryInterface;
 use Redirect;
 use View;
-use Illuminate\Http\Request;
-use PCI\Http\Requests;
-use PCI\Http\Controllers\Controller;
-use PCI\Repositories\Interfaces\User\EmployeeRepositoryInterface;
 
 class EmployeesController extends Controller
 {
@@ -87,17 +87,29 @@ class EmployeesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $employee = $this->empRepo->find($id);
+
+        // necesitamos saber si el usuario puede o no editar este recurso.
+        if ($this->currentUser->cant('update', $employee)) {
+            return $this->redirectBack();
+        }
+
+        $genders = Gender::lists('desc', 'id');
+        $nats    = Nationality::lists('desc', 'id');
+
+        return View::make('employees.edit', compact('employee', 'genders', 'nats'));
     }
 
     /**
      * Update the specified resource in storage.
-     * @param  \Illuminate\Http\Request $request
+     * @param \PCI\Http\Requests\User\UpdateEmployeeRequest $request
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateEmployeeRequest $request, $id)
     {
-        //
+        $user = $this->empRepo->update($id, $request->all());
+
+        return Redirect::route('users.show', $user->name);
     }
 }

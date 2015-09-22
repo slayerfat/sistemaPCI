@@ -45,11 +45,12 @@ class EmployeePolicy
     }
 
     /**
+     * @param \PCI\Models\User $user
      * @param \PCI\Models\Employee $employee
      * @return bool
      */
-    public function update(Employee $employee)
+    public function update(User $user, Employee $employee)
     {
-        return $this->user->isOwnerOrAdmin($employee->user_id);
+        return $user->isOwnerOrAdmin($employee->user_id);
     }
 }

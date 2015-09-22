@@ -45,9 +45,7 @@ class EmployeeRepository extends AbstractRepository implements EmployeeRepositor
 
         $user = $this->findUser($data['user_id']);
 
-        $employee->user_id        = $user->id;
-        $employee->gender_id      = $data['gender_id'];
-        $employee->nationality_id = $data['nacionality_id'];
+        $employee->user_id = $user->id;
 
         $user->employee()->save($employee);
 
@@ -67,11 +65,31 @@ class EmployeeRepository extends AbstractRepository implements EmployeeRepositor
      * Actualiza algun modelo.
      * @param int $id
      * @param array $data
-     * @return \PCI\Models\AbstractBaseModel
+     * @return \PCI\Models\User
      */
     public function update($id, array $data)
     {
-        // TODO: Implement update() method.
+        /** @var \PCI\Models\Employee $employee */
+        $employee = $this->find($id);
+        $employee->fill($data);
+
+        $employee->save();
+
+        $employee->load('user');
+
+        return $employee->user;
+    }
+
+    /**
+     * Busca algun Elemento segun Id u otra regla.
+     * @param  string|int $id
+     * @return \PCI\Models\AbstractBaseModel
+     */
+    public function find($id)
+    {
+        $employee = $this->getById($id);
+
+        return $employee;
     }
 
     /**
@@ -102,18 +120,6 @@ class EmployeeRepository extends AbstractRepository implements EmployeeRepositor
     public function cantUser($policyName, $id)
     {
         return Gate::denies($policyName, $this->find($id));
-    }
-
-    /**
-     * Busca algun Elemento segun Id u otra regla.
-     * @param  string|int $id
-     * @return \PCI\Models\AbstractBaseModel
-     */
-    public function find($id)
-    {
-        $employee = $this->getByNameOrId($id);
-
-        return $employee;
     }
 
     /**

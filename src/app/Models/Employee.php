@@ -50,11 +50,14 @@ class Employee extends AbstractBaseModel
 
     /**
      * The attributes that are mass assignable.
-     *
+     * La nacionalidad y genero no son problema.
+
      * @var array
      */
     protected $fillable = [
         'ci',
+        'nationality_id',
+        'gender_id',
         'first_name',
         'last_name',
         'first_surname',

@@ -31,7 +31,20 @@ switch ($active) {
             </li>
 
             <li>
-                <a href="{{route($user->person ? 'employees.edit' : 'employees.create', $user->name)}}">
+                <?php
+                switch (is_null($user->employee)) {
+                    case true:
+                        $route = 'employees.create';
+                        $id    = $user->name;
+                        break;
+
+                    default:
+                        $route = 'employees.edit';
+                        $id    = $user->employee->id;
+                        break;
+                }
+                ?>
+                <a href="{{route($route, $id)}}">
                     {{trans('models.employees.singular')}}
                 </a>
             </li>
