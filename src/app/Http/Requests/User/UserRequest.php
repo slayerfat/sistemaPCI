@@ -24,8 +24,8 @@ class UserRequest extends Request
     }
 
     /**
-     * Determine if the user is authorized to make this request.
-     *
+     * Determina si el usuario esta autorizado a hacer esta peticion.
+
      * @return bool
      */
     public function authorize()
@@ -40,8 +40,8 @@ class UserRequest extends Request
     }
 
     /**
-     * Get the validation rules that apply to the request.
-     *
+     * Obtiene las reglas de validacion que seran aplicadas a esta peticion.
+
      * @return array<string, string>
      */
     public function rules()
