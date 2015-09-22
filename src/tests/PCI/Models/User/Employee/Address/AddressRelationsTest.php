@@ -1,8 +1,8 @@
 <?php namespace Tests\PCI\Models\User\Employee\Address;
 
 use PCI\Models\Address;
-use PCI\Models\Parish;
 use PCI\Models\Employee;
+use PCI\Models\Parish;
 use Tests\AbstractTestCase;
 
 class AddressRelationsTest extends AbstractTestCase
@@ -23,7 +23,7 @@ class AddressRelationsTest extends AbstractTestCase
         $this->mockBasicModelRelation(
             Address::class,
             'employee',
-            'hasMany',
+            'hasOne',
             Employee::class
         );
     }

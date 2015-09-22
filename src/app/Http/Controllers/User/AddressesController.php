@@ -96,6 +96,10 @@ class AddressesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = $this->addrRepo->update($id, $request->all());
+
+        Flash::success(trans('models.addresses.update.success'));
+
+        return Redirect::route('users.show', $user->name);
     }
 }

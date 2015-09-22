@@ -75,10 +75,13 @@ class AddressRepository extends AbstractRepository implements AddressRepositoryI
     public function update($id, array $data)
     {
         $address = $this->find($id);
+        $address->load('employee.user');
 
-        $address->save($data);
+        // por alguna razon, save no estaba funcionado
+        // por eso se invoca fill antes del save.
+        $address->fill($data)->save();
 
-        return $address;
+        return $address->employee->user;
     }
 
     /**
