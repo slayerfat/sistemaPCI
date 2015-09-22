@@ -67,7 +67,7 @@ class MovementTypesController extends AbstractAuxController
     {
         $this->model = $this->repo->create($request->all());
 
-        Flash::success(trans('models.movementTypes.create.success'));
+        Flash::success(trans('models.movementTypes.store.success'));
 
         return Redirect::route('movementTypes.show', $this->model->slug);
     }

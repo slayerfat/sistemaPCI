@@ -67,7 +67,7 @@ class ProfilesController extends AbstractAuxController
     {
         $this->model = $this->repo->create($request->all());
 
-        Flash::success(trans('models.profiles.create.success'));
+        Flash::success(trans('models.profiles.store.success'));
 
         return Redirect::route('profiles.show', $this->model->slug);
     }

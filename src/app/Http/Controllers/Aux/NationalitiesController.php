@@ -67,7 +67,7 @@ class NationalitiesController extends AbstractAuxController
     {
         $this->model = $this->repo->create($request->all());
 
-        Flash::success(trans('models.nats.create.success'));
+        Flash::success(trans('models.nats.store.success'));
 
         return Redirect::route('nats.show', $this->model->slug);
     }

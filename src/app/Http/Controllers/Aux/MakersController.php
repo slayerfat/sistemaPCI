@@ -67,7 +67,7 @@ class MakersController extends AbstractAuxController
     {
         $this->model = $this->repo->create($request->all());
 
-        Flash::success(trans('models.itemTypes.store.success'));
+        Flash::success(trans('models.makers.store.success'));
 
         return Redirect::route('makers.show', $this->model->slug);
     }
@@ -94,7 +94,7 @@ class MakersController extends AbstractAuxController
     {
         $this->model = $this->repo->update($id, $request->all());
 
-        Flash::success(trans('models.itemTypes.update.success'));
+        Flash::success(trans('models.makers.update.success'));
 
         return Redirect::route('makers.show', $this->model->slug);
     }

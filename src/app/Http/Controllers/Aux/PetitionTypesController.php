@@ -67,7 +67,7 @@ class PetitionTypesController extends AbstractAuxController
     {
         $this->model = $this->repo->create($request->all());
 
-        Flash::success(trans('models.petitionTypes.create.success'));
+        Flash::success(trans('models.petitionTypes.store.success'));
 
         return Redirect::route('petitionTypes.show', $this->model->slug);
     }

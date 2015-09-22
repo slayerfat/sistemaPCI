@@ -76,7 +76,7 @@ class EmployeesController extends Controller
 
         $user = $this->empRepo->create($data);
 
-        Flash::success(trans('models.employee.create.success'));
+        Flash::success(trans('models.employees.store.success'));
 
         return Redirect::route('users.show', $user->name);
     }
@@ -111,7 +111,7 @@ class EmployeesController extends Controller
     {
         $user = $this->empRepo->update($id, $request->all());
 
-        Flash::success(trans('models.employee.update.success'));
+        Flash::success(trans('models.employees.update.success'));
 
         return Redirect::route('users.show', $user->name);
     }

@@ -51,6 +51,7 @@ class EmployeeIntegrationTest extends AbstractIntegrationTest
             ->press(trans('models.employees.create'))
             ->dontSee(trans('defaults.auth.error'))
             ->dontSee('Oops!')
+            ->see(trans('models.employees.store.success'))
             ->seePageIs(route('users.show', $this->user->name));
     }
 
@@ -93,6 +94,7 @@ class EmployeeIntegrationTest extends AbstractIntegrationTest
             ->type('again', 'first_surname')
             ->press(trans('models.employees.edit'))
             ->seePageIs(route('users.show', $randomUser->name))
+            ->see(trans('models.employees.update.success'))
             ->see('testing')
             ->see('again');
     }

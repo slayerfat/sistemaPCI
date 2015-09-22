@@ -67,7 +67,7 @@ class SubCategoriesController extends AbstractAuxController
     {
         $this->model = $this->repo->create($request->all());
 
-        Flash::success(trans('models.subCats.create.success'));
+        Flash::success(trans('models.subCats.store.success'));
 
         return Redirect::route('subCats.show', $this->model->slug);
     }

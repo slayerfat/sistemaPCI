@@ -67,7 +67,7 @@ class NoteTypesController extends AbstractAuxController
     {
         $this->model = $this->repo->create($request->all());
 
-        Flash::success(trans('models.noteTypes.create.success'));
+        Flash::success(trans('models.noteTypes.store.success'));
 
         return Redirect::route('noteTypes.show', $this->model->slug);
     }

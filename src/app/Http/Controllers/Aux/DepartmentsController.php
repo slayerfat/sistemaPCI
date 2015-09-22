@@ -67,7 +67,7 @@ class DepartmentsController extends AbstractAuxController
     {
         $this->model = $this->repo->create($request->all());
 
-        Flash::success(trans('models.depts.update.success'));
+        Flash::success(trans('models.depts.store.success'));
 
         return Redirect::route('depts.show', $this->model->slug);
     }
