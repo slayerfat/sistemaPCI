@@ -63,6 +63,27 @@ Para ello deberan:
 
 `sudo apt-get install php5-gd`
 
+**Es de suma importancia chequear capacidad de rewrite si se pretende usar apache:** 
+
+para usar links amigables [es necesario configurar apache u otro servidor:](http://laraveles.com/docs/5.1/ "Documentacion")
+
+> El framework viene con un archivo public/.htaccess que se utiliza para permitir URLs sin index.php. 
+
+> Si utilizas Apache para servir tu aplicación Laravel, asegúrate de activar el módulo mod_rewrite. Si el archivo .htaccess que viene con Laravel no funciona con tu instalación de Apache, prueba con éste:
+
+> ```apache
+> Options +FollowSymLinks
+> RewriteEngine On
+> 
+> RewriteCond %{REQUEST_FILENAME} !-d
+> RewriteCond %{REQUEST_FILENAME} !-f
+> RewriteRule ^ index.php [L]
+> ```
+
+solucion sencilla: `sudo a2enmod rewrite`
+
+solucion complicada: [este enlace es de ayuda](http://www.google.com "lo lamento")
+
 Si usan xampp, wampp, lampp, deberan referirse a la documentacion de php para esos paquetes, puesto que, si falla composer, es muy probable que sea debido a los binarios de PHP utilizados por su computadora.
 
 Otra opcion es copiar el archivo de composer.phar a donde estan los archivos de php de xampp.
