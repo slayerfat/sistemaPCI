@@ -175,6 +175,6 @@ class Address extends AbstractBaseModel
      */
     public function employee()
     {
-        return $this->hasMany(Employee::class);
+        return $this->hasOne(Employee::class);
     }
 }
