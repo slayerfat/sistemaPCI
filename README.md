@@ -170,6 +170,12 @@ y listo, la base de datos esta localmente en el sistema.
 
 Si falla pueden hacer un `composer dump-autoload` y reintentarlo, si vuelve a falla puden crear un [problema (issue) en github](https://github.com/slayerfat/sistemaPCI/issues) con el error y la descripcion del mismo.
 
+### Migrations
+
+```
+php src/artisan migrate:reset && php src/artisan migrate && php src/artisan db:seed --class="PCI\Database\DatabaseSeeder"
+```
+
 ## Homestead
 
 El sistema funciona por medio de [Homestead](http://laravel.com/docs/5.1/homestead) o por medio de apache/nginx u otro.
