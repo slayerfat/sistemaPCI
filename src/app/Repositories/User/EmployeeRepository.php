@@ -31,7 +31,7 @@ class EmployeeRepository extends AbstractRepository implements EmployeeRepositor
      */
     public function getAll()
     {
-        // TODO: Implement getAll() method.
+        return $this->model->all();
     }
 
     /**
@@ -43,7 +43,7 @@ class EmployeeRepository extends AbstractRepository implements EmployeeRepositor
         /** @var \PCI\Models\Employee $employee */
         $employee = $this->newInstance($data);
 
-        $user = $this->findUser($data['user_id']);
+        $user = $this->findParent($data['user_id']);
 
         $employee->user_id = $user->id;
 
@@ -56,7 +56,7 @@ class EmployeeRepository extends AbstractRepository implements EmployeeRepositor
      * @param string|int $id
      * @return \PCI\Models\User
      */
-    public function findUser($id)
+    public function findParent($id)
     {
         return $this->userRepo->find($id);
     }
@@ -99,7 +99,7 @@ class EmployeeRepository extends AbstractRepository implements EmployeeRepositor
      */
     public function delete($id)
     {
-        // TODO: Implement delete() method.
+        return $this->executeDelete($id, 'Información Personal');
     }
 
     /**

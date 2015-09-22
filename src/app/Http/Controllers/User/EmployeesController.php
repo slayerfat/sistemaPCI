@@ -45,7 +45,7 @@ class EmployeesController extends Controller
      */
     public function create($id)
     {
-        $user = $this->empRepo->findUser($id);
+        $user = $this->empRepo->findParent($id);
         $employee = $this->empRepo->newInstance();
 
         // necesitamos saber si el usuario puede o no editar este recurso.

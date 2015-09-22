@@ -37,11 +37,7 @@ class EmployeePolicy
             return false;
         }
 
-        if ($user->isAdmin()) {
-            return true;
-        }
-
-        return $this->user->id == $relatedEmployeeUser->id;
+        return $user->isOwnerOrAdmin($relatedEmployeeUser->id);
     }
 
     /**

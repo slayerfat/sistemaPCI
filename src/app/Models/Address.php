@@ -36,10 +36,11 @@ class Address extends AbstractBaseModel
 
     /**
      * The attributes that are mass assignable.
-     *
+     * Parroquina no tiene problema.
      * @var array
      */
     protected $fillable = [
+        'parish_id',
         'building',
         'street',
         'av',
@@ -69,54 +70,6 @@ class Address extends AbstractBaseModel
         }
 
         return $results;
-    }
-
-    public function getBuildingAttribute($value)
-    {
-        $value = $this->removeDotInString($value);
-
-        return $this->ucAndCleanString($value);
-    }
-
-    public function getStreetAttribute($value)
-    {
-        $value = $this->removeDotInString($value);
-
-        return $this->ucAndCleanString($value);
-    }
-
-    public function getAvAttribute($value)
-    {
-        $value = $this->removeDotInString($value);
-
-        return $this->ucAndCleanString($value);
-    }
-
-    // -------------------------------------------------------------------------
-    // Relaciones
-    // -------------------------------------------------------------------------
-    // -------------------------------------------------------------------------
-    // Belongs To 1..* -> 1
-    // -------------------------------------------------------------------------
-
-    /**
-     * @return Parish
-     */
-    public function parish()
-    {
-        return $this->belongsTo(Parish::class);
-    }
-
-    // -------------------------------------------------------------------------
-    // Has Many 1 -> 1..*
-    // -------------------------------------------------------------------------
-
-    /**
-     * @return Collection
-     */
-    public function employee()
-    {
-        return $this->hasMany(Employee::class);
     }
 
     /**
@@ -155,6 +108,24 @@ class Address extends AbstractBaseModel
         return 'Av. ' . $this->av;
     }
 
+    // -------------------------------------------------------------------------
+    // Relaciones
+    // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+    // Belongs To 1..* -> 1
+    // -------------------------------------------------------------------------
+
+    public function getBuildingAttribute($value)
+    {
+        $value = $this->removeDotInString($value);
+
+        return $this->ucAndCleanString($value);
+    }
+
+    // -------------------------------------------------------------------------
+    // Has Many 1 -> 1..*
+    // -------------------------------------------------------------------------
+
     /**
      * @param $value
      * @return mixed
@@ -175,5 +146,35 @@ class Address extends AbstractBaseModel
     private function ucAndCleanString($value)
     {
         return ucfirst(trim($value));
+    }
+
+    public function getStreetAttribute($value)
+    {
+        $value = $this->removeDotInString($value);
+
+        return $this->ucAndCleanString($value);
+    }
+
+    public function getAvAttribute($value)
+    {
+        $value = $this->removeDotInString($value);
+
+        return $this->ucAndCleanString($value);
+    }
+
+    /**
+     * @return Parish
+     */
+    public function parish()
+    {
+        return $this->belongsTo(Parish::class);
+    }
+
+    /**
+     * @return Collection
+     */
+    public function employee()
+    {
+        return $this->hasMany(Employee::class);
     }
 }

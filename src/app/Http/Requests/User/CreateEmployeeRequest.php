@@ -30,7 +30,7 @@ class CreateEmployeeRequest extends Request
      */
     public function authorize()
     {
-        $user = $this->empRepo->findUser($this->route('users'));
+        $user = $this->empRepo->findParent($this->route('users'));
 
         return $this->user()->can('create', [Employee::class, $user]);
     }

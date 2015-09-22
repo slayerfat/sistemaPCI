@@ -3,7 +3,7 @@
 use PCI\Repositories\Interfaces\Misc\FindParentInterface;
 use PCI\Repositories\Interfaces\ModelRepositoryInterface;
 
-interface EmployeeRepositoryInterface extends ModelRepositoryInterface, FindParentInterface
+interface AddressRepositoryInterface extends ModelRepositoryInterface, FindParentInterface
 {
 
 }
