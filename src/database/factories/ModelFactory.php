@@ -8,7 +8,7 @@ $faker = Faker\Factory::create('es_ES');
 
 foreach ($models as $model) {
     $factory->define($model, function () use ($faker) {
-        return ['desc' => $faker->words];
+        return ['desc' => $faker->text(40)];
     });
 }
 
