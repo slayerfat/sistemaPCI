@@ -49,6 +49,22 @@ switch ($active) {
                 </a>
             </li>
 
+            @if($user->employee)
+                @if($user->employee->address_id)
+                    <li>
+                        <a href="{{route('addresses.edit', $user->employee->address_id)}}">
+                            {{trans('models.addresses.singular')}}
+                        </a>
+                    </li>
+                @else
+                    <li>
+                        <a href="{{route('addresses.create', $user->employee->id)}}">
+                            {{trans('models.addresses.singular')}}
+                        </a>
+                    </li>
+                @endif
+            @endif
+
             @can('destroy', $user)
                 <li class="sidebar-danger">
                     {!!

@@ -47,6 +47,24 @@ class UserRoutes extends AbstractPciRoutes
                 ]
             ]
         ],
+        [
+            'routerOptions' => [
+                'prefix'     => 'direcciones',
+                'middleware' => 'auth',
+            ],
+            'rtDetails'     => [
+                'uses'     => 'User\AddressesController',
+                'as'       => 'addresses',
+                'resource' => '{addresses}',
+                'ignore'   => [
+                    'create',
+                    'store',
+                    'index',
+                    'show',
+                    'destroy'
+                ]
+            ]
+        ],
     ];
 
     /**
@@ -73,6 +91,27 @@ class UserRoutes extends AbstractPciRoutes
             'data'   => [
                 'uses' => 'User\EmployeesController@store',
                 'as'   => 'employees.store',
+                'middleware' => 'auth'
+            ]
+        ],
+        /**
+         * Direccion, mismo caso que lo atenrior
+         */
+        [
+            'method' => 'get',
+            'url'    => 'direcciones/{employees}/crear',
+            'data'   => [
+                'uses'       => 'User\AddressesController@create',
+                'as'         => 'addresses.create',
+                'middleware' => 'auth'
+            ]
+        ],
+        [
+            'method' => 'post',
+            'url'    => 'direcciones/{employees}',
+            'data'   => [
+                'uses' => 'User\AddressesController@store',
+                'as'   => 'addresses.store',
                 'middleware' => 'auth'
             ]
         ],

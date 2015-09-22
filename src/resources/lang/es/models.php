@@ -44,6 +44,20 @@ return [
     'depts.update.success'         => 'Departamento actualizado exitosamente.',
 
     /**
+     * Direccion
+     */
+    'addresses.index'          => 'Ver Direcciones',
+    'addresses.show'           => 'Ver Dirección',
+    'addresses.create'         => 'Crear Dirección',
+    'addresses.edit'           => 'Editar Dirección',
+    'addresses.destroy'        => 'Eliminar Dirección',
+    'addresses.plural'         => 'Direcciones',
+    'addresses.singular'       => 'Dirección',
+    'addresses.fa-icon'        => 'map-marker',
+    'addresses.store.success'  => 'Dirección creada exitosamente.',
+    'addresses.update.success' => 'Dirección actualizada exitosamente.',
+
+    /**
      * Fabricante
      */
     'makers.index'                 => 'Ver Fabricantes',
