@@ -1,8 +1,13 @@
-## v0.2.0
+## v0.2.0 22-09-15
 
 Features:
 
 - creado recurso de Empleados.
+
+Mejoras:
+
+- actualizado resources/lang/es/models.php
+- Carpinteria genderal en src/app/
 
 ## v0.1.2 21-09-15
 
