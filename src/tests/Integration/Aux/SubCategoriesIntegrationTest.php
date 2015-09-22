@@ -3,6 +3,12 @@
 use PCI\Models\Category;
 use PCI\Models\SubCategory;
 
+/**
+ * Class SubCategoriesIntegrationTest
+ * @package Tests\Integration\Aux
+ * Nota: se extiende AuxIntegrationTest para que
+ * se ejecuten las pruebas heredadas.
+ */
 class SubCategoriesIntegrationTest extends AuxIntegrationTest
 {
 

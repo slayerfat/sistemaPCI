@@ -4,24 +4,37 @@ use PCI\Models\Employee;
 use PCI\Models\Gender;
 use PCI\Models\Nationality;
 use PCI\Models\User;
-use Tests\Integration\AbstractIntegrationTest;
 
-class EmployeeIntegrationTest extends AbstractIntegrationTest
+class EmployeeIntegrationTest extends AbstractUserIntegration
 {
-
-    /**
-     * @var \PCI\Models\User
-     */
-    private $user;
 
     public function setUp()
     {
         parent::setUp();
 
-        $this->user             = User::first();
-        $this->user->profile_id = User::ADMIN_ID;
-        $this->user->save();
+        $this->user = $this->getUser();
 
+        $this->persistData();
+    }
+
+    /**
+     * @return \PCI\Models\User
+     */
+    protected function getUser()
+    {
+        /** @var \PCI\Models\User $user */
+        $user             = User::first();
+        $user->profile_id = User::ADMIN_ID;
+        $user->save();
+
+        return $user;
+    }
+
+    /**
+     * @return void
+     */
+    protected function persistData()
+    {
         // necesitamos generos para crear y actualizar
         factory(Gender::class, 2)->create();
 

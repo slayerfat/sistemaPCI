@@ -1,9 +1,9 @@
 <?php namespace Tests\Integration\Aux;
 
 use PCI\Models\User;
-use Tests\Integration\AbstractIntegrationTest;
+use Tests\Integration\AbstractIntegration;
 
-abstract class AbstractAuxTest extends AbstractIntegrationTest
+abstract class AbstractAuxIntegration extends AbstractIntegration
 {
 
     /**

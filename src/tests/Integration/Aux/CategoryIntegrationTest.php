@@ -1,6 +1,6 @@
 <?php namespace Tests\Integration\Aux;
 
-class CategoryIntegrationTest extends AbstractAuxTest
+class CategoryIntegrationTest extends AbstractAuxIntegration
 {
 
     public function testTodoNewRequirements()

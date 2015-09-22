@@ -2,6 +2,12 @@
 
 use PCI\Models\Profile;
 
+/**
+ * Class ProfileIntegrationTest
+ * @package Tests\Integration\Aux
+ * Nota: se extiende AuxIntegrationTest para que
+ * se ejecuten las pruebas heredadas.
+ */
 class ProfileIntegrationTest extends AuxIntegrationTest
 {
 
