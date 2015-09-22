@@ -2,6 +2,7 @@
 
 namespace PCI\Http\Controllers\User;
 
+use Flash;
 use Illuminate\Auth\Guard;
 use PCI\Http\Controllers\Controller;
 use PCI\Http\Requests;
@@ -75,7 +76,7 @@ class EmployeesController extends Controller
 
         $user = $this->empRepo->create($data);
 
-        // TODO: crear flashes
+        Flash::success(trans('models.employee.create.success'));
 
         return Redirect::route('users.show', $user->name);
     }
@@ -109,6 +110,8 @@ class EmployeesController extends Controller
     public function update(UpdateEmployeeRequest $request, $id)
     {
         $user = $this->empRepo->update($id, $request->all());
+
+        Flash::success(trans('models.employee.update.success'));
 
         return Redirect::route('users.show', $user->name);
     }

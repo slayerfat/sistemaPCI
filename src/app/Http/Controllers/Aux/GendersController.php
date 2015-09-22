@@ -1,9 +1,10 @@
 <?php namespace PCI\Http\Controllers\Aux;
 
-use PCI\Repositories\Interfaces\Aux\GenderRepositoryInterface;
-use Redirect;
+use Flash;
 use Illuminate\View\Factory;
 use PCI\Http\Requests\Aux\GenderRequest;
+use PCI\Repositories\Interfaces\Aux\GenderRepositoryInterface;
+use Redirect;
 
 class GendersController extends AbstractAuxController
 {
@@ -66,6 +67,8 @@ class GendersController extends AbstractAuxController
     {
         $this->model = $this->repo->create($request->all());
 
+        Flash::success(trans('models.genders.store.success'));
+
         return Redirect::route('genders.show', $this->model->slug);
     }
 
@@ -90,6 +93,8 @@ class GendersController extends AbstractAuxController
     public function update($id, GenderRequest $request)
     {
         $this->model = $this->repo->update($id, $request->all());
+
+        Flash::success(trans('models.genders.update.success'));
 
         return Redirect::route('genders.show', $this->model->slug);
     }

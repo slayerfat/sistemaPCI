@@ -2,14 +2,14 @@
 
 use Event;
 use Flash;
-use PCI\Events\NewUserRegistration;
-use Redirect;
-use PCI\Http\Requests;
-use PCI\Models\Profile;
-use PCI\Http\Requests\User\UserRequest;
-use PCI\Http\Controllers\Controller;
 use Illuminate\View\Factory as View;
+use PCI\Events\NewUserRegistration;
+use PCI\Http\Controllers\Controller;
+use PCI\Http\Requests;
+use PCI\Http\Requests\User\UserRequest;
+use PCI\Models\Profile;
 use PCI\Repositories\Interfaces\User\UserRepositoryInterface;
+use Redirect;
 
 class UsersController extends Controller
 {
@@ -72,7 +72,7 @@ class UsersController extends Controller
 
         Event::fire(new NewUserRegistration($user));
 
-        Flash::success('Usuario creado existosamente, correo de confirmación enviado.');
+        Flash::success(trans('models.users.create.success') . ' Correo electrónico de confirmacion enviado.');
 
         return Redirect::route('users.show', $user->name);
     }
@@ -98,6 +98,7 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
+        /** @var \PCI\Models\User $user */
         $user = $this->userRepo->find($id);
 
         if ($user->cannot('update', $user)) {
@@ -119,7 +120,7 @@ class UsersController extends Controller
     {
         $user = $this->userRepo->update($id, $request->all());
 
-        Flash::success('Usuario actualizado correctamente.');
+        Flash::success(trans('models.users.udpate.success'));
 
         return Redirect::route('users.show', $user->name);
     }

@@ -1,9 +1,10 @@
 <?php namespace PCI\Http\Controllers\Aux;
 
-use PCI\Repositories\Interfaces\Aux\NoteTypeRepositoryInterface;
-use Redirect;
+use Flash;
 use Illuminate\View\Factory;
 use PCI\Http\Requests\Aux\NoteTypeRequest;
+use PCI\Repositories\Interfaces\Aux\NoteTypeRepositoryInterface;
+use Redirect;
 
 class NoteTypesController extends AbstractAuxController
 {
@@ -66,6 +67,8 @@ class NoteTypesController extends AbstractAuxController
     {
         $this->model = $this->repo->create($request->all());
 
+        Flash::success(trans('models.noteTypes.create.success'));
+
         return Redirect::route('noteTypes.show', $this->model->slug);
     }
 
@@ -90,6 +93,8 @@ class NoteTypesController extends AbstractAuxController
     public function update($id, NoteTypeRequest $request)
     {
         $this->model = $this->repo->update($id, $request->all());
+
+        Flash::success(trans('models.noteTypes.update.success'));
 
         return Redirect::route('noteTypes.show', $this->model->slug);
     }

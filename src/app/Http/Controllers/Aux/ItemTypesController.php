@@ -1,9 +1,10 @@
 <?php namespace PCI\Http\Controllers\Aux;
 
-use PCI\Repositories\Interfaces\Aux\ItemTypesRepositoryInterface;
-use Redirect;
+use Flash;
 use Illuminate\View\Factory;
 use PCI\Http\Requests\Aux\ItemTypeRequest;
+use PCI\Repositories\Interfaces\Aux\ItemTypesRepositoryInterface;
+use Redirect;
 
 class ItemTypesController extends AbstractAuxController
 {
@@ -66,6 +67,8 @@ class ItemTypesController extends AbstractAuxController
     {
         $this->model = $this->repo->create($request->all());
 
+        Flash::success(trans('models.itemTypes.store.success'));
+
         return Redirect::route('itemTypes.show', $this->model->slug);
     }
 
@@ -90,6 +93,8 @@ class ItemTypesController extends AbstractAuxController
     public function update($id, ItemTypeRequest $request)
     {
         $this->model = $this->repo->update($id, $request->all());
+
+        Flash::success(trans('models.itemTypes.update.success'));
 
         return Redirect::route('itemTypes.show', $this->model->slug);
     }

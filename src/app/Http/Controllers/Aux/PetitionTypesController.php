@@ -1,9 +1,10 @@
 <?php namespace PCI\Http\Controllers\Aux;
 
-use PCI\Repositories\Interfaces\Aux\PetitionTypeRepositoryInterface;
-use Redirect;
+use Flash;
 use Illuminate\View\Factory;
 use PCI\Http\Requests\Aux\PetitionTypeRequest;
+use PCI\Repositories\Interfaces\Aux\PetitionTypeRepositoryInterface;
+use Redirect;
 
 class PetitionTypesController extends AbstractAuxController
 {
@@ -66,6 +67,8 @@ class PetitionTypesController extends AbstractAuxController
     {
         $this->model = $this->repo->create($request->all());
 
+        Flash::success(trans('models.petitionTypes.create.success'));
+
         return Redirect::route('petitionTypes.show', $this->model->slug);
     }
 
@@ -90,6 +93,8 @@ class PetitionTypesController extends AbstractAuxController
     public function update($id, PetitionTypeRequest $request)
     {
         $this->model = $this->repo->update($id, $request->all());
+
+        Flash::success(trans('models.petitionTypes.update.success'));
 
         return Redirect::route('petitionTypes.show', $this->model->slug);
     }
