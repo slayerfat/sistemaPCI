@@ -17,15 +17,6 @@ class EmployeeRepositoryProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->registerEmployee();
-    }
-
-    /**
-     * Registra el Repositorio de Empleado
-     * @return void
-     */
-    private function registerEmployee()
-    {
         // el repositorio necesita dos cosas para funcionar:
         // necesita al empleado y necesita al repo de usuario
         $this->app->bind(

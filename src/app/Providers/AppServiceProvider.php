@@ -1,8 +1,6 @@
 <?php namespace PCI\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use PCI\Mamarrachismo\PhoneParser\Interfaces\PhoneParserInterface;
-use PCI\Mamarrachismo\PhoneParser\PhoneParser;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -29,10 +27,6 @@ class AppServiceProvider extends ServiceProvider
         // ~/sistemaPCI/public
         $this->app->bind('path.public', function () {
             return laravel_pls();
-        });
-
-        $this->app->bind(PhoneParserInterface::class, function () {
-            return new PhoneParser;
         });
     }
 }

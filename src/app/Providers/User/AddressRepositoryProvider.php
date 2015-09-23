@@ -17,15 +17,6 @@ class AddressRepositoryProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->registerEmployee();
-    }
-
-    /**
-     * Registra el Repositorio de Empleado
-     * @return void
-     */
-    private function registerEmployee()
-    {
         // asi como el repositorio de empleado
         // debemos pasarle parametros adicionales
         // al constructor del repositorio de direccion.

@@ -158,6 +158,7 @@ return [
         PCI\Providers\RouteServiceProvider::class,
         PCI\Providers\ViewComposerServiceProvider::class,
         PCI\Providers\User\UserDeletingServiceProvider::class,
+        PCI\Providers\PhoneParserProvider::class,
         /**
          * Caimaneitor servis provaider
          */
@@ -165,10 +166,11 @@ return [
         /**
          * Repositorios
          */
-        PCI\Providers\Aux\CategoriesRepositoriesProvider::class,
+        PCI\Providers\Aux\CategoryRepositoryProvider::class,
         PCI\Providers\Aux\EmployeeRepositoriesProvider::class,
         PCI\Providers\Aux\MakerRepositoriesProvider::class,
         PCI\Providers\Aux\ProfileRepositoryProvider::class,
+        PCI\Providers\Aux\SubCategoryRepositoryProvider::class,
         PCI\Providers\Aux\TypesRepositoriesProvider::class,
         PCI\Providers\User\AddressRepositoryProvider::class,
         PCI\Providers\User\EmployeeRepositoryProvider::class,
