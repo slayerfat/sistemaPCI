@@ -10,9 +10,10 @@ use Illuminate\Database\Eloquent\Collection;
 
 /**
  * PCI\Models\NoteType
- *
+
  * @property integer $id
  * @property string $desc
+ * @property string $slug
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property integer $created_by
@@ -20,12 +21,11 @@ use Illuminate\Database\Eloquent\Collection;
  * @property-read \Illuminate\Database\Eloquent\Collection|Note[] $notes
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\NoteType whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\NoteType whereDesc($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\NoteType whereSlug($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\NoteType whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\NoteType whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\NoteType whereCreatedBy($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\NoteType whereUpdatedBy($value)
- * @property string $slug
- * @method static \Illuminate\Database\Query\Builder|\PCI\Models\NoteType whereSlug($value)
  */
 class NoteType extends AbstractBaseModel implements SluggableInterface
 {

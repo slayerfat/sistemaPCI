@@ -10,9 +10,10 @@ use Illuminate\Database\Eloquent\Collection;
 
 /**
  * PCI\Models\ItemType
- *
+
  * @property integer $id
  * @property string $desc
+ * @property string $slug
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property integer $created_by
@@ -20,6 +21,7 @@ use Illuminate\Database\Eloquent\Collection;
  * @property-read \Illuminate\Database\Eloquent\Collection|Item[] $items
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\ItemType whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\ItemType whereDesc($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\ItemType whereSlug($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\ItemType whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\ItemType whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\ItemType whereCreatedBy($value)

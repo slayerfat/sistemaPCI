@@ -10,9 +10,10 @@ use Illuminate\Database\Eloquent\Collection;
 
 /**
  * PCI\Models\Nationality
- *
+
  * @property integer $id
  * @property string $desc
+ * @property string $slug
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property integer $created_by
@@ -20,12 +21,11 @@ use Illuminate\Database\Eloquent\Collection;
  * @property-read \Illuminate\Database\Eloquent\Collection|Employee[] $employee
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Nationality whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Nationality whereDesc($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Nationality whereSlug($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Nationality whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Nationality whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Nationality whereCreatedBy($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Nationality whereUpdatedBy($value)
- * @property string $slug
- * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Nationality whereSlug($value)
  */
 class Nationality extends AbstractBaseModel implements SluggableInterface
 {

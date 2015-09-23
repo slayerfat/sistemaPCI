@@ -10,9 +10,10 @@ use Illuminate\Database\Eloquent\Collection;
 
 /**
  * PCI\Models\Category
- *
+
  * @property integer $id
  * @property string $desc
+ * @property string $slug
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property integer $created_by
@@ -20,12 +21,11 @@ use Illuminate\Database\Eloquent\Collection;
  * @property-read \Illuminate\Database\Eloquent\Collection|SubCategory[] $subCategories
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Category whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Category whereDesc($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Category whereSlug($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Category whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Category whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Category whereCreatedBy($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Category whereUpdatedBy($value)
- * @property string $slug
- * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Category whereSlug($value)
  */
 class Category extends AbstractBaseModel implements SluggableInterface
 {

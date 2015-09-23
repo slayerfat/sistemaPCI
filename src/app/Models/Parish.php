@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Collection;
 
 /**
  * PCI\Models\Parish
- *
+
  * @property integer $id
- * @property integer $parish_id
+ * @property integer $town_id
  * @property string $desc
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
@@ -19,14 +19,12 @@ use Illuminate\Database\Eloquent\Collection;
  * @property-read Town $town
  * @property-read \Illuminate\Database\Eloquent\Collection|Address[] $addresses
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Parish whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Parish whereParishId($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Parish whereTownId($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Parish whereDesc($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Parish whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Parish whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Parish whereCreatedBy($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Parish whereUpdatedBy($value)
- * @property integer $town_id
- * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Parish whereTownId($value)
  */
 class Parish extends AbstractPlacesModel
 {

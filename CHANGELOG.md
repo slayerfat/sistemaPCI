@@ -1,3 +1,13 @@
+## v0.2.2
+
+Features:
+
+- cero
+
+Mejoras:
+
+- Mejorado ModelFactory
+
 ## v0.2.1 23-09-15
 
 Features:

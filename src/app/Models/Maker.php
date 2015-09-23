@@ -10,9 +10,10 @@ use Illuminate\Database\Eloquent\Collection;
 
 /**
  * PCI\Models\Maker
- *
+
  * @property integer $id
  * @property string $desc
+ * @property string $slug
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property integer $created_by
@@ -20,12 +21,11 @@ use Illuminate\Database\Eloquent\Collection;
  * @property-read \Illuminate\Database\Eloquent\Collection|Item[] $items
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Maker whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Maker whereDesc($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Maker whereSlug($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Maker whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Maker whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Maker whereCreatedBy($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Maker whereUpdatedBy($value)
- * @property string $slug
- * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Maker whereSlug($value)
  */
 class Maker extends AbstractBaseModel implements SluggableInterface
 {

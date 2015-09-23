@@ -10,22 +10,22 @@ use Illuminate\Database\Eloquent\Collection;
 
 /**
  * PCI\Models\Profile
- *
- * @property-read \Illuminate\Database\Eloquent\Collection|User[] $users
+
  * @property integer $id
  * @property string $desc
+ * @property string $slug
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property integer $created_by
  * @property integer $updated_by
+ * @property-read \Illuminate\Database\Eloquent\Collection|User[] $users
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Profile whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Profile whereDesc($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Profile whereSlug($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Profile whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Profile whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Profile whereCreatedBy($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Profile whereUpdatedBy($value)
- * @property string $slug
- * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Profile whereSlug($value)
  */
 class Profile extends AbstractBaseModel implements SluggableInterface
 {

@@ -4,11 +4,9 @@ namespace PCI\Models;
 
 use Illuminate\Database\Eloquent\Collection;
 
-/** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
-
 /**
  * PCI\Models\Address
- *
+
  * @property integer $id
  * @property integer $parish_id
  * @property string $building
@@ -18,8 +16,9 @@ use Illuminate\Database\Eloquent\Collection;
  * @property \Carbon\Carbon $updated_at
  * @property integer $created_by
  * @property integer $updated_by
+ * @property-read string $formatted_details
  * @property-read Parish $parish
- * @property-read \Illuminate\Database\Eloquent\Collection|Employee[] $employee
+ * @property-read Employee $employee
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Address whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Address whereParishId($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Address whereBuilding($value)
@@ -29,7 +28,6 @@ use Illuminate\Database\Eloquent\Collection;
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Address whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Address whereCreatedBy($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Address whereUpdatedBy($value)
- * @property-read mixed $formatted_details
  */
 class Address extends AbstractBaseModel
 {

@@ -1,5 +1,10 @@
 <?php namespace PCI\Models;
 
+/**
+ * PCI\Models\AbstractPlacesModel
+ * @property-read mixed $created_at
+ * @property-read mixed $updated_at
+ */
 class AbstractPlacesModel extends AbstractBaseModel
 {
 
