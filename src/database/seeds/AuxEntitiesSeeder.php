@@ -22,16 +22,8 @@ class AuxEntitiesSeeder extends AbstractSeeder
         $this->setData();
     }
 
-    public function run()
-    {
-        $this->command->line('Empezando Seeding de Modelos relacionados con usuario!');
-
-        $this->seedModels($this->data);
-    }
-
     /**
      * Genera la informacion necesaria para crear las entidades.
-     *
      * Cada entidad poseen atributos que se repiten por cada iteracion (DUH).
      */
     private function setData()
@@ -43,7 +35,6 @@ class AuxEntitiesSeeder extends AbstractSeeder
                 ['desc' => 'Masculino'],
                 ['desc' => 'Femenino']
             ],
-
             'PCI\Models\Department'   => [
                 [
                     'desc'  => 'Servicios Generales',
@@ -51,39 +42,32 @@ class AuxEntitiesSeeder extends AbstractSeeder
                 ],
                 ['desc' => 'Gerencia General', 'phone' => $faker->phoneNumber]
             ],
-
             'PCI\Models\ItemType'     => [
                 ['desc' => 'Perecedero'],
                 ['desc' => 'No Perecedero']
             ],
-
             'PCI\Models\Maker'        => [
                 ['desc' => 'Empresa X'],
                 ['desc' => 'Empresa Y'],
                 ['desc' => 'Empresa Z'],
             ],
-
             'PCI\Models\MovementType' => [
                 ['desc' => 'Entrada'],
                 ['desc' => 'Salida'],
                 ['desc' => 'Otro'],
             ],
-
             'PCI\Models\Nationality'  => [
                 ['desc' => 'Venezolano'],
                 ['desc' => 'Extrangero'],
             ],
-
             'PCI\Models\NoteType'     => [
                 ['desc' => 'Entrada (entrada)'],
                 ['desc' => 'Entrega (salida)'],
             ],
-
             'PCI\Models\PetitionType' => [
                 ['desc' => 'Entrada (entrada)'],
                 ['desc' => 'Entrega (salida)'],
             ],
-
             'PCI\Models\Position'     => [
                 ['desc' => 'Facilitador'],
                 ['desc' => 'Personal Medico'],
@@ -91,14 +75,12 @@ class AuxEntitiesSeeder extends AbstractSeeder
                 ['desc' => 'Ayudante'],
                 ['desc' => 'Otro'],
             ],
-
             'PCI\Models\Category'     => [
                 ['desc' => 'Alimentos'],
                 ['desc' => 'Herramientas'],
                 ['desc' => 'Articulos de Limpieza'],
                 ['desc' => 'Articulos Medicos'],
             ],
-
             'PCI\Models\SubCategory'  => [
                 /**
                  * Alimentos
@@ -106,7 +88,6 @@ class AuxEntitiesSeeder extends AbstractSeeder
                 ['desc' => 'Empacados', 'category_id' => 1],
                 ['desc' => 'Harinas', 'category_id' => 1],
                 ['desc' => 'Verduras y Hortalizas', 'category_id' => 1],
-
                 /**
                  * Herramientas
                  */
@@ -115,7 +96,6 @@ class AuxEntitiesSeeder extends AbstractSeeder
                 ['desc' => 'Hidraulicas', 'category_id' => 2],
                 ['desc' => 'Miscelaneos', 'category_id' => 2],
                 ['desc' => 'Otro', 'category_id' => 2],
-
                 /**
                  * Articulos de Limpieza
                  */
@@ -123,7 +103,6 @@ class AuxEntitiesSeeder extends AbstractSeeder
                 ['desc' => 'Detergentes', 'category_id' => 3],
                 ['desc' => 'Cepillos', 'category_id' => 3],
                 ['desc' => 'Otro', 'category_id' => 3],
-
                 /**
                  * Articulos Medicos
                  */
@@ -133,7 +112,6 @@ class AuxEntitiesSeeder extends AbstractSeeder
             ],
         ];
     }
-
 
     /**
      * Arreglo de Entidades secundarias o auxiliares en el sistema.
@@ -149,13 +127,17 @@ class AuxEntitiesSeeder extends AbstractSeeder
             'PCI\Models\MovementType',
             'PCI\Models\Nationality',
             'PCI\Models\NoteType',
-            'PCI\Models\Parish',
             'PCI\Models\PetitionType',
             'PCI\Models\Position',
             'PCI\Models\Profile',
             'PCI\Models\State',
-            'PCI\Models\SubCategory',
-            'PCI\Models\Town',
         ];
+    }
+
+    public function run()
+    {
+        $this->command->line('Empezando Seeding de Modelos relacionados con usuario!');
+
+        $this->seedModels($this->data);
     }
 }
