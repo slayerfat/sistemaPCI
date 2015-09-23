@@ -6,6 +6,53 @@ En este archivo estaran los cambios pertinentes en el DED y el Documento de Espe
 
 Detalles, observaciones u otros:
 
+#### 22-09-15
+
+Empleado es ahora 1 a 1 con direccion, explicacion:
+
+Cuando se manipula una direccion, es mas conveniente generarla de 1 a 1 con empleado, porque si es por ejemplo una relacion 1 a N, entonces desde direccion, como se sabe el Id del usuario impactado por el cambio?
+
+En otras palabras:
+
+```php
+<?php
+
+// esto funciona perfectamente:
+$empleado  = Empleado::find(1);
+$direccion = $empleado->direccion;
+
+$direccion->calle = 'tal calle';
+
+$direccion->save();
+
+$usuario = $empleado->usuario;
+
+return $usuario instanceof Usuario; // verdadero
+```
+
+En cambio, a la inversa:
+
+```php
+<?php
+
+$direccion = Direccion::find(1);
+$direccion->calle = 'tal calle';
+
+$direccion->save();
+
+$usuario = $direccion->empleado->usuario;
+
+// si la relacion de Direccion y Empleado es N a 1
+// este retorno regresa una coleccion, no un modelo
+return $usuario instanceof Usuario; // falso (instanceof Collection)
+
+// si la relacion de Direccion y Empleado es 1 a 1
+// este retorno regresa un modelo
+return $usuario instanceof Usuario; // verdadero
+```
+
+como en los requerimientos del sistema no especifican nada sobre las direcciones y los empleados, este cambio es valido.
+
 #### 17-09-15
 
 Las entidades no poseen un campo que ayude a generar urls. (slugs).

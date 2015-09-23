@@ -1,3 +1,14 @@
+## v0.2.1
+
+Features:
+
+- creada direccion de Empleado.
+- creado api interno de Estados, Municpios, Parroquias.
+
+Cambios:
+
+- Direcciones cambiado 1 a 1 con Empleado. (ver DEDCHANGE.md 22-09-15)
+
 ## v0.2.0 22-09-15
 
 Features:

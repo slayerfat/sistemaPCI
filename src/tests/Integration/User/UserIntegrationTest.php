@@ -1,36 +1,39 @@
 <?php namespace Tests\Integration\User;
 
 use PCI\Models\User;
-use Tests\Integration\AbstractIntegrationTest;
 
-class UserIntegrationTest extends AbstractIntegrationTest
+class UserIntegrationTest extends AbstractUserIntegration
 {
 
-    /**
-     * @var \PCI\Models\User
-     */
-    private $user;
-
-    public function setUp()
+    public function testGenericTableShouldBeACollectionVariable()
     {
-        parent::setUp();
+        $this->actingAs($this->user)
+             ->visit('usuarios')
+             ->see($this->user->name);
 
-        $this->user = factory(User::class)->create([
+        factory(User::class, 5)->create();
+
+        $this->actingAs($this->user)
+             ->visit('usuarios')
+             ->see($this->user->name);
+    }
+
+    /**
+     * @return \PCI\Models\User
+     */
+    protected function getUser()
+    {
+        return factory(User::class)->create([
             'profile_id' => User::ADMIN_ID,
             'confirmation_code' => null,
         ]);
     }
 
-    public function testGenericTableShouldBeACollectionVariable()
+    /**
+     * @return void
+     */
+    protected function persistData()
     {
-        $this->actingAs($this->user)
-            ->visit('usuarios')
-            ->see($this->user->name);
-
-        factory(User::class, 5)->create();
-
-        $this->actingAs($this->user)
-            ->visit('usuarios')
-            ->see($this->user->name);
+        // TODO: Implement persistData() method.
     }
 }

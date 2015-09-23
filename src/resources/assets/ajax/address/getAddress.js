@@ -5,13 +5,13 @@ $("document").ready(function(){
     $.ajax({
         type: 'GET',
         dataType: "json",
-        url: '/direcciones/estados',
+        url: '/api/direcciones/estados',
         data: null,
         success: function (datos){
             // se chequea entre los datos recibidos (json)
             $.each(datos, function(index, estado) {
                 $('#state_id').append(
-                    '<option value="'+estado.id+'">'+estado.description+'</option>');
+                    '<option value="' + estado.id + '">' + estado.desc + '</option>');
             });
         }
     });
@@ -23,7 +23,7 @@ $("document").ready(function(){
         $.ajax({
             type: 'GET',
             dataType: "json",
-            url: '/direcciones/municipios/'+id,
+            url: '/api/direcciones/municipios/' + id,
             data: null,
             success: function (datos){
                 // se borran los municipios existentes
@@ -32,7 +32,7 @@ $("document").ready(function(){
                 // se chequea entre los datos recibidos (json)
                 $.each(datos, function(index, municipio) {
                     $('#town_id').append(
-                        '<option value="'+municipio.id+'">'+municipio.description+'</option>');
+                        '<option value="' + municipio.id + '">' + municipio.desc + '</option>');
                 });
                 $('#parish_id').empty();
             }
@@ -46,14 +46,14 @@ $("document").ready(function(){
         $.ajax({
             type: 'GET',
             dataType: "json",
-            url: '/direcciones/parroquias/'+id,
+            url: '/api/direcciones/parroquias/' + id,
             data: null,
             success: function (datos){
                 $('#parish_id').empty();
                 $('#parish_id').append('<option value="">Seleccione</option>');
                 $.each(datos, function(index, municipio) {
                     $('#parish_id').append(
-                        '<option value="'+municipio.id+'">'+municipio.description+'</option>');
+                        '<option value="' + municipio.id + '">' + municipio.desc + '</option>');
                 });
             }
         });

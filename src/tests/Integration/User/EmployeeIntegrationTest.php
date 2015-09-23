@@ -4,30 +4,9 @@ use PCI\Models\Employee;
 use PCI\Models\Gender;
 use PCI\Models\Nationality;
 use PCI\Models\User;
-use Tests\Integration\AbstractIntegrationTest;
 
-class EmployeeIntegrationTest extends AbstractIntegrationTest
+class EmployeeIntegrationTest extends AbstractUserIntegration
 {
-
-    /**
-     * @var \PCI\Models\User
-     */
-    private $user;
-
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->user             = User::first();
-        $this->user->profile_id = User::ADMIN_ID;
-        $this->user->save();
-
-        // necesitamos generos para crear y actualizar
-        factory(Gender::class, 2)->create();
-
-        // tambien necesitamos nacionalidades para crear y actualizar
-        factory(Nationality::class, 2)->create();
-    }
 
     public function testSideBarMenuShouldHaveCreateLinks()
     {
@@ -82,7 +61,10 @@ class EmployeeIntegrationTest extends AbstractIntegrationTest
     public function testUserShouldBeAbleToEditIfAdmin()
     {
         $randomUser = factory(User::class)->create();
-        $employee   = factory(Employee::class)->create(['user_id' => $randomUser->id]);
+        $employee = factory(Employee::class)->create([
+            'user_id'    => $randomUser->id,
+            'address_id' => null
+        ]);
 
         $this->actingAs($this->user)
             ->visit(route('users.show', $randomUser->name))
@@ -104,7 +86,10 @@ class EmployeeIntegrationTest extends AbstractIntegrationTest
         $anotherUser = factory(User::class)->create(['confirmation_code' => null]);
 
         $randomUser = factory(User::class)->create();
-        $employee   = factory(Employee::class)->create(['user_id' => $randomUser->id]);
+        $employee = factory(Employee::class)->create([
+            'user_id'    => $randomUser->id,
+            'address_id' => null
+        ]);
 
         $this->actingAs($anotherUser)
             ->visit(route('index'))
@@ -112,5 +97,30 @@ class EmployeeIntegrationTest extends AbstractIntegrationTest
             ->visit(route('employees.edit', $employee->id))
             ->see(trans('defaults.auth.error'))
             ->seePageIs(route('index'));
+    }
+
+    /**
+     * @return \PCI\Models\User
+     */
+    protected function getUser()
+    {
+        /** @var \PCI\Models\User $user */
+        $user             = User::first();
+        $user->profile_id = User::ADMIN_ID;
+        $user->save();
+
+        return $user;
+    }
+
+    /**
+     * @return void
+     */
+    protected function persistData()
+    {
+        // necesitamos generos para crear y actualizar
+        factory(Gender::class, 2)->create();
+
+        // tambien necesitamos nacionalidades para crear y actualizar
+        factory(Nationality::class, 2)->create();
     }
 }

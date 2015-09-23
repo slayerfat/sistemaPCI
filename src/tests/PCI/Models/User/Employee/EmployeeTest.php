@@ -15,7 +15,7 @@ class EmployeeTest extends AbstractTestCase
     {
         parent::setUp();
 
-        $this->employee = factory(Employee::class)->make();
+        $this->employee = new Employee;
     }
 
     public function testFormattedNamesShouldReturnReadableString()

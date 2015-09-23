@@ -36,10 +36,11 @@ class Address extends AbstractBaseModel
 
     /**
      * The attributes that are mass assignable.
-     *
+     * Parroquina no tiene problema.
      * @var array
      */
     protected $fillable = [
+        'parish_id',
         'building',
         'street',
         'av',
@@ -71,11 +72,88 @@ class Address extends AbstractBaseModel
         return $results;
     }
 
+    /**
+     * @return string|null
+     */
+    public function formattedBuilding()
+    {
+        $attr = $this->attributes['building'];
+
+        return $this->isAttrValid($attr) ? 'Edf./Qta./Blq. ' . $this->building : null;
+    }
+
+    /**
+     * (q . !k . !l) === !(!q + k + l)
+     * @param $attr
+     * @return bool
+     */
+    private function isAttrValid($attr)
+    {
+        return !(!isset($attr) || is_null($attr) || trim($attr) == '');
+    }
+
+    /**
+     * @return string|null
+     */
+    public function formattedStreet()
+    {
+        $attr = $this->attributes['street'];
+
+        return $this->isAttrValid($attr) ? 'Calle(s) ' . $this->street : null;
+    }
+
+    // -------------------------------------------------------------------------
+    // Relaciones
+    // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+    // Belongs To 1..* -> 1
+    // -------------------------------------------------------------------------
+
+    /**
+     * @return string|null
+     */
+    public function formattedAv()
+    {
+        $attr = $this->attributes['av'];
+
+        return $this->isAttrValid($attr) ? 'Av. ' . $this->av : null;
+    }
+
+    // -------------------------------------------------------------------------
+    // Has Many 1 -> 1..*
+    // -------------------------------------------------------------------------
+
     public function getBuildingAttribute($value)
     {
         $value = $this->removeDotInString($value);
 
         return $this->ucAndCleanString($value);
+    }
+
+    /**
+     * @param $value
+     * @return mixed
+     */
+    private function removeDotInString($value)
+    {
+        if (is_null($value) || trim($value) == '') {
+            return null;
+        }
+
+        if ($value[strlen($value) - 1] == '.') {
+            $value[strlen($value) - 1] = null;
+        }
+
+        return $value;
+    }
+
+    /**
+     * @param $value
+     * @return string
+     */
+    private function ucAndCleanString($value)
+    {
+        return ucfirst(trim($value));
     }
 
     public function getStreetAttribute($value)
@@ -92,13 +170,6 @@ class Address extends AbstractBaseModel
         return $this->ucAndCleanString($value);
     }
 
-    // -------------------------------------------------------------------------
-    // Relaciones
-    // -------------------------------------------------------------------------
-    // -------------------------------------------------------------------------
-    // Belongs To 1..* -> 1
-    // -------------------------------------------------------------------------
-
     /**
      * @return Parish
      */
@@ -107,73 +178,11 @@ class Address extends AbstractBaseModel
         return $this->belongsTo(Parish::class);
     }
 
-    // -------------------------------------------------------------------------
-    // Has Many 1 -> 1..*
-    // -------------------------------------------------------------------------
-
     /**
      * @return Collection
      */
     public function employee()
     {
-        return $this->hasMany(Employee::class);
-    }
-
-    /**
-     * @return string|null
-     */
-    public function formattedBuilding()
-    {
-        if (!isset($this->attributes['building'])) {
-            return null;
-        }
-
-        return 'Edf./Qta./Blq. ' . $this->building;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function formattedStreet()
-    {
-        if (!isset($this->attributes['street'])) {
-            return null;
-        }
-
-        return 'Calle(s) ' . $this->street;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function formattedAv()
-    {
-        if (!isset($this->attributes['av'])) {
-            return null;
-        }
-
-        return 'Av. ' . $this->av;
-    }
-
-    /**
-     * @param $value
-     * @return mixed
-     */
-    private function removeDotInString($value)
-    {
-        if ($value[strlen($value) - 1] == '.') {
-            $value[strlen($value) - 1] = null;
-        }
-
-        return $value;
-    }
-
-    /**
-     * @param $value
-     * @return string
-     */
-    private function ucAndCleanString($value)
-    {
-        return ucfirst(trim($value));
+        return $this->hasOne(Employee::class);
     }
 }

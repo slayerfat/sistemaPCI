@@ -6,8 +6,7 @@ use Flash;
 use Illuminate\Auth\Guard;
 use PCI\Http\Controllers\Controller;
 use PCI\Http\Requests;
-use PCI\Http\Requests\User\CreateEmployeeRequest;
-use PCI\Http\Requests\User\UpdateEmployeeRequest;
+use PCI\Http\Requests\User\EmployeeRequest;
 use PCI\Models\Gender;
 use PCI\Models\Nationality;
 use PCI\Repositories\Interfaces\User\EmployeeRepositoryInterface;
@@ -45,7 +44,7 @@ class EmployeesController extends Controller
      */
     public function create($id)
     {
-        $user = $this->empRepo->findUser($id);
+        $user = $this->empRepo->findParent($id);
         $employee = $this->empRepo->newInstance();
 
         // necesitamos saber si el usuario puede o no editar este recurso.
@@ -63,10 +62,10 @@ class EmployeesController extends Controller
     /**
      * Store a newly created resource in storage.
      * @param string|int $id
-     * @param \PCI\Http\Requests\User\CreateEmployeeRequest $request
+     * @param \PCI\Http\Requests\User\EmployeeRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store($id, CreateEmployeeRequest $request)
+    public function store($id, EmployeeRequest $request)
     {
         $data = $request->all();
 
@@ -103,11 +102,11 @@ class EmployeesController extends Controller
 
     /**
      * Update the specified resource in storage.
-     * @param \PCI\Http\Requests\User\UpdateEmployeeRequest $request
+     * @param \PCI\Http\Requests\User\EmployeeRequest $request
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateEmployeeRequest $request, $id)
+    public function update(EmployeeRequest $request, $id)
     {
         $user = $this->empRepo->update($id, $request->all());
 

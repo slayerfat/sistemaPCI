@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
 class CreateAddressesTable extends Migration
 {
@@ -18,7 +18,7 @@ class CreateAddressesTable extends Migration
             $table->foreign('parish_id')
                 ->references('id')
                 ->on('parishes');
-            $table->string('building')->nullable();
+            $table->string('building', 50)->nullable();
             $table->string('street')->nullable();
             $table->string('av')->nullable();
             $table->timestamps();

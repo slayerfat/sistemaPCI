@@ -1,11 +1,13 @@
 <?php namespace PCI\Providers;
 
-use PCI\Models\Employee;
-use PCI\Models\User;
-use PCI\Policies\User\EmployeePolicy;
-use PCI\Policies\User\UserPolicy;
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use PCI\Models\Address;
+use PCI\Models\Employee;
+use PCI\Models\User;
+use PCI\Policies\User\AddressPolicy;
+use PCI\Policies\User\EmployeePolicy;
+use PCI\Policies\User\UserPolicy;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -16,7 +18,8 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         User::class     => UserPolicy::class,
-        Employee::class => EmployeePolicy::class
+        Employee::class => EmployeePolicy::class,
+        Address::class  => AddressPolicy::class
     ];
 
     /**

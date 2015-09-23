@@ -53,11 +53,23 @@ class AddressTest extends AbstractTestCase
         );
     }
 
-    public function testFomattedMethodsShouldReturn()
+    public function testFomattedMethodsShouldReturnEmptyStringWhenNullGiven()
     {
         $this->address->building = null;
         $this->address->street = null;
         $this->address->av = null;
+
+        $this->assertEquals(
+            '',
+            $this->address->formattedDetails
+        );
+    }
+
+    public function testFomattedMethodsShouldReturnEmptyWhenEmptyStringGiven()
+    {
+        $this->address->building = '';
+        $this->address->street   = '';
+        $this->address->av       = '';
 
         $this->assertEquals(
             '',

@@ -26,15 +26,8 @@ use Illuminate\Database\Eloquent\Collection;
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Town whereCreatedBy($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Town whereUpdatedBy($value)
  */
-class Town extends AbstractBaseModel
+class Town extends AbstractPlacesModel
 {
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = ['desc'];
 
     // -------------------------------------------------------------------------
     // Relaciones

@@ -10,7 +10,7 @@ use PCI\Models\Nationality;
 use PCI\Models\NoteType;
 use PCI\Models\PetitionType;
 
-class AuxIntegrationTest extends AbstractAuxTest
+class AuxIntegrationTest extends AbstractAuxIntegration
 {
 
     /**
