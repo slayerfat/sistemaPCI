@@ -13,6 +13,10 @@ abstract class AbstractUserIntegration extends AbstractIntegration
     public function setUp()
     {
         parent::setUp();
+
+        $this->user = $this->getUser();
+
+        $this->persistData();
     }
 
     /**

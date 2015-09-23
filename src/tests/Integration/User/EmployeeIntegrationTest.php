@@ -8,40 +8,6 @@ use PCI\Models\User;
 class EmployeeIntegrationTest extends AbstractUserIntegration
 {
 
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->user = $this->getUser();
-
-        $this->persistData();
-    }
-
-    /**
-     * @return \PCI\Models\User
-     */
-    protected function getUser()
-    {
-        /** @var \PCI\Models\User $user */
-        $user             = User::first();
-        $user->profile_id = User::ADMIN_ID;
-        $user->save();
-
-        return $user;
-    }
-
-    /**
-     * @return void
-     */
-    protected function persistData()
-    {
-        // necesitamos generos para crear y actualizar
-        factory(Gender::class, 2)->create();
-
-        // tambien necesitamos nacionalidades para crear y actualizar
-        factory(Nationality::class, 2)->create();
-    }
-
     public function testSideBarMenuShouldHaveCreateLinks()
     {
         $this->actingAs($this->user)
@@ -125,5 +91,30 @@ class EmployeeIntegrationTest extends AbstractUserIntegration
             ->visit(route('employees.edit', $employee->id))
             ->see(trans('defaults.auth.error'))
             ->seePageIs(route('index'));
+    }
+
+    /**
+     * @return \PCI\Models\User
+     */
+    protected function getUser()
+    {
+        /** @var \PCI\Models\User $user */
+        $user             = User::first();
+        $user->profile_id = User::ADMIN_ID;
+        $user->save();
+
+        return $user;
+    }
+
+    /**
+     * @return void
+     */
+    protected function persistData()
+    {
+        // necesitamos generos para crear y actualizar
+        factory(Gender::class, 2)->create();
+
+        // tambien necesitamos nacionalidades para crear y actualizar
+        factory(Nationality::class, 2)->create();
     }
 }

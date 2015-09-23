@@ -5,13 +5,17 @@ use PCI\Models\User;
 class UserIntegrationTest extends AbstractUserIntegration
 {
 
-    public function setUp()
+    public function testGenericTableShouldBeACollectionVariable()
     {
-        parent::setUp();
+        $this->actingAs($this->user)
+             ->visit('usuarios')
+             ->see($this->user->name);
 
-        $this->user = $this->getUser();
+        factory(User::class, 5)->create();
 
-        $this->persistData();
+        $this->actingAs($this->user)
+             ->visit('usuarios')
+             ->see($this->user->name);
     }
 
     /**
@@ -31,18 +35,5 @@ class UserIntegrationTest extends AbstractUserIntegration
     protected function persistData()
     {
         // TODO: Implement persistData() method.
-    }
-
-    public function testGenericTableShouldBeACollectionVariable()
-    {
-        $this->actingAs($this->user)
-            ->visit('usuarios')
-            ->see($this->user->name);
-
-        factory(User::class, 5)->create();
-
-        $this->actingAs($this->user)
-            ->visit('usuarios')
-            ->see($this->user->name);
     }
 }
