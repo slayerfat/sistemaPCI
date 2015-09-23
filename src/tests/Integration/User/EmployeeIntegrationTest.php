@@ -61,7 +61,10 @@ class EmployeeIntegrationTest extends AbstractUserIntegration
     public function testUserShouldBeAbleToEditIfAdmin()
     {
         $randomUser = factory(User::class)->create();
-        $employee   = factory(Employee::class)->create(['user_id' => $randomUser->id]);
+        $employee = factory(Employee::class)->create([
+            'user_id'    => $randomUser->id,
+            'address_id' => null
+        ]);
 
         $this->actingAs($this->user)
             ->visit(route('users.show', $randomUser->name))
@@ -83,7 +86,10 @@ class EmployeeIntegrationTest extends AbstractUserIntegration
         $anotherUser = factory(User::class)->create(['confirmation_code' => null]);
 
         $randomUser = factory(User::class)->create();
-        $employee   = factory(Employee::class)->create(['user_id' => $randomUser->id]);
+        $employee = factory(Employee::class)->create([
+            'user_id'    => $randomUser->id,
+            'address_id' => null
+        ]);
 
         $this->actingAs($anotherUser)
             ->visit(route('index'))
