@@ -36,8 +36,7 @@ class AddressesController extends Controller
      */
     public function town($id)
     {
-        $town    = Town::whereId($id)->first();
-        $stateId = $town->state_id;
+        $stateId = Town::whereId($id)->firstOrFail()->state_id;
 
         return Town::whereStateId($stateId)->get();
     }
@@ -60,8 +59,7 @@ class AddressesController extends Controller
      */
     public function parish($id)
     {
-        $parish = Parish::whereId($id)->firstOrFail();
-        $townId = $parish->town_id;
+        $townId = Parish::whereId($id)->firstOrFail()->town_id;
 
         return Parish::whereTownId($townId)->get();
     }
