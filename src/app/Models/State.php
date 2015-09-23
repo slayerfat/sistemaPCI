@@ -23,22 +23,8 @@ use Illuminate\Database\Eloquent\Collection;
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\State whereCreatedBy($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\State whereUpdatedBy($value)
  */
-class State extends AbstractBaseModel
+class State extends AbstractPlacesModel
 {
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = ['desc'];
-
-    protected $hidden = [
-        'created_at',
-        'updated_at',
-        'created_by',
-        'updated_by'
-    ];
 
     // -------------------------------------------------------------------------
     // Relaciones

@@ -28,15 +28,8 @@ use Illuminate\Database\Eloquent\Collection;
  * @property integer $town_id
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Parish whereTownId($value)
  */
-class Parish extends AbstractBaseModel
+class Parish extends AbstractPlacesModel
 {
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = ['desc'];
 
     // -------------------------------------------------------------------------
     // Relaciones
