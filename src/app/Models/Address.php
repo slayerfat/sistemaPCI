@@ -83,16 +83,13 @@ class Address extends AbstractBaseModel
     }
 
     /**
+     * (q . !k . !l) === !(!q + k + l)
      * @param $attr
      * @return bool
      */
     private function isAttrValid($attr)
     {
-        if (!isset($attr) || is_null($attr) || trim($attr) == '') {
-            return false;
-        }
-
-        return true;
+        return !(!isset($attr) || is_null($attr) || trim($attr) == '');
     }
 
     /**

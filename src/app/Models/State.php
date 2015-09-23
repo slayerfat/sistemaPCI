@@ -33,6 +33,13 @@ class State extends AbstractBaseModel
      */
     protected $fillable = ['desc'];
 
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+        'created_by',
+        'updated_by'
+    ];
+
     // -------------------------------------------------------------------------
     // Relaciones
     // -------------------------------------------------------------------------
