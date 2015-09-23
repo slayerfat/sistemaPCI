@@ -51,7 +51,7 @@ class AddressesController extends Controller
             return $this->redirectBack();
         }
 
-        return View::make('addresses.create', compact('employee'));
+        return View::make('addresses.create', compact('employee', 'address'));
     }
 
     /**

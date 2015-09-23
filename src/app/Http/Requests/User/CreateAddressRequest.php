@@ -2,6 +2,7 @@
 
 use PCI\Http\Requests\Request;
 use PCI\Repositories\Interfaces\User\AddressRepositoryInterface;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class CreateAddressRequest extends Request
 {
@@ -22,14 +23,29 @@ class CreateAddressRequest extends Request
     /**
      * Determine if the user is authorized to make this request.
      * @return bool
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException
      */
     public function authorize()
     {
-        $employee = $this->addrRepo->findParent($this->route('employees'));
+        switch ($this->method()) {
+            case 'PUT':
+            case 'PATCH':
+                $address  = $this->addrRepo->find($this->route('addresses'));
+                $employee = $address->employee;
 
-        $address = $this->addrRepo->newInstance();
+                return $this->user()->can('create', [$address, $employee]);
+                break;
 
-        return $this->user()->can('create', [$address, $employee]);
+            case 'POST':
+                $employee = $this->addrRepo->findParent($this->route('employees'));
+
+                $address = $this->addrRepo->newInstance();
+
+                return $this->user()->can('create', [$address, $employee]);
+
+            default:
+                throw new HttpException(500, 'Request con metodo invalido.');
+        }
     }
 
     /**
@@ -39,7 +55,10 @@ class CreateAddressRequest extends Request
     public function rules()
     {
         return [
-            //
+            'parish_id' => 'required|numeric',
+            'building'  => 'alpha|between:3, 50',
+            'street'    => 'alpha|max:255',
+            'av'        => 'alpha|max:255',
         ];
     }
 }

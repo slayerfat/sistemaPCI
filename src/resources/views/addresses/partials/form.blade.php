@@ -54,7 +54,7 @@ ControlGroup::generate(
 !!}
 
 {{--se tiene que hacer esta mamarrachada mientras tanto--}}
-<?php $id = ]$address->exists() ? $address->id : null ?>
+<?php $id = $address->exists() ? $address->id : null ?>
 
 <div class="form-group">
     <label for="parish_id" class="control-label col-sm-3">Parroquia</label>
