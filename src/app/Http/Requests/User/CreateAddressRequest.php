@@ -34,7 +34,6 @@ class CreateAddressRequest extends Request
                 $employee = $address->employee;
 
                 return $this->user()->can('create', [$address, $employee]);
-                break;
 
             case 'POST':
                 $employee = $this->addrRepo->findParent($this->route('employees'));
