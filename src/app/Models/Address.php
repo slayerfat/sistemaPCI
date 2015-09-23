@@ -79,11 +79,20 @@ class Address extends AbstractBaseModel
     {
         $attr = $this->attributes['building'];
 
+        return $this->isAttrValid($attr) ? 'Edf./Qta./Blq. ' . $this->building : null;
+    }
+
+    /**
+     * @param $attr
+     * @return bool
+     */
+    private function isAttrValid($attr)
+    {
         if (!isset($attr) || is_null($attr) || trim($attr) == '') {
-            return null;
+            return false;
         }
 
-        return 'Edf./Qta./Blq. ' . $this->building;
+        return true;
     }
 
     /**
@@ -93,25 +102,7 @@ class Address extends AbstractBaseModel
     {
         $attr = $this->attributes['street'];
 
-        if (!isset($attr) || is_null($attr) || trim($attr) == '') {
-            return null;
-        }
-
-        return 'Calle(s) ' . $this->street;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function formattedAv()
-    {
-        $attr = $this->attributes['av'];
-
-        if (!isset($attr) || is_null($attr) || trim($attr) == '') {
-            return null;
-        }
-
-        return 'Av. ' . $this->av;
+        return $this->isAttrValid($attr) ? 'Calle(s) ' . $this->street : null;
     }
 
     // -------------------------------------------------------------------------
@@ -121,16 +112,26 @@ class Address extends AbstractBaseModel
     // Belongs To 1..* -> 1
     // -------------------------------------------------------------------------
 
+    /**
+     * @return string|null
+     */
+    public function formattedAv()
+    {
+        $attr = $this->attributes['av'];
+
+        return $this->isAttrValid($attr) ? 'Av. ' . $this->av : null;
+    }
+
+    // -------------------------------------------------------------------------
+    // Has Many 1 -> 1..*
+    // -------------------------------------------------------------------------
+
     public function getBuildingAttribute($value)
     {
         $value = $this->removeDotInString($value);
 
         return $this->ucAndCleanString($value);
     }
-
-    // -------------------------------------------------------------------------
-    // Has Many 1 -> 1..*
-    // -------------------------------------------------------------------------
 
     /**
      * @param $value
