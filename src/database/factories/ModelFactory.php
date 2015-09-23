@@ -14,7 +14,7 @@ foreach ($models as $model) {
 
 $factory->define(PCI\Models\Address::class, function () use ($faker) {
     return [
-        'parish_id' => 1,
+        'parish_id' => factory(PCI\Models\Parish::class)->create()->id,
         'building'  => $faker->buildingNumber,
         'street'    => $faker->streetAddress,
         'av'        => $faker->word,
@@ -76,8 +76,8 @@ $factory->define(PCI\Models\Item::class, function () use ($faker) {
 
 $factory->define(PCI\Models\Movement::class, function () use ($faker) {
     return [
-        'note_id'          => 1,
         'movement_type_id' => 1,
+        'note_id' => factory(PCI\Models\Note::class)->create()->id,
         'creation'         => $faker->dateTime,
     ];
 });
@@ -85,9 +85,9 @@ $factory->define(PCI\Models\Movement::class, function () use ($faker) {
 $factory->define(PCI\Models\Note::class, function () use ($faker) {
     return [
         'user_id'      => 1,
-        'attendant_id' => 1,
         'note_type_id' => 1,
-        'petition_id'  => 1,
+        'attendant_id' => factory(PCI\Models\User::class)->create()->id,
+        'petition_id'  => factory(PCI\Models\Petition::class)->create()->id,
         'creation'     => $faker->dateTime,
         'comments'     => $faker->paragraph,
         'status'       => true,
