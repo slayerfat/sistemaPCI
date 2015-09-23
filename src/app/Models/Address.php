@@ -77,11 +77,9 @@ class Address extends AbstractBaseModel
      */
     public function formattedBuilding()
     {
-        if (!isset($this->attributes['building'])) {
-            return null;
-        }
+        $attr = $this->attributes['building'];
 
-        if (!is_null($this->attributes['building'])) {
+        if (!isset($attr) || is_null($attr) || trim($attr) == '') {
             return null;
         }
 
@@ -93,11 +91,9 @@ class Address extends AbstractBaseModel
      */
     public function formattedStreet()
     {
-        if (!isset($this->attributes['street'])) {
-            return null;
-        }
+        $attr = $this->attributes['street'];
 
-        if (!is_null($this->attributes['building'])) {
+        if (!isset($attr) || is_null($attr) || trim($attr) == '') {
             return null;
         }
 
@@ -109,11 +105,9 @@ class Address extends AbstractBaseModel
      */
     public function formattedAv()
     {
-        if (!isset($this->attributes['av'])) {
-            return null;
-        }
+        $attr = $this->attributes['av'];
 
-        if (!is_null($this->attributes['building'])) {
+        if (!isset($attr) || is_null($attr) || trim($attr) == '') {
             return null;
         }
 
@@ -144,7 +138,11 @@ class Address extends AbstractBaseModel
      */
     private function removeDotInString($value)
     {
-        if (is_null($value) && $value[strlen($value) - 1] == '.') {
+        if (is_null($value) || trim($value) == '') {
+            return null;
+        }
+
+        if ($value[strlen($value) - 1] == '.') {
             $value[strlen($value) - 1] = null;
         }
 
