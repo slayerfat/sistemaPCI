@@ -42,10 +42,10 @@ class UpdateEmployeeRequest extends Request
         return [
             'ci' => 'numeric|between:999999,99999999|unique:employees,ci,'
                 . (int) $this->route('employees'),
-            'first_name'     => 'required|string|max:20',
-            'last_name'      => 'string|max:20',
-            'first_surname'  => 'required|string|max:20',
-            'last_surname'   => 'string|max:20',
+            'first_name'    => 'required|regex:/^[a-zA-Z-_áéíóúÁÉÍÓÚÑñ\']+$/|between:3,20',
+            'last_name'     => 'regex:/^[a-zA-Z-_áéíóúÁÉÍÓÚÑñ\']+$/|between:3,20',
+            'first_surname' => 'required|regex:/^[a-zA-Z-_áéíóúÁÉÍÓÚÑñ\']+$/|between:3,20',
+            'last_surname'  => 'regex:/^[a-zA-Z-_áéíóúÁÉÍÓÚÑñ\']+$/|between:3,20',
             'phone'          => 'max:15',
             'cellphone'      => 'max:15',
             'gender_id'      => 'numeric',
