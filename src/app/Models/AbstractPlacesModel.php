@@ -20,5 +20,4 @@ class AbstractPlacesModel extends AbstractBaseModel
         'created_by',
         'updated_by'
     ];
-
 }
