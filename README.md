@@ -10,7 +10,7 @@ Misión Alma Mater, Programa Nacional de Formación: Informatica, Trayecto 3, IU
 - [x] v0.1 Usuario
 - [x] v0.1.x Entidades Auxiliares
 - [x] v0.2 Empleado
-- [ ] v0.2.x Direccion con Estado Municipio y Parroquia
+- [x] v0.2.x Direccion con Estado Municipio y Parroquia
 - [ ] v0.3 Almacen e Items
 
 ## Dependencias del Sistema
