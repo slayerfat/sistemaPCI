@@ -20,6 +20,7 @@ class ProfilesController extends AbstractAuxController
     private $model;
 
     /**
+     * Este controlador necesita el repositorio de pefiles.
      * @param \Illuminate\View\Factory $view
      * @param \PCI\Repositories\Interfaces\Aux\ProfileRepositoryInterface $repo
      */

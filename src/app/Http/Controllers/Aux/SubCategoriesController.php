@@ -20,6 +20,7 @@ class SubCategoriesController extends AbstractAuxController
     private $model;
 
     /**
+     * Este controlador necesita el repositorio de rubros.
      * @param \Illuminate\View\Factory $view
      * @param \PCI\Repositories\Interfaces\Aux\SubCategoryRepositoryInterface $repo
      */

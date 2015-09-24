@@ -6,6 +6,12 @@ use PCI\Models\Parish;
 use PCI\Models\State;
 use PCI\Models\Town;
 
+/**
+ * Class AddressesController
+ * @package PCI\Http\Controllers\Api\Address
+ * @author Alejandro Granadillo <slayerfat@gmail.com>
+ * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
+ */
 class AddressesController extends Controller
 {
 

@@ -20,6 +20,7 @@ class GendersController extends AbstractAuxController
     private $model;
 
     /**
+     * Este controlador necesita el repositorio de generos.
      * @param \Illuminate\View\Factory $view
      * @param \PCI\Repositories\Interfaces\Aux\GenderRepositoryInterface $repo
      */

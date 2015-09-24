@@ -20,6 +20,7 @@ class ItemTypesController extends AbstractAuxController
     private $model;
 
     /**
+     * Este controlador necesita el repositorio de tipos de items.
      * @param \Illuminate\View\Factory $view
      * @param \PCI\Repositories\Interfaces\Aux\ItemTypesRepositoryInterface $repo
      */

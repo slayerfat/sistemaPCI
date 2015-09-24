@@ -20,6 +20,7 @@ class MakersController extends AbstractAuxController
     private $model;
 
     /**
+     * Este controlador necesita el repositorio de fabricantes.
      * @param \Illuminate\View\Factory $view
      * @param \PCI\Repositories\Interfaces\Aux\MakerRepositoryInterface $repo
      */

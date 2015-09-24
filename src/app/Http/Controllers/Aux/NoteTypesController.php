@@ -20,6 +20,7 @@ class NoteTypesController extends AbstractAuxController
     private $model;
 
     /**
+     * Este controlador necesita el repositorio de tipo de notas.
      * @param \Illuminate\View\Factory $view
      * @param \PCI\Repositories\Interfaces\Aux\NoteTypeRepositoryInterface $repo
      */

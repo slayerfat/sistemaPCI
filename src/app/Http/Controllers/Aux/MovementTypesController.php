@@ -20,6 +20,7 @@ class MovementTypesController extends AbstractAuxController
     private $model;
 
     /**
+     * Este controlador necesita el repositorio de tipo de movimientos.
      * @param \Illuminate\View\Factory $view
      * @param \PCI\Repositories\Interfaces\Aux\MovementTypeRepositoryInterface $repo
      */

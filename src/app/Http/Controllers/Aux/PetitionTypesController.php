@@ -20,6 +20,7 @@ class PetitionTypesController extends AbstractAuxController
     private $model;
 
     /**
+     * Este controlador necesita el repositorio de tipo de pedido.
      * @param \Illuminate\View\Factory $view
      * @param \PCI\Repositories\Interfaces\Aux\PetitionTypeRepositoryInterface $repo
      */

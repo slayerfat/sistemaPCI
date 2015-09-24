@@ -20,6 +20,7 @@ class NationalitiesController extends AbstractAuxController
     private $model;
 
     /**
+     * Este controlador necesita el repositorio de nacionalidades.
      * @param \Illuminate\View\Factory $view
      * @param \PCI\Repositories\Interfaces\Aux\NationalityRepositoryInterface $repo
      */

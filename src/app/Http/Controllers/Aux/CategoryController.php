@@ -20,6 +20,7 @@ class CategoryController extends AbstractAuxController
     private $model;
 
     /**
+     * Este controlador necesita el repositorio de categorias.
      * @param \Illuminate\View\Factory $view
      * @param \PCI\Repositories\Interfaces\Aux\CategoryRepositoryInterface $catRepo
      */

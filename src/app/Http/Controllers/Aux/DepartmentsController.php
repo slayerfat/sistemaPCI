@@ -20,6 +20,7 @@ class DepartmentsController extends AbstractAuxController
     private $model;
 
     /**
+     * Este controlador necesita el repositorio de departamentos.
      * @param \Illuminate\View\Factory $view
      * @param \PCI\Repositories\Interfaces\Aux\DepartmentRepositoryInterface $repo
      */
