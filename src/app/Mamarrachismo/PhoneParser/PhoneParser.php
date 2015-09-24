@@ -2,6 +2,12 @@
 
 use PCI\Mamarrachismo\PhoneParser\Interfaces\PhoneParserInterface;
 
+/**
+ * Class PhoneParser
+ * @package PCI\Mamarrachismo\PhoneParser
+ * @author Alejandro Granadillo <slayerfat@gmail.com>
+ * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
+ */
 class PhoneParser implements PhoneParserInterface
 {
 
@@ -24,8 +30,8 @@ class PhoneParser implements PhoneParserInterface
     /**
      * Chequea y devuelve el telefono acomodado.
      * ej: 02123334422 -> (212)-333-4422
-     * @param string $number
-     * @return string
+     * @param int|string $number el numero, ej: 02123334422
+     * @return string regresa en formato (212)-333-4422
      */
     public function parseNumber($number)
     {
@@ -43,10 +49,26 @@ class PhoneParser implements PhoneParserInterface
     }
 
     /**
+     * Ejecuta la comprobacion por medio de regex
+     * y devuelve lo se pudo capturar.
+     * @param string $regex el regex a ejecutar
+     * @param string $data el texto al que se hara la comprobacion.
+     * @return string[]
+     */
+    private function execute($regex, $data)
+    {
+        $matches = [];
+
+        preg_match($regex, (string) $data, $matches);
+
+        return $matches;
+    }
+
+    /**
      * Chequea y devuelve el telefono acomodado.
      * ej: algo1232224455xzx -> 1232224455
-     * @param int|string $number
-     * @return string
+     * @param string $number el texto con el numero.
+     * @return string regresa el numero, ej: 1232224455
      */
     public function parseString($number)
     {
@@ -61,19 +83,5 @@ class PhoneParser implements PhoneParserInterface
         }
 
         return '';
-    }
-
-    /**
-     * @param $regex
-     * @param $data
-     * @return string[]
-     */
-    private function execute($regex, $data)
-    {
-        $matches = [];
-
-        preg_match($regex, (string) $data, $matches);
-
-        return $matches;
     }
 }
