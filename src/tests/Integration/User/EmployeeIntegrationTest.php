@@ -75,6 +75,7 @@ class EmployeeIntegrationTest extends AbstractUserIntegration
             ->type('testing', 'first_name')
             ->type('again', 'first_surname')
             ->press(trans('models.employees.edit'))
+            ->dontSee('Oops!')
             ->seePageIs(route('users.show', $randomUser->name))
             ->see(trans('models.employees.update.success'))
             ->see('testing')

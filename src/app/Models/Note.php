@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Collection;
 
 /**
  * PCI\Models\Note
- *
+
  * @property integer $id
  * @property integer $user_id
  * @property integer $to_user_id
@@ -20,6 +20,8 @@ use Illuminate\Database\Eloquent\Collection;
  * @property boolean $status
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
+ * @property integer $created_by
+ * @property integer $updated_by
  * @property-read Petition $petition
  * @property-read User $requestedBy
  * @property-read User $toUser
@@ -38,8 +40,6 @@ use Illuminate\Database\Eloquent\Collection;
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Note whereStatus($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Note whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Note whereUpdatedAt($value)
- * @property integer $created_by
- * @property integer $updated_by
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Note whereCreatedBy($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Note whereUpdatedBy($value)
  */

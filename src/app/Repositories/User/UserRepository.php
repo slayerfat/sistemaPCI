@@ -1,21 +1,31 @@
 <?php namespace PCI\Repositories\User;
 
-use PCI\Models\AbstractBaseModel;
-use PCI\Mamarrachismo\PhoneParser\PhoneParser;
 use Illuminate\Pagination\LengthAwarePaginator;
+use PCI\Mamarrachismo\PhoneParser\PhoneParser;
+use PCI\Models\AbstractBaseModel;
 use PCI\Repositories\AbstractRepository;
-use PCI\Repositories\ViewVariable\ViewPaginatorVariable;
+use PCI\Repositories\Interfaces\GetByNameOrIdInterface;
 use PCI\Repositories\Interfaces\User\UserRepositoryInterface;
+use PCI\Repositories\ViewVariable\ViewPaginatorVariable;
 
-class UserRepository extends AbstractRepository implements UserRepositoryInterface
+/**
+ * Class UserRepository
+ * @package PCI\Repositories\User
+ * @author Alejandro Granadillo <slayerfat@gmail.com>
+ * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
+ */
+class UserRepository extends AbstractRepository implements UserRepositoryInterface, GetByNameOrIdInterface
 {
 
     /**
+     * El repositorio del que depende este.
      * @var \PCI\Models\User
      */
     protected $model;
 
     /**
+     * genera un codigo de 32 caracteres para validar
+     * al usuario por correo por primera vez.
      * @return \PCI\Models\User
      */
     public function generateConfirmationCode()
@@ -30,17 +40,22 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
     }
 
     /**
-     * @param string $code
-     * @return boolean
+     * confirma el codigo previamente creado.
+     * @param string $code El codigo de 32 caracteres.
+     * @return bool Verdaredo si existe un usuario con este codigo.
      */
     public function confirmCode($code)
     {
         $user = $this->model->whereConfirmationCode($code)->first();
 
+        // si no hay usuario este no sera confirmado.
         if (is_null($user)) {
             return false;
         }
 
+        // si existe el codigo se cambia a nulo que significa que el
+        // usuario no posee condigo de confirmacion
+        // por ende esta confirmado.
         $user->confirmation_code = null;
         $user->save();
 
@@ -48,14 +63,20 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
     }
 
     /**
-     * @param array $data
-     * @return \PCI\Repositories\AbstractRepository|null
+     * Persiste informacion referente a una entidad.
+     * Se sobrescribe del padre porque es
+     * necesaria logica adicional.
+     * @param array $data El array con informacion del modelo.
+     * @return \PCI\Models\User
      */
     public function create(array $data)
     {
         /** @var \PCI\Models\User $user */
         $user = $this->newInstance();
 
+        // detallese que se guarda la contraseña
+        // de forma encriptada por medio de
+        // la funcion global bcrypt.
         $user->name       = $data['name'];
         $user->email      = $data['email'];
         $user->password   = bcrypt($data['password']);
@@ -68,16 +89,19 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
     }
 
     /**
-     * Actualiza algun modelo.
-     * @param int   $id
-     * @param array $data
-     * @return \PCI\Models\AbstractBaseModel
+     * Actualiza algun modelo y lo persiste
+     * en la base de datos del sistema.
+     * @param int $id El identificador unico.
+     * @param array $data El arreglo con informacion relacioada al modelo.
+     * @return \PCI\Models\User
      */
     public function update($id, array $data)
     {
         /** @var \PCI\Models\User $user */
         $user = $this->find($id);
 
+        // si no se introdujo una nueva contraseña
+        // entonces no se persiste la clave.
         if (trim($data['password']) != '') {
             $user->password = bcrypt($data['password']);
         }
@@ -92,7 +116,8 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
     }
 
     /**
-     * @param  string|int $id
+     * Busca algun Elemento segun Id u otra regla.
+     * @param  string|int $id El identificador unico (slug|name|etc|id).
      * @return \PCI\Models\AbstractBaseModel
      */
     public function find($id)
@@ -103,8 +128,19 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
     }
 
     /**
+     * Busca en la base de datos algun modelo
+     * que tenga un campo nombre y/o id.
+     * @param  string|int $id El identificador (name|id)
+     * @return \PCI\Models\User
+     */
+    public function getByNameOrId($id)
+    {
+        return $this->getByIdOrAnother($id, 'name');
+    }
+
+    /**
      * Elimina del sistema un modelo.
-     * @param $id
+     * @param int $id El identificador unico.
      * @return boolean|\PCI\Models\AbstractBaseModel
      */
     public function delete($id)
@@ -129,7 +165,7 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
     /**
      * Genera un objeto LengthAwarePaginator con todos los
      * usuarios en el sistema y con eager loading.
-     * @param int $quantity
+     * @param int $quantity la cantidad a mostrar por pagina.
      * @return LengthAwarePaginator
      */
     public function getTablePaginator($quantity = 25)
@@ -141,6 +177,7 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
     }
 
     /**
+     * Consigue todos los elementos y devuelve una coleccion.
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function getAll()
@@ -152,12 +189,13 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
 
     /**
      * genera la data necesaria que utilizara el paginator.
-     *
      * @param \PCI\Models\AbstractBaseModel|\PCI\Models\User $user
      * @return array
      */
     protected function makePaginatorData(AbstractBaseModel $user)
     {
+        // estos son los datos propios
+        // del usuario que nos interesa.
         $partial = [
             'uid'       => $user->name,
             'Seudonimo' => $user->name,
@@ -165,24 +203,30 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
             'Perfil'    => $user->profile->desc
         ];
 
+        // si el usuario tiene informacion de empleado
+        // entonces nos conviene extraer esta.
         if ($user->employee) {
             $parser = new PhoneParser;
 
             $phone = $parser->parseNumber($user->employee->phone);
 
             $employee = [
-                'Nombres'   => $user->employee->formattedNames(),
-                'C.I.'      => $user->employee->ci,
-                'Telefono'  => $phone
+                'Nombres'  => $user->employee->formattedNames(),
+                'C.I.'     => $user->employee->ci,
+                'Telefono' => $phone
             ];
 
+            // una vez complado unimos los dos arreglos en uno solo
             return array_merge($partial, $employee);
         }
 
+        // como el usuario no posee informacion de personal
+        // creamos este arreglo con datos por defecto
+        // para que se vea bonito en la vista.
         $defaults = [
-            'Nombres'   => '-',
-            'C.I.'      => '-',
-            'Telefono'  => '-'
+            'Nombres'  => '-',
+            'C.I.'     => '-',
+            'Telefono' => '-'
         ];
 
         return array_merge($partial, $defaults);

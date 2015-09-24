@@ -10,10 +10,11 @@ use Illuminate\Database\Eloquent\Collection;
 
 /**
  * PCI\Models\SubCategory
- *
+
  * @property integer $id
  * @property integer $category_id
  * @property string $desc
+ * @property string $slug
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property integer $created_by
@@ -23,12 +24,11 @@ use Illuminate\Database\Eloquent\Collection;
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\SubCategory whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\SubCategory whereCategoryId($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\SubCategory whereDesc($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\SubCategory whereSlug($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\SubCategory whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\SubCategory whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\SubCategory whereCreatedBy($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\SubCategory whereUpdatedBy($value)
- * @property string $slug
- * @method static \Illuminate\Database\Query\Builder|\PCI\Models\SubCategory whereSlug($value)
  */
 class SubCategory extends AbstractBaseModel implements SluggableInterface
 {

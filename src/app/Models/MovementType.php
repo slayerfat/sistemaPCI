@@ -10,9 +10,10 @@ use Illuminate\Database\Eloquent\Collection;
 
 /**
  * PCI\Models\MovementType
- *
+
  * @property integer $id
  * @property string $desc
+ * @property string $slug
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property integer $created_by
@@ -20,12 +21,11 @@ use Illuminate\Database\Eloquent\Collection;
  * @property-read \Illuminate\Database\Eloquent\Collection|Movement[] $movements
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\MovementType whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\MovementType whereDesc($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\MovementType whereSlug($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\MovementType whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\MovementType whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\MovementType whereCreatedBy($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\MovementType whereUpdatedBy($value)
- * @property string $slug
- * @method static \Illuminate\Database\Query\Builder|\PCI\Models\MovementType whereSlug($value)
  */
 class MovementType extends AbstractBaseModel implements SluggableInterface
 {

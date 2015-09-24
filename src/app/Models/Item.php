@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Collection;
 
 /**
  * PCI\Models\Item
- *
+
  * @property integer $id
  * @property integer $item_type_id
  * @property integer $maker_id
@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Collection;
  * @property string $asoc
  * @property integer $priority
  * @property string $desc
+ * @property string $slug
  * @property integer $stock
  * @property integer $minimum
  * @property \Carbon\Carbon $due
@@ -29,7 +30,7 @@ use Illuminate\Database\Eloquent\Collection;
  * @property-read Maker $maker
  * @property-read ItemType $type
  * @property-read \Illuminate\Database\Eloquent\Collection|Depot[] $depots
- * @property-read \Illuminate\Database\Eloquent\Collection|Item[] $dependsOn
+ * @property-read \Illuminate\Database\Eloquent\Collection|self[] $dependsOn
  * @property-read \Illuminate\Database\Eloquent\Collection|Petition[] $petitions
  * @property-read \Illuminate\Database\Eloquent\Collection|Movement[] $movements
  * @property-read \Illuminate\Database\Eloquent\Collection|Note[] $notes
@@ -40,6 +41,7 @@ use Illuminate\Database\Eloquent\Collection;
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Item whereAsoc($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Item wherePriority($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Item whereDesc($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Item whereSlug($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Item whereStock($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Item whereMinimum($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Item whereDue($value)
@@ -47,8 +49,6 @@ use Illuminate\Database\Eloquent\Collection;
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Item whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Item whereCreatedBy($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Item whereUpdatedBy($value)
- * @property string $slug
- * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Item whereSlug($value)
  */
 class Item extends AbstractBaseModel implements SluggableInterface
 {

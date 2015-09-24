@@ -157,10 +157,24 @@ return [
         PCI\Providers\EventServiceProvider::class,
         PCI\Providers\RouteServiceProvider::class,
         PCI\Providers\ViewComposerServiceProvider::class,
-        PCI\Providers\CaimaeitorServiceProvider::class,
-        PCI\Providers\User\UsersRepositoriesServiceProvider::class,
-        PCI\Providers\Aux\AuxRepositoriesProvider::class,
         PCI\Providers\User\UserDeletingServiceProvider::class,
+        PCI\Providers\PhoneParserProvider::class,
+        /**
+         * Caimaneitor servis provaider
+         */
+        PCI\Providers\CaimaeitorServiceProvider::class,
+        /**
+         * Repositorios
+         */
+        PCI\Providers\Aux\CategoryRepositoryProvider::class,
+        PCI\Providers\Aux\EmployeeRepositoriesProvider::class,
+        PCI\Providers\Aux\MakerRepositoriesProvider::class,
+        PCI\Providers\Aux\ProfileRepositoryProvider::class,
+        PCI\Providers\Aux\SubCategoryRepositoryProvider::class,
+        PCI\Providers\Aux\TypesRepositoriesProvider::class,
+        PCI\Providers\User\AddressRepositoryProvider::class,
+        PCI\Providers\User\EmployeeRepositoryProvider::class,
+        PCI\Providers\User\UsersRepositoriesServiceProvider::class,
     ],
 
     /*

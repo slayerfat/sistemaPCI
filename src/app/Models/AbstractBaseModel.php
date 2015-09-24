@@ -7,8 +7,8 @@ use Log;
 use LogicException;
 
 /**
- * Class AbstractBaseModel
- *
+ * PCI\Models\AbstractBaseModel
+
  * @package PCI\Models
  * @SuppressWarnings(PHPMD.NumberOfChildren)
  * Se suprime esta advertencia por ser todos los hijos
@@ -85,6 +85,15 @@ class AbstractBaseModel extends Eloquent
     }
 
     /**
+     * @param $value
+     * @return Date
+     */
+    protected function getDateInstance($value)
+    {
+        return Date::make($value);
+    }
+
+    /**
      * Cuando se pide la fecha de updated_at se devuelve una
      * instancia de Date en vez de Carbon\Carbon
      * @param $value
@@ -96,30 +105,12 @@ class AbstractBaseModel extends Eloquent
     }
 
     /**
-     * @param $value
-     * @return Date
-     */
-    protected function getDateInstance($value)
-    {
-        return Date::make($value);
-    }
-
-    /**
      * Busca al usuario que creo a este modelo.
      * @return User
      */
     public function createdBy()
     {
         return $this->findModelManipulator('created_by');
-    }
-
-    /**
-     * Busca al ultimo usuario que actualizo este modelo.
-     * @return User
-     */
-    public function updatedBy()
-    {
-        return $this->findModelManipulator('updated_by');
     }
 
     /**
@@ -138,5 +129,14 @@ class AbstractBaseModel extends Eloquent
         }
 
         return User::newInstance();
+    }
+
+    /**
+     * Busca al ultimo usuario que actualizo este modelo.
+     * @return User
+     */
+    public function updatedBy()
+    {
+        return $this->findModelManipulator('updated_by');
     }
 }

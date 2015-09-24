@@ -1,39 +1,55 @@
-## v0.2.1 23-09-15
+# Change Log
 
-Features:
+Todos los cambios significatiovos en este proyecto estaran documentados en este archivo. Este proyecto intenta seguir el [Versionamiento Semantico](http://semver.org/).
+
+## [En Desarrollo][unrele]
+
+### Añadido:
+
+- Mejor documentacion interna en las clases de Providers y Repositories
+
+### Cambiado:
+
+- Mejorado ModelFactory
+- Carpinteria en app/Providers y app/Repositories
+- El Changelog con [este 'standard'](https://github.com/olivierlacan/keep-a-changelog)
+
+## [v0.2.1] - 2015-09-23
+
+### Añadido:
 
 - creada direccion de Empleado.
 - creado api interno de Estados, Municpios, Parroquias.
 
-Cambios:
+### Cambiado:
 
 - Direcciones cambiado 1 a 1 con Empleado. (ver DEDCHANGE.md 22-09-15)
 
-## v0.2.0 22-09-15
+## [v0.2.0] - 2015-09-22
 
-Features:
+### Añadido:
 
 - creado recurso de Empleados.
 
-Mejoras:
+### Cambiado:
 
 - actualizado resources/lang/es/models.php
 - Carpinteria genderal en src/app/
 
-## v0.1.2 21-09-15
+## v0.1.2 - 2015-09-21
 
-Features:
+### Añadido:
 
 - navbar mejorado
 - implementados a la lista de recursos genericos: todos excepto Estado, Municipio, Parroquia
 
-Mejoras:
+### Cambiado:
 
 - Las siguientes entidades poseen un campo Slug: Cargo
 
-## v0.1.1 19-07-15
+## [v0.1.1] - 2015-09-19
 
-Features:
+### Añadido:
 
 - Recursos genericos/Auxiliares completos (gestion de Categoria, Perfiles, etc.), todos estos pueden cumplir las actividades basicas:
     1. consultar listado
@@ -44,21 +60,21 @@ Features:
 - creados Repositorios, Proveedores y otros necesarios para: Categoria, Departamento
 - creadas algunas pruebas de integracion.
 
-Mejoras:
+### Cambiado:
 
 - Mejorada interfaces de repos, un poco mas abstracto.
 - creada funcion mamarrachamente que genera el directorio publico de la aplicacion.
 - Las siguientes entidades poseen un campo Slug: Categoria, Departamento, Genero, Item, Maker, Movimiento, Nacionalidad, Tipo de Nota, Tipo de Peticion, Perfil, SubCategoria.
 
-## v0.0.6 17-09-15
+## [v0.1.0] - 2015-09-17
 
-Features:
+### Añadido:
 
 - modulo esencial de usuario completado.
 - creado PhoneParser: manipula telefonos segun formato venezolano, (`Mamarrachamente`).
 - **Caimaneitor** posee sus propios **JIUNITESS**.
 
-Mejoras:
+### Cambiado:
 
 - restructurada carpeta de tests.
 - creadas pruebas adicionales.
@@ -66,20 +82,20 @@ Mejoras:
 - Middleware: creado RedirectIfNotAdmin, para chequear el perfil de adiministrador del usuario.
 - Providers: UserDeletingServiceProvider, para manipular de ser necesario al usuario cuando es eliminado.
 
-## v0.0.5 14-09-15
+## [v0.0.5] - 2015-09-14
 
-Features:
+### Añadido:
 
 - **Caimaneitor: ENJANST!**
 - implementacion parcial de modulo de usuarios.
 
-Mejoras:
+### Cambiado:
 
 - añadidas algunas pruebas del repositorio de usuarios y el modelo de usuarios.
 
-## v0.0.4 13-09-15
+## [v0.0.4] - 2015-09-13
 
-Features:
+### Añadido:
 
 - **Creado Caimaneitor:** `php artisan inspirar`
 - Creadp Repositorio parcial de Usuario.
@@ -91,7 +107,7 @@ Features:
 - creado evento de registro de nuevo usuario (enviar email, codigo de autorizacion, etc...)
 - flujo completo de Usuario se registra, Usuario necesita verificacion, Usuario verifica.
 
-Cambios:
+### Cambiado:
 
 - Como todos los seeds tienen namespace, es necesario usarlos con `php src/artisan db:seed --class="PCI\Database\DatabaseSeeder"`
 - Gran decepcion en el uso de artisan serve: por alguna razon, ya sea por mi ignorancia o por algun otro motivo, el servidor de php no estaba funcionando correctamente para jalar algunos assets (bootstrap, jquery etc.) de forma normal, sin embargo por medio de apache2 funciona segun lo esperado.
@@ -104,26 +120,26 @@ Cambios:
     - alternativa: devolver sistema a estructura original (no se cuanto tiempo quitara).
     - alternativa: ver como desacoplar este asunto de laravel (tiempo?).
 
-## v0.0.3 10-09-15
+## [v0.0.3] - 2015-09-10
 
-Features:
+### Añadido:
 
 - ModelFactory, todos los modelos tienen fabricas.
 - Creadas Migraciones de todos los modelos del sistema.
 - Añadida entidad Perfil en el sistema.
 - Creado TODO.md para control interno.
 
-Mejoras:
+### Cambiado:
 
 - Reducido acoplamiento en Personal y ajustadas interacciones con Usuario.
 
-bugfixes:
+Arreglado:
 
 - migraciones deberian trabajar correctamente: ajuste en mig de usuario y perfiles.
 
-## v0.0.2 07-09-15
+## [v0.0.2] - 2015-09-07
 
-Documentacion:
+### Documentacion:
 
 Se crearon documentacion segun aspectos clave del sistema, para ser referenciados facilmente, estos son:
 
@@ -131,7 +147,7 @@ Se crearon documentacion segun aspectos clave del sistema, para ser referenciado
 1. DATASTRUC.md: cambios dentro de la estructura de datos y entidades.
 1. DEDCHANGE.md: cambios relevantes en el documento de especificacion de diseño (incluyendo doc. esp. requsitos) que no impactan en la estructura de datos.
 
-Features:
+### Añadido:
 
   1. Modelos
     - Todos los modelos segun el diagrama de clases refinado completado.
@@ -143,8 +159,20 @@ Features:
   1. Integracion continua
     - primeros pasos establecidos para integracion continua por medio de travis y scrutinizer.
 
-Bugfixes:
+### Arreglado:
 
   - ajustado forma en la que se trabaja composer, phpunit y otros servicios.
   - `replace.php` deberia funcionar correctamente.
   - cypher deberia funcionar por cambio de strings de tamaño 32.
+
+[unrele]: https://github.com/slayerfat/sistemaPCI/compare/v0.2.1...develop
+[v0.2.1]: https://github.com/slayerfat/sistemaPCI/compare/v0.2.0...v0.2.1
+[v0.2.0]: https://github.com/slayerfat/sistemaPCI/compare/v0.1.2...v0.2.0
+[v0.1.2]: https://github.com/slayerfat/sistemaPCI/compare/v0.1.1...v0.1.2
+[v0.1.1]: https://github.com/slayerfat/sistemaPCI/compare/v0.1.0...v0.1.1
+[v0.1.0]: https://github.com/slayerfat/sistemaPCI/compare/v0.0.5...v0.1.0
+[v0.0.5]: https://github.com/slayerfat/sistemaPCI/compare/v0.0.4...v0.0.5
+[v0.0.4]: https://github.com/slayerfat/sistemaPCI/compare/v0.0.3...v0.0.4
+[v0.0.3]: https://github.com/slayerfat/sistemaPCI/compare/v0.0.2...v0.0.3
+[v0.0.2]: https://github.com/slayerfat/sistemaPCI/compare/v0.0.1...v0.0.2
+[v0.0.1]: https://github.com/slayerfat/sistemaPCI/compare/v0.0.1-0...v0.0.1

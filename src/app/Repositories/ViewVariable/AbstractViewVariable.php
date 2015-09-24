@@ -1,13 +1,15 @@
 <?php namespace PCI\Repositories\ViewVariable;
 
-use StdClass;
 use PCI\Models\AbstractBaseModel;
 use PCI\Repositories\ViewVariable\Interfaces\ViewVariableInterface;
+use StdClass;
 
 /**
  * Class AbstractViewVariable
  * @package PCI\Repositories\ViewVariable
+ * @author Alejandro Granadillo <slayerfat@gmail.com>
  * @link http://i.imgur.com/xVyoSl.jpg
+ * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
  */
 abstract class AbstractViewVariable implements ViewVariableInterface
 {
@@ -18,11 +20,15 @@ abstract class AbstractViewVariable implements ViewVariableInterface
     protected $model;
 
     /**
+     * La vista destino que la activdad
+     * esta por logica destinada a ir,
+     * util para el controlador y vistas.
      * @var string
      */
     protected $destView;
 
     /**
+     * La vista inicial, util para el controlador y vistas.
      * @var string
      */
     protected $initialView;
@@ -35,11 +41,13 @@ abstract class AbstractViewVariable implements ViewVariableInterface
     protected $usersGoal;
 
     /**
+     * El nombre de la llave foranea del modelo.
      * @var string
      */
     protected $foreignKey;
 
     /**
+     * El modelo padre relacionado.
      * @var \PCI\Models\AbstractBaseModel
      */
     protected $parent;
@@ -72,11 +80,7 @@ abstract class AbstractViewVariable implements ViewVariableInterface
     protected $trans;
 
     /**
-     * @return mixed
-     */
-    abstract public function getModel();
-
-    /**
+     * Los objetivos del usuario en texto legible.
      * @return string
      */
     public function getUsersGoal()
@@ -85,6 +89,8 @@ abstract class AbstractViewVariable implements ViewVariableInterface
     }
 
     /**
+     * Genera o cambia los objetivos
+     * del usuario en la actividad.
      * @param string $usersGoal
      */
     public function setUsersGoal($usersGoal)
@@ -93,6 +99,8 @@ abstract class AbstractViewVariable implements ViewVariableInterface
     }
 
     /**
+     * La vista destino que la actividad
+     * esta por logica destinada a ir.
      * @return string
      */
     public function getDestView()
@@ -101,6 +109,7 @@ abstract class AbstractViewVariable implements ViewVariableInterface
     }
 
     /**
+     * Cambia o guarda la vista destino.
      * @param string $destView
      */
     public function setDestView($destView)
@@ -109,6 +118,8 @@ abstract class AbstractViewVariable implements ViewVariableInterface
     }
 
     /**
+     * La vista inicial en 'vista.tal' para
+     * ser utilizada por View.
      * @return string
      */
     public function getInitialView()
@@ -117,6 +128,9 @@ abstract class AbstractViewVariable implements ViewVariableInterface
     }
 
     /**
+     * Guarda la vista inicial.
+     * La vista inicial en 'vista.tal' para
+     * ser utilizada por View.
      * @param string $initialView
      */
     public function setInitialView($initialView)
@@ -125,6 +139,7 @@ abstract class AbstractViewVariable implements ViewVariableInterface
     }
 
     /**
+     * Llave foranea segun la estructura de datos.
      * @return string
      */
     public function getForeignKey()
@@ -133,6 +148,7 @@ abstract class AbstractViewVariable implements ViewVariableInterface
     }
 
     /**
+     * Cambia la llave foranea segun la estructura de datos
      * @param string $foreignKey
      */
     public function setForeignKey($foreignKey)
@@ -141,24 +157,13 @@ abstract class AbstractViewVariable implements ViewVariableInterface
     }
 
     /**
+     * Regresa el modelo Eloquent del padre
+     * relacionado al modelo principal.
      * @return \PCI\Models\AbstractBaseModel
      */
     public function getParent()
     {
         return new $this->parent;
-    }
-
-    /**
-     * @param string $field
-     * @param string $id
-     * @return array
-     */
-    public function getParentLists($field = 'desc', $id = 'id')
-    {
-        /** @var AbstractBaseModel $parent */
-        $parent = new $this->parent;
-
-        return $parent->lists($field, $id);
     }
 
     /**
@@ -168,6 +173,21 @@ abstract class AbstractViewVariable implements ViewVariableInterface
     public function setParent($parent)
     {
         $this->parent = $parent;
+    }
+
+    /**
+     * Ejecuta un query y genera un array asociativo
+     * segun los parametros datos en este metodo.
+     * @param string $field el campo en la base de datos
+     * @param string $id el identificador principal
+     * @return array<string, string>
+     */
+    public function getParentLists($field = 'desc', $id = 'id')
+    {
+        /** @var AbstractBaseModel $parent */
+        $parent = new $this->parent;
+
+        return $parent->lists($field, $id);
     }
 
     /**
@@ -181,6 +201,7 @@ abstract class AbstractViewVariable implements ViewVariableInterface
     }
 
     /**
+     * El nombre formal del padre en formato legible.
      * @return string
      */
     public function getParentTitle()
@@ -189,7 +210,8 @@ abstract class AbstractViewVariable implements ViewVariableInterface
     }
 
     /**
-     * @param string $parentTitle
+     * Cambia el nombre formal del modelo padre.
+     * @param string $parentTitle El titulo en formato legible.
      */
     public function setParentTitle($parentTitle)
     {
@@ -197,6 +219,7 @@ abstract class AbstractViewVariable implements ViewVariableInterface
     }
 
     /**
+     * El nombre formal del modelo padre.
      * @return string
      */
     public function getResource()
@@ -205,6 +228,10 @@ abstract class AbstractViewVariable implements ViewVariableInterface
     }
 
     /**
+     * Cambia el nombre identificador del modelo principal.
+     * Este identificador es el nombre corto
+     * y en plural del modelo, {users},
+     * {notes}, {addresses}, etc...
      * @param string $resource
      */
     public function setResource($resource)
@@ -213,22 +240,8 @@ abstract class AbstractViewVariable implements ViewVariableInterface
     }
 
     /**
-     * Genera las rutas necesarias para manipular al
+     * Rutas necesarias para manipular al
      * modelo en las vistas y controladores
-     */
-    protected function setRoutes()
-    {
-        $this->routes = new StdClass;
-        $routes       = [
-            'index', 'show', 'create', 'store', 'edit', 'update', 'destroy'
-        ];
-
-        foreach ($routes as $route) {
-            $this->routes->$route = "{$this->resource}.$route";
-        }
-    }
-
-    /**
      * @return \StdClass
      */
     public function getRoutes()
@@ -237,12 +250,54 @@ abstract class AbstractViewVariable implements ViewVariableInterface
     }
 
     /**
+     * Genera las rutas necesarias para manipular al
+     * modelo en las vistas y controladores
+     * @return void
+     */
+    protected function setRoutes()
+    {
+        $this->routes = new StdClass;
+        $routes       = [
+            'index',
+            'show',
+            'create',
+            'store',
+            'edit',
+            'update',
+            'destroy'
+        ];
+
+        foreach ($routes as $route) {
+            $this->routes->$route = "{$this->resource}.$route";
+        }
+    }
+
+    /**
+     * Regresa un objeto generico con todas las
+     * variables relacionadas con el modelo.
+     * estas variables son las que se encuentran en
+     * resource/lang/es/models.php
+     * @return \StdClass
+     */
+    public function getTrans()
+    {
+        return $this->trans;
+    }
+
+    /**
      * Genera los nombres formales.
+     * Estos nombres estan en un objeto que
+     * contiene todos los elementos principales
+     * descritos en resource/lang/es/models.php
+     * @return void
      */
     protected function setTrans()
     {
         $this->trans = new StdClass;
-        $types       = [
+
+        // se genera segun el recurso todos las variables
+        // el recurso es el alinas corto del modelo o ruta.
+        $types = [
             'singular' => trans("models.{$this->resource}.singular"),
             'plural'   => trans("models.{$this->resource}.plural"),
             'index'    => trans("models.{$this->resource}.index"),
@@ -253,31 +308,34 @@ abstract class AbstractViewVariable implements ViewVariableInterface
             'fa-icon'  => trans("models.{$this->resource}.fa-icon"),
         ];
 
+        // por cada key del array se genera
+        // un atributo del objeto generico.
         foreach ($types as $type => $def) {
             $this->trans->$type = $def;
         }
     }
 
     /**
-     * @return \StdClass
+     * Regresa el modelo en json.
+     * @return string
      */
-    public function getTrans()
+    public function __toString()
     {
-        return $this->trans;
+        return $this->getModel()->toJson();
     }
 
     /**
-     * genera la vista inicial (a donde se va inicialmente) y la
-     * vista de destino (a donde se pretende ir, si aplica)
+     * El modelo principal.
+     * @return mixed
      */
-    protected function setViews()
-    {
-        $this->initialView = "{$this->resource}.index";
-        $this->destView    = "{$this->resource}.show";
-    }
+    abstract public function getModel();
 
     /**
+     * Ejecuta los metodos minimos necesarios para
+     * que la instancia de esta clase tenga lo
+     * necesario que necesitan las vistas.
      * @param $resource
+     * @return void
      */
     protected function setDefaults($resource)
     {
@@ -289,11 +347,13 @@ abstract class AbstractViewVariable implements ViewVariableInterface
     }
 
     /**
-     * Regresa el modelo en json.
-     * @return string
+     * genera la vista inicial (a donde se va inicialmente) y la
+     * vista de destino (a donde se pretende ir, si aplica)
+     * @return void
      */
-    public function __toString()
+    protected function setViews()
     {
-        return $this->getModel()->toJson();
+        $this->initialView = "{$this->resource}.index";
+        $this->destView    = "{$this->resource}.show";
     }
 }

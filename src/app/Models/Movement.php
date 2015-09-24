@@ -8,13 +8,15 @@ use Illuminate\Database\Eloquent\Collection;
 
 /**
  * PCI\Models\Movement
- *
+
  * @property integer $id
  * @property integer $movement_type_id
  * @property integer $note_id
  * @property \Carbon\Carbon $creation
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
+ * @property integer $created_by
+ * @property integer $updated_by
  * @property-read MovementType $type
  * @property-read Note $note
  * @property-read \Illuminate\Database\Eloquent\Collection|Item[] $items
@@ -24,8 +26,6 @@ use Illuminate\Database\Eloquent\Collection;
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Movement whereCreation($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Movement whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Movement whereUpdatedAt($value)
- * @property integer $created_by
- * @property integer $updated_by
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Movement whereCreatedBy($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Movement whereUpdatedBy($value)
  */

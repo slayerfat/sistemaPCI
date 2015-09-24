@@ -1,8 +1,8 @@
 <?php namespace PCI\Providers\User;
 
+use Illuminate\Support\ServiceProvider;
 use LogicException;
 use PCI\Models\User;
-use Illuminate\Support\ServiceProvider;
 use PCI\Providers\Exceptions\AdminCountException;
 
 class UserDeletingServiceProvider extends ServiceProvider
@@ -38,13 +38,18 @@ class UserDeletingServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register the application services.
-     *
+     * Se chequea la cantidad de administradores en el sistema.
+     * si es menor o igual a 1 se bota una excepcion.
      * @return void
+     * @throws \PCI\Providers\Exceptions\AdminCountException
      */
-    public function register()
+    private function checkAdminCount()
     {
-        //User::deleting no se registra aqui.
+        $admins = User::whereProfileId(User::ADMIN_ID)->count();
+
+        if ($admins <= 1) {
+            throw new AdminCountException('El Sistema debe tener al menos un Administrador.');
+        }
     }
 
     /**
@@ -64,17 +69,11 @@ class UserDeletingServiceProvider extends ServiceProvider
     }
 
     /**
-     * Se chequea la cantidad de administradores en el sistema.
-     * si es menor o igual a 1 se bota una excepcion.
+     * Register the application services.
      * @return void
-     * @throws \PCI\Providers\Exceptions\AdminCountException
      */
-    private function checkAdminCount()
+    public function register()
     {
-        $admins = User::whereProfileId(User::ADMIN_ID)->count();
-
-        if ($admins <= 1) {
-            throw new AdminCountException('El Sistema debe tener al menos un Administrador.');
-        }
+        //User::deleting no se registra aqui.
     }
 }

@@ -3,49 +3,46 @@
 namespace PCI\Models;
 
 use Illuminate\Auth\Authenticatable;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Auth\Passwords\CanResetPassword;
-use Illuminate\Foundation\Auth\Access\Authorizable;
-use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Foundation\Auth\Access\Authorizable;
 
 /** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
 
 /**
  * PCI\Models\User
- *
+
  * @property integer $id
+ * @property integer $profile_id
  * @property string $name
  * @property string $email
  * @property string $password
+ * @property string $confirmation_code
  * @property string $remember_token
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
- * @method static \Illuminate\Database\Query\Builder|\PCI\Models\User whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\PCI\Models\User whereName($value)
- * @method static \Illuminate\Database\Query\Builder|\PCI\Models\User whereEmail($value)
- * @method static \Illuminate\Database\Query\Builder|\PCI\Models\User wherePassword($value)
- * @method static \Illuminate\Database\Query\Builder|\PCI\Models\User whereRememberToken($value)
- * @method static \Illuminate\Database\Query\Builder|\PCI\Models\User whereCreatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\PCI\Models\User whereUpdatedAt($value)
- * @property-read Employee $details
- * @property boolean $status
+ * @property integer $created_by
+ * @property integer $updated_by
+ * @property-read Address $address
  * @property-read Employee $employee
  * @property-read Attendant $attendant
  * @property-read \Illuminate\Database\Eloquent\Collection|Note[] $notes
  * @property-read \Illuminate\Database\Eloquent\Collection|Petition[] $petitions
- * @method static \Illuminate\Database\Query\Builder|\PCI\Models\User whereStatus($value)
  * @property-read Profile $profile
- * @property integer $profile_id
- * @property integer $created_by
- * @property integer $updated_by
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\User whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\User whereProfileId($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\User whereName($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\User whereEmail($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\User wherePassword($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\User whereConfirmationCode($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\User whereRememberToken($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\User whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\User whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\User whereCreatedBy($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\User whereUpdatedBy($value)
- * @property string $confirmation_code
- * @method static \Illuminate\Database\Query\Builder|\PCI\Models\User whereConfirmationCode($value)
- * @property-read mixed $address
  */
 class User extends AbstractBaseModel implements
     AuthenticatableContract,
@@ -168,17 +165,17 @@ class User extends AbstractBaseModel implements
     /**
      * @return boolean
      */
-    public function isAdmin()
+    public function isUser()
     {
-        return $this->attributes['profile_id'] == self::ADMIN_ID;
+        return $this->attributes['profile_id'] == self::USER_ID;
     }
 
     /**
      * @return boolean
      */
-    public function isUser()
+    public function isActive()
     {
-        return $this->attributes['profile_id'] == self::USER_ID;
+        return !$this->isDisabled();
     }
 
     /**
@@ -192,9 +189,9 @@ class User extends AbstractBaseModel implements
     /**
      * @return boolean
      */
-    public function isActive()
+    public function isUnverified()
     {
-        return ! $this->isDisabled();
+        return !$this->isVerified();
     }
 
     /**
@@ -206,20 +203,28 @@ class User extends AbstractBaseModel implements
     }
 
     /**
+     * helper para ver si es admin o si puede manipular algun recurso.
+     * @param int $id el foreign key del recurso.
      * @return boolean
      */
-    public function isUnverified()
+    public function isOwnerOrAdmin($id)
     {
-        return ! $this->isVerified();
+        return $this->isAdmin() || $this->isOwner($id);
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isAdmin()
+    {
+        return $this->attributes['profile_id'] == self::ADMIN_ID;
     }
 
     /**
      * chequea si el id del foreign key del recurso es igual al id del usuario,
      * en otras palabras, verific que el usuario pueda modificar algun recurso
      * viendo si le pertenece o no.
-     *
      * @param int $id el foreign key del recurso.
-     *
      * @return boolean
      */
     public function isOwner($id)
@@ -233,17 +238,5 @@ class User extends AbstractBaseModel implements
         }
 
         return false;
-    }
-
-    /**
-     * helper para ver si es admin o si puede manipular algun recurso.
-     *
-     * @param int $id el foreign key del recurso.
-     *
-     * @return boolean
-     */
-    public function isOwnerOrAdmin($id)
-    {
-        return $this->isAdmin() || $this->isOwner($id);
     }
 }

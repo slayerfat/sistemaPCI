@@ -6,8 +6,7 @@ namespace PCI\Models;
 
 /**
  * PCI\Models\Employee
- *
- * @property-read User $user
+
  * @property integer $id
  * @property integer $user_id
  * @property integer $address_id
@@ -25,6 +24,7 @@ namespace PCI\Models;
  * @property integer $created_by
  * @property integer $updated_by
  * @property-read WorkDetail $workDetails
+ * @property-read User $user
  * @property-read Nationality $nationality
  * @property-read Gender $gender
  * @property-read Address $address

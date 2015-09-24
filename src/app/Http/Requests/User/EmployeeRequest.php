@@ -31,18 +31,23 @@ class EmployeeRequest extends Request
      */
     public function authorize()
     {
+        // necesitamos saber que tipo de request es
         switch ($this->method()) {
+            // este caso esta actualizando
             case 'PUT':
             case 'PATCH':
                 $employee = $this->empRepo->find($this->route('employees'));
 
                 return $this->user()->can('update', $employee);
 
+            // este caso esta creando
             case 'POST':
                 $user = $this->empRepo->findParent($this->route('users'));
 
                 return $this->user()->can('create', [Employee::class, $user]);
 
+            // si no esta creado o actualizando
+            // probablemente es un error externo.
             default:
                 throw new HttpException(500, 'Request con metodo invalido.');
         }
@@ -54,6 +59,7 @@ class EmployeeRequest extends Request
      */
     public function rules()
     {
+        // necesitamos saber que regla la cedula tendra
         $ciRules = $this->getCiRule();
 
         $genericRules = [
@@ -67,6 +73,7 @@ class EmployeeRequest extends Request
             'nationality_id' => 'required_with:identity_card|numeric',
         ];
 
+        // unimos las reglas genericas con las de la cedula
         return array_merge($ciRules, $genericRules);
     }
 
@@ -76,6 +83,9 @@ class EmployeeRequest extends Request
      */
     private function getCiRule()
     {
+        // debido a que la cedula es unica se hace la regla
+        // sin embargo al actualizar, es necesario que
+        // ignore la ya existente
         switch ($this->method()) {
             case 'PUT':
             case 'PATCH':

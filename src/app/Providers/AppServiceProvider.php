@@ -1,15 +1,18 @@
 <?php namespace PCI\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use PCI\Mamarrachismo\PhoneParser\Interfaces\PhoneParserInterface;
-use PCI\Mamarrachismo\PhoneParser\PhoneParser;
 
+/**
+ * Class AppServiceProvider
+ * @package PCI\Providers
+ * @author Alejandro Granadillo <slayerfat@gmail.com>
+ * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
+ */
 class AppServiceProvider extends ServiceProvider
 {
 
     /**
      * Register any application services.
-     *
      * @return void
      */
     public function register()
@@ -20,7 +23,7 @@ class AppServiceProvider extends ServiceProvider
         // pruebas, pero si lo incluye cuando se ejecuta la aplicacion de forma
         // normal, hace falta hacer pruebas al respecto, pero por ahora este
         // asunto funciona mamarrachamente.
-        include __DIR__.'/../../../public/laravel_pls.php';
+        include __DIR__ . '/../../../public/laravel_pls.php';
 
         // Cambia la direccion del directorio en $app
         // publico del standard a lo que sea, en este caso se cambio de
@@ -29,10 +32,6 @@ class AppServiceProvider extends ServiceProvider
         // ~/sistemaPCI/public
         $this->app->bind('path.public', function () {
             return laravel_pls();
-        });
-
-        $this->app->bind(PhoneParserInterface::class, function () {
-            return new PhoneParser;
         });
     }
 }
