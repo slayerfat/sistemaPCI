@@ -8,15 +8,24 @@ use PCI\Repositories\Interfaces\GetByNameOrIdInterface;
 use PCI\Repositories\Interfaces\User\UserRepositoryInterface;
 use PCI\Repositories\ViewVariable\ViewPaginatorVariable;
 
+/**
+ * Class UserRepository
+ * @package PCI\Repositories\User
+ * @author Alejandro Granadillo <slayerfat@gmail.com>
+ * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
+ */
 class UserRepository extends AbstractRepository implements UserRepositoryInterface, GetByNameOrIdInterface
 {
 
     /**
+     * El repositorio del que depende este.
      * @var \PCI\Models\User
      */
     protected $model;
 
     /**
+     * genera un codigo de 32 caracteres para validar
+     * al usuario por correo por primera vez.
      * @return \PCI\Models\User
      */
     public function generateConfirmationCode()
@@ -31,17 +40,22 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
     }
 
     /**
-     * @param string $code
-     * @return boolean
+     * confirma el codigo previamente creado.
+     * @param string $code El codigo de 32 caracteres.
+     * @return bool Verdaredo si existe un usuario con este codigo.
      */
     public function confirmCode($code)
     {
         $user = $this->model->whereConfirmationCode($code)->first();
 
+        // si no hay usuario este no sera confirmado.
         if (is_null($user)) {
             return false;
         }
 
+        // si existe el codigo se cambia a nulo que significa que el
+        // usuario no posee condigo de confirmacion
+        // por ende esta confirmado.
         $user->confirmation_code = null;
         $user->save();
 
@@ -102,7 +116,8 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
     }
 
     /**
-     * @param  string|int $id
+     * Busca algun Elemento segun Id u otra regla.
+     * @param  string|int $id El identificador unico (slug|name|etc|id).
      * @return \PCI\Models\AbstractBaseModel
      */
     public function find($id)
@@ -113,8 +128,19 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
     }
 
     /**
+     * Busca en la base de datos algun modelo
+     * que tenga un campo nombre y/o id.
+     * @param  string|int $id El identificador (name|id)
+     * @return \PCI\Models\User
+     */
+    public function getByNameOrId($id)
+    {
+        return $this->getByIdOrAnother($id, 'name');
+    }
+
+    /**
      * Elimina del sistema un modelo.
-     * @param $id
+     * @param int $id El identificador unico.
      * @return boolean|\PCI\Models\AbstractBaseModel
      */
     public function delete($id)
@@ -139,7 +165,7 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
     /**
      * Genera un objeto LengthAwarePaginator con todos los
      * usuarios en el sistema y con eager loading.
-     * @param int $quantity
+     * @param int $quantity la cantidad a mostrar por pagina.
      * @return LengthAwarePaginator
      */
     public function getTablePaginator($quantity = 25)
@@ -151,6 +177,7 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
     }
 
     /**
+     * Consigue todos los elementos y devuelve una coleccion.
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function getAll()
@@ -167,6 +194,8 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
      */
     protected function makePaginatorData(AbstractBaseModel $user)
     {
+        // estos son los datos propios
+        // del usuario que nos interesa.
         $partial = [
             'uid'       => $user->name,
             'Seudonimo' => $user->name,
@@ -174,6 +203,8 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
             'Perfil'    => $user->profile->desc
         ];
 
+        // si el usuario tiene informacion de empleado
+        // entonces nos conviene extraer esta.
         if ($user->employee) {
             $parser = new PhoneParser;
 
@@ -185,9 +216,13 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
                 'Telefono' => $phone
             ];
 
+            // una vez complado unimos los dos arreglos en uno solo
             return array_merge($partial, $employee);
         }
 
+        // como el usuario no posee informacion de personal
+        // creamos este arreglo con datos por defecto
+        // para que se vea bonito en la vista.
         $defaults = [
             'Nombres'  => '-',
             'C.I.'     => '-',

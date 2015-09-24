@@ -5,15 +5,24 @@ use PCI\Repositories\AbstractRepository;
 use PCI\Repositories\Interfaces\User\AddressRepositoryInterface;
 use PCI\Repositories\Interfaces\User\EmployeeRepositoryInterface;
 
+/**
+ * Class AddressRepository
+ * @package PCI\Repositories\User
+ * @author Alejandro Granadillo <slayerfat@gmail.com>
+ * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
+ */
 class AddressRepository extends AbstractRepository implements AddressRepositoryInterface
 {
 
     /**
+     * El repositorio del que depende este.
      * @var \PCI\Repositories\Interfaces\User\EmployeeRepositoryInterface
      */
     private $empRepo;
 
     /**
+     * Genera una instancia del repositorio.
+     * Este depende del modelo Address y el repositorio de empleados.
      * @param \PCI\Models\AbstractBaseModel $model
      * @param \PCI\Repositories\Interfaces\User\EmployeeRepositoryInterface $empRepo
      */
@@ -97,7 +106,7 @@ class AddressRepository extends AbstractRepository implements AddressRepositoryI
 
     /**
      * Busca algun Elemento segun Id u otra regla.
-     * @param  string|int $id
+     * @param  string|int $id El identificador unico (slug|name|etc|id).
      * @return \PCI\Models\AbstractBaseModel
      */
     public function find($id)
@@ -107,7 +116,7 @@ class AddressRepository extends AbstractRepository implements AddressRepositoryI
 
     /**
      * Elimina del sistema un modelo.
-     * @param $id
+     * @param int $id El identificador unico.
      * @return boolean|\PCI\Models\AbstractBaseModel
      */
     public function delete($id)

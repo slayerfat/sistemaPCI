@@ -34,9 +34,8 @@ interface UserRepositoryInterface extends
 
     /**
      * confirma el codigo previamente creado.
-     *
-     * @param string $code
-     * @return bool
+     * @param string $code El codigo de 32 caracteres.
+     * @return bool Verdaredo si existe un usuario con este codigo.
      */
     public function confirmCode($code);
 }

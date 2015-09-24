@@ -37,8 +37,7 @@ abstract class AbstractRepository
     /**
      * Busca en la base de datos algun modelo
      * que tenga un campo slug y/o id.
-     * @param  string|int $id
-
+     * @param  string|int $id El identificador unico (slug|id).
      * @return \PCI\Models\AbstractBaseModel
      */
     public function getBySlugOrId($id)
@@ -83,17 +82,6 @@ abstract class AbstractRepository
                 'Es necesario un identificador para continuar con el proceso.'
             );
         }
-    }
-
-    /**
-     * Busca en la base de datos algun modelo
-     * que tenga un campo nombre y/o id.
-     * @param  string|int $id
-     * @return \PCI\Models\AbstractBaseModel
-     */
-    public function getByNameOrId($id)
-    {
-        return $this->getByIdOrAnother($id, 'name');
     }
 
     /**

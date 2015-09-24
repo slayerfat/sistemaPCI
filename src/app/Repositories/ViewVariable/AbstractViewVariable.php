@@ -211,7 +211,7 @@ abstract class AbstractViewVariable implements ViewVariableInterface
 
     /**
      * Cambia el nombre formal del modelo padre.
-     * @param string $parentTitle
+     * @param string $parentTitle El titulo en formato legible.
      */
     public function setParentTitle($parentTitle)
     {
@@ -219,6 +219,7 @@ abstract class AbstractViewVariable implements ViewVariableInterface
     }
 
     /**
+     * El nombre formal del modelo padre.
      * @return string
      */
     public function getResource()

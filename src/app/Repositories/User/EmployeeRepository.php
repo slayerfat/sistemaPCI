@@ -6,15 +6,24 @@ use PCI\Repositories\AbstractRepository;
 use PCI\Repositories\Interfaces\User\EmployeeRepositoryInterface;
 use PCI\Repositories\Interfaces\User\UserRepositoryInterface;
 
+/**
+ * Class EmployeeRepository
+ * @package PCI\Repositories\User
+ * @author Alejandro Granadillo <slayerfat@gmail.com>
+ * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
+ */
 class EmployeeRepository extends AbstractRepository implements EmployeeRepositoryInterface
 {
 
     /**
+     * El repositorio del que depende este.
      * @var \PCI\Repositories\Interfaces\User\UserRepositoryInterface
      */
     private $userRepo;
 
     /**
+     * Genera una instancia del repositorio.
+     * Este depende del modelo Usuario y el repositorio de Usuario.
      * @param \PCI\Models\AbstractBaseModel $model
      * @param \PCI\Repositories\Interfaces\User\UserRepositoryInterface $userRepo
      */
@@ -94,7 +103,7 @@ class EmployeeRepository extends AbstractRepository implements EmployeeRepositor
 
     /**
      * Busca algun Elemento segun Id u otra regla.
-     * @param  string|int $id
+     * @param  string|int $id El identificador unico (slug|name|etc|id).
      * @return \PCI\Models\AbstractBaseModel
      */
     public function find($id)
@@ -106,7 +115,7 @@ class EmployeeRepository extends AbstractRepository implements EmployeeRepositor
 
     /**
      * Elimina del sistema un modelo.
-     * @param $id
+     * @param int $id El identificador unico.
      * @return boolean|\PCI\Models\AbstractBaseModel
      */
     public function delete($id)
