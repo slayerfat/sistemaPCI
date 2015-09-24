@@ -1,48 +1,47 @@
 <?php namespace PCI\Policies\User;
 
-use Illuminate\Contracts\Auth\Guard;
 use PCI\Models\Employee;
 use PCI\Models\User;
 
+/**
+ * Class EmployeePolicy
+ * @package PCI\Policies\User
+ * @author Alejandro Granadillo <slayerfat@gmail.com>
+ * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
+ */
 class EmployeePolicy
 {
 
     /**
-     * @var \PCI\Models\User
-     */
-    private $user;
-
-    /**
-     * @param \Illuminate\Contracts\Auth\Guard $auth
-     */
-    public function __construct(Guard $auth)
-    {
-        $this->user = $auth->user();
-    }
-
-    /**
-     * @param \PCI\Models\User $user
-     * @param string $employee
-     * @param \PCI\Models\User $relatedEmployeeUser
+     * Se chequea si el empleado puede ser creado por
+     * el usuario actualmente haciendo la peticion.
+     * @param \PCI\Models\User $user El usuario haciendo la peticion.
+     * @param \PCI\Models\Employee $employee El Empleado a manipular.
+     * @param \PCI\Models\User $relatedEmployeeUser El modelo relacionado con el empleado.
      * @return bool
-     * @throws \LogicException
      */
-    public function create(User $user, $employee, User $relatedEmployeeUser)
+    public function create(User $user, Employee $employee, User $relatedEmployeeUser)
     {
-        if (!($employee == Employee::class || $employee instanceof Employee)) {
+        if (!$employee instanceof Employee) {
             throw new \LogicException;
         }
 
+        // el usuario solo puede tener una
+        // informacion de empleado.
         if ($relatedEmployeeUser->employee) {
             return false;
         }
 
+        // si no es administrador, solo el usuario puede
+        // crear su propia informacion personal.
         return $user->isOwnerOrAdmin($relatedEmployeeUser->id);
     }
 
     /**
-     * @param \PCI\Models\User $user
-     * @param \PCI\Models\Employee $employee
+     * Se chequea si el empleado puede ser actualizado por
+     * el usuario actualmente haciendo la peticion.
+     * @param \PCI\Models\User $user El usuario haciendo la peticion.
+     * @param \PCI\Models\Employee $employee El empleado a manipular.
      * @return bool
      */
     public function update(User $user, Employee $employee)
