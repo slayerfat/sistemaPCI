@@ -8,7 +8,9 @@ use Illuminate\Database\Eloquent\Collection;
 
 /**
  * PCI\Models\Attendant
- *
+ * @package PCI\Models
+ * @author Alejandro Granadillo <slayerfat@gmail.com>
+ * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
  * @property integer $id
  * @property integer $user_id
  * @property \Carbon\Carbon $selection

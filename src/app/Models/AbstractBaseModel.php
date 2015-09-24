@@ -13,6 +13,8 @@ use LogicException;
  * @SuppressWarnings(PHPMD.NumberOfChildren)
  * Se suprime esta advertencia por ser todos los hijos
  * modelos eloquens que contienen el metodo boot igual.
+ * @author Alejandro Granadillo <slayerfat@gmail.com>
+ * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
  * @property-read \Jenssegers\Date\Date $created_at
  * @property-read \Jenssegers\Date\Date $updated_at
  */
@@ -32,8 +34,7 @@ class AbstractBaseModel extends Eloquent
     /**
      * Automaticamente manipula los campos de control
      * created/update
-     *
-     * @throws LogicException
+     * @throws \LogicException
      */
     public static function boot()
     {
@@ -76,8 +77,8 @@ class AbstractBaseModel extends Eloquent
     /**
      * Cuando se pide la fecha de created_at se devuelve una
      * instancia de Date en vez de Carbon\Carbon
-     * @param $value
-     * @return Date
+     * @param string $value
+     * @return \Jenssegers\Date\Date
      */
     public function getCreatedAtAttribute($value)
     {
@@ -85,10 +86,12 @@ class AbstractBaseModel extends Eloquent
     }
 
     /**
-     * @param $value
-     * @return Date
+     * Regresa la instancia de Date con el valor que
+     * tiene en su momento el modelo concreto.
+     * @param string $value el valor a parsear
+     * @return \Jenssegers\Date\Date
      */
-    protected function getDateInstance($value)
+    private function getDateInstance($value)
     {
         return Date::make($value);
     }
@@ -96,8 +99,8 @@ class AbstractBaseModel extends Eloquent
     /**
      * Cuando se pide la fecha de updated_at se devuelve una
      * instancia de Date en vez de Carbon\Carbon
-     * @param $value
-     * @return Date
+     * @param string $value
+     * @return \Jenssegers\Date\Date
      */
     public function getUpdatedAtAttribute($value)
     {

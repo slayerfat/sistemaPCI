@@ -10,7 +10,9 @@ use Illuminate\Database\Eloquent\Collection;
 
 /**
  * PCI\Models\Item
-
+ * @package PCI\Models
+ * @author Alejandro Granadillo <slayerfat@gmail.com>
+ * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
  * @property integer $id
  * @property integer $item_type_id
  * @property integer $maker_id
@@ -30,7 +32,7 @@ use Illuminate\Database\Eloquent\Collection;
  * @property-read Maker $maker
  * @property-read ItemType $type
  * @property-read \Illuminate\Database\Eloquent\Collection|Depot[] $depots
- * @property-read \Illuminate\Database\Eloquent\Collection|self[] $dependsOn
+ * @property-read \Illuminate\Database\Eloquent\Collection|\PCI\Models\Item[] $dependsOn
  * @property-read \Illuminate\Database\Eloquent\Collection|Petition[] $petitions
  * @property-read \Illuminate\Database\Eloquent\Collection|Movement[] $movements
  * @property-read \Illuminate\Database\Eloquent\Collection|Note[] $notes

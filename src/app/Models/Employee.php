@@ -6,7 +6,9 @@ namespace PCI\Models;
 
 /**
  * PCI\Models\Employee
-
+ * @package PCI\Models
+ * @author Alejandro Granadillo <slayerfat@gmail.com>
+ * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
  * @property integer $id
  * @property integer $user_id
  * @property integer $address_id
