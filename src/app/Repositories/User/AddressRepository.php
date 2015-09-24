@@ -64,8 +64,12 @@ class AddressRepository extends AbstractRepository implements AddressRepositoryI
     }
 
     /**
-     * @param string|int $id
-     * @return \PCI\Models\AbstractBaseModel
+     * Busca al padre relacionado directamente con
+     * este modelo, si existen varios padres,
+     * entonces se devuelve el mas importante
+     * en contexto al repositorio.
+     * @param string|int $id El identificador unico (name|slug|int).
+     * @return \PCI\Models\Address
      */
     public function findParent($id)
     {

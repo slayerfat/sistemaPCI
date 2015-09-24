@@ -46,6 +46,7 @@ class EmployeeRepository extends AbstractRepository implements EmployeeRepositor
         /** @var \PCI\Models\Employee $employee */
         $employee = $this->newInstance($data);
 
+        /** @var \PCI\Models\User $user */
         $user = $this->findParent($data['user_id']);
 
         $employee->user_id = $user->id;
@@ -59,8 +60,12 @@ class EmployeeRepository extends AbstractRepository implements EmployeeRepositor
     }
 
     /**
-     * @param string|int $id
-     * @return \PCI\Models\User
+     * Busca al padre relacionado directamente con
+     * este modelo, si existen varios padres,
+     * entonces se devuelve el mas importante
+     * en contexto al repositorio.
+     * @param string|int $id El identificador unico (name|slug|int).
+     * @return \PCI\Models\Employee
      */
     public function findParent($id)
     {
