@@ -3,13 +3,20 @@
 namespace PCI\Listeners;
 
 use Illuminate\Contracts\Mail\Mailer;
-use PCI\Events\NewUserRegistration;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use PCI\Events\NewUserRegistration;
 
+/**
+ * Class EmailUserConfirmation
+ * @package PCI\Listeners
+ * @author Alejandro Granadillo <slayerfat@gmail.com>
+ * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
+ */
 class EmailUserConfirmation implements ShouldQueue
 {
 
     /**
+     * La implementacion del Mailer para enviar correos.
      * @var Mailer
      */
     private $mail;
@@ -24,8 +31,10 @@ class EmailUserConfirmation implements ShouldQueue
     }
 
     /**
-     * Handle the event.
-     *
+     * En este evento, enviamos el correo con los datos
+     * necesario para que el usuario pueda
+     * confirmar su cuenta por medio
+     * de la clave de ocnfirmacion.
      * @param  NewUserRegistration  $event
      * @return void
      */
