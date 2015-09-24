@@ -7,6 +7,8 @@ use PCI\Mamarrachismo\PhoneParser\PhoneParser;
 /**
  * Class PhoneParserProvider
  * @package PCI\Providers
+ * @author Alejandro Granadillo <slayerfat@gmail.com>
+ * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
  */
 class PhoneParserProvider extends ServiceProvider
 {

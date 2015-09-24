@@ -14,6 +14,12 @@ use PCI\Repositories\Interfaces\Aux\MovementTypeRepositoryInterface;
 use PCI\Repositories\Interfaces\Aux\NoteTypeRepositoryInterface;
 use PCI\Repositories\Interfaces\Aux\PetitionTypeRepositoryInterface;
 
+/**
+ * Class TypesRepositoriesProvider
+ * @package PCI\Providers\Aux
+ * @author Alejandro Granadillo <slayerfat@gmail.com>
+ * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
+ */
 class TypesRepositoriesProvider extends ServiceProvider
 {
 
