@@ -4,6 +4,12 @@ Todos los cambios significatiovos en este proyecto estaran documentados en este 
 
 ## [En Desarrollo][unrele]
 
+### Añadido
+
+- Ampliada documentacion en polizas.
+
+## [v0.2.2] - 2015-09-24
+
 ### Añadido:
 
 - Mejor documentacion interna en las clases de Providers y Repositories
@@ -166,6 +172,7 @@ Se crearon documentacion segun aspectos clave del sistema, para ser referenciado
   - cypher deberia funcionar por cambio de strings de tamaño 32.
 
 [unrele]: https://github.com/slayerfat/sistemaPCI/compare/v0.2.1...develop
+[v0.2.2]: https://github.com/slayerfat/sistemaPCI/compare/v0.2.1...v0.2.2
 [v0.2.1]: https://github.com/slayerfat/sistemaPCI/compare/v0.2.0...v0.2.1
 [v0.2.0]: https://github.com/slayerfat/sistemaPCI/compare/v0.1.2...v0.2.0
 [v0.1.2]: https://github.com/slayerfat/sistemaPCI/compare/v0.1.1...v0.1.2
