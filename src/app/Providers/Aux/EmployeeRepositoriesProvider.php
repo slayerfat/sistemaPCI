@@ -11,6 +11,12 @@ use PCI\Repositories\Interfaces\Aux\DepartmentRepositoryInterface;
 use PCI\Repositories\Interfaces\Aux\GenderRepositoryInterface;
 use PCI\Repositories\Interfaces\Aux\NationalityRepositoryInterface;
 
+/**
+ * Class EmployeeRepositoriesProvider
+ * @package PCI\Providers\Aux
+ * @author Alejandro Granadillo <slayerfat@gmail.com>
+ * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
+ */
 class EmployeeRepositoriesProvider extends ServiceProvider
 {
 

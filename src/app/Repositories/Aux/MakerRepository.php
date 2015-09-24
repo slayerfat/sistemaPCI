@@ -12,7 +12,7 @@ class MakerRepository extends AbstractAuxRepository implements MakerRepositoryIn
      */
     public function delete($id)
     {
-        return $this->executeDelete($id, trans('models.maker.singular'));
+        return $this->executeDelete($id, trans('models.makers.singular'));
     }
 
     /**

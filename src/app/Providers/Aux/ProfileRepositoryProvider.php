@@ -5,6 +5,12 @@ use PCI\Models\Profile;
 use PCI\Repositories\Aux\ProfileRepository;
 use PCI\Repositories\Interfaces\Aux\ProfileRepositoryInterface;
 
+/**
+ * Class ProfileRepositoryProvider
+ * @package PCI\Providers\Aux
+ * @author Alejandro Granadillo <slayerfat@gmail.com>
+ * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
+ */
 class ProfileRepositoryProvider extends ServiceProvider
 {
 
@@ -13,15 +19,6 @@ class ProfileRepositoryProvider extends ServiceProvider
      * @return void
      */
     public function register()
-    {
-        $this->registerProfileRepository();
-    }
-
-    /**
-     * Registra el Repositorio de Perfil
-     * @return void
-     */
-    private function registerProfileRepository()
     {
         $this->app->bind(ProfileRepositoryInterface::class, function ($app) {
             return new ProfileRepository($app[Profile::class]);

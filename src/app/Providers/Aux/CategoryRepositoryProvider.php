@@ -5,6 +5,12 @@ use PCI\Models\Category;
 use PCI\Repositories\Aux\CategoryRepository;
 use PCI\Repositories\Interfaces\Aux\CategoryRepositoryInterface;
 
+/**
+ * Class CategoryRepositoryProvider
+ * @package PCI\Providers\Aux
+ * @author Alejandro Granadillo <slayerfat@gmail.com>
+ * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
+ */
 class CategoryRepositoryProvider extends ServiceProvider
 {
 
