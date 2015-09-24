@@ -258,7 +258,13 @@ abstract class AbstractViewVariable implements ViewVariableInterface
     {
         $this->routes = new StdClass;
         $routes       = [
-            'index', 'show', 'create', 'store', 'edit', 'update', 'destroy'
+            'index',
+            'show',
+            'create',
+            'store',
+            'edit',
+            'update',
+            'destroy'
         ];
 
         foreach ($routes as $route) {
@@ -291,7 +297,7 @@ abstract class AbstractViewVariable implements ViewVariableInterface
 
         // se genera segun el recurso todos las variables
         // el recurso es el alinas corto del modelo o ruta.
-        $types       = [
+        $types = [
             'singular' => trans("models.{$this->resource}.singular"),
             'plural'   => trans("models.{$this->resource}.plural"),
             'index'    => trans("models.{$this->resource}.index"),

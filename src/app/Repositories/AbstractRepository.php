@@ -18,7 +18,6 @@ abstract class AbstractRepository
 
     /**
      * El modelo a ser manipulado
-     *
      * @var \PCI\Models\AbstractBaseModel
      */
     protected $model;
@@ -68,7 +67,6 @@ abstract class AbstractRepository
      * Chequea si el id es valido para ser procesado,
      * de lo contrario bota una excepcion.
      * @param string|int $id
-     *
      * @return void
      * @throws HttpException
      */
