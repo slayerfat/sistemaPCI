@@ -6,15 +6,23 @@ use PCI\Http\Requests\Aux\ProfileRequest;
 use PCI\Repositories\Interfaces\Aux\ProfileRepositoryInterface;
 use Redirect;
 
+/**
+ * Class ProfilesController
+ * @package PCI\Http\Controllers\Aux
+ * @author Alejandro Granadillo <slayerfat@gmail.com>
+ * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
+ */
 class ProfilesController extends AbstractAuxController
 {
 
     /**
+     * La implementacion de la interfaz de repositorio.
      * @var \PCI\Repositories\Interfaces\Aux\ProfileRepositoryInterface
      */
     private $repo;
 
     /**
+     * El modelo Eloquent.
      * @var \PCI\Models\Profile
      */
     private $model;
@@ -31,6 +39,10 @@ class ProfilesController extends AbstractAuxController
         $this->repo = $repo;
     }
 
+    /**
+     * Muestra un listado general del recurso.
+     * @return \Illuminate\Contracts\View\View
+     */
     public function index()
     {
         return $this->makeView(
@@ -40,7 +52,8 @@ class ProfilesController extends AbstractAuxController
     }
 
     /**
-     * @param string|int $id
+     * Muestra el recurso especificado.
+     * @param string|int $id El identificador unico.
      * @return \Illuminate\Contracts\View\View
      */
     public function show($id)
@@ -53,6 +66,7 @@ class ProfilesController extends AbstractAuxController
     }
 
     /**
+     * Muestra la forma para crear un nuevo recurso.
      * @return \Illuminate\Contracts\View\View
      */
     public function create()
@@ -61,6 +75,7 @@ class ProfilesController extends AbstractAuxController
     }
 
     /**
+     * Persiste la informacion relacionada con el nuevo recurso.
      * @param \PCI\Http\Requests\Aux\ProfileRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -74,7 +89,8 @@ class ProfilesController extends AbstractAuxController
     }
 
     /**
-     * @param $id
+     * Muestra el forumulario para actualizar el recurso.
+     * @param string|int $id El identificador unico.
      * @return \Illuminate\Contracts\View\View
      */
     public function edit($id)
@@ -87,7 +103,8 @@ class ProfilesController extends AbstractAuxController
     }
 
     /**
-     * @param $id
+     * Persiste la actualizacion del modelo.
+     * @param int $id El identificador unico.
      * @param \PCI\Http\Requests\Aux\ProfileRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -101,7 +118,8 @@ class ProfilesController extends AbstractAuxController
     }
 
     /**
-     * @param $id
+     * Elimina al recurso del sistema
+     * @param int $id El identificador unico.
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($id)

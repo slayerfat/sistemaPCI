@@ -6,15 +6,23 @@ use PCI\Http\Requests\Aux\MakerRequest;
 use PCI\Repositories\Interfaces\Aux\MakerRepositoryInterface;
 use Redirect;
 
+/**
+ * Class MakersController
+ * @package PCI\Http\Controllers\Aux
+ * @author Alejandro Granadillo <slayerfat@gmail.com>
+ * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
+ */
 class MakersController extends AbstractAuxController
 {
 
     /**
+     * La implementacion de la interfaz de repositorio.
      * @var \PCI\Repositories\Interfaces\Aux\MakerRepositoryInterface
      */
     private $repo;
 
     /**
+     * El modelo Eloquent.
      * @var \PCI\Models\Maker
      */
     private $model;
@@ -31,6 +39,10 @@ class MakersController extends AbstractAuxController
         $this->repo = $repo;
     }
 
+    /**
+     * Muestra un listado general del recurso.
+     * @return \Illuminate\Contracts\View\View
+     */
     public function index()
     {
         return $this->makeView(
@@ -40,7 +52,8 @@ class MakersController extends AbstractAuxController
     }
 
     /**
-     * @param string|int $id
+     * Muestra el recurso especificado.
+     * @param string|int $id El identificador unico.
      * @return \Illuminate\Contracts\View\View
      */
     public function show($id)
@@ -53,6 +66,7 @@ class MakersController extends AbstractAuxController
     }
 
     /**
+     * Muestra la forma para crear un nuevo recurso.
      * @return \Illuminate\Contracts\View\View
      */
     public function create()
@@ -61,6 +75,7 @@ class MakersController extends AbstractAuxController
     }
 
     /**
+     * Persiste la informacion relacionada con el nuevo recurso.
      * @param \PCI\Http\Requests\Aux\MakerRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -74,7 +89,8 @@ class MakersController extends AbstractAuxController
     }
 
     /**
-     * @param $id
+     * Muestra el forumulario para actualizar el recurso.
+     * @param string|int $id El identificador unico.
      * @return \Illuminate\Contracts\View\View
      */
     public function edit($id)
@@ -87,7 +103,8 @@ class MakersController extends AbstractAuxController
     }
 
     /**
-     * @param $id
+     * Persiste la actualizacion del modelo.
+     * @param int $id El identificador unico.
      * @param \PCI\Http\Requests\Aux\MakerRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -101,7 +118,8 @@ class MakersController extends AbstractAuxController
     }
 
     /**
-     * @param $id
+     * Elimina al recurso del sistema
+     * @param int $id El identificador unico.
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($id)
