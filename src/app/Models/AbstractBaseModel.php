@@ -18,7 +18,7 @@ use LogicException;
  * @property-read \Jenssegers\Date\Date $created_at
  * @property-read \Jenssegers\Date\Date $updated_at
  */
-class AbstractBaseModel extends Eloquent
+abstract class AbstractBaseModel extends Eloquent
 {
 
     /**
