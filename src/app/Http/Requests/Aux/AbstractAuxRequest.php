@@ -3,7 +3,7 @@
 use Illuminate\Auth\Guard;
 use PCI\Http\Requests\Request;
 
-class AbstractAuxRequest extends Request
+abstract class AbstractAuxRequest extends Request
 {
 
     /**
