@@ -59,6 +59,7 @@ class Movement extends AbstractBaseModel
     // -------------------------------------------------------------------------
 
     /**
+     * Regresa el tipo de movimiento relacionado.
      * @return MovementType
      */
     public function type()
@@ -67,6 +68,7 @@ class Movement extends AbstractBaseModel
     }
 
     /**
+     * Regresa la nota relacionada a este movimiento.
      * @return Note
      */
     public function note()
@@ -79,6 +81,7 @@ class Movement extends AbstractBaseModel
     // -------------------------------------------------------------------------
 
     /**
+     * Regresa una coleccion de items asociados.
      * @return Collection
      */
     public function items()

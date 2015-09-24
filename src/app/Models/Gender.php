@@ -42,6 +42,7 @@ class Gender extends AbstractBaseModel implements SluggableInterface
     protected $fillable = ['desc'];
 
     /**
+     * Los datos necesarios para generarar un slug en el modelo.
      * @var array
      */
     protected $sluggable = [
@@ -57,6 +58,7 @@ class Gender extends AbstractBaseModel implements SluggableInterface
     // -------------------------------------------------------------------------
 
     /**
+     * Regresa una coleccion de empleados.
      * @return Collection
      */
     public function employee()

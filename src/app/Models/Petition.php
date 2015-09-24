@@ -64,14 +64,11 @@ class Petition extends AbstractBaseModel
     // Relaciones
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
-    // Has Many 1 -> 1..*
-    // -------------------------------------------------------------------------
-
-    // -------------------------------------------------------------------------
     // belongs to
     // -------------------------------------------------------------------------
 
     /**
+     * Regresa el tipo de pedido asociado.
      * @return PetitionType
      */
     public function type()
@@ -80,7 +77,8 @@ class Petition extends AbstractBaseModel
     }
 
     /**
-     * @return Employee
+     * Regresa el usuario asociado al pedido.
+     * @return User
      */
     public function user()
     {
@@ -92,6 +90,7 @@ class Petition extends AbstractBaseModel
     // -------------------------------------------------------------------------
 
     /**
+     * Regresa una coleccion de items asociados.
      * @return Collection
      */
     public function items()
@@ -100,10 +99,11 @@ class Petition extends AbstractBaseModel
     }
 
     // -------------------------------------------------------------------------
-    // has many
+    // has many 1 -> 1..*
     // -------------------------------------------------------------------------
 
     /**
+     * Regresa una coleccion de notas asociadas.
      * @return Collection
      */
     public function notes()

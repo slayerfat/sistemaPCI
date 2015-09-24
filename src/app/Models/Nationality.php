@@ -42,6 +42,7 @@ class Nationality extends AbstractBaseModel implements SluggableInterface
     protected $fillable = ['desc'];
 
     /**
+     * Los datos necesarios para generarar un slug en el modelo.
      * @var array
      */
     protected $sluggable = [
@@ -57,6 +58,7 @@ class Nationality extends AbstractBaseModel implements SluggableInterface
     // -------------------------------------------------------------------------
 
     /**
+     * Regresa una coleccion de empleados asociados.
      * @return Collection
      */
     public function employee()

@@ -60,6 +60,7 @@ class Profile extends AbstractBaseModel implements SluggableInterface
     protected $fillable = ['desc'];
 
     /**
+     * Los datos necesarios para generarar un slug en el modelo.
      * @var array
      */
     protected $sluggable = [
@@ -75,6 +76,7 @@ class Profile extends AbstractBaseModel implements SluggableInterface
     // -------------------------------------------------------------------------
 
     /**
+     * Regresa una coleccion de usuarios asociados.
      * @return Collection
      */
     public function users()

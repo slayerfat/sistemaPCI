@@ -61,6 +61,7 @@ class Attendant extends AbstractBaseModel
     // -------------------------------------------------------------------------
 
     /**
+     * Regresa al usuario relacionado.
      * @return User
      */
     public function user()
@@ -73,6 +74,7 @@ class Attendant extends AbstractBaseModel
     // -------------------------------------------------------------------------
 
     /**
+     * Regresa una coleccion de notas.
      * @return Collection
      */
     public function notes()

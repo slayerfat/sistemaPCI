@@ -4,6 +4,8 @@ namespace PCI\Models;
 
 use Illuminate\Database\Eloquent\Collection;
 
+/** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
+
 /**
  * PCI\Models\Address
  * @package PCI\Models
@@ -125,6 +127,7 @@ class Address extends AbstractBaseModel
     // -------------------------------------------------------------------------
 
     /**
+     * Regresa la parroquia relacionada.
      * @return Parish
      */
     public function parish()
@@ -137,6 +140,7 @@ class Address extends AbstractBaseModel
     // -------------------------------------------------------------------------
 
     /**
+     * Regresa una coleccion de empleados relacionados.
      * @return Collection
      */
     public function employee()

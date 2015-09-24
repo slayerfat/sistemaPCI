@@ -39,6 +39,7 @@ class Town extends AbstractPlacesModel
     // -------------------------------------------------------------------------
 
     /**
+     * Regresa al estado asociado al municipio.
      * @return State
      */
     public function state()
@@ -51,6 +52,7 @@ class Town extends AbstractPlacesModel
     // -------------------------------------------------------------------------
 
     /**
+     * Regresa una coleccion de parroquias asociadas.
      * @return Collection
      */
     public function parishes()

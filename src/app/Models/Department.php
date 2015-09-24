@@ -44,6 +44,7 @@ class Department extends AbstractBaseModel implements SluggableInterface
     protected $fillable = ['desc', 'phone'];
 
     /**
+     * Los datos necesarios para generarar un slug en el modelo.
      * @var array
      */
     protected $sluggable = [
@@ -59,6 +60,7 @@ class Department extends AbstractBaseModel implements SluggableInterface
     // -------------------------------------------------------------------------
 
     /**
+     * Regresa una coleccion de datos laborales.
      * @return Collection
      */
     public function workDetails()

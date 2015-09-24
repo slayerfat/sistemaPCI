@@ -96,6 +96,7 @@ class Employee extends AbstractBaseModel
     // -------------------------------------------------------------------------
 
     /**
+     * Regresa los datos laborales del empleado.
      * @return WorkDetail
      */
     public function workDetails()
@@ -108,6 +109,7 @@ class Employee extends AbstractBaseModel
     // -------------------------------------------------------------------------
 
     /**
+     * Regresa el usuario relacionado con el empleado.
      * @return User
      */
     public function user()
@@ -116,6 +118,7 @@ class Employee extends AbstractBaseModel
     }
 
     /**
+     * Regresa la nacionalidad relacionada con el empleado.
      * @return Nationality
      */
     public function nationality()
@@ -124,6 +127,7 @@ class Employee extends AbstractBaseModel
     }
 
     /**
+     * Regresa el genero relacionado con el empleado.
      * @return Gender
      */
     public function gender()
@@ -132,6 +136,7 @@ class Employee extends AbstractBaseModel
     }
 
     /**
+     * Regresa la direccion relacionada con el empleado.
      * @return Address
      */
     public function address()
@@ -144,7 +149,9 @@ class Employee extends AbstractBaseModel
     // -------------------------------------------------------------------------
 
     /**
-     * @param null $everything
+     * Genera los nombres en formato legible para
+     * ser consumido por alguna vista.
+     * @param null $everything chequea si se trae los nombres secundarios.
      * @return string
      */
     public function formattedNames($everything = null)
@@ -153,6 +160,8 @@ class Employee extends AbstractBaseModel
 
         $firstSurname = ucfirst($this->attributes['first_surname']);
 
+        // si everything no es nulo entonces
+        // se desea los nombres y apellidos.
         if (is_null($everything)) {
             return "{$firstSurname}, {$firstName}";
         }
@@ -165,9 +174,10 @@ class Employee extends AbstractBaseModel
     // -------------------------------------------------------------------------
 
     /**
-     * @param $firstSurname
-     * @param $firstName
-     * @return string
+     * Genera los nombres en formato legible con los nombres y apellidos.
+     * @param string $firstSurname El primer apellido.
+     * @param string $firstName El primer nombre.
+     * @return string los apellidos, nombres.
      */
     private function formattedNamesWithLast($firstSurname, $firstName)
     {

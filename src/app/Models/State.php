@@ -36,6 +36,7 @@ class State extends AbstractPlacesModel
     // -------------------------------------------------------------------------
 
     /**
+     * Regresa una coleccion de minucipios asociados.
      * @return Collection
      */
     public function towns()

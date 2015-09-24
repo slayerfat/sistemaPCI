@@ -51,6 +51,7 @@ class Depot extends AbstractBaseModel
     // -------------------------------------------------------------------------
 
     /**
+     * Regresa al Empleado relacionado, El jefe de almacen.
      * @return Employee
      */
     public function owner()
@@ -63,6 +64,7 @@ class Depot extends AbstractBaseModel
     // -------------------------------------------------------------------------
 
     /**
+     * Regresa una coleccion de items existentes en el almacen.
      * @return Collection
      */
     public function items()

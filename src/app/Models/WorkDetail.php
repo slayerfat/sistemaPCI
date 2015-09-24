@@ -64,6 +64,7 @@ class WorkDetail extends AbstractBaseModel
     // -------------------------------------------------------------------------
 
     /**
+     * Regresa al empleado relacionado.
      * @return Employee
      */
     public function employee()
@@ -72,6 +73,7 @@ class WorkDetail extends AbstractBaseModel
     }
 
     /**
+     * Regresa el cargo relacionado.
      * @return Position
      */
     public function position()
@@ -80,6 +82,7 @@ class WorkDetail extends AbstractBaseModel
     }
 
     /**
+     * Regresa el departamento relacionado.
      * @return Department
      */
     public function department()

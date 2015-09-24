@@ -39,6 +39,7 @@ class Parish extends AbstractPlacesModel
     // -------------------------------------------------------------------------
 
     /**
+     * Regresa el municipio asociado.
      * @return Town
      */
     public function town()
@@ -51,6 +52,7 @@ class Parish extends AbstractPlacesModel
     // -------------------------------------------------------------------------
 
     /**
+     * Regresa una coleccion de direcciones asociadaos.
      * @return Collection
      */
     public function addresses()

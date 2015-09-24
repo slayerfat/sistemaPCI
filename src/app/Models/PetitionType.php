@@ -42,6 +42,7 @@ class PetitionType extends AbstractBaseModel implements SluggableInterface
     protected $fillable = ['desc'];
 
     /**
+     * Los datos necesarios para generarar un slug en el modelo.
      * @var array
      */
     protected $sluggable = [
@@ -57,6 +58,7 @@ class PetitionType extends AbstractBaseModel implements SluggableInterface
     // -------------------------------------------------------------------------
 
     /**
+     * Regresa una el tipo de pedido.
      * @return Collection
      */
     public function petitions()

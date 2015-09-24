@@ -77,6 +77,7 @@ class Note extends AbstractBaseModel
     // -------------------------------------------------------------------------
 
     /**
+     * Regresa la peticion relacionada a esta nota.
      * @return Petition
      */
     public function petition()
@@ -85,6 +86,7 @@ class Note extends AbstractBaseModel
     }
 
     /**
+     * Regresa al usuario relacionado a esta nota.
      * @return User
      */
     public function requestedBy()
@@ -93,6 +95,7 @@ class Note extends AbstractBaseModel
     }
 
     /**
+     * Regresa el usuario destinatario de la nota.
      * @return User
      */
     public function toUser()
@@ -101,6 +104,7 @@ class Note extends AbstractBaseModel
     }
 
     /**
+     * Regresa el encargado de almacen.
      * @return Attendant
      */
     public function attendant()
@@ -109,6 +113,7 @@ class Note extends AbstractBaseModel
     }
 
     /**
+     * Regresa una el tipo de nota relacionado.
      * @return NoteType
      */
     public function type()
@@ -121,6 +126,7 @@ class Note extends AbstractBaseModel
     // -------------------------------------------------------------------------
 
     /**
+     * Regresa una coleccion de items asociados.
      * @return Collection
      */
     public function items()
@@ -133,6 +139,7 @@ class Note extends AbstractBaseModel
     // -------------------------------------------------------------------------
 
     /**
+     * Regresa una coleccion de movimientos asociados.
      * @return Movement
      */
     public function movements()
