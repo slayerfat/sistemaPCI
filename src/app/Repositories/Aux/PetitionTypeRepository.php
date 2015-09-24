@@ -2,12 +2,18 @@
 
 use PCI\Repositories\Interfaces\Aux\PetitionTypeRepositoryInterface;
 
+/**
+ * Class PetitionTypeRepository
+ * @package PCI\Repositories\Aux
+ * @author Alejandro Granadillo <slayerfat@gmail.com>
+ * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
+ */
 class PetitionTypeRepository extends AbstractAuxRepository implements PetitionTypeRepositoryInterface
 {
 
     /**
-     * Elimina del sistema un modelo.
-     * @param $id
+     * Elimina a este modelo del sistema.
+     * @param int $id El identificador unico.
      * @return boolean|\PCI\Models\AbstractBaseModel
      */
     public function delete($id)
@@ -32,7 +38,7 @@ class PetitionTypeRepository extends AbstractAuxRepository implements PetitionTy
     /**
      * Regresa variable con un modelo y datos
      * adicionales necesarios para generar la vista.
-     * @param string|int $id
+     * @param string|int $id El identificador unico, slug o id.
      * @return \PCI\Repositories\ViewVariable\ViewModelVariable
      */
     public function getShowViewVariables($id)
@@ -65,7 +71,7 @@ class PetitionTypeRepository extends AbstractAuxRepository implements PetitionTy
      * Regresa variable con un modelo y datos
      * adicionales necesarios para generar la
      * vista con el proposito de Model Binding.
-     * @param string|int $id
+     * @param string|int $id El identificador unico, slug o id.
      * @return \PCI\Repositories\ViewVariable\ViewModelVariable
      */
     public function getEditViewVariables($id)

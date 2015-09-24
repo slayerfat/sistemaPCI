@@ -49,14 +49,20 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
     }
 
     /**
-     * @param array $data
-     * @return \PCI\Repositories\AbstractRepository|null
+     * Persiste informacion referente a una entidad.
+     * Se sobrescribe del padre porque es
+     * necesaria logica adicional.
+     * @param array $data El array con informacion del modelo.
+     * @return \PCI\Models\User
      */
     public function create(array $data)
     {
         /** @var \PCI\Models\User $user */
         $user = $this->newInstance();
 
+        // detallese que se guarda la contraseña
+        // de forma encriptada por medio de
+        // la funcion global bcrypt.
         $user->name       = $data['name'];
         $user->email      = $data['email'];
         $user->password   = bcrypt($data['password']);
@@ -69,16 +75,19 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
     }
 
     /**
-     * Actualiza algun modelo.
-     * @param int $id
-     * @param array $data
-     * @return \PCI\Models\AbstractBaseModel
+     * Actualiza algun modelo y lo persiste
+     * en la base de datos del sistema.
+     * @param int $id El identificador unico.
+     * @param array $data El arreglo con informacion relacioada al modelo.
+     * @return \PCI\Models\User
      */
     public function update($id, array $data)
     {
         /** @var \PCI\Models\User $user */
         $user = $this->find($id);
 
+        // si no se introdujo una nueva contraseña
+        // entonces no se persiste la clave.
         if (trim($data['password']) != '') {
             $user->password = bcrypt($data['password']);
         }

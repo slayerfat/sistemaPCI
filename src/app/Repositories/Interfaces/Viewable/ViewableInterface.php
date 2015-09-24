@@ -6,7 +6,7 @@ interface ViewableInterface extends GetIndexViewableInterface
     /**
      * Regresa variable con un modelo y datos
      * adicionales necesarios para generar la vista.
-     * @param string|int $id
+     * @param string|int $id El identificador unico, slug o id.
      * @return \PCI\Repositories\ViewVariable\ViewModelVariable
      */
     public function getShowViewVariables($id);
@@ -23,7 +23,7 @@ interface ViewableInterface extends GetIndexViewableInterface
      * Regresa variable con un modelo y datos
      * adicionales necesarios para generar la
      * vista con el proposito de Model Binding.
-     * @param string|int $id
+     * @param string|int $id El identificador unico, slug o id.
      * @return \PCI\Repositories\ViewVariable\ViewModelVariable
      */
     public function getEditViewVariables($id);

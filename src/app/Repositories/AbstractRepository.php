@@ -121,9 +121,9 @@ abstract class AbstractRepository
      * y genera un flash de exito o fracaso.
      * adicionalmente ataja error de tabla con
      * hijos o genera exception cuando sea otro.
-     * @param int $id
-     * @param string $resource
-     * @param string $child
+     * @param int $id El identificador unico.
+     * @param string $resource El termino relacionado en texto legible.
+     * @param string $child El termino relacionado en texto legible de la relacion hija.
      * @return bool|\PCI\Models\User
      */
     protected function executeDelete($id, $resource = 'Recurso', $child = 'Recursos')

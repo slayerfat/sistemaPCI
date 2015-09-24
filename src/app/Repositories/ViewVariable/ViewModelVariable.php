@@ -22,7 +22,7 @@ class ViewModelVariable extends AbstractViewVariable implements GetModelInterfac
      * Genera una instancia de ViewModelVariable, que sirve para generar
      * formularios genericos de entidades secundarias.
      * @param \PCI\Models\AbstractBaseModel $model
-     * @param string $resource el modelo a manipular
+     * @param string $resource El identificador o alias.
      */
     public function __construct(AbstractBaseModel $model, $resource)
     {

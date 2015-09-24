@@ -36,7 +36,10 @@ class AddressRepository extends AbstractRepository implements AddressRepositoryI
     }
 
     /**
-     * @param array $data
+     * Persiste informacion referente a una entidad.
+     * Se sobrescribe del padre porque es
+     * necesaria logica adicional.
+     * @param array $data El array con informacion del modelo.
      * @return \PCI\Models\User
      */
     public function create(array $data)
@@ -45,10 +48,13 @@ class AddressRepository extends AbstractRepository implements AddressRepositoryI
         /** @var \PCI\Models\Employee $employee */
         $employee = $this->findParent($data['employee_id']);
 
+        // creamos una nueva instancia con los datos
+        // y la guardamos.
         /** @var \PCI\Models\Address $address */
         $address = $this->newInstance($data);
         $address->save();
 
+        // asociamos al empleado con la nueva direccion.
         $employee->address_id = $address->id;
         $employee->save();
 
@@ -67,10 +73,11 @@ class AddressRepository extends AbstractRepository implements AddressRepositoryI
     }
 
     /**
-     * Actualiza algun modelo.
-     * @param int $id
-     * @param array $data
-     * @return \PCI\Models\AbstractBaseModel
+     * Actualiza algun modelo y lo persiste
+     * en la base de datos del sistema.
+     * @param int $id El identificador unico.
+     * @param array $data El arreglo con informacion relacioada al modelo.
+     * @return \PCI\Models\Address
      */
     public function update($id, array $data)
     {

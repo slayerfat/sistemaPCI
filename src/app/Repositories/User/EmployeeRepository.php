@@ -35,8 +35,11 @@ class EmployeeRepository extends AbstractRepository implements EmployeeRepositor
     }
 
     /**
-     * @param array $data
-     * @return \PCI\Models\User
+     * Persiste informacion referente a una entidad.
+     * Se sobrescribe del padre porque es
+     * necesaria logica adicional.
+     * @param array $data El array con informacion del modelo.
+     * @return \PCI\Models\User Regresa al usuario, no al empleado.
      */
     public function create(array $data)
     {
@@ -49,6 +52,9 @@ class EmployeeRepository extends AbstractRepository implements EmployeeRepositor
 
         $user->employee()->save($employee);
 
+        // se regresa al usuario porque se va a mostrar
+        // en la vista al usuario relacionado con
+        // esta nueva informacion de empleado.
         return $user;
     }
 
@@ -62,9 +68,10 @@ class EmployeeRepository extends AbstractRepository implements EmployeeRepositor
     }
 
     /**
-     * Actualiza algun modelo.
-     * @param int $id
-     * @param array $data
+     * Actualiza algun modelo y lo persiste
+     * en la base de datos del sistema.
+     * @param int $id El identificador unico.
+     * @param array $data El arreglo con informacion relacioada al modelo.
      * @return \PCI\Models\User
      */
     public function update($id, array $data)
