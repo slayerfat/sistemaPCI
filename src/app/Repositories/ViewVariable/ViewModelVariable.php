@@ -3,6 +3,12 @@
 use PCI\Models\AbstractBaseModel;
 use PCI\Repositories\ViewVariable\Interfaces\GetModelInterface;
 
+/**
+ * Class ViewModelVariable
+ * @package PCI\Repositories\ViewVariable
+ * @author Alejandro Granadillo <slayerfat@gmail.com>
+ * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
+ */
 class ViewModelVariable extends AbstractViewVariable implements GetModelInterface
 {
 
@@ -16,7 +22,7 @@ class ViewModelVariable extends AbstractViewVariable implements GetModelInterfac
      * Genera una instancia de ViewModelVariable, que sirve para generar
      * formularios genericos de entidades secundarias.
      * @param \PCI\Models\AbstractBaseModel $model
-     * @param string $resource
+     * @param string $resource el modelo a manipular
      */
     public function __construct(AbstractBaseModel $model, $resource)
     {
@@ -29,6 +35,7 @@ class ViewModelVariable extends AbstractViewVariable implements GetModelInterfac
     }
 
     /**
+     * Regresa al modelo.
      * @return \PCI\Models\AbstractBaseModel
      */
     public function getModel()
@@ -37,6 +44,8 @@ class ViewModelVariable extends AbstractViewVariable implements GetModelInterfac
     }
 
     /**
+     * Guarda algun modelo.
+     * Por ahora no hace manipulacion/validacion, solo el typehint.
      * @param \PCI\Models\AbstractBaseModel $model
      * @return void
      */

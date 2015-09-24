@@ -1,13 +1,14 @@
 <?php namespace PCI\Repositories\User;
 
-use PCI\Models\AbstractBaseModel;
-use PCI\Mamarrachismo\PhoneParser\PhoneParser;
 use Illuminate\Pagination\LengthAwarePaginator;
+use PCI\Mamarrachismo\PhoneParser\PhoneParser;
+use PCI\Models\AbstractBaseModel;
 use PCI\Repositories\AbstractRepository;
-use PCI\Repositories\ViewVariable\ViewPaginatorVariable;
+use PCI\Repositories\Interfaces\GetByNameOrIdInterface;
 use PCI\Repositories\Interfaces\User\UserRepositoryInterface;
+use PCI\Repositories\ViewVariable\ViewPaginatorVariable;
 
-class UserRepository extends AbstractRepository implements UserRepositoryInterface
+class UserRepository extends AbstractRepository implements UserRepositoryInterface, GetByNameOrIdInterface
 {
 
     /**
@@ -69,7 +70,7 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
 
     /**
      * Actualiza algun modelo.
-     * @param int   $id
+     * @param int $id
      * @param array $data
      * @return \PCI\Models\AbstractBaseModel
      */
@@ -152,7 +153,6 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
 
     /**
      * genera la data necesaria que utilizara el paginator.
-     *
      * @param \PCI\Models\AbstractBaseModel|\PCI\Models\User $user
      * @return array
      */
@@ -171,18 +171,18 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
             $phone = $parser->parseNumber($user->employee->phone);
 
             $employee = [
-                'Nombres'   => $user->employee->formattedNames(),
-                'C.I.'      => $user->employee->ci,
-                'Telefono'  => $phone
+                'Nombres'  => $user->employee->formattedNames(),
+                'C.I.'     => $user->employee->ci,
+                'Telefono' => $phone
             ];
 
             return array_merge($partial, $employee);
         }
 
         $defaults = [
-            'Nombres'   => '-',
-            'C.I.'      => '-',
-            'Telefono'  => '-'
+            'Nombres'  => '-',
+            'C.I.'     => '-',
+            'Telefono' => '-'
         ];
 
         return array_merge($partial, $defaults);

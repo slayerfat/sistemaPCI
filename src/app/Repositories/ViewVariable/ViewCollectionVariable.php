@@ -3,6 +3,12 @@
 use Illuminate\Database\Eloquent\Collection;
 use PCI\Repositories\ViewVariable\Interfaces\GetModelCollectionInterface;
 
+/**
+ * Class ViewCollectionVariable
+ * @package PCI\Repositories\ViewVariable
+ * @author Alejandro Granadillo <slayerfat@gmail.com>
+ * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
+ */
 class ViewCollectionVariable extends AbstractViewVariable implements GetModelCollectionInterface
 {
 
@@ -16,7 +22,7 @@ class ViewCollectionVariable extends AbstractViewVariable implements GetModelCol
      * Genera una instancia de ViewModelVariable, que sirve para generar
      * formularios genericos de entidades secundarias.
      * @param \Illuminate\Database\Eloquent\Collection $model
-     * @param string $resource
+     * @param string $resource el modelo a manipular
      */
     public function __construct(Collection $model, $resource)
     {
@@ -30,6 +36,7 @@ class ViewCollectionVariable extends AbstractViewVariable implements GetModelCol
     }
 
     /**
+     * Regresa al modelo.
      * @return \Illuminate\Database\Eloquent\Collection|null
      */
     public function getModel()
@@ -38,6 +45,8 @@ class ViewCollectionVariable extends AbstractViewVariable implements GetModelCol
     }
 
     /**
+     * Guarda alguna Coleccion.
+     * Por ahora no hace manipulacion/validacion, solo el typehint.
      * @param \Illuminate\Database\Eloquent\Collection|null $collection
      */
     public function setModel(Collection $collection)
