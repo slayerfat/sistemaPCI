@@ -1,7 +1,6 @@
 <?php namespace PCI\Http\Requests\User;
 
 use PCI\Http\Requests\Request;
-use PCI\Models\Employee;
 use PCI\Repositories\Interfaces\User\EmployeeRepositoryInterface;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
@@ -44,7 +43,10 @@ class EmployeeRequest extends Request
             case 'POST':
                 $user = $this->empRepo->findParent($this->route('users'));
 
-                return $this->user()->can('create', [Employee::class, $user]);
+                return $this->user()->can('create', [
+                    $this->empRepo->newInstance(),
+                    $user
+                ]);
 
             // si no esta creado o actualizando
             // probablemente es un error externo.
