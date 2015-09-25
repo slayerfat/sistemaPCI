@@ -6,7 +6,13 @@ Todos los cambios significatiovos en este proyecto estaran documentados en este 
 
 ### Añadido
 
-- Ampliada documentacion en polizas.
+- Pruebas, Pruebas, Pruebas.
+
+## [v0.2.3] - 2015-09-24
+
+### Añadido
+
+- Ampliada documentacion en polizas, Controllers, Repos, etc..
 
 ## [v0.2.2] - 2015-09-24
 
@@ -171,7 +177,8 @@ Se crearon documentacion segun aspectos clave del sistema, para ser referenciado
   - `replace.php` deberia funcionar correctamente.
   - cypher deberia funcionar por cambio de strings de tamaño 32.
 
-[unrele]: https://github.com/slayerfat/sistemaPCI/compare/v0.2.1...develop
+[unrele]: https://github.com/slayerfat/sistemaPCI/compare/v0.2.3...develop
+[v0.2.3]: https://github.com/slayerfat/sistemaPCI/compare/v0.2.2...v0.2.3
 [v0.2.2]: https://github.com/slayerfat/sistemaPCI/compare/v0.2.1...v0.2.2
 [v0.2.1]: https://github.com/slayerfat/sistemaPCI/compare/v0.2.0...v0.2.1
 [v0.2.0]: https://github.com/slayerfat/sistemaPCI/compare/v0.1.2...v0.2.0
