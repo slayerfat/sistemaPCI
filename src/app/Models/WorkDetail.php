@@ -37,10 +37,15 @@ class WorkDetail extends AbstractBaseModel
 {
     /**
      * The attributes that are mass assignable.
-     *
+     * el caso de departamento y cargo, no hay problema.
      * @var array
      */
-    protected $fillable = ['join_date', 'departure_date'];
+    protected $fillable = [
+        'department_id',
+        'position_id',
+        'join_date',
+        'departure_date'
+    ];
 
     /**
      * Atributos que deben ser mutados a dates.

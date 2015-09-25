@@ -50,9 +50,9 @@ switch ($active) {
             </li>
 
             @if($user->employee)
-                @if($user->employee->work_id)
+                @if($user->employee->workDetails)
                     <li>
-                        <a href="{{route('workDetails.edit', $user->employee->work_id)}}">
+                        <a href="{{route('workDetails.edit', $user->employee->workDetails->id)}}">
                             {{trans('models.workDetails.singular')}}
                         </a>
                     </li>

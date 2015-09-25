@@ -85,13 +85,13 @@ class WorkDetailsController extends Controller
 
         // solucion mamarracha, pero asi nos
         // ahorramos modificar la interface
-        $data['user_id'] = $id;
+        $data['employee_id'] = $id;
 
         $user = $this->repo->create($data);
 
         Flash::success(trans('models.workDetails.store.success'));
 
-        return $this->view->make('users.show', compact('user'));
+        return Redirect::route('users.show', $user->name);
     }
 
     /**
@@ -112,7 +112,10 @@ class WorkDetailsController extends Controller
         $departments = Department::lists('desc', 'id');
         $positions   = Position::lists('desc', 'id');
 
-        return $this->view->make('employees.edit', compact('workDetail', 'departments', 'positions'));
+        return $this->view->make(
+            'employees.workDetails.edit',
+            compact('workDetail', 'departments', 'positions')
+        );
     }
 
     /**
@@ -125,7 +128,7 @@ class WorkDetailsController extends Controller
     {
         $user = $this->repo->update($id, $request->all());
 
-        Flash::success(trans('models.employees.update.success'));
+        Flash::success(trans('models.workDetails.update.success'));
 
         return Redirect::route('users.show', $user->name);
     }

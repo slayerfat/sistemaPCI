@@ -64,9 +64,8 @@ class WorkDetailRequest extends Request
         return [
             'department_id'  => 'numeric',
             'position_id'    => 'numeric',
-            'employee_id'    => 'required|numeric',
             'join_date'      => 'date',
-            'departure_date' => 'numeric',
+            'departure_date' => 'date',
         ];
     }
 }

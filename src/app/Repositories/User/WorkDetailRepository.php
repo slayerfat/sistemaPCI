@@ -34,6 +34,36 @@ class WorkDetailRepository extends AbstractRepository implements WorkDetailRepos
     }
 
     /**
+     * Consigue todos los elementos y devuelve una coleccion.
+     * @return \Illuminate\Database\Eloquent\Collection|null
+     */
+    public function getAll()
+    {
+        return $this->model->all();
+    }
+
+    /**
+     * Persiste informacion referente a una entidad.
+     * @param array $data El array con informacion del modelo.
+     * @return \PCI\Models\AbstractBaseModel
+     */
+    public function create(array $data)
+    {
+        /** @var \PCI\Models\WorkDetail $workDetail */
+        $workDetail = $this->newInstance($data);
+
+        /** @var \PCI\Models\Employee $employee */
+        $employee = $this->findParent($data['employee_id']);
+
+        $employee->workDetails()->save($workDetail);
+
+        // se regresa al usuario porque se va a mostrar en
+        // la vista al usuario relacionado con esta
+        // nueva informacion de datos laborales.
+        return $employee->user;
+    }
+
+    /**
      * Busca al padre relacionado directamente con
      * este modelo, si existen varios padres,
      * entonces se devuelve el mas importante
@@ -47,35 +77,6 @@ class WorkDetailRepository extends AbstractRepository implements WorkDetailRepos
     }
 
     /**
-     * Busca algun Elemento segun Id u otra regla.
-     * @param  string|int $id El identificador unico (slug|name|etc|id).
-     * @return \PCI\Models\AbstractBaseModel
-     */
-    public function find($id)
-    {
-        // TODO: Implement find() method.
-    }
-
-    /**
-     * Consigue todos los elementos y devuelve una coleccion.
-     * @return \Illuminate\Database\Eloquent\Collection|null
-     */
-    public function getAll()
-    {
-        // TODO: Implement getAll() method.
-    }
-
-    /**
-     * Persiste informacion referente a una entidad.
-     * @param array $data El array con informacion del modelo.
-     * @return \PCI\Models\AbstractBaseModel
-     */
-    public function create(array $data)
-    {
-        // TODO: Implement create() method.
-    }
-
-    /**
      * Actualiza algun modelo y lo persiste
      * en la base de datos del sistema.
      * @param int $id El identificador unico.
@@ -84,7 +85,25 @@ class WorkDetailRepository extends AbstractRepository implements WorkDetailRepos
      */
     public function update($id, array $data)
     {
-        // TODO: Implement update() method.
+        /** @var \PCI\Models\WorkDetail $workDetail */
+        $workDetail = $this->find($id);
+        $workDetail->fill($data);
+
+        $workDetail->save();
+
+        $workDetail->load('employee.user', 'employee');
+
+        return $workDetail->employee->user;
+    }
+
+    /**
+     * Busca algun Elemento segun Id u otra regla.
+     * @param  string|int $id El identificador unico (slug|name|etc|id).
+     * @return \PCI\Models\AbstractBaseModel
+     */
+    public function find($id)
+    {
+        return $this->getById($id);
     }
 
     /**
@@ -94,7 +113,7 @@ class WorkDetailRepository extends AbstractRepository implements WorkDetailRepos
      */
     public function delete($id)
     {
-        // TODO: Implement delete() method.
+        return $this->executeDelete($id, trans('models.workDetails.singular'));
     }
 
     /**

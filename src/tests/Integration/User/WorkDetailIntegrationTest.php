@@ -31,7 +31,6 @@ class WorkDetailIntegrationTest extends AbstractUserIntegration
 
     public function testUserCanCreateIfAdminAndNoEmployee()
     {
-        $this->markTestIncomplete();
         $employee = factory(Employee::class)->create(['user_id' => $this->user->id]);
 
         $this->actingAs($this->user)
@@ -52,7 +51,6 @@ class WorkDetailIntegrationTest extends AbstractUserIntegration
     public function testUserShouldNotcreateIfNotAdmin()
     {
         $user = factory(User::class)->create(['confirmation_code' => null]);
-
         $employee = factory(Employee::class)->create(['user_id' => $this->user->id]);
 
         $this->actingAs($user)
@@ -63,14 +61,17 @@ class WorkDetailIntegrationTest extends AbstractUserIntegration
              ->seePageIs(route('index'));
     }
 
-    public function testUserShouldNotcreateIfAlreadyEmployeeModel()
+    public function testUserShouldNotcreateIfAlreadyWoekDetailsModel()
     {
-        $employee = factory(Employee::class)->create(['user_id' => $this->user->id]);
-        $this->markTestIncomplete();
+        $randomUser                    = factory(User::class)->create();
+        $workDetail                    = factory(WorkDetail::class)->create();
+        $workDetail->employee->user_id = $randomUser->id;
+        $workDetail->employee->save();
+
         $this->actingAs($this->user)
              ->visit(route('index'))
              ->seePageIs(route('index'))
-             ->visit(route('workDetails.create', $employee->id))
+            ->visit(route('workDetails.create', $workDetail->employee->id))
              ->see(trans('defaults.auth.error'))
              ->seePageIs(route('index'));
     }
@@ -78,10 +79,9 @@ class WorkDetailIntegrationTest extends AbstractUserIntegration
     public function testUserShouldBeAbleToEditIfAdmin()
     {
         $randomUser = factory(User::class)->create();
-        $this->markTestIncomplete();
         $workDetail                    = factory(WorkDetail::class)->create();
-        $workDetail->employee->user_id = $randomUser;
-        $workDetail->save();
+        $workDetail->employee->user_id = $randomUser->id;
+        $workDetail->employee->save();
 
         $this->actingAs($this->user)
              ->visit(route('users.show', $randomUser->name))
@@ -102,7 +102,6 @@ class WorkDetailIntegrationTest extends AbstractUserIntegration
     public function testNonAdminShouldntBeAbleToEditEmployee()
     {
         $anotherUser = factory(User::class)->create(['confirmation_code' => null]);
-
         $workDetail = factory(WorkDetail::class)->create();
 
         $this->actingAs($anotherUser)
