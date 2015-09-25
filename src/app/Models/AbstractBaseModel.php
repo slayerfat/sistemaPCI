@@ -90,7 +90,7 @@ abstract class AbstractBaseModel extends Eloquent
      * @param string $value el valor a parsear
      * @return \Jenssegers\Date\Date
      */
-    private function getDateInstance($value)
+    protected function getDateInstance($value)
     {
         return Date::make($value);
     }
