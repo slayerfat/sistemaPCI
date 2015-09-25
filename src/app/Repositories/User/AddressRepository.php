@@ -78,7 +78,7 @@ class AddressRepository extends AbstractRepository implements AddressRepositoryI
      * entonces se devuelve el mas importante
      * en contexto al repositorio.
      * @param string|int $id El identificador unico (name|slug|int).
-     * @return \PCI\Models\Address
+     * @return \PCI\Models\Employee
      */
     public function findParent($id)
     {
