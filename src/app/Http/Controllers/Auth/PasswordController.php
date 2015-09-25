@@ -2,9 +2,15 @@
 
 namespace PCI\Http\Controllers\Auth;
 
-use PCI\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
+use PCI\Http\Controllers\Controller;
 
+/**
+ * Class PasswordController
+ * @package PCI\Http\Controllers\Auth
+ * @author Alejandro Granadillo <slayerfat@gmail.com>
+ * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
+ */
 class PasswordController extends Controller
 {
     /*

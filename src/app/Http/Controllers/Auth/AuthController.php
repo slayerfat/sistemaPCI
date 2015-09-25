@@ -4,14 +4,20 @@ namespace PCI\Http\Controllers\Auth;
 
 use Event;
 use Flash;
-use Validator;
-use PCI\Models\User;
-use PCI\Events\NewUserRegistration;
-use PCI\Http\Controllers\Controller;
+use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Validation\ValidatesRequests;
-use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use PCI\Events\NewUserRegistration;
+use PCI\Http\Controllers\Controller;
+use PCI\Models\User;
+use Validator;
 
+/**
+ * Class AuthController
+ * @package PCI\Http\Controllers\Auth
+ * @author Alejandro Granadillo <slayerfat@gmail.com>
+ * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
+ */
 class AuthController extends Controller
 {
     /*
