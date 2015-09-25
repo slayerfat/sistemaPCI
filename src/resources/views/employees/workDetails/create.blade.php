@@ -4,11 +4,11 @@
     @include('partials.errors')
 
     <div class="container">
-        {!! BSForm::horizontalModel($workDetail, ['route' => ['workDetails.store', $user->name]]) !!}
+        {!! BSForm::horizontalModel($workDetail, ['route' => ['workDetails.store', $employee->id]]) !!}
 
         <legend>{{trans('models.workDetails.create')}}</legend>
 
-        @include('workDetails.partials.form', ['btnMsg' => trans('models.workDetails.create')])
+        @include('employees.workDetails.partials.form', ['btnMsg' => trans('models.workDetails.create')])
 
         {!! BSForm::close() !!}
     </div>

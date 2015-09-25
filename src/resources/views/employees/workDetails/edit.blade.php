@@ -18,7 +18,7 @@
 
         <legend>{{trans('models.workDetails.edit')}}</legend>
 
-        @include('workDetails.partials.form', ['btnMsg' => trans('models.workDetails.edit')])
+        @include('employees.workDetails.partials.form', ['btnMsg' => trans('models.workDetails.edit')])
 
         {!! BSForm::close() !!}
     </div>

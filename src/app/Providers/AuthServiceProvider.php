@@ -5,9 +5,11 @@ use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvid
 use PCI\Models\Address;
 use PCI\Models\Employee;
 use PCI\Models\User;
+use PCI\Models\WorkDetail;
 use PCI\Policies\User\AddressPolicy;
 use PCI\Policies\User\EmployeePolicy;
 use PCI\Policies\User\UserPolicy;
+use PCI\Policies\User\WorkDetailPolicy;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -17,9 +19,10 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        User::class     => UserPolicy::class,
-        Employee::class => EmployeePolicy::class,
-        Address::class  => AddressPolicy::class
+        User::class       => UserPolicy::class,
+        Employee::class   => EmployeePolicy::class,
+        Address::class    => AddressPolicy::class,
+        WorkDetail::class => WorkDetailPolicy::class
     ];
 
     /**

@@ -18,7 +18,7 @@ class WorkDetailRepository extends AbstractRepository implements WorkDetailRepos
      * La implementacion del repositorio de empleado.
      * @var \PCI\Repositories\Interfaces\User\EmployeeRepositoryInterface
      */
-    private $empRepo;
+    private $parentRepo;
 
     /**
      * Genera una nueva instancia del repositorio.
@@ -30,7 +30,7 @@ class WorkDetailRepository extends AbstractRepository implements WorkDetailRepos
     {
         parent::__construct($model);
 
-        $this->empRepo = $empRepo;
+        $this->parentRepo = $empRepo;
     }
 
     /**
@@ -43,7 +43,7 @@ class WorkDetailRepository extends AbstractRepository implements WorkDetailRepos
      */
     public function findParent($id)
     {
-        // TODO: Implement findParent() method.
+        return $this->parentRepo->find($id);
     }
 
     /**
