@@ -8,7 +8,9 @@ use Illuminate\Database\Eloquent\Collection;
 
 /**
  * PCI\Models\Movement
-
+ * @package PCI\Models
+ * @author Alejandro Granadillo <slayerfat@gmail.com>
+ * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
  * @property integer $id
  * @property integer $movement_type_id
  * @property integer $note_id
@@ -57,6 +59,7 @@ class Movement extends AbstractBaseModel
     // -------------------------------------------------------------------------
 
     /**
+     * Regresa el tipo de movimiento relacionado.
      * @return MovementType
      */
     public function type()
@@ -65,6 +68,7 @@ class Movement extends AbstractBaseModel
     }
 
     /**
+     * Regresa la nota relacionada a este movimiento.
      * @return Note
      */
     public function note()
@@ -77,6 +81,7 @@ class Movement extends AbstractBaseModel
     // -------------------------------------------------------------------------
 
     /**
+     * Regresa una coleccion de items asociados.
      * @return Collection
      */
     public function items()

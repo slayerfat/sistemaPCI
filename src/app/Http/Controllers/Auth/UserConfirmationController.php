@@ -2,26 +2,36 @@
 
 use Event;
 use Flash;
-use Redirect;
 use Illuminate\Auth\Guard;
-use PCI\Http\Controllers\Controller;
 use PCI\Events\ConfirmationCodeRequest;
+use PCI\Http\Controllers\Controller;
 use PCI\Repositories\Interfaces\User\UserRepositoryInterface;
+use Redirect;
 
+/**
+ * Class UserConfirmationController
+ * @package PCI\Http\Controllers\Auth
+ * @author Alejandro Granadillo <slayerfat@gmail.com>
+ * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
+ */
 class UserConfirmationController extends Controller
 {
 
     /**
+     * La implementacion de Guard que contiene al usuario.
      * @var Guard
      */
     private $auth;
 
     /**
+     * El repositorio de usuarios.
      * @var UserRepositoryInterface
      */
     private $userRepo;
 
     /**
+     * Construye una nueva instancia, esta depende
+     * del Guard y el repositorio de usuarios.
      * @param Guard $auth
      * @param \PCI\Repositories\Interfaces\User\UserRepositoryInterface $userRepo
      */
@@ -32,7 +42,8 @@ class UserConfirmationController extends Controller
     }
 
     /**
-     * @param $code
+     * Chequea el codigo y redireciona segun el repo.
+     * @param string $code el codigo en 32 caracteres.
      * @return \Illuminate\Http\RedirectResponse
      */
     public function confirm($code)
@@ -53,6 +64,8 @@ class UserConfirmationController extends Controller
     }
 
     /**
+     * Si el usuario no tiene o necesita un
+     * nuevo codigo, este es generado aqui.
      * @return \Illuminate\Http\RedirectResponse
      */
     public function create()

@@ -6,7 +6,9 @@ namespace PCI\Models;
 
 /**
  * PCI\Models\WorkDetail
- *
+ * @package PCI\Models
+ * @author Alejandro Granadillo <slayerfat@gmail.com>
+ * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
  * @property integer $id
  * @property integer $department_id
  * @property integer $position_id
@@ -62,6 +64,7 @@ class WorkDetail extends AbstractBaseModel
     // -------------------------------------------------------------------------
 
     /**
+     * Regresa al empleado relacionado.
      * @return Employee
      */
     public function employee()
@@ -70,6 +73,7 @@ class WorkDetail extends AbstractBaseModel
     }
 
     /**
+     * Regresa el cargo relacionado.
      * @return Position
      */
     public function position()
@@ -78,6 +82,7 @@ class WorkDetail extends AbstractBaseModel
     }
 
     /**
+     * Regresa el departamento relacionado.
      * @return Department
      */
     public function department()

@@ -1,9 +1,16 @@
 <?php namespace PCI\Http\Routes;
 
+/**
+ * Class UserRoutes
+ * @package PCI\Http\Routes
+ * @author Alejandro Granadillo <slayerfat@gmail.com>
+ * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
+ */
 class UserRoutes extends AbstractPciRoutes
 {
 
     /**
+     * Las rutas varias que encajan en el formato restful
      * @var array
      */
     protected $restfulOptions = [
@@ -68,6 +75,7 @@ class UserRoutes extends AbstractPciRoutes
     ];
 
     /**
+     * Las rutas varias que no encajan en el formato restful
      * @var array
      */
     protected $nonRestfulOptions = [

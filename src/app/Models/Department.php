@@ -10,7 +10,9 @@ use Illuminate\Database\Eloquent\Collection;
 
 /**
  * PCI\Models\Department
-
+ * @package PCI\Models
+ * @author Alejandro Granadillo <slayerfat@gmail.com>
+ * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
  * @property integer $id
  * @property string $desc
  * @property string $slug
@@ -42,6 +44,7 @@ class Department extends AbstractBaseModel implements SluggableInterface
     protected $fillable = ['desc', 'phone'];
 
     /**
+     * Los datos necesarios para generarar un slug en el modelo.
      * @var array
      */
     protected $sluggable = [
@@ -57,6 +60,7 @@ class Department extends AbstractBaseModel implements SluggableInterface
     // -------------------------------------------------------------------------
 
     /**
+     * Regresa una coleccion de datos laborales.
      * @return Collection
      */
     public function workDetails()

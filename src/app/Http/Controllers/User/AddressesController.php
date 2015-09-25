@@ -10,20 +10,29 @@ use PCI\Repositories\Interfaces\User\AddressRepositoryInterface;
 use Redirect;
 use View;
 
+/**
+ * Class AddressesController
+ * @package PCI\Http\Controllers\User
+ * @author Alejandro Granadillo <slayerfat@gmail.com>
+ * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
+ */
 class AddressesController extends Controller
 {
 
     /**
+     * La implementacion del repositorio de direccion.
      * @var \PCI\Repositories\Interfaces\User\AddressRepositoryInterface
      */
     private $addrRepo;
 
     /**
+     * El modelo.
      * @var \PCI\Models\User
      */
     private $user;
 
     /**
+     * Genera una instancia del controlador.
      * @param \PCI\Repositories\Interfaces\User\AddressRepositoryInterface $addrRepo
      * @param \Illuminate\Auth\Guard $auth
      */

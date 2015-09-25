@@ -4,10 +4,17 @@ use Gate;
 use PCI\Http\Requests\Request;
 use PCI\Repositories\Interfaces\User\UserRepositoryInterface;
 
+/**
+ * Class UserRequest
+ * @package PCI\Http\Requests\User
+ * @author Alejandro Granadillo <slayerfat@gmail.com>
+ * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
+ */
 class UserRequest extends Request
 {
 
     /**
+     * La implementacion de esta interface.
      * @var \PCI\Repositories\Interfaces\User\UserRepositoryInterface
      */
     private $userRepo;

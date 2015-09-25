@@ -4,9 +4,13 @@ namespace PCI\Models;
 
 use Illuminate\Database\Eloquent\Collection;
 
+/** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
+
 /**
  * PCI\Models\Address
-
+ * @package PCI\Models
+ * @author Alejandro Granadillo <slayerfat@gmail.com>
+ * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
  * @property integer $id
  * @property integer $parish_id
  * @property string $building
@@ -35,7 +39,7 @@ class Address extends AbstractBaseModel
     /**
      * The attributes that are mass assignable.
      * Parroquina no tiene problema.
-     * @var array
+     * @var string[]
      */
     protected $fillable = [
         'parish_id',
@@ -49,6 +53,8 @@ class Address extends AbstractBaseModel
     // -------------------------------------------------------------------------
 
     /**
+     * Regresa una cadena de texto
+     * formateada de forma agradable para la vista.
      * @return string
      */
     public function getFormattedDetailsAttribute()
@@ -71,6 +77,7 @@ class Address extends AbstractBaseModel
     }
 
     /**
+     * Regresa un string con 'Edf./Qta./Blq. {$this->building}' o nulo.
      * @return string|null
      */
     public function formattedBuilding()
@@ -82,7 +89,7 @@ class Address extends AbstractBaseModel
 
     /**
      * (q . !k . !l) === !(!q + k + l)
-     * @param $attr
+     * @param string $attr el atributo a validar
      * @return bool
      */
     private function isAttrValid($attr)
@@ -91,6 +98,7 @@ class Address extends AbstractBaseModel
     }
 
     /**
+     * Regresa un string con 'Calle(s) {$this->street}' o nulo.
      * @return string|null
      */
     public function formattedStreet()
@@ -100,14 +108,8 @@ class Address extends AbstractBaseModel
         return $this->isAttrValid($attr) ? 'Calle(s) ' . $this->street : null;
     }
 
-    // -------------------------------------------------------------------------
-    // Relaciones
-    // -------------------------------------------------------------------------
-    // -------------------------------------------------------------------------
-    // Belongs To 1..* -> 1
-    // -------------------------------------------------------------------------
-
     /**
+     * Regresa un string con 'Av. {$this->av}' o nulo.
      * @return string|null
      */
     public function formattedAv()
@@ -118,9 +120,39 @@ class Address extends AbstractBaseModel
     }
 
     // -------------------------------------------------------------------------
-    // Has Many 1 -> 1..*
+    // Relaciones
+    // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+    // Belongs To 1..* -> 1
     // -------------------------------------------------------------------------
 
+    /**
+     * Regresa la parroquia relacionada.
+     * @return Parish
+     */
+    public function parish()
+    {
+        return $this->belongsTo(Parish::class);
+    }
+
+    // -------------------------------------------------------------------------
+    // hasOne 1 -> 1
+    // -------------------------------------------------------------------------
+
+    /**
+     * Regresa una coleccion de empleados relacionados.
+     * @return Collection
+     */
+    public function employee()
+    {
+        return $this->hasOne(Employee::class);
+    }
+
+    /**
+     * Regresa el edificio en formato legible.
+     * @param string $value El atributo interno a devolver.
+     * @return string
+     */
     public function getBuildingAttribute($value)
     {
         $value = $this->removeDotInString($value);
@@ -129,15 +161,23 @@ class Address extends AbstractBaseModel
     }
 
     /**
-     * @param $value
-     * @return mixed
+     * Si la cadena de texto tiene un punto al final, lo elimina.
+     * Esto se debe a que cuando se formatea el texto,
+     * nos conviene que no tenga el punto.
+     * @param string $value La cadena de texto a comprobar.
+     * @return string|null
      */
     private function removeDotInString($value)
     {
+        // esto evita hacer operaciones en nulo
         if (is_null($value) || trim($value) == '') {
             return null;
         }
 
+        // si el ultimo caracter del texto es un punto
+        // entonces lo pone nulo, se trato con
+        // unset, pero no sirve, investigar
+        // una mejor solucion para esto.
         if ($value[strlen($value) - 1] == '.') {
             $value[strlen($value) - 1] = null;
         }
@@ -146,7 +186,8 @@ class Address extends AbstractBaseModel
     }
 
     /**
-     * @param $value
+     * Devuelve la primera letra del string en mayuscula, con trim.
+     * @param string $value el valor a manipular.
      * @return string
      */
     private function ucAndCleanString($value)
@@ -154,6 +195,11 @@ class Address extends AbstractBaseModel
         return ucfirst(trim($value));
     }
 
+    /**
+     * Regresa el edificio en formato legible.
+     * @param string $value El atributo interno a devolver.
+     * @return string
+     */
     public function getStreetAttribute($value)
     {
         $value = $this->removeDotInString($value);
@@ -161,26 +207,15 @@ class Address extends AbstractBaseModel
         return $this->ucAndCleanString($value);
     }
 
+    /**
+     * Regresa el edificio en formato legible.
+     * @param string $value El atributo interno a devolver.
+     * @return string
+     */
     public function getAvAttribute($value)
     {
         $value = $this->removeDotInString($value);
 
         return $this->ucAndCleanString($value);
-    }
-
-    /**
-     * @return Parish
-     */
-    public function parish()
-    {
-        return $this->belongsTo(Parish::class);
-    }
-
-    /**
-     * @return Collection
-     */
-    public function employee()
-    {
-        return $this->hasOne(Employee::class);
     }
 }

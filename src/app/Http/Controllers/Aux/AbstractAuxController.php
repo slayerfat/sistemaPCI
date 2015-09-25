@@ -1,14 +1,21 @@
 <?php namespace PCI\Http\Controllers\Aux;
 
 use Illuminate\View\Factory;
-use PCI\Repositories\ViewVariable\Interfaces\ViewVariableInterface;
 use PCI\Http\Controllers\Controller;
+use PCI\Repositories\ViewVariable\Interfaces\ViewVariableInterface;
 use Redirect;
 
+/**
+ * Class AbstractAuxController
+ * @package PCI\Http\Controllers\Aux
+ * @author Alejandro Granadillo <slayerfat@gmail.com>
+ * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
+ */
 abstract class AbstractAuxController extends Controller
 {
 
     /**
+     * La fabrica que genera la vista para el usuario.
      * @var \Illuminate\View\Factory
      */
     protected $view;
@@ -27,7 +34,7 @@ abstract class AbstractAuxController extends Controller
     /**
      * Genera una vista para ser utilizada por algun
      * otro controlador concreto.
-     * @param string $view
+     * @param string $view la vista en texto entendible por el view factory.
      * @param \PCI\Repositories\ViewVariable\Interfaces\ViewVariableInterface $variables
      * @return \Illuminate\Contracts\View\View
      */
@@ -40,8 +47,11 @@ abstract class AbstractAuxController extends Controller
     }
 
     /**
+     * Este es la logica basica que utilizan los controladores
+     * dependientes de esta clase para eliminar
+     * a un modelo de la base de datos.
      * @param boolean|\PCI\Models\AbstractBaseModel $model
-     * @param $alias
+     * @param string $alias el alias o descripcion del modelo.
      * @return \Illuminate\Http\RedirectResponse
      */
     protected function destroyPrototype($model, $alias)

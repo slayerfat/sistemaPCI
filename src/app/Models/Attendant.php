@@ -8,7 +8,9 @@ use Illuminate\Database\Eloquent\Collection;
 
 /**
  * PCI\Models\Attendant
- *
+ * @package PCI\Models
+ * @author Alejandro Granadillo <slayerfat@gmail.com>
+ * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
  * @property integer $id
  * @property integer $user_id
  * @property \Carbon\Carbon $selection
@@ -59,6 +61,7 @@ class Attendant extends AbstractBaseModel
     // -------------------------------------------------------------------------
 
     /**
+     * Regresa al usuario relacionado.
      * @return User
      */
     public function user()
@@ -71,6 +74,7 @@ class Attendant extends AbstractBaseModel
     // -------------------------------------------------------------------------
 
     /**
+     * Regresa una coleccion de notas.
      * @return Collection
      */
     public function notes()

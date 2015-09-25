@@ -13,20 +13,29 @@ use PCI\Repositories\Interfaces\User\EmployeeRepositoryInterface;
 use Redirect;
 use View;
 
+/**
+ * Class EmployeesController
+ * @package PCI\Http\Controllers\User
+ * @author Alejandro Granadillo <slayerfat@gmail.com>
+ * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
+ */
 class EmployeesController extends Controller
 {
 
     /**
+     * La implementacion del repositorio de empleado.
      * @var \PCI\Repositories\Interfaces\User\EmployeeRepositoryInterface
      */
     private $empRepo;
 
     /**
+     * El modelo.
      * @var \PCI\Models\User
      */
     private $currentUser;
 
     /**
+     * Genera una instancia del controlador.
      * @param \PCI\Repositories\Interfaces\User\EmployeeRepositoryInterface $empRepo
      * @param \Illuminate\Auth\Guard $auth
      */

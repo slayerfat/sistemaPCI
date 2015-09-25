@@ -10,7 +10,9 @@ use Illuminate\Database\Eloquent\Collection;
 
 /**
  * PCI\Models\Item
-
+ * @package PCI\Models
+ * @author Alejandro Granadillo <slayerfat@gmail.com>
+ * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
  * @property integer $id
  * @property integer $item_type_id
  * @property integer $maker_id
@@ -30,7 +32,7 @@ use Illuminate\Database\Eloquent\Collection;
  * @property-read Maker $maker
  * @property-read ItemType $type
  * @property-read \Illuminate\Database\Eloquent\Collection|Depot[] $depots
- * @property-read \Illuminate\Database\Eloquent\Collection|self[] $dependsOn
+ * @property-read \Illuminate\Database\Eloquent\Collection|\PCI\Models\Item[] $dependsOn
  * @property-read \Illuminate\Database\Eloquent\Collection|Petition[] $petitions
  * @property-read \Illuminate\Database\Eloquent\Collection|Movement[] $movements
  * @property-read \Illuminate\Database\Eloquent\Collection|Note[] $notes
@@ -70,6 +72,7 @@ class Item extends AbstractBaseModel implements SluggableInterface
     ];
 
     /**
+     * Los datos necesarios para generarar un slug en el modelo.
      * @var array
      */
     protected $sluggable = [
@@ -95,6 +98,7 @@ class Item extends AbstractBaseModel implements SluggableInterface
     // -------------------------------------------------------------------------
 
     /**
+     * Regresa el rubro asociado al item.
      * @return SubCategory
      */
     public function subCategory()
@@ -103,6 +107,7 @@ class Item extends AbstractBaseModel implements SluggableInterface
     }
 
     /**
+     * regresa el fabricante asociado.
      * @return Maker
      */
     public function maker()
@@ -111,6 +116,7 @@ class Item extends AbstractBaseModel implements SluggableInterface
     }
 
     /**
+     * Regresa el tipo de item.
      * @return ItemType
      */
     public function type()
@@ -123,6 +129,7 @@ class Item extends AbstractBaseModel implements SluggableInterface
     // -------------------------------------------------------------------------
 
     /**
+     * Regresa una coleccion de almacenes en donde este item puede estar.
      * @return Collection
      */
     public function depots()
@@ -132,6 +139,7 @@ class Item extends AbstractBaseModel implements SluggableInterface
 
     /**
      * Relacion unaria.
+     * Regresa los items que dependen de otros items.
      * @return Collection
      */
     public function dependsOn()
@@ -145,6 +153,7 @@ class Item extends AbstractBaseModel implements SluggableInterface
     }
 
     /**
+     * Regresa una coleccion de peticiones relacionadas con el item.
      * @return Collection
      */
     public function petitions()
@@ -153,6 +162,7 @@ class Item extends AbstractBaseModel implements SluggableInterface
     }
 
     /**
+     * Regresa una coleccion de movimientos relacionadas con el item.
      * @return Collection
      */
     public function movements()
@@ -161,6 +171,7 @@ class Item extends AbstractBaseModel implements SluggableInterface
     }
 
     /**
+     * Regresa una coleccion de notas asociadas al item.
      * @return Collection
      */
     public function notes()

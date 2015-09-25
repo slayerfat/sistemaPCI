@@ -11,20 +11,31 @@ use PCI\Models\Profile;
 use PCI\Repositories\Interfaces\User\UserRepositoryInterface;
 use Redirect;
 
+/**
+ * Class UsersController
+ * @package PCI\Http\Controllers\User
+ * @author Alejandro Granadillo <slayerfat@gmail.com>
+ * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
+ */
 class UsersController extends Controller
 {
 
     /**
+     * La implementacion del repositorio de usuario.
      * @var UserRepositoryInterface
      */
     private $userRepo;
 
     /**
+     * La fabrica que genera la vista.
      * @var View
      */
     private $view;
 
     /**
+     * Genera una nueva instancia del controlador.
+     * Este controlador genera las vistas injectadolas
+     * aqui en este constructor.
      * @param \PCI\Repositories\Interfaces\User\UserRepositoryInterface $userRepo
      * @param View $view
      */
@@ -33,10 +44,12 @@ class UsersController extends Controller
         $this->userRepo = $userRepo;
         $this->view     = $view;
 
+        // el middleware de admin
         $this->middleware('admin', ['except' => ['edit', 'update', 'show']]);
     }
 
     /**
+     * Regresa un listado de recursos.
      * @return \Illuminate\Contracts\View\View
      */
     public function index()
@@ -49,7 +62,7 @@ class UsersController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     * @param \PCI\Models\Profile $profile
+     * @param \PCI\Models\Profile $profile la instancia injectada por el IOC de laravel.
      * @return \Illuminate\Contracts\View\View
      */
     public function create(Profile $profile)
@@ -70,6 +83,9 @@ class UsersController extends Controller
     {
         $user = $this->userRepo->create($request->all());
 
+        // cuando un usuario es creado y guardado,
+        // se dispara el evento o regla de negocio
+        // relacionada con un nuevo usuario en el sistema.
         Event::fire(new NewUserRegistration($user));
 
         Flash::success(trans('models.users.create.success') . ' Correo electrónico de confirmacion enviado.');
@@ -79,8 +95,7 @@ class UsersController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param  int  $id
+     * @param  string|int $id El slug|id identificador.
      * @return \Illuminate\Contracts\View\View
      */
     public function show($id)
@@ -92,8 +107,7 @@ class UsersController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
+     * @param  string|int $id El slug|id identificador.
      * @return \Illuminate\Contracts\View\View
      */
     public function edit($id)
@@ -105,6 +119,7 @@ class UsersController extends Controller
             return $this->redirectBack();
         }
 
+        //todo: crear repo?
         $profiles = Profile::lists('desc', 'id');
 
         return $this->view->make('users.edit', compact('user', 'profiles'));
@@ -113,7 +128,7 @@ class UsersController extends Controller
     /**
      * Update the specified resource in storage.
      * @param \PCI\Http\Requests\User\UserRequest $request
-     * @param             $id
+     * @param  int $id El id identificador.
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(UserRequest $request, $id)
@@ -127,12 +142,13 @@ class UsersController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  int  $id
+     * @param  int $id El id identificador.
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($id)
     {
+        // este algoritmo basicamente se repite
+        // en casi todos los controladores.
         $result = $this->userRepo->delete($id);
 
         if ($result === true) {

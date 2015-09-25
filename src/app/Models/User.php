@@ -14,7 +14,9 @@ use Illuminate\Foundation\Auth\Access\Authorizable;
 
 /**
  * PCI\Models\User
-
+ * @package PCI\Models
+ * @author Alejandro Granadillo <slayerfat@gmail.com>
+ * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
  * @property integer $id
  * @property integer $profile_id
  * @property string $name
@@ -52,26 +54,25 @@ class User extends AbstractBaseModel implements
     use Authenticatable, Authorizable, CanResetPassword;
 
     /**
-     * Administrador del sistema
+     * Id del perfil Administrador del sistema
      * @var int
      */
     const ADMIN_ID = Profile::ADMIN_ID;
 
     /**
-     * Usuario del sistema
+     * Id del perfil Usuario del sistema
      * @var int
      */
     const USER_ID = Profile::USER_ID;
 
     /**
-     * Usuario desactivado
+     * Id del perfil Usuario desactivado
      * @var int
      */
     const DISABLED_ID = Profile::DISABLED_ID;
 
     /**
      * The database table used by the model.
-     *
      * @var string
      */
     protected $table = 'users';
@@ -79,14 +80,12 @@ class User extends AbstractBaseModel implements
 
     /**
      * The attributes that are mass assignable.
-     *
      * @var array
      */
     protected $fillable = ['name', 'email', 'password', 'status', 'confirmation_code'];
 
     /**
      * The attributes excluded from the model's JSON form.
-     *
      * @var array
      */
     protected $hidden = ['password', 'remember_token', 'confirmation_code'];
@@ -96,6 +95,8 @@ class User extends AbstractBaseModel implements
     // -------------------------------------------------------------------------
 
     /**
+     * Regresa mamarrachamente a la direccion relacionada
+     * al usuario por medio del empleado.
      * @return \PCI\Models\Address
      */
     public function getAddressAttribute()
@@ -111,6 +112,7 @@ class User extends AbstractBaseModel implements
     // -------------------------------------------------------------------------
 
     /**
+     * Regresa la informacion de empleado relacionado al usuario.
      * @return Employee
      */
     public function employee()
@@ -119,6 +121,7 @@ class User extends AbstractBaseModel implements
     }
 
     /**
+     * Regresa informacion de encargado de almacen, si este posee.
      * @return Attendant
      */
     public function attendant()
@@ -131,6 +134,7 @@ class User extends AbstractBaseModel implements
     // -------------------------------------------------------------------------
 
     /**
+     * Regresa una coleccion de notas asociadas.
      * @return Collection
      */
     public function notes()
@@ -139,6 +143,7 @@ class User extends AbstractBaseModel implements
     }
 
     /**
+     * Regresa una coleccion de pedidos asociados.
      * @return Collection
      */
     public function petitions()
@@ -151,7 +156,8 @@ class User extends AbstractBaseModel implements
     // -------------------------------------------------------------------------
 
     /**
-     * @return Employee
+     * Regresa el perfil asociado.
+     * @return Profile
      */
     public function profile()
     {
@@ -163,6 +169,8 @@ class User extends AbstractBaseModel implements
     // -------------------------------------------------------------------------
 
     /**
+     * Determina si el usuario es de perfil
+     * usuario activo en el sistema.
      * @return boolean
      */
     public function isUser()
@@ -171,6 +179,8 @@ class User extends AbstractBaseModel implements
     }
 
     /**
+     * Determina si el usuario no es de perfil
+     * desactivado activo en el sistema.
      * @return boolean
      */
     public function isActive()
@@ -179,6 +189,8 @@ class User extends AbstractBaseModel implements
     }
 
     /**
+     * Determina si el usuario es de perfil
+     * usuario activo en el sistema.
      * @return boolean
      */
     public function isDisabled()
@@ -187,6 +199,9 @@ class User extends AbstractBaseModel implements
     }
 
     /**
+     * Determina si el usuario tiene codigo de
+     * verificacion en el sistema, es decir,
+     * No ha sido verificado.
      * @return boolean
      */
     public function isUnverified()
@@ -195,6 +210,9 @@ class User extends AbstractBaseModel implements
     }
 
     /**
+     * Determina si el usuario no tiene codigo
+     * de verificacion en el sistema,
+     * es decir, ha sido verificado.
      * @return boolean
      */
     public function isVerified()
@@ -213,6 +231,7 @@ class User extends AbstractBaseModel implements
     }
 
     /**
+     * Determina si el usuario es administrador del sistema.
      * @return boolean
      */
     public function isAdmin()

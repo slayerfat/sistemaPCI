@@ -1,11 +1,54 @@
-<?php namespace PCI\Mamarrachismo\Caimaneitor;
+<?php
+
+/**
+ *  ……………………▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+ * ……………▄▄█▓▓▓▒▒▒▒▒▒▒▒▒▒▓▓▓▓█▄▄
+ * …………▄▀▀▓▒░░░░░░░░░░░░░░░░▒▓▓▀▄
+ * ………▄▀▓▒▒░░░░░░░░░░░░░░░░░░░▒▒▓▀▄
+ * …..█▓█▒░░░░░░░░░░░░░░░░░░░░░▒▓▒▓█
+ * ..▌▓▀▒░░░░░░░░░░░░░░░░░░░░░░░░▒▀▓█
+ * ..█▌▓▒▒░░░░░░░░░░░░░░░░░░░░░░░░░▒▓█
+ * ▐█▓▒░░░░░░░░░░░░░░░░░░░░░░░░░░░▒▓█▌
+ * █▓▒▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒▓█
+ * █▐▒▒░░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒█▓
+ * █▓█▒░░░░░░░░░░░░░░░░░░░░░░░░░░░▒█▌▓█
+ * █▓▓█▒░░░░░░░░░░░░░░░░░░░░░░░░░░▒█▓▓█
+ * █▓█▒░▒▒▒▒░░▀▀█▄▄░░░░░▄▄█▀▀░░▒▒▒▒░▒█▓█
+ * █▓▌▒▒▓▓▓▓▄▄▄▒▒▒▀█░░░░█▀▒▒▒▄▄▄▓▓▓▓▒▒▐▓█
+ * ██▌▒▓███▓█████▓▒▐▌░░▐▌▒▓████▓████▓▒▐██
+ * .██▒▒▓███ayy████▓▄░░░▄▓████lmao███▓▒▒██
+ * .█▓▒▒▓██████████▓▒░░░▒▓██████████▓▒▒▓█
+ * ..█▓▒░▒▓███████▓▓▄▀░░▀▄▓▓███████▓▒▒▓█
+ * ...█▓▒░▒▒▓▓▓▓▄▄▄▀▒░░░░░▒▀▄▄▄▓▓▓▓▒▒░▓█
+ * ....█▓▒░▒▒▒▒░░░░░▒▒▒▒▒▒░░░░░▒▒▒▒░▒▓█
+ * .....█▓▓▒▒▒░░░░░░░▒▒▒▒░░░░░▒▒▒▓▓█
+ * ......▀██▓▓▓▒░░▄▄▄▄▄▄▄▄▄▄░░▒▓█▀
+ * .......▀█▓▒▒░░░░░░▀▀▀▀▒░░▒▒▓█▀
+ * ..........██▓▓▒░░▒▒▒░▒▒▒░▒▓██
+ * ............█▓▒▒▒░░░░░▒▒▒▓█
+ * ..............▀▀█▓▓▓▓▓▓█▀
+ */
+
+namespace PCI\Mamarrachismo\Caimaneitor;
 
 use Illuminate\Support\Collection;
 use PCI\Mamarrachismo\Caimaneitor\Interfaces\CaimanizerInterface;
 
+/**
+ * Class Caimaneitor
+ * @package PCI\Mamarrachismo\Caimaneitor
+ * @author Alejandro Granadillo <slayerfat@gmail.com>
+ * @link https://uahtechcomm.files.wordpress.com/2014/10/funny-picture-every-group-project.jpg
+ * @link http://i3.kym-cdn.com/photos/images/newsfeed/000/215/821/1323635452001.png
+ * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
+ */
 class Caimaneitor implements CaimanizerInterface
 {
 
+    /**
+     * They see me rollin'...
+     * @var string[]
+     */
     public static $caimaneishons = [
         'Puro cara e\' papeo. - Bryan Torres',
         'Tranquilo que en vacaciones me pongo pa\' eso. - Andres Leotur',
@@ -18,6 +61,10 @@ class Caimaneitor implements CaimanizerInterface
         para darme cuenta que la solucion estaba detras de mi. - Alejandro Granadillo',
     ];
 
+    /**
+     * ...they hatin'
+     * @var string[]
+     */
     public static $locaishons = [
         'Con cinco tragos de mas en la taguara La Barcaza Azul.',
         'Tomando Roncito en Los Caracas.',
@@ -41,6 +88,7 @@ class Caimaneitor implements CaimanizerInterface
     }
 
     /**
+     * Regresa un mensaje inspirado.
      * @return string
      */
     public function __toString()

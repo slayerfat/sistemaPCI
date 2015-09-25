@@ -6,20 +6,29 @@ use PCI\Http\Requests\Aux\PetitionTypeRequest;
 use PCI\Repositories\Interfaces\Aux\PetitionTypeRepositoryInterface;
 use Redirect;
 
+/**
+ * Class PetitionTypesController
+ * @package PCI\Http\Controllers\Aux
+ * @author Alejandro Granadillo <slayerfat@gmail.com>
+ * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
+ */
 class PetitionTypesController extends AbstractAuxController
 {
 
     /**
+     * La implementacion de la interfaz de repositorio.
      * @var \PCI\Repositories\Interfaces\Aux\PetitionTypeRepositoryInterface
      */
     private $repo;
 
     /**
+     * El modelo Eloquent.
      * @var \PCI\Models\PetitionType
      */
     private $model;
 
     /**
+     * Este controlador necesita el repositorio de tipo de pedido.
      * @param \Illuminate\View\Factory $view
      * @param \PCI\Repositories\Interfaces\Aux\PetitionTypeRepositoryInterface $repo
      */
@@ -30,6 +39,12 @@ class PetitionTypesController extends AbstractAuxController
         $this->repo = $repo;
     }
 
+    /**
+     * /**
+     * /**
+     * Muestra un listado general del recurso.
+     * @return \Illuminate\Contracts\View\View
+     */
     public function index()
     {
         return $this->makeView(
@@ -39,7 +54,8 @@ class PetitionTypesController extends AbstractAuxController
     }
 
     /**
-     * @param string|int $id
+     * Muestra el recurso especificado.
+     * @param string|int $id El identificador unico.
      * @return \Illuminate\Contracts\View\View
      */
     public function show($id)
@@ -52,6 +68,7 @@ class PetitionTypesController extends AbstractAuxController
     }
 
     /**
+     * Muestra la forma para crear un nuevo recurso.
      * @return \Illuminate\Contracts\View\View
      */
     public function create()
@@ -60,6 +77,7 @@ class PetitionTypesController extends AbstractAuxController
     }
 
     /**
+     * Persiste la informacion relacionada con el nuevo recurso.
      * @param \PCI\Http\Requests\Aux\PetitionTypeRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -73,7 +91,8 @@ class PetitionTypesController extends AbstractAuxController
     }
 
     /**
-     * @param $id
+     * Muestra el forumulario para actualizar el recurso.
+     * @param string|int $id El identificador unico.
      * @return \Illuminate\Contracts\View\View
      */
     public function edit($id)
@@ -86,7 +105,8 @@ class PetitionTypesController extends AbstractAuxController
     }
 
     /**
-     * @param $id
+     * Persiste la actualizacion del modelo.
+     * @param int $id El identificador unico.
      * @param \PCI\Http\Requests\Aux\PetitionTypeRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -100,7 +120,8 @@ class PetitionTypesController extends AbstractAuxController
     }
 
     /**
-     * @param $id
+     * Elimina al recurso del sistema
+     * @param int $id El identificador unico.
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($id)

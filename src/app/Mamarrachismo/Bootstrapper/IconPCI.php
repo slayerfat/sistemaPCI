@@ -1,14 +1,16 @@
 <?php namespace PCI\Mamarrachismo\Bootstrapper;
 
+use Bootstrapper\Attributes;
 use Bootstrapper\Bridges\Config\Laravel5Config;
 use Bootstrapper\Exceptions\IconException;
-use Bootstrapper\Attributes;
 
 /**
  * Class IconPCI
  * @package PCI\Mamarrachismo\Bootstrapper
  * Pasamos por la penosa tarea de extender la clase
  * original para cambiar un simple detalle.
+ * @author Alejandro Granadillo <slayerfat@gmail.com> *
+ * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
  */
 class IconPCI extends \Bootstrapper\Icon
 {

@@ -1,11 +1,14 @@
-<?php
-
-namespace PCI\Http\Middleware;
+<?php namespace PCI\Http\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
-use PCI\Models\User;
 
+/**
+ * Class Authenticate
+ * @package PCI\Http\Middleware
+ * @author Alejandro Granadillo <slayerfat@gmail.com>
+ * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
+ */
 class Authenticate
 {
     /**
@@ -16,7 +19,8 @@ class Authenticate
     protected $auth;
 
     /**
-     * @var User|null
+     * El usuario actual en el sitema.
+     * @var \PCI\Models\User|null
      */
     protected $user;
 
@@ -46,9 +50,12 @@ class Authenticate
                 return response('Unauthorized.', 401);
             }
 
+            // si la peticion no es ajax entonces
+            // se redirecciona al login
             return redirect()->guest('sesion/iniciar');
         }
 
+        // si el usuario todavia no ha verificado su cuenta.
         if ($this->user->isUnverified()) {
             return redirect()->route('index.unverified');
         }

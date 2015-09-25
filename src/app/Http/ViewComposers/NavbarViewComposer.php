@@ -1,20 +1,33 @@
 <?php namespace PCI\Http\ViewComposers;
 
-use PCI\Models\User;
-use Illuminate\View\View;
 use Illuminate\Auth\Guard;
-use Bootstrapper\Navigation;
+use Illuminate\View\View;
 use PCI\Mamarrachismo\Bootstrapper\IconPCI;
 
+/**
+ * Class NavbarViewComposer
+ * @package PCI\Http\ViewComposers
+ * @author Alejandro Granadillo <slayerfat@gmail.com>
+ * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
+ */
 class NavbarViewComposer
 {
 
     /**
-     * @var User
+     * El usuario actualmente en el sistema.
+     * @var \PCI\Models\User
      */
     private $user;
 
     /**
+     * El IconPCI que genera los iconos para las vistas.
+     * @var \PCI\Mamarrachismo\Bootstrapper\IconPCI
+     */
+    private $icon;
+
+    /**
+     * Genera una nueva instancia de este composer
+     * con la implementacion de Guard.
      * @param Guard $auth
      */
     public function __construct(Guard $auth)
@@ -24,6 +37,8 @@ class NavbarViewComposer
     }
 
     /**
+     * Genera las variables necesarias para
+     * la vista, en este caso el navbar.
      * @param \Illuminate\View\View $view
      * @return void
      */
@@ -36,53 +51,18 @@ class NavbarViewComposer
         $rightLinks = $this->getRightLinks();
 
         // busquedas
-        $searchBox = '<form class="navbar-form navbar-left hidden-sm" role="search">
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Indique su busqueda">
-                            </div>
-                            <button type="submit" class="btn btn-default">Buscar</button>
-                        </form>';
+        $searchBox = $this->getSearchBox();
 
+        // regresa la vista con las variables generadas.
         $view->with(compact('links', 'rightLinks', 'searchBox'));
     }
 
     /**
-     * @return array
-     */
-    private function getRightLinks()
-    {
-        if (is_null($this->user)) {
-            return [
-                [
-                    'link'  => route('auth.getLogin'),
-                    'title' => $this->icon->create('sign-in') . 'Entrar'
-                ],
-                [
-                    'link'  => route('auth.getRegister'),
-                    'title' => $this->icon->create('check-square-o') . 'Registrarse'
-                ],
-            ];
-        }
-
-        return [
-            [
-                "Hola " . $this->user->name,
-                [
-                    [
-                        'link'  => route('users.show', $this->user->name),
-                        'title' => $this->icon->create('eye') . trans('models.users.show')
-                    ],
-                    [
-                        'link'  => route('auth.getLogout'),
-                        'title' => $this->icon->create('sign-out') . 'Salir'
-                    ],
-                ]
-            ]
-        ];
-    }
-
-    /**
-     * @return array
+     * Genera el array necesario para mostrar  los enlaces
+     * en el navbar excepto el lado derecho.
+     * Al igual que self::getRightLinks, genera
+     * un array asociativo con links y titulo.
+     * @return array un array de arrays asociativos con link y titulo.
      */
     private function getLeftLinks()
     {
@@ -108,7 +88,7 @@ class NavbarViewComposer
                         'link'  => '#',
                         'title' => $this->icon->create('eye') . 'Consultar'
                     ],
-                    Navigation::NAVIGATION_DIVIDER,
+                    'divider',
                     [
                         'link'  => '#',
                         'title' => $this->icon->create('plus') . '...'
@@ -126,8 +106,10 @@ class NavbarViewComposer
     }
 
     /**
-     * @param $links
-     * @return array
+     * Genera los enlaces de mantenimiento que solo
+     * deberian ser vistos por el administrador.
+     * @param array $links los enlaces previamente hechos para ser fusionados.
+     * @return array un array de arrays asociativos con link y titulo.
      */
     private function makeAdminLinks($links)
     {
@@ -159,7 +141,7 @@ class NavbarViewComposer
                     'title' => $this->icon->create(trans('models.nats.fa-icon'))
                         . trans('models.nats.index')
                 ],
-                Navigation::NAVIGATION_DIVIDER,
+                'divider',
                 [
                     'link'  => route('cats.index'),
                     'title' => $this->icon->create(trans('models.cats.fa-icon'))
@@ -175,7 +157,7 @@ class NavbarViewComposer
                     'title' => $this->icon->create(trans('models.itemTypes.fa-icon'))
                         . trans('models.itemTypes.index')
                 ],
-                Navigation::NAVIGATION_DIVIDER,
+                'divider',
                 [
                     'link'  => route('makers.index'),
                     'title' => $this->icon->create(trans('models.makers.fa-icon'))
@@ -200,5 +182,62 @@ class NavbarViewComposer
         ];
 
         return $links;
+    }
+
+    /**
+     * Genera el array necesario para mostrar  los enlaces
+     * en el navbar del lado derecho.
+     * Este array esta compuesto de arrays
+     * asociativos con el link y titulo.
+     * @return array un array de arrays asociativos con link y titulo.
+     */
+    private function getRightLinks()
+    {
+        // si el usuario no existe, entonces es un guest
+        // asi que se le invita a entrar o registrarse.
+        if (is_null($this->user)) {
+            return [
+                [
+                    'link'  => route('auth.getLogin'),
+                    'title' => $this->icon->create('sign-in') . 'Entrar'
+                ],
+                [
+                    'link'  => route('auth.getRegister'),
+                    'title' => $this->icon->create('check-square-o') . 'Registrarse'
+                ],
+            ];
+        }
+
+        // de lo contrario se crean los links necesarios
+        // para que el usuario pueda manipular su cuenta.
+        return [
+            [
+                "Hola " . $this->user->name,
+                [
+                    [
+                        'link'  => route('users.show', $this->user->name),
+                        'title' => $this->icon->create('eye') . trans('models.users.show')
+                    ],
+                    [
+                        'link'  => route('auth.getLogout'),
+                        'title' => $this->icon->create('sign-out') . 'Salir'
+                    ],
+                ]
+            ]
+        ];
+    }
+
+    /**
+     * Regresa el formulario necesario para el navbar.
+     * @return string
+     */
+    private function getSearchBox()
+    {
+        return '<form class="navbar-form navbar-left hidden-sm" role="search">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Indique su busqueda">
+                    </div>
+                    <button type="submit" class="btn btn-default">Buscar</button>
+                </form>';
     }
 }

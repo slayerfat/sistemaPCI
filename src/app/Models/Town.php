@@ -8,7 +8,9 @@ use Illuminate\Database\Eloquent\Collection;
 
 /**
  * PCI\Models\Town
- *
+ * @package PCI\Models
+ * @author Alejandro Granadillo <slayerfat@gmail.com>
+ * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
  * @property integer $id
  * @property integer $state_id
  * @property string $desc
@@ -37,6 +39,7 @@ class Town extends AbstractPlacesModel
     // -------------------------------------------------------------------------
 
     /**
+     * Regresa al estado asociado al municipio.
      * @return State
      */
     public function state()
@@ -49,6 +52,7 @@ class Town extends AbstractPlacesModel
     // -------------------------------------------------------------------------
 
     /**
+     * Regresa una coleccion de parroquias asociadas.
      * @return Collection
      */
     public function parishes()

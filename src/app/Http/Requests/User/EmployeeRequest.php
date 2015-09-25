@@ -1,14 +1,20 @@
 <?php namespace PCI\Http\Requests\User;
 
 use PCI\Http\Requests\Request;
-use PCI\Models\Employee;
 use PCI\Repositories\Interfaces\User\EmployeeRepositoryInterface;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
+/**
+ * Class EmployeeRequest
+ * @package PCI\Http\Requests\User
+ * @author Alejandro Granadillo <slayerfat@gmail.com>
+ * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
+ */
 class EmployeeRequest extends Request
 {
 
     /**
+     * La implementacion del empleado.
      * @var \PCI\Repositories\Interfaces\User\EmployeeRepositoryInterface
      */
     private $empRepo;
@@ -44,7 +50,10 @@ class EmployeeRequest extends Request
             case 'POST':
                 $user = $this->empRepo->findParent($this->route('users'));
 
-                return $this->user()->can('create', [Employee::class, $user]);
+                return $this->user()->can('create', [
+                    $this->empRepo->newInstance(),
+                    $user
+                ]);
 
             // si no esta creado o actualizando
             // probablemente es un error externo.
@@ -55,7 +64,7 @@ class EmployeeRequest extends Request
 
     /**
      * Obtiene las reglas de validacion que seran aplicadas a esta peticion.
-     * @return array
+     * @return array<string, string>
      */
     public function rules()
     {
@@ -79,7 +88,7 @@ class EmployeeRequest extends Request
 
     /**
      * Regresa las reglas relacionadas a la cedula de identidad
-     * @return array
+     * @return array<string, string>
      */
     private function getCiRule()
     {

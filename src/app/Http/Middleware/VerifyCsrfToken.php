@@ -4,6 +4,12 @@ namespace PCI\Http\Middleware;
 
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken as BaseVerifier;
 
+/**
+ * Class VerifyCsrfToken
+ * @package PCI\Http\Middleware
+ * @author Alejandro Granadillo <slayerfat@gmail.com>
+ * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
+ */
 class VerifyCsrfToken extends BaseVerifier
 {
     /**
