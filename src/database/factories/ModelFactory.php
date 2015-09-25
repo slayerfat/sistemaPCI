@@ -4,7 +4,7 @@
 // tienen la misma estructura
 $models = PCI\Database\AuxEntitiesSeeder::getModels();
 
-$faker = Faker\Factory::create('es_ES');
+$faker = Faker\Factory::create();
 
 foreach ($models as $model) {
     $factory->define($model, function () use ($faker) {
@@ -51,10 +51,10 @@ $factory->define(PCI\Models\Employee::class, function () use ($faker) {
         'gender_id'      => factory(PCI\Models\Gender::class)->create()->id,
         'address_id'     => factory(PCI\Models\Address::class)->create()->id,
         'ci'             => rand(999999, 99999999),
-        'first_name'    => $faker->word,
-        'last_name'     => $faker->word,
-        'first_surname' => $faker->word,
-        'last_surname'  => $faker->word,
+        'first_name'    => $faker->firstName,
+        'last_name'     => $faker->firstName,
+        'first_surname' => $faker->lastName,
+        'last_surname'  => $faker->lastName,
         'phone'          => '0' . rand(400, 499) . rand(100, 999) . rand(1000, 9999),
         'cellphone'      => '0' . rand(400, 499) . rand(100, 999) . rand(1000, 9999),
     ];
