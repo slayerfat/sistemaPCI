@@ -17,6 +17,6 @@ abstract class AbstractTableSeeder extends Seeder
     {
         $this->guarded ? Model::unguard() : Model::reguard();
 
-        return $this->guarded = ! $this->guarded;
+        return $this->guarded = !$this->guarded;
     }
 }

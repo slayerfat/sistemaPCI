@@ -73,7 +73,7 @@ class EmployeeRepository extends AbstractRepository implements EmployeeRepositor
      * entonces se devuelve el mas importante
      * en contexto al repositorio.
      * @param string|int $id El identificador unico (name|slug|int).
-     * @return \PCI\Models\Employee
+     * @return \PCI\Models\User
      */
     public function findParent($id)
     {

@@ -38,13 +38,13 @@ class Profile extends AbstractBaseModel implements SluggableInterface
      * Administrador del sistema
      * @var int
      */
-    const ADMIN_ID    = 1;
+    const ADMIN_ID = 1;
 
     /**
      * Usuario del sistema
      * @var int
      */
-    const USER_ID     = 2;
+    const USER_ID = 2;
 
     /**
      * Usuario desactivado

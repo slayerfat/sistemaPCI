@@ -1,84 +1,129 @@
 <?php namespace Tests\PCI\Repositories\Aux;
 
-use PCI\Models\Department;
-use PCI\Models\Gender;
-use PCI\Repositories\Aux\DepartmentRepository;
-use PCI\Repositories\Aux\GenderRepository;
-use Tests\AbstractTestCase;
-use PCI\Models\Category;
-use PCI\Repositories\Aux\CategoryRepository;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use PCI\Models\Category;
+use PCI\Models\Department;
+use PCI\Models\Gender;
+use PCI\Models\ItemType;
+use PCI\Models\Maker;
+use PCI\Models\MovementType;
+use PCI\Models\Nationality;
+use PCI\Models\NoteType;
+use PCI\Models\PetitionType;
+use PCI\Models\Profile;
+use PCI\Models\SubCategory;
+use PCI\Repositories\Aux\CategoryRepository;
+use PCI\Repositories\Aux\DepartmentRepository;
+use PCI\Repositories\Aux\GenderRepository;
+use PCI\Repositories\Aux\ItemTypesRepository;
+use PCI\Repositories\Aux\MakerRepository;
+use PCI\Repositories\Aux\MovementTypeRepository;
+use PCI\Repositories\Aux\NationalityRepository;
+use PCI\Repositories\Aux\NoteTypeRepository;
+use PCI\Repositories\Aux\PetitionTypeRepository;
+use PCI\Repositories\Aux\ProfileRepository;
+use PCI\Repositories\Aux\SubCategoryRepository;
+use Tests\AbstractTestCase;
 
+/** @SuppressWarnings(PHPMD.CouplingBetweenObjects) */
 class ViewableInterfaceRepositoryTest extends AbstractTestCase
 {
+
     use DatabaseMigrations, DatabaseTransactions;
 
-    /**
-     * @var \PCI\Repositories\Aux\AbstractAuxRepository[]
-     */
-    private $repos = [];
-
-    /**
-     * @var \PCI\Models\AbstractBaseModel[]
-     */
-    private $model = [];
+    public function dataProvider()
+    {
+        return [
+            'category'      => [CategoryRepository::class, Category::class],
+            'department'    => [DepartmentRepository::class, Department::class],
+            'gender'        => [GenderRepository::class, Gender::class],
+            'itemTypes'     => [ItemTypesRepository::class, ItemType::class],
+            'maker'         => [MakerRepository::class, Maker::class],
+            'movementTypes' => [
+                MovementTypeRepository::class,
+                MovementType::class
+            ],
+            'nationality'   => [
+                NationalityRepository::class,
+                Nationality::class
+            ],
+            'noteTypes'     => [NoteTypeRepository::class, NoteType::class],
+            'petitionType'  => [
+                PetitionTypeRepository::class,
+                PetitionType::class
+            ],
+            'profile'       => [ProfileRepository::class, Profile::class],
+            'subCat'        => [
+                SubCategoryRepository::class,
+                SubCategory::class
+            ],
+        ];
+    }
 
     public function setUp()
     {
         parent::setUp();
 
         $this->runDatabaseMigrations();
-
-        $array = [
-            [CategoryRepository::class, Category::class],
-            [DepartmentRepository::class, Department::class],
-            [GenderRepository::class, Gender::class],
-        ];
-
-        foreach ($array as $data) {
-            $this->repos[] = new $data[0](new $data[1]());
-
-            $this->model[] = factory($data[1])->create();
-        }
     }
 
-    public function testDelete()
+    /**
+     * @dataProvider dataProvider
+     * @param $repository
+     * @param $model
+     */
+    public function testDelete($repository, $model)
     {
-        /** @var \PCI\Repositories\Interfaces\ModelRepositoryInterface $repo */
-        foreach ($this->repos as $key => $repo) {
-            $this->assertTrue($repo->delete($this->model[$key]->id));
-        }
+        $repo = new $repository(new $model);
+
+        $model = factory($model)->create();
+
+        $this->assertTrue($repo->delete($model->id));
     }
 
-    public function testGetIndexViewVariablesShouldNotBeNull()
+    /**
+     * @dataProvider dataProvider
+     * @param $repository
+     * @param $model
+     */
+    public function testGetIndexViewVariablesShouldNotBeNull($repository, $model)
     {
         /** @var \PCI\Repositories\Interfaces\Viewable\ViewableInterface $repo */
-        foreach ($this->repos as $repo) {
-            $variable = $repo->getIndexViewVariables();
+        $repo = new $repository(new $model);
 
-            $this->assertNotEmpty($variable);
-            $this->assertInstanceOf(\PCI\Repositories\ViewVariable\ViewPaginatorVariable::class, $variable);
-        }
+        factory($model)->create();
+
+        $variable = $repo->getIndexViewVariables();
+
+        $this->assertNotEmpty($variable);
+        $this->assertInstanceOf(\PCI\Repositories\ViewVariable\ViewPaginatorVariable::class, $variable);
     }
 
-    public function testGetShowViewVariablesShouldNotBeNull()
+    /**
+     * @dataProvider dataProvider
+     * @param $repository
+     * @param $model
+     */
+    public function testGetShowViewVariablesShouldNotBeNull($repository, $model)
     {
         $data = [];
 
         /** @var \PCI\Repositories\Interfaces\Viewable\ViewableInterface $repo */
-        foreach ($this->repos as $repo) {
-            $data[] = $repo->getShowViewVariables(1);
-            $data[] = $repo->getCreateViewVariables();
-            $data[] = $repo->getEditViewVariables(1);
+        $repo = new $repository(new $model);
 
-            foreach ($data as $variable) {
-                $this->assertNotEmpty($variable);
-                $this->assertInstanceOf(
-                    \PCI\Repositories\ViewVariable\ViewModelVariable::class,
-                    $variable
-                );
-            }
+        factory($model)->create();
+
+        $data[] = $repo->getShowViewVariables(1);
+        $data[] = $repo->getCreateViewVariables();
+        $data[] = $repo->getEditViewVariables(1);
+
+        foreach ($data as $variable) {
+            $this->assertNotEmpty($variable);
+            $this->assertInstanceOf(
+                \PCI\Repositories\ViewVariable\ViewModelVariable::class,
+                $variable
+            );
         }
     }
 }

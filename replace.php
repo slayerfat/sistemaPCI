@@ -16,7 +16,7 @@
  */
 
 // el archivo a manipular
-$file = __DIR__.'/src/vendor/laravel/framework/src/Illuminate/Foundation/Console/ServeCommand.php';
+$file = __DIR__ . '/src/vendor/laravel/framework/src/Illuminate/Foundation/Console/ServeCommand.php';
 
 // la linea infractora
 $original = 'chdir($this->laravel->publicPath());';

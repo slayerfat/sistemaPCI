@@ -53,7 +53,6 @@ class Employee extends AbstractBaseModel
     /**
      * The attributes that are mass assignable.
      * La nacionalidad y genero no son problema.
-
      * @var array
      */
     protected $fillable = [
@@ -77,7 +76,7 @@ class Employee extends AbstractBaseModel
      * la convierte a nulo para que sea guardada
      * correctamente en la base de datos.
      * @param int $value
-     * @return int|null|string
+     * @return null|integer
      */
     public function setCiAttribute($value)
     {
@@ -151,7 +150,7 @@ class Employee extends AbstractBaseModel
     /**
      * Genera los nombres en formato legible para
      * ser consumido por alguna vista.
-     * @param null $everything chequea si se trae los nombres secundarios.
+     * @param boolean $everything chequea si se trae los nombres secundarios.
      * @return string
      */
     public function formattedNames($everything = null)
