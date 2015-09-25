@@ -4,6 +4,10 @@ Todos los cambios significatiovos en este proyecto estaran documentados en este 
 
 ## [En Desarrollo][unrele]
 
+- Añadido detalles laborales, cargo, departamento, etc.
+
+## [v0.2.4] - 2015-09-24
+
 ### Añadido
 
 - Pruebas, Pruebas, Pruebas.
@@ -177,7 +181,8 @@ Se crearon documentacion segun aspectos clave del sistema, para ser referenciado
   - `replace.php` deberia funcionar correctamente.
   - cypher deberia funcionar por cambio de strings de tamaño 32.
 
-[unrele]: https://github.com/slayerfat/sistemaPCI/compare/v0.2.3...develop
+[unrele]: https://github.com/slayerfat/sistemaPCI/compare/v0.2.4...develop
+[v0.2.4]: https://github.com/slayerfat/sistemaPCI/compare/v0.2.3...v0.2.4
 [v0.2.3]: https://github.com/slayerfat/sistemaPCI/compare/v0.2.2...v0.2.3
 [v0.2.2]: https://github.com/slayerfat/sistemaPCI/compare/v0.2.1...v0.2.2
 [v0.2.1]: https://github.com/slayerfat/sistemaPCI/compare/v0.2.0...v0.2.1
