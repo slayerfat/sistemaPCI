@@ -5,8 +5,10 @@ use Route;
 /**
  * Class AbstractPciRoutes
  * @package PCI\Http\Routes
+ * @author Alejandro Granadillo <slayerfat@gmail.com>
  * @see http://i.imgur.com/xVyoSl.jpg
  * Poderoso copypasta de https://github.com/slayerfat/orbiagro.com.ve/blob/master/app/Http/Routes/Routes.php
+ * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
  */
 abstract class AbstractPciRoutes
 {
@@ -33,6 +35,7 @@ abstract class AbstractPciRoutes
     protected $nonRestfulOptions = [];
 
     /**
+     * Genera todas las rutas relacionadas con esta clase
      * @return void
      */
     abstract public function execute();
@@ -55,19 +58,6 @@ abstract class AbstractPciRoutes
         }
 
         $this->registerSigleRoute($nonRestfulArray);
-    }
-
-    /**
-     * itera las opciones para registrar las rutas.
-     *
-     * @param  array  $options
-     * @return void
-     */
-    protected function registerSigleRoute(array $options)
-    {
-        foreach ($options as $details) {
-            Route::$details['method']($details['url'], $details['data']);
-        }
     }
 
     /**
@@ -97,23 +87,43 @@ abstract class AbstractPciRoutes
                 $defaults = array_except($defaults, $details['ignore']);
             }
 
-            foreach ($defaults as $name => $rule) {
-                /**
-                 * rule[0] es el metodo
-                 * rule[1] es el url
-                 *
-                 * @example Route::rule[0](rule[1], ...)
-                 *          Route::create('/', ...)
-                 */
-                Route::$rule[0](
-                    $rule[1],
-                    [
-                        'uses' => $details['uses'] . '@' . $name,
-                        'as'   => $details['as'] . '.' . $name
-                    ]
-                );
-            }
+            $this->registerRoutes($defaults, $details);
         });
+    }
+
+    /**
+     * Registra las rutas segun los datos dentro del array.
+     * @param array $defaults los metodos o rutas restful del controlador.
+     * @param array $details los detalles de la nueva ruta.
+     * @return void
+     */
+    private function registerRoutes($defaults, $details)
+    {
+        foreach ($defaults as $name => $rule) {
+            // rule[0] es el metodo
+            // rule[1] es el url
+            // {@example}  Route::rule[0](rule[1], ...)
+            //             Route::create('/', ...)
+            Route::$rule[0](
+                $rule[1],
+                [
+                    'uses' => $details['uses'] . '@' . $name,
+                    'as'   => $details['as'] . '.' . $name
+                ]
+            );
+        }
+    }
+
+    /**
+     * itera las opciones para registrar las rutas.
+     * @param  array $options
+     * @return void
+     */
+    protected function registerSigleRoute(array $options)
+    {
+        foreach ($options as $details) {
+            Route::$details['method']($details['url'], $details['data']);
+        }
     }
 
     /**

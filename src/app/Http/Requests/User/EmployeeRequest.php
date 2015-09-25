@@ -14,6 +14,7 @@ class EmployeeRequest extends Request
 {
 
     /**
+     * La implementacion del empleado.
      * @var \PCI\Repositories\Interfaces\User\EmployeeRepositoryInterface
      */
     private $empRepo;

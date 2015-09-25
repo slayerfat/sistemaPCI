@@ -12,8 +12,12 @@ abstract class Request extends FormRequest
 {
 
     /**
+     * Cuando algun request es denegado, este es el metodo
+     * por defecto que FormRequest ejecuta automaticamente.
+     * En este caso nos interesa que muestre un mensaje
+     * de error y redireccione de vuelta
+     * a donde estaba el usuario.
      * @see FormRequest.
-     *
      * @return \Illuminate\Http\Response
      */
     public function forbiddenResponse()

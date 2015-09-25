@@ -1,9 +1,16 @@
 <?php namespace PCI\Http\Routes;
 
+/**.
+ * Class AddressRoutes
+ * @package PCI\Http\Routes
+ * @author Alejandro Granadillo <slayerfat@gmail.com>
+ * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
+ */
 class AddressRoutes extends AbstractPciRoutes
 {
 
     /**
+     * Las rutas varias que no encajan en el formato restful
      * @var array
      */
     protected $nonRestfulOptions = [
@@ -59,6 +66,7 @@ class AddressRoutes extends AbstractPciRoutes
 
     /**
      * Genera todas las rutas relacionadas con esta clase
+     * @return void
      */
     public function execute()
     {

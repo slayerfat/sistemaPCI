@@ -2,7 +2,6 @@
 
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
-use PCI\Models\User;
 
 /**
  * Class Authenticate
@@ -20,7 +19,8 @@ class Authenticate
     protected $auth;
 
     /**
-     * @var User|null
+     * El usuario actual en el sitema.
+     * @var \PCI\Models\User|null
      */
     protected $user;
 
