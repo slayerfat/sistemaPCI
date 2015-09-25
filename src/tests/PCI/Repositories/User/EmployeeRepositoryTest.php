@@ -2,7 +2,6 @@
 
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Mockery;
 use PCI\Models\Employee;
 use PCI\Models\User;
 use PCI\Repositories\User\EmployeeRepository;

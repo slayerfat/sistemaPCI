@@ -7,7 +7,7 @@
     <div class="container">
         {!! BSForm::horizontal() !!}
 
-        <?php $text = 'Ingresar a '.trans('defaults.appName') ?>
+        <?php $text = 'Ingresar a ' . trans('defaults.appName') ?>
 
         <legend>{{$text}}</legend>
 

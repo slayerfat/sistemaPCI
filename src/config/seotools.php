@@ -41,8 +41,8 @@ return [
          * The default values to be used by the twitter cards generator.
          */
         'defaults' => [
-          //'card'        => 'slayerfat',
-          //'site'        => '@slayerfat',
+            //'card'        => 'slayerfat',
+            //'site'        => '@slayerfat',
         ]
     ]
 ];

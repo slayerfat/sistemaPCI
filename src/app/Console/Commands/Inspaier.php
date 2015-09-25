@@ -28,6 +28,6 @@ class Inspaier extends Command
      */
     public function handle()
     {
-        $this->comment(PHP_EOL.Caimaneitor::caimanais().PHP_EOL);
+        $this->comment(PHP_EOL . Caimaneitor::caimanais() . PHP_EOL);
     }
 }

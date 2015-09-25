@@ -35,7 +35,7 @@ class AbstractAuxRepositoryTest extends AbstractTestCase
     public function createUpdatedataProvider()
     {
         return [
-            ['ayy',]
+            ['ayy', ]
         ];
     }
 

@@ -19,6 +19,6 @@ class CaimaneitorTest extends AbstractTestCase
     public function testCaimaneitorNeedsToImplementMagicToString()
     {
         $caimanity = new \PCI\Mamarrachismo\Caimaneitor\Caimaneitor();
-        $this->assertInternalType('string', (string)$caimanity);
+        $this->assertInternalType('string', (string) $caimanity);
     }
 }

@@ -1,7 +1,5 @@
 <?php namespace Tests\PCI\Repositories\ViewVariable;
 
-use stdClass;
-use Mockery;
 use PCI\Models\User;
 use Tests\AbstractTestCase;
 use PCI\Models\Employee;
