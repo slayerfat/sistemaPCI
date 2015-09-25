@@ -1,9 +1,13 @@
-<?php
-
-namespace PCI\Http\Requests;
+<?php namespace PCI\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Class Request
+ * @package PCI\Http\Requests
+ * @author Alejandro Granadillo <slayerfat@gmail.com>
+ * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
+ */
 abstract class Request extends FormRequest
 {
 

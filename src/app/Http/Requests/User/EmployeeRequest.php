@@ -4,6 +4,12 @@ use PCI\Http\Requests\Request;
 use PCI\Repositories\Interfaces\User\EmployeeRepositoryInterface;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
+/**
+ * Class EmployeeRequest
+ * @package PCI\Http\Requests\User
+ * @author Alejandro Granadillo <slayerfat@gmail.com>
+ * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
+ */
 class EmployeeRequest extends Request
 {
 
@@ -57,7 +63,7 @@ class EmployeeRequest extends Request
 
     /**
      * Obtiene las reglas de validacion que seran aplicadas a esta peticion.
-     * @return array
+     * @return array<string, string>
      */
     public function rules()
     {
@@ -81,7 +87,7 @@ class EmployeeRequest extends Request
 
     /**
      * Regresa las reglas relacionadas a la cedula de identidad
-     * @return array
+     * @return array<string, string>
      */
     private function getCiRule()
     {

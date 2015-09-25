@@ -5,6 +5,12 @@ namespace PCI\Http\Middleware;
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
 
+/**
+ * Class RedirectIfAuthenticated
+ * @package PCI\Http\Middleware
+ * @author Alejandro Granadillo <slayerfat@gmail.com>
+ * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
+ */
 class RedirectIfAuthenticated
 {
     /**
