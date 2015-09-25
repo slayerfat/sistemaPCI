@@ -18,6 +18,7 @@
                 </h2>
 
                 @include('users.partials.showEmployee')
+                @include('users.partials.showWorkDetail')
             </div>
 
             {{-- pedidos --}}

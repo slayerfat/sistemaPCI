@@ -10,9 +10,11 @@
                 <small>{{$user->employee->nationality->desc}}</small>
             @endif
 
-            <small>C.I. {{$user->employee->ci}}</small>
+                @if($user->employee->ci)
+                    <small>C.I. {{$user->employee->ci}}</small>
 
-            <br/>
+                    <br/>
+                @endif
         @endif
 
         @if($user->employee->gender)
