@@ -334,7 +334,7 @@ abstract class AbstractViewVariable implements ViewVariableInterface
      * Ejecuta los metodos minimos necesarios para
      * que la instancia de esta clase tenga lo
      * necesario que necesitan las vistas.
-     * @param $resource
+     * @param string $resource
      * @return void
      */
     protected function setDefaults($resource)

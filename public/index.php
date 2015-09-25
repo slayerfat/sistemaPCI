@@ -18,7 +18,7 @@
  */
 function public_path($path = '')
 {
-    return realpath(__DIR__).($path ? DIRECTORY_SEPARATOR.$path : $path);
+    return realpath(__DIR__) . ($path ? DIRECTORY_SEPARATOR . $path : $path);
 }
 
 /*
@@ -33,7 +33,7 @@ function public_path($path = '')
 |
 */
 
-require __DIR__.'/../src/bootstrap/autoload.php';
+require __DIR__ . '/../src/bootstrap/autoload.php';
 
 /*
 |--------------------------------------------------------------------------
@@ -47,7 +47,7 @@ require __DIR__.'/../src/bootstrap/autoload.php';
 |
 */
 
-$app = require_once __DIR__.'/../src/bootstrap/app.php';
+$app = require_once __DIR__ . '/../src/bootstrap/app.php';
 
 /*
 |--------------------------------------------------------------------------

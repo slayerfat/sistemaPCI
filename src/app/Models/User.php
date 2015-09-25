@@ -217,7 +217,7 @@ class User extends AbstractBaseModel implements
      */
     public function isVerified()
     {
-        return ! $this->confirmation_code;
+        return !$this->confirmation_code;
     }
 
     /**
