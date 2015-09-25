@@ -138,6 +138,9 @@ $factory->define(PCI\Models\User::class, function () use ($faker) {
 
 $factory->define(PCI\Models\WorkDetail::class, function () use ($faker) {
     return [
+        'department_id' => factory(\PCI\Models\Department::class)->create()->id,
+        'position_id'   => factory(\PCI\Models\Position::class)->create()->id,
+        'employee_id'   => factory(\PCI\Models\Employee::class)->create()->id,
         'join_date'      => $faker->date,
         'departure_date' => $faker->date,
     ];
