@@ -4,9 +4,15 @@ Todos los cambios significatiovos en este proyecto estaran documentados en este 
 
 ## [En Desarrollo][unrele]
 
-- Añadido detalles laborales, cargo, departamento, etc.
+- Almacen, Items
 
-## [v0.2.4] - 2015-09-24
+## [v0.2.5] - 2015-09-26
+
+### Añadido
+
+- Recurso de Datos Laborales.
+
+## [v0.2.4] - 2015-09-25
 
 ### Añadido
 
@@ -181,7 +187,8 @@ Se crearon documentacion segun aspectos clave del sistema, para ser referenciado
   - `replace.php` deberia funcionar correctamente.
   - cypher deberia funcionar por cambio de strings de tamaño 32.
 
-[unrele]: https://github.com/slayerfat/sistemaPCI/compare/v0.2.4...develop
+[unrele]: https://github.com/slayerfat/sistemaPCI/compare/v0.2.5...develop
+[v0.2.5]: https://github.com/slayerfat/sistemaPCI/compare/v0.2.4...v0.2.5
 [v0.2.4]: https://github.com/slayerfat/sistemaPCI/compare/v0.2.3...v0.2.4
 [v0.2.3]: https://github.com/slayerfat/sistemaPCI/compare/v0.2.2...v0.2.3
 [v0.2.2]: https://github.com/slayerfat/sistemaPCI/compare/v0.2.1...v0.2.2

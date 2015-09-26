@@ -8,12 +8,40 @@ Sistema de Gestion de Inventario Para la Division de Rehabilitacion Ocupacional.
 Misión Alma Mater, Programa Nacional de Formación: Informatica, Trayecto 3, IUTOMS.
 
 - [x] v0.1 Usuario
-- [x] v0.1.x Entidades Auxiliares
 - [x] v0.2 Empleado
-- [x] v0.2.x Direccion con Estado Municipio y Parroquia
-- [x] v0.2.x ModelFactory y carpinteria
-- [ ] v0.2.x Pruebas, Pruebas, Pruebas
 - [ ] v0.3 Almacen e Items
+- [Bitacora](https://github.com/slayerfat/sistemaPCI/blob/master/CHANGELOG.md)
+
+## Indice
+
+- [sistemaPCI](https://github.com/slayerfat/sistemaPCI#sistemapci)
+- [Indice](https://github.com/slayerfat/sistemaPCI#indice)
+- [Documentacion](https://github.com/slayerfat/sistemaPCI#documentacion)
+- [Dependencias del Sistema](https://github.com/slayerfat/sistemaPCI#dependencias-del-sistema)
+    - [Node.js](https://github.com/slayerfat/sistemaPCI#node)
+    - [Bower](https://github.com/slayerfat/sistemaPCI#bower)
+    - [Composer](https://github.com/slayerfat/sistemaPCI#composer)
+    - [Obtener las Dependencias](https://github.com/slayerfat/sistemaPCI#obtener-las-dependecias-del-sistema)
+    - [Sobre las Dependencias](https://github.com/slayerfat/sistemaPCI#sobre-las-dependencias)
+    - [Gulp](https://github.com/slayerfat/sistemaPCI#gulp)
+- [Base de Datos](https://github.com/slayerfat/sistemaPCI#base-de-datos)
+- [Migraciones](https://github.com/slayerfat/sistemaPCI#migraciones)
+- [Homestead](https://github.com/slayerfat/sistemaPCI#homestead)
+- [Arbol de Directorios](https://github.com/slayerfat/sistemaPCI#arbol-de-directorios-simplificado)
+- [Libreria PHP3D](https://github.com/slayerfat/sistemaPCI#php3d-technology-required)
+- [Caimaneitor](https://github.com/slayerfat/sistemaPCI#caimaneitorcaimanais)
+- [Estatus Bio-Psico-Social](https://github.com/slayerfat/sistemaPCI#situacion-bio-psico-social)
+- [Laravel PHP Framework](https://github.com/slayerfat/sistemaPCI#laravel-php-framework)
+- [Contribuciones al Repositorio](https://github.com/slayerfat/sistemaPCI#contribuciones-al-repositorio)
+
+## Documentacion
+
+Dentro de este repositorio existen archivos complementarios que ayudaran en la documentacion del mismo, estos son:
+
+[CHANGELOG.md](https://github.com/slayerfat/sistemaPCI/blob/master/CHANGELOG.md), 
+[DATASTRUC.md](https://github.com/slayerfat/sistemaPCI/blob/master/DATASTRUC.md), 
+[DEDCHANGE.md](https://github.com/slayerfat/sistemaPCI/blob/master/DEDCHANGE.md)
+y [TODO.md](https://github.com/slayerfat/sistemaPCI/blob/master/TODO.md).
 
 ## Dependencias del Sistema
 
@@ -25,8 +53,11 @@ Para poder usar el software adecuadamente, es necesario instalar los siguientes 
 
 Para usar este repositorio es necesario tener instalado en el sistema [node.js](http://nodejs.org/).
 
-
 Para chequear que node esta instalado en tu sistema debes hacer un `node -v` en consola, el sistema dira `vX.YY.*` luego chequear que npm _(node package manager)_ este en el sistema con un `npm -v` en consola.
+
+### Bower
+
+Una vez instalado Node: `npm install --global bower` y luego ejecutar `bower install` para instalar dependencias adicionales.
 
 ### Composer
 Tambien es necesario instalar [composer](https://getcomposer.org/).
@@ -178,7 +209,7 @@ y listo, la base de datos esta localmente en el sistema.
 
 Si falla pueden hacer un `composer dump-autoload` y reintentarlo, si vuelve a falla puden crear un [problema (issue) en github](https://github.com/slayerfat/sistemaPCI/issues) con el error y la descripcion del mismo.
 
-### Migrations
+### Migraciones
 
 ```
 php src/artisan migrate:reset && php src/artisan migrate && php src/artisan db:seed --class="PCI\Database\DatabaseSeeder"
@@ -290,12 +321,6 @@ Esta compleja implementacion fue inspirada por la inspiradora `Inspire: Inspired
 [@githubbt:](https://github.com/githubbt)
 
 ![@githubbt](http://www.grammarly.com/blog/wp-content/uploads/2015/01/Silhouette-question-mark.jpeg "im helping")
-
-## Documentacion adicional
-
-Dentro de este repositorio existen archivos complementarios que ayudaran en la documentacion del mismo, estos son:
-
-CHANGELOG.md, DATASTRUC.md, DEDCHANGE.md y TODO.md.
 
 ## Laravel PHP Framework
 
