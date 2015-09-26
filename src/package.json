@@ -1,6 +1,6 @@
 {
   "name": "sistemaPCI",
-  "version": "0.2.4",
+  "version": "0.2.5-0",
   "description": "sistemaPCI",
   "main": "gulpfile.js",
   "private": true,
