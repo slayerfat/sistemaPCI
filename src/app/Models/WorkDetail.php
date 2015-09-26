@@ -74,7 +74,7 @@ class WorkDetail extends AbstractBaseModel
      * @param string $value
      * @return \Jenssegers\Date\Date
      */
-    public function getPepartureDateAttribute($value)
+    public function getDepartureDateAttribute($value)
     {
         return $this->getDateInstance($value);
     }
