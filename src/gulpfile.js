@@ -10,7 +10,8 @@ var paths = {
     'public': elixir.config.publicPath,
     'jquery': './vendor/bower_components/jquery/',
     'bootstrap': './node_modules/bootstrap-sass/assets/',
-    'fontAwesome': './vendor/bower_components/font-awesome/'
+    'fontAwesome': './vendor/bower_components/font-awesome/',
+    'datepicker': './vendor/bower_components/bootstrap-datepicker/'
 }
 
 // git bump (v0.1.2) <-- gulp release|feature|patch|pre
@@ -82,8 +83,22 @@ elixir(function (mix) {
         .scripts([
             '../ajax/address/setAddress.js'
         ], paths.public + '/js/setAddress.js')
+        .scripts([
+            paths.datepicker + 'dist/js/bootstrap-datepicker.min.js',
+            paths.datepicker + 'dist/locales/bootstrap-datepicker.es.min.js',
+        ], paths.public + '/js/datepicker.js')
+        .styles([
+            paths.datepicker + 'dist/css/bootstrap-datepicker3.css',
+        ], paths.public + '/css/datepicker.css')
 
         // 'versiona' los archivos para obtener copias actualizadas
         // y no versiones de cache del explorador (firefox es el peor)
-        .version(['css/app.css', 'js/all.js', 'js/setAddress.js', 'js/getAddress.js']);
+        .version([
+            'css/app.css',
+            'js/all.js',
+            'js/setAddress.js',
+            'js/getAddress.js',
+            '/js/datepicker.js',
+            '/css/datepicker.css'
+        ]);
 });

@@ -238,4 +238,17 @@ return [
     'petitions.fa-icon'            => 'check',
     'petitions.store.success'      => 'Pedido creado exitosamente.',
     'petitions.update.success'     => 'Pedido actualizado exitosamente.',
+    /**
+     * Datos Laborales
+     */
+    'workDetails.index'          => 'Ver Datos Laborales',
+    'workDetails.show'           => 'Ver Datos Laborales',
+    'workDetails.create'         => 'Crear Datos Laborales',
+    'workDetails.edit'           => 'Editar Datos Laborales',
+    'workDetails.destroy'        => 'Eliminar Datos Laborales',
+    'workDetails.plural'         => 'Datos Laborales',
+    'workDetails.singular'       => 'Datos Laborales',
+    'workDetails.fa-icon'        => 'briefcase',
+    'workDetails.store.success'  => 'Datos Laborales creados exitosamente.',
+    'workDetails.update.success' => 'Datos Laborales actualizados exitosamente.',
 ];

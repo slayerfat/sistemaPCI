@@ -17,7 +17,13 @@
                     Perfil <small>{{$user->profile->desc}}</small>
                 </h2>
 
+                <hr/>
+
                 @include('users.partials.showEmployee')
+
+                <hr/>
+
+                @include('users.partials.showWorkDetail')
             </div>
 
             {{-- pedidos --}}

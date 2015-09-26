@@ -50,6 +50,20 @@ switch ($active) {
             </li>
 
             @if($user->employee)
+                @if($user->employee->workDetails)
+                    <li>
+                        <a href="{{route('workDetails.edit', $user->employee->workDetails->id)}}">
+                            {{trans('models.workDetails.singular')}}
+                        </a>
+                    </li>
+                @else
+                    <li>
+                        <a href="{{route('workDetails.create', $user->employee->id)}}">
+                            {{trans('models.workDetails.singular')}}
+                        </a>
+                    </li>
+                @endif
+
                 @if($user->employee->address_id)
                     <li>
                         <a href="{{route('addresses.edit', $user->employee->address_id)}}">

@@ -72,6 +72,24 @@ class UserRoutes extends AbstractPciRoutes
                 ]
             ]
         ],
+        [
+            'routerOptions' => [
+                'prefix'     => 'datos-laborales',
+                'middleware' => 'auth',
+            ],
+            'rtDetails'     => [
+                'uses'     => 'User\WorkDetailsController',
+                'as'       => 'workDetails',
+                'resource' => '{workDetails}',
+                'ignore'   => [
+                    'create',
+                    'store',
+                    'index',
+                    'show',
+                    'destroy'
+                ]
+            ]
+        ],
     ];
 
     /**
@@ -102,8 +120,9 @@ class UserRoutes extends AbstractPciRoutes
                 'middleware' => 'auth'
             ]
         ],
+
         /**
-         * Direccion, mismo caso que lo atenrior
+         * Direccion, mismo caso que lo anterior
          */
         [
             'method' => 'get',
@@ -120,6 +139,27 @@ class UserRoutes extends AbstractPciRoutes
             'data'   => [
                 'uses' => 'User\AddressesController@store',
                 'as'   => 'addresses.store',
+                'middleware' => 'auth'
+            ]
+        ],
+        /**
+         * Datos laborales, mismo caso que lo anterior
+         */
+        [
+            'method' => 'get',
+            'url'    => 'datos-laborales/{employees}/crear',
+            'data'   => [
+                'uses'       => 'User\WorkDetailsController@create',
+                'as'         => 'workDetails.create',
+                'middleware' => 'auth'
+            ]
+        ],
+        [
+            'method' => 'post',
+            'url'    => 'datos-laborales/{employees}',
+            'data'   => [
+                'uses' => 'User\WorkDetailsController@store',
+                'as'   => 'workDetails.store',
                 'middleware' => 'auth'
             ]
         ],

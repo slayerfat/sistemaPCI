@@ -10,15 +10,19 @@
                 <small>{{$user->employee->nationality->desc}}</small>
             @endif
 
-            <small>C.I. {{$user->employee->ci}}</small>
+                @if($user->employee->ci)
+                    <small>C.I. {{$user->employee->ci}}</small>
 
-            <br/>
+                    <br/>
+                @endif
         @endif
 
         @if($user->employee->gender)
             <small>Genero {{$user->employee->gender->desc}}</small>
         @endif
     </h2>
+
+    <hr/>
 
     <h3>
         Telefonos: <br/>
@@ -43,6 +47,8 @@
                 Parroquia {{$user->address->parish->desc}}
             </h3>
         @endif
+
+            <hr/>
 
         @if(Auth::user()->isAdmin())
             <h4>

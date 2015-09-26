@@ -2,7 +2,6 @@
 
 use PCI\Http\Requests\Request;
 use PCI\Repositories\Interfaces\User\EmployeeRepositoryInterface;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 
 /**
  * Class EmployeeRequest
@@ -37,29 +36,21 @@ class EmployeeRequest extends Request
      */
     public function authorize()
     {
-        // necesitamos saber que tipo de request es
-        switch ($this->method()) {
-            // este caso esta actualizando
-            case 'PUT':
-            case 'PATCH':
-                $employee = $this->empRepo->find($this->route('employees'));
+        // cuando se esta solicitando crear un nuevo empleado, nos
+        // conviene saber cual es el usuario que sera relacionado
+        // para determinar que este puede ser manipulado.
+        if ($this->isMethod('POST')) {
+            $user = $this->empRepo->findParent($this->route('users'));
 
-                return $this->user()->can('update', $employee);
-
-            // este caso esta creando
-            case 'POST':
-                $user = $this->empRepo->findParent($this->route('users'));
-
-                return $this->user()->can('create', [
-                    $this->empRepo->newInstance(),
-                    $user
-                ]);
-
-            // si no esta creado o actualizando
-            // probablemente es un error externo.
-            default:
-                throw new HttpException(500, 'Request con metodo invalido.');
+            return $this->user()->can('create', [
+                $this->empRepo->newInstance(),
+                $user
+            ]);
         }
+
+        $employee = $this->empRepo->find($this->route('employees'));
+
+        return $this->user()->can('update', $employee);
     }
 
     /**
@@ -95,19 +86,15 @@ class EmployeeRequest extends Request
         // debido a que la cedula es unica se hace la regla
         // sin embargo al actualizar, es necesario que
         // ignore la ya existente
-        switch ($this->method()) {
-            case 'PUT':
-            case 'PATCH':
-                return [
-                    'ci' => 'numeric|between:999999,99999999|unique:employees,ci,'
-                        . (int) $this->route('employees'),
-                ];
-
-            case 'POST':
-            default:
-                return [
-                    'ci' => 'numeric|between:999999,99999999|unique:employees',
-                ];
+        if ($this->isMethod('POST')) {
+            return [
+                'ci' => 'numeric|between:999999,99999999|unique:employees',
+            ];
         }
+
+        return [
+            'ci' => 'numeric|between:999999,99999999|unique:employees,ci,'
+                . (int) $this->route('employees'),
+        ];
     }
 }

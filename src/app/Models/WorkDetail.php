@@ -37,10 +37,15 @@ class WorkDetail extends AbstractBaseModel
 {
     /**
      * The attributes that are mass assignable.
-     *
+     * el caso de departamento y cargo, no hay problema.
      * @var array
      */
-    protected $fillable = ['join_date', 'departure_date'];
+    protected $fillable = [
+        'department_id',
+        'position_id',
+        'join_date',
+        'departure_date'
+    ];
 
     /**
      * Atributos que deben ser mutados a dates.
@@ -52,13 +57,31 @@ class WorkDetail extends AbstractBaseModel
      */
     protected $dates = ['join_date', 'departure_date'];
 
+    /**
+     * Cuando se pide la fecha de join_date se devuelve una
+     * instancia de Date en vez de Carbon\Carbon
+     * @param string $value
+     * @return \Jenssegers\Date\Date
+     */
+    public function getJoinDateAttribute($value)
+    {
+        return $this->getDateInstance($value);
+    }
+
+    /**
+     * Cuando se pide la fecha de departure_date se devuelve una
+     * instancia de Date en vez de Carbon\Carbon
+     * @param string $value
+     * @return \Jenssegers\Date\Date
+     */
+    public function getDepartureDateAttribute($value)
+    {
+        return $this->getDateInstance($value);
+    }
+
     // -------------------------------------------------------------------------
     // Relaciones
     // -------------------------------------------------------------------------
-    // -------------------------------------------------------------------------
-    // Has one 1 -> 1
-    // -------------------------------------------------------------------------
-
     // -------------------------------------------------------------------------
     // Belongs to 1..* -> 1
     // -------------------------------------------------------------------------
