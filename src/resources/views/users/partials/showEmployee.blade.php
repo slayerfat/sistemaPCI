@@ -22,6 +22,8 @@
         @endif
     </h2>
 
+    <hr/>
+
     <h3>
         Telefonos: <br/>
 
@@ -45,6 +47,8 @@
                 Parroquia {{$user->address->parish->desc}}
             </h3>
         @endif
+
+            <hr/>
 
         @if(Auth::user()->isAdmin())
             <h4>

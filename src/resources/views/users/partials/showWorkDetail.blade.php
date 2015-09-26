@@ -23,7 +23,9 @@
         </div>
         @if(Auth::user()->isOwnerOrAdmin($user->id))
 
-            @if(Auth::user()->isAdmin())
+            <hr/>
+
+        @if(Auth::user()->isAdmin())
                 <h4>
                     Fecha de ingreso:
 
