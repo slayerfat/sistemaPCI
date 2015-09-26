@@ -10,7 +10,8 @@ Misión Alma Mater, Programa Nacional de Formación: Informatica, Trayecto 3, IU
 - [x] v0.1 Usuario
 - [x] v0.2 Empleado
 - [ ] v0.3 Almacen e Items
-- [Bitacora](https://github.com/slayerfat/sistemaPCI/blob/master/CHANGELOG.md)
+
+[Ver Bitacora](https://github.com/slayerfat/sistemaPCI/blob/master/CHANGELOG.md)
 
 ## Indice
 
@@ -25,7 +26,7 @@ Misión Alma Mater, Programa Nacional de Formación: Informatica, Trayecto 3, IU
     - [Sobre las Dependencias](https://github.com/slayerfat/sistemaPCI#sobre-las-dependencias)
     - [Gulp](https://github.com/slayerfat/sistemaPCI#gulp)
 - [Base de Datos](https://github.com/slayerfat/sistemaPCI#base-de-datos)
-- [Migraciones](https://github.com/slayerfat/sistemaPCI#migraciones)
+    - [Migraciones](https://github.com/slayerfat/sistemaPCI#migraciones)
 - [Homestead](https://github.com/slayerfat/sistemaPCI#homestead)
 - [Arbol de Directorios](https://github.com/slayerfat/sistemaPCI#arbol-de-directorios-simplificado)
 - [Libreria PHP3D](https://github.com/slayerfat/sistemaPCI#php3d-technology-required)
