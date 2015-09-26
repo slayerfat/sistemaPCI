@@ -43,3 +43,18 @@ ControlGroup::generate(
 !!}
 
 {!! Button::primary($btnMsg)->block()->submit() !!}
+
+@section('css')
+    <link rel="stylesheet" href="{{elixir('css/datepicker.css')}}"/>
+@stop
+
+@section('js')
+    <script type="text/javascript"
+            src="{!! elixir('js/datepicker.js') !!}"></script>
+    <script type="text/javascript">
+        $('#join_date, #departure_date').datepicker({
+            language: 'es',
+            format: 'yyyy-mm-dd'
+        });
+    </script>
+@stop
