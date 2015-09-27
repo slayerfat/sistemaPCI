@@ -2,6 +2,19 @@
 
 return [
     /**
+     * Almacen
+     */
+    'depots.index'          => 'Ver Almacenes',
+    'depots.show'           => 'Ver Almacen',
+    'depots.create'         => 'Crear Almacen',
+    'depots.edit'           => 'Editar Almacen',
+    'depots.destroy'        => 'Eliminar Almacen',
+    'depots.plural'         => 'Almacenes',
+    'depots.singular'       => 'Almacen',
+    'depots.fa-icon'        => 'bars',
+    'depots.store.success'  => 'Almacen creada exitosamente.',
+    'depots.update.success' => 'Almacen actualizada exitosamente.',
+    /**
      * Categoria
      */
     'cats.index'                   => 'Ver Categorias',
@@ -179,7 +192,7 @@ return [
     'items.destroy'                => 'Eliminar Item',
     'items.plural'                 => 'Items',
     'items.singular'               => 'Item',
-    'items.fa-icon'                => 'archive',
+    'items.fa-icon'         => 'cubes',
     'items.store.success'          => 'Item creado exitosamente.',
     'items.update.success'         => 'Item actualizado exitosamente.',
 

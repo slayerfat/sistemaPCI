@@ -172,6 +172,7 @@ return [
         PCI\Providers\Aux\ProfileRepositoryProvider::class,
         PCI\Providers\Aux\SubCategoryRepositoryProvider::class,
         PCI\Providers\Aux\TypesRepositoriesProvider::class,
+        PCI\Providers\Item\DepotRepositoryProvider::class,
         PCI\Providers\User\AddressRepositoryProvider::class,
         PCI\Providers\User\EmployeeRepositoryProvider::class,
         PCI\Providers\User\UsersRepositoriesServiceProvider::class,
