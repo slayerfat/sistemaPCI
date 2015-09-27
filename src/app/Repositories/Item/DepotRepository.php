@@ -21,7 +21,7 @@ class DepotRepository extends AbstractRepository implements DepotRepositoryInter
      */
     public function find($id)
     {
-        // TODO: Implement find() method.
+        return $this->getById($id);
     }
 
     /**

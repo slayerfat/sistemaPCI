@@ -6,6 +6,7 @@ use PCI\Http\Controllers\Traits\CheckDestroyStatusTrait;
 use PCI\Http\Requests;
 use PCI\Http\Requests\DepotRequest;
 use PCI\Repositories\Interfaces\Item\DepotRepositoryInterface;
+use Redirect;
 
 /**
  * Class DepotsController
@@ -60,7 +61,9 @@ class DepotsController extends Controller
      */
     public function create()
     {
-        //
+        $depot = $this->repo->newInstance();
+
+        return $this->view->make('depot.create', compact('depot'));
     }
 
     /**
@@ -70,7 +73,9 @@ class DepotsController extends Controller
      */
     public function store(DepotRequest $request)
     {
-        //
+        $depot = $this->repo->create($request->all());
+
+        return Redirect::route('depots.show', $depot->id);
     }
 
     /**
@@ -80,7 +85,9 @@ class DepotsController extends Controller
      */
     public function show($id)
     {
-        //
+        $depot = $this->repo->find($id);
+
+        return $this->view->make('depots.show', compact('depot'));
     }
 
     /**
@@ -90,7 +97,9 @@ class DepotsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $depot = $this->repo->find($id);
+
+        return $this->view->make('depots.edit', compact('depot'));
     }
 
     /**
@@ -101,7 +110,9 @@ class DepotsController extends Controller
      */
     public function update(DepotRequest $request, $id)
     {
-        //
+        $depot = $this->repo->update($id, $request->all());
+
+        return Redirect::route('depots.show', $depot->id);
     }
 
     /**
@@ -111,6 +122,6 @@ class DepotsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return $this->checkDestroyStatus($this->repo->delete($id), 'depots');
     }
 }
