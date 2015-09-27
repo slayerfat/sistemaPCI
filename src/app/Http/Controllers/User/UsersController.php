@@ -5,6 +5,7 @@ use Flash;
 use Illuminate\View\Factory as View;
 use PCI\Events\NewUserRegistration;
 use PCI\Http\Controllers\Controller;
+use PCI\Http\Controllers\Traits\CheckDestroyStatusTrait;
 use PCI\Http\Requests;
 use PCI\Http\Requests\User\UserRequest;
 use PCI\Models\Profile;
@@ -19,6 +20,8 @@ use Redirect;
  */
 class UsersController extends Controller
 {
+
+    use CheckDestroyStatusTrait;
 
     /**
      * La implementacion del repositorio de usuario.
@@ -147,14 +150,6 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        // este algoritmo basicamente se repite
-        // en casi todos los controladores.
-        $result = $this->userRepo->delete($id);
-
-        if ($result === true) {
-            return Redirect::route('users.index');
-        }
-
-        return Redirect::route('users.show', $result->name);
+        return $this->checkDestroyStatus($this->userRepo->delete($id), 'users');
     }
 }
