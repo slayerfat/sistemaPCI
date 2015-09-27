@@ -2,6 +2,7 @@
 
 use Illuminate\View\Factory as View;
 use PCI\Http\Controllers\Controller;
+use PCI\Http\Controllers\Traits\CheckDestroyStatusTrait;
 use PCI\Http\Requests;
 use PCI\Http\Requests\DepotRequest;
 use PCI\Repositories\Interfaces\Item\DepotRepositoryInterface;
@@ -14,6 +15,8 @@ use PCI\Repositories\Interfaces\Item\DepotRepositoryInterface;
  */
 class DepotsController extends Controller
 {
+
+    use CheckDestroyStatusTrait;
 
     /**
      * La fabrica que genera las vistas.
@@ -36,6 +39,8 @@ class DepotsController extends Controller
     {
         $this->view = $view;
         $this->repo = $repo;
+
+        $this->middleware('admin', ['except' => 'index', 'show']);
     }
 
     /**
@@ -44,7 +49,9 @@ class DepotsController extends Controller
      */
     public function index()
     {
-        //
+        $depots = $this->repo->getIndexViewVariables();
+
+        return $this->view->make('depots.index', compact('depots'));
     }
 
     /**
