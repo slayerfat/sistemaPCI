@@ -20,7 +20,7 @@ use Illuminate\Database\Eloquent\Collection;
  * @property \Carbon\Carbon $updated_at
  * @property integer $created_by
  * @property integer $updated_by
- * @property-read Employee $owner
+ * @property-read User $owner
  * @property-read \Illuminate\Database\Eloquent\Collection|Item[] $items
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Depot whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Depot whereUserId($value)
@@ -54,11 +54,13 @@ class Depot extends AbstractBaseModel
 
     /**
      * Regresa al Empleado relacionado, El jefe de almacen.
-     * @return Employee
+     * @return User
      */
     public function owner()
     {
-        return $this->belongsTo(Employee::class);
+        // por alguna razon el user id no estaba
+        // siendo tomado correctamente.
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     // -------------------------------------------------------------------------
