@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Collection;
  * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
  * @property integer $id
  * @property integer $user_id
+ * @property integer $number
  * @property integer $rack
  * @property integer $shelf
  * @property \Carbon\Carbon $created_at
@@ -39,6 +40,7 @@ class Depot extends AbstractBaseModel
      * @var array
      */
     protected $fillable = [
+        'number',
         'rack',
         'shelf'
     ];
