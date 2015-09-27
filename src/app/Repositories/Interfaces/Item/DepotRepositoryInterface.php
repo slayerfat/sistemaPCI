@@ -15,8 +15,13 @@
 namespace PCI\Repositories\Interfaces\Item;
 
 use PCI\Repositories\Interfaces\ModelRepositoryInterface;
+use PCI\Repositories\Interfaces\RepositoryPaginatorInterface;
+use PCI\Repositories\Interfaces\Viewable\GetIndexViewableInterface;
 
-interface DepotRepositoryInterface extends ModelRepositoryInterface
+interface DepotRepositoryInterface extends
+    ModelRepositoryInterface,
+    RepositoryPaginatorInterface,
+    GetIndexViewableInterface
 {
 
 }
