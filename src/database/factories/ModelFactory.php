@@ -23,7 +23,7 @@ $factory->define(PCI\Models\Address::class, function () use ($faker) {
 
 $factory->define(PCI\Models\Attendant::class, function () use ($faker) {
     return [
-        'user_id'   => 1,
+        'user_id' => factory(PCI\Models\User::class)->create()->id,
         'selection' => $faker->dateTime,
         'status'    => true
     ];
@@ -39,6 +39,7 @@ $factory->define(PCI\Models\Department::class, function () use ($faker) {
 $factory->define(PCI\Models\Depot::class, function () use ($faker) {
     return [
         'user_id' => 1,
+        'number' => rand(1, 2),
         'rack'    => rand(1, 5),
         'shelf'   => rand(1, 10),
     ];
@@ -86,7 +87,7 @@ $factory->define(PCI\Models\Note::class, function () use ($faker) {
     return [
         'user_id'      => 1,
         'note_type_id' => 1,
-        'attendant_id' => factory(PCI\Models\User::class)->create()->id,
+        'attendant_id' => factory(PCI\Models\Attendant::class)->create()->id,
         'petition_id'  => factory(PCI\Models\Petition::class)->create()->id,
         'creation'     => $faker->dateTime,
         'comments'     => $faker->paragraph,

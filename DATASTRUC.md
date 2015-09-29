@@ -2,6 +2,10 @@
 
 En este documento se pretende mantener la bitacora de cambios significativos en la estructura de datos del sistema.
 
+## v0.2.7
+
+Almacen necesita el numero de almacen (actualmente no lo tiene)
+
 ## v0.2.1
 
 Direccion tiene una relacion 1 a 1 con Empleado (queries mas faciles y no hay restriccion que diga que no se puede hacer).

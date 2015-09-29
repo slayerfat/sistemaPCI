@@ -5,7 +5,7 @@ interface RepositoryPaginatorInterface
 
     /**
      * Genera un objeto LengthAwarePaginator con todos los
-     * usuarios en el sistema y con eager loading.
+     * modelos en el sistema y con eager loading (si aplica).
      * @param int $quantity la cantidad a mostrar por pagina.
      * @return \Illuminate\Pagination\LengthAwarePaginator
      */

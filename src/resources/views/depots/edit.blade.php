@@ -7,18 +7,18 @@
         {!!
 
         BSForm::horizontalModel(
-            $user,
+            $depot,
             [
-                'route' => ['users.update', $user->id],
+                'route' => ['depots.update', $depot->id],
                 'method' => 'PATCH'
             ]
         )
 
         !!}
 
-        <legend>{{trans('models.users.edit')}}</legend>
+        <legend>{{trans('models.depots.edit')}}</legend>
 
-        @include('users.partials.form', ['btnMsg' => trans('models.users.edit')])
+        @include('depots.partials.form', ['btnMsg' => trans('models.depots.edit')])
 
         {!! BSForm::close() !!}
     </div>

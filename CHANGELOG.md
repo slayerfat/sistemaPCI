@@ -4,7 +4,13 @@ Todos los cambios significatiovos en este proyecto estaran documentados en este 
 
 ## [En Desarrollo][unrele]
 
-- Almacen, Items
+### Añadido
+
+- Recurso de Almacen, e Items.
+
+### Cambiado
+
+- Mejorado navbar: chequea al usuario y brinda links segun el perfil.
 
 ## [v0.2.5] - 2015-09-26
 

@@ -134,7 +134,6 @@ class AuxRoutes extends AbstractPciRoutes
 
     /**
      * Genera todas las rutas relacionadas con esta clase
-     *
      * @return void
      */
     public function execute()

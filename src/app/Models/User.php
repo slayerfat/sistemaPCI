@@ -151,6 +151,17 @@ class User extends AbstractBaseModel implements
         return $this->hasMany(Petition::class);
     }
 
+    /**
+     * Regresa una coleccion de almacenes que maneja.
+     * Esta relacion se refiere al Jefe de
+     * Almacen administra/maneja almacen.
+     * @return Depot
+     */
+    public function manages()
+    {
+        return $this->hasMany(Depot::class);
+    }
+
     // -------------------------------------------------------------------------
     // belongs to 1..* -> 1
     // -------------------------------------------------------------------------

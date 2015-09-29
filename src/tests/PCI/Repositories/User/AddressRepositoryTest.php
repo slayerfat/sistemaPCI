@@ -1,7 +1,5 @@
 <?php namespace Tests\PCI\Repositories\User;
 
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Mockery;
 use PCI\Models\Address;
 use PCI\Models\Employee;
@@ -9,50 +7,31 @@ use PCI\Models\User;
 use PCI\Repositories\User\AddressRepository;
 use PCI\Repositories\User\EmployeeRepository;
 use PCI\Repositories\User\UserRepository;
-use Tests\AbstractTestCase;
+use Tests\PCI\Repositories\AbstractRepositoryTestCase;
 
-class AddressRepositoryTest extends AbstractTestCase
+class AddressRepositoryTest extends AbstractRepositoryTestCase
 {
-
-    use DatabaseTransactions, DatabaseMigrations;
 
     /**
      * @var \PCI\Repositories\User\AddressRepository
      */
-    private $repo;
+    protected $repo;
+
+    /**
+     * @var \PCI\Models\Employee
+     */
+    protected $model;
 
     /**
      * @var \PCI\Models\User
      */
     private $user;
 
-    /**
-     * @var \PCI\Models\Employee
-     */
-    private $employee;
-
     public function setUp()
     {
         parent::setUp();
 
-        $this->runDatabaseMigrations();
-
         $this->user = factory(User::class)->create();
-
-        $this->employee = factory(Employee::class)->create();
-
-        // debido a que el repositorio de direccion depende
-        // del repositorio de empleado que tiene sus
-        // dependendias, y como no queremos usar
-        // el IOC container, lo hacemos
-        // explicitamente aqui.
-        $this->repo = new AddressRepository(
-            new Address(),
-            new EmployeeRepository(
-                new Employee(),
-                new UserRepository(new User())
-            )
-        );
     }
 
     public function testGetAllShouldNotBeEmpty()
@@ -62,7 +41,7 @@ class AddressRepositoryTest extends AbstractTestCase
 
     public function testFindParentShouldReturnEmployee()
     {
-        $result = $this->repo->findParent($this->employee->id);
+        $result = $this->repo->findParent($this->model->id);
 
         $this->assertInstanceOf(Employee::class, $result);
     }
@@ -74,7 +53,7 @@ class AddressRepositoryTest extends AbstractTestCase
             'av'          => 'test',
             'street'      => 'test',
             'building'    => 'test',
-            'employee_id' => $this->employee->id,
+            'employee_id' => $this->model->id,
         ];
 
         $this->assertInstanceOf(
@@ -85,7 +64,7 @@ class AddressRepositoryTest extends AbstractTestCase
 
     public function testFindShouldReturnAddress()
     {
-        $repoResults = $this->repo->find($this->employee->address->id);
+        $repoResults = $this->repo->find($this->model->address->id);
 
         $this->assertInstanceOf(Address::class, $repoResults);
     }
@@ -105,10 +84,10 @@ class AddressRepositoryTest extends AbstractTestCase
             'av'          => 'testing',
             'street'      => 'testing',
             'building'    => 'testing',
-            'employee_id' => $this->employee->id,
+            'employee_id' => $this->model->id,
         ];
 
-        $user = $this->repo->update($this->employee->address->id, $data);
+        $user = $this->repo->update($this->model->address->id, $data);
 
         $this->seeInDatabase('addresses', [
             'av'       => 'testing',
@@ -127,5 +106,34 @@ class AddressRepositoryTest extends AbstractTestCase
         $this->assertTrue($this->repo->delete($address->id));
 
         $this->notSeeInDatabase('addresses', ['id' => $address->id]);
+    }
+
+    /**
+     * Crea el repositorio necesario para esta prueba.
+     * @return \PCI\Repositories\AbstractRepository
+     */
+    protected function makeRepo()
+    {
+        // debido a que el repositorio de direccion depende
+        // del repositorio de empleado que tiene sus
+        // dependendias, y como no queremos usar
+        // el IOC container, lo hacemos
+        // explicitamente aqui.
+        return new AddressRepository(
+            new Address(),
+            new EmployeeRepository(
+                new Employee(),
+                new UserRepository(new User())
+            )
+        );
+    }
+
+    /**
+     * Crea el modelo necesario para esta prueba.
+     * @return \PCI\Models\AbstractBaseModel
+     */
+    protected function makeModel()
+    {
+        return factory(Employee::class)->create();
     }
 }

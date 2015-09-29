@@ -18,6 +18,7 @@ Misión Alma Mater, Programa Nacional de Formación: Informatica, Trayecto 3, IU
 - [sistemaPCI](https://github.com/slayerfat/sistemaPCI#sistemapci)
 - [Indice](https://github.com/slayerfat/sistemaPCI#indice)
 - [Documentacion](https://github.com/slayerfat/sistemaPCI#documentacion)
+- [Instalacion Rapida](https://github.com/slayerfat/sistemaPCI#instalacion-rapida)
 - [Dependencias del Sistema](https://github.com/slayerfat/sistemaPCI#dependencias-del-sistema)
     - [Node.js](https://github.com/slayerfat/sistemaPCI#node)
     - [Bower](https://github.com/slayerfat/sistemaPCI#bower)
@@ -25,6 +26,7 @@ Misión Alma Mater, Programa Nacional de Formación: Informatica, Trayecto 3, IU
     - [Obtener las Dependencias](https://github.com/slayerfat/sistemaPCI#obtener-las-dependecias-del-sistema)
     - [Sobre las Dependencias](https://github.com/slayerfat/sistemaPCI#sobre-las-dependencias)
     - [Gulp](https://github.com/slayerfat/sistemaPCI#gulp)
+    - [Permisos](https://github.com/slayerfat/sistemaPCI#permisos)
 - [Base de Datos](https://github.com/slayerfat/sistemaPCI#base-de-datos)
     - [Migraciones](https://github.com/slayerfat/sistemaPCI#migraciones)
 - [Homestead](https://github.com/slayerfat/sistemaPCI#homestead)
@@ -43,6 +45,14 @@ Dentro de este repositorio existen archivos complementarios que ayudaran en la d
 [DATASTRUC.md](https://github.com/slayerfat/sistemaPCI/blob/master/DATASTRUC.md), 
 [DEDCHANGE.md](https://github.com/slayerfat/sistemaPCI/blob/master/DEDCHANGE.md)
 y [TODO.md](https://github.com/slayerfat/sistemaPCI/blob/master/TODO.md).
+
+## Instalacion Rapida
+
+Copiar y pegar en consola:
+
+```bash
+git clone https://github.com/slayerfat/sistemaPCI sistemaPCI && chmod u+x sistemaPCI/caimanismo.sh && ./sistemaPCI/caimanismo.sh
+```
 
 ## Dependencias del Sistema
 
@@ -158,6 +168,21 @@ se vera:
 ```
 
 Tambien pueden hacer un `gulp watch` para autocompilar `scss` (sass).
+
+### Permisos
+
+Es necesario cambiar los permisos en algunas carpetas del sistema, esto se debe a que Laravel necesta escribir sus logs y necesita compilar ciertas cosas.
+
+Se debe otorgar la escritura a laravel en estos directorios:
+
+```
+~/sistemaPCI/src/storage
+~/sistemaPCI/src/bootstrap
+```
+
+la forma mas facil es: `chmod go+w -R src/storage && chmod go+w -R src/bootstrap`
+
+Si se quieren poner exoticos con los permisos, o cambiar el dueño de las carpetas en el sistema operativo, lo pueden hacer.
 
 ## Base de datos
 

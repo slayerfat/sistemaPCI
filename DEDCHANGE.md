@@ -6,6 +6,10 @@ En este archivo estaran los cambios pertinentes en el DED y el Documento de Espe
 
 Detalles, observaciones u otros:
 
+#### 27-09-15
+
+Almacen necesita el numero de almacen (actualmente no lo tiene)
+
 #### 22-09-15
 
 Empleado es ahora 1 a 1 con direccion, explicacion:

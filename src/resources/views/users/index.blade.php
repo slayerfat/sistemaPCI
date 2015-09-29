@@ -4,7 +4,7 @@
 
     @include('partials.genericTable', [
         'data' => $users,
-        'title' => 'Usuarios en el sistema'
+        'title' => trans('models.users.plural')
     ])
 
 @stop
