@@ -2,7 +2,17 @@
 
 @section('content')
     <div class="container">
-        <h1>Almacen {{$depot->number}}</h1>
+        <h1>
+            Almacen {{$depot->number}}
+
+            {!!
+
+            Button::withValue('Editar')
+                    ->asLinkTo(route('depots.edit', $depot->id))
+                    ->withIcon(Icon::create('edit'))
+
+            !!}
+        </h1>
 
         <h2>
             Administrador por

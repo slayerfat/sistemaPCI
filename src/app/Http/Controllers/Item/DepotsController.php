@@ -63,7 +63,7 @@ class DepotsController extends Controller
     {
         $depot = $this->repo->newInstance();
 
-        return $this->view->make('depot.create', compact('depot'));
+        return $this->view->make('depots.create', compact('depot'));
     }
 
     /**
