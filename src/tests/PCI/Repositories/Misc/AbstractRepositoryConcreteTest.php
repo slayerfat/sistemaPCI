@@ -1,14 +1,14 @@
-<?php namespace Tests\PCI\Repositories;
+<?php namespace Tests\PCI\Repositories\Misc;
 
-use Mockery;
-use PCI\Models\User;
-use Tests\AbstractTestCase;
-use PCI\Models\AbstractBaseModel;
-use PCI\Repositories\User\UserRepository as ConcreteClass;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Mockery;
+use PCI\Models\AbstractBaseModel;
+use PCI\Models\User;
+use PCI\Repositories\User\UserRepository as ConcreteClass;
+use Tests\AbstractTestCase;
 
-class AbstractRepositoryTest extends AbstractTestCase
+class AbstractRepositoryConcreteTest extends AbstractTestCase
 {
     use DatabaseTransactions, DatabaseMigrations;
 
