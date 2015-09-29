@@ -140,7 +140,7 @@ class DepotRepository extends AbstractRepository implements DepotRepositoryInter
     {
         // por ahora no necesitamos manipular la coleccion.
         return $this->model->all()->sortBy(function ($depot) {
-            return sprintf('%-s%s', $depot->number, $depot->rack);
+            return sprintf('%s, %s, %s', $depot->number, $depot->rack, $depot->shelf);
         });
     }
 
