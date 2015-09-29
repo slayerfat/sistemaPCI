@@ -1,8 +1,10 @@
 <?php namespace PCI\Repositories\Item;
 
+use PCI\Exceptions\Business\UserIsNotAdminException;
 use PCI\Models\AbstractBaseModel;
 use PCI\Repositories\AbstractRepository;
 use PCI\Repositories\Interfaces\Item\DepotRepositoryInterface;
+use PCI\Repositories\Interfaces\User\UserRepositoryInterface;
 use PCI\Repositories\ViewVariable\ViewPaginatorVariable;
 
 /**
@@ -13,6 +15,24 @@ use PCI\Repositories\ViewVariable\ViewPaginatorVariable;
  */
 class DepotRepository extends AbstractRepository implements DepotRepositoryInterface
 {
+
+    /**
+     * @var \PCI\Repositories\Interfaces\User\UserRepositoryInterface
+     */
+    private $userRepo;
+
+    /**
+     * Genera la instancia de esta clase.
+     * Esta necesita un modelo, y necesita el repositorio de usuarios.
+     * @param \PCI\Models\AbstractBaseModel $model
+     * @param \PCI\Repositories\Interfaces\User\UserRepositoryInterface $userRepo
+     */
+    public function __construct(AbstractBaseModel $model, UserRepositoryInterface $userRepo)
+    {
+        parent::__construct($model);
+
+        $this->userRepo = $userRepo;
+    }
 
     /**
      * Busca algun Elemento segun Id u otra regla.
@@ -31,7 +51,32 @@ class DepotRepository extends AbstractRepository implements DepotRepositoryInter
      */
     public function create(array $data)
     {
-        // TODO: Implement create() method.
+        $depot = $this->model->newInstance($data);
+
+        $owner = $this->checkOwner($data);
+
+        $owner->manages()->save($depot);
+
+        return $depot;
+    }
+
+    /**
+     * Chequea si el id de usuario que viene del formulario
+     * es un administrador, si no lo es buta una excepcion.
+     * @param array $data el array del request con los datos.
+     * @return \PCI\Models\User el modelo del jefe de almacen.
+     * @throws \PCI\Exceptions\Business\UserIsNotAdminException
+     */
+    private function checkOwner(array $data)
+    {
+        /** @var \PCI\Models\User $owner */
+        $owner = $this->userRepo->find($data['user_id']);
+
+        if (!$owner->isAdmin()) {
+            throw new UserIsNotAdminException;
+        }
+
+        return $owner;
     }
 
     /**

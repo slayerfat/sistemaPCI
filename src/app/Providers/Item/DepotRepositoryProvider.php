@@ -3,6 +3,7 @@
 use Illuminate\Support\ServiceProvider;
 use PCI\Models\Depot;
 use PCI\Repositories\Interfaces\Item\DepotRepositoryInterface;
+use PCI\Repositories\Interfaces\User\UserRepositoryInterface;
 use PCI\Repositories\Item\DepotRepository;
 
 /**
@@ -21,7 +22,7 @@ class DepotRepositoryProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(DepotRepositoryInterface::class, function ($app) {
-            return new DepotRepository($app[Depot::class]);
+            return new DepotRepository($app[Depot::class], $app[UserRepositoryInterface::class]);
         });
     }
 }
