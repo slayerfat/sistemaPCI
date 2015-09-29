@@ -7,6 +7,7 @@
  * Considerando cambiar nombre de la clase de
  * AbstractUserIntegration -> AbstractGeneralIntegration o algo similar.
  */
+use PCI\Models\Depot;
 use PCI\Models\User;
 use Tests\Integration\User\AbstractUserIntegration;
 
@@ -29,8 +30,61 @@ class DepotIntegrationTest extends AbstractUserIntegration
              ->type('25255', 'rack')
              ->see(trans('models.depots.create'))
              ->press(trans('models.depots.create'))
-             ->seePageIs(route('depots.show', 1))
+            ->seePageIs(route('depots.show', 2))
              ->see(trans('models.depots.singular') . ' 1');
+    }
+
+    public function testCanSeeAndVisitDepotsIndex()
+    {
+        $this->actingAs($this->user)
+             ->visit(route('home'))
+             ->seePageIs(route('index'))
+             ->see(trans('models.depots.plural'))
+             ->visit(route('depots.index'))
+             ->seePageIs(route('depots.index'))
+             ->see(trans('models.depots.create'))
+             ->click(trans('models.depots.create'))
+             ->seePageIs(route('depots.create'));
+    }
+
+    public function testShowDepotsHasLinks()
+    {
+        $this->actingAs($this->user)
+             ->visit(route('depots.show', 1))
+             ->seePageIs(route('depots.show', 1))
+             ->see(trans('models.depots.singular') . ' 1')
+             ->see('Editar')
+             ->see('Eliminar')
+             ->click('Editar')
+             ->seePageIs(route('depots.edit', 1));
+    }
+
+    public function testEditDepotsShouldPersistAndRedirect()
+    {
+        $this->actingAs($this->user)
+             ->visit(route('depots.edit', 1))
+             ->seePageIs(route('depots.edit', 1))
+             ->select('2', 'number')
+             ->type('3', 'shelf')
+             ->type('4', 'rack')
+             ->see(trans('models.depots.edit'))
+             ->press(trans('models.depots.edit'))
+             ->seePageIs(route('depots.show', 1))
+             ->see(trans('models.depots.singular') . ' 2')
+             ->seeInDatabase('depots', [
+                 'number' => 2,
+                 'rack'   => 4,
+                 'shelf'  => 3
+             ]);
+    }
+
+    public function testDeleteDepotShouldRedirectToDepotsIndex()
+    {
+        $this->withoutMiddleware()
+             ->delete(route('depots.destroy', 1))
+             ->assertResponseStatus(302); //302 redirect
+
+        $this->notSeeInDatabase('depots', ['id' => 1]);
     }
 
     /**
@@ -49,6 +103,6 @@ class DepotIntegrationTest extends AbstractUserIntegration
      */
     protected function persistData()
     {
-        // TODO: Implement persistData() method.
+        factory(Depot::class)->create(['number' => 1]);
     }
 }
