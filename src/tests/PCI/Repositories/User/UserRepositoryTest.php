@@ -1,43 +1,28 @@
 <?php namespace Tests\PCI\Repositories\User;
 
+use Illuminate\Pagination\LengthAwarePaginator;
 use Mockery;
 use PCI\Models\Employee;
 use PCI\Models\User;
-use Tests\AbstractTestCase;
 use PCI\Repositories\User\UserRepository;
-use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Tests\PCI\Repositories\AbstractRepositoryTestCase;
 
-class UserRepositoryTest extends AbstractTestCase
+class UserRepositoryTest extends AbstractRepositoryTestCase
 {
-
-    use DatabaseTransactions, DatabaseMigrations;
 
     /**
      * @var \PCI\Repositories\User\UserRepository
      */
-    private $repo;
+    protected $repo;
 
     /**
-     * @var User
+     * @var \PCI\Models\User
      */
-    private $user;
-
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->runDatabaseMigrations();
-
-        $this->user = factory(User::class)->create();
-
-        $this->repo = new UserRepository(new User);
-    }
+    protected $model;
 
     public function testFindShouldReturnUser()
     {
-        $repoResults = $this->repo->find($this->user->id);
+        $repoResults = $this->repo->find($this->model->id);
 
         $this->assertInstanceOf(User::class, $repoResults);
     }
@@ -52,12 +37,12 @@ class UserRepositoryTest extends AbstractTestCase
 
     public function testGenerateConfirmationCodeShouldMakeChangesAndReturnUser()
     {
-        $this->actingAs($this->user);
+        $this->actingAs($this->model);
 
         $repoResults = $this->repo->generateConfirmationCode();
 
         $this->assertInstanceOf(User::class, $repoResults);
-        $this->assertSame($this->user, $repoResults);
+        $this->assertSame($this->model, $repoResults);
         $this->assertNotEmpty($repoResults->confirmation_code);
     }
 
@@ -70,7 +55,7 @@ class UserRepositoryTest extends AbstractTestCase
 
     public function testConfirmShouldPersistIfCorrectCodeIsGiven()
     {
-        $repoResults = $this->repo->confirmCode($this->user->confirmation_code);
+        $repoResults = $this->repo->confirmCode($this->model->confirmation_code);
 
         $this->assertTrue($repoResults);
     }
@@ -90,9 +75,9 @@ class UserRepositoryTest extends AbstractTestCase
             'profile_id' => 1,
         ];
 
-        $user = $this->repo->update($this->user->id, $data);
+        $user = $this->repo->update($this->model->id, $data);
 
-        $this->assertEquals($this->user->password, $user->password);
+        $this->assertEquals($this->model->password, $user->password);
     }
 
     public function testUpdateShouldChangeChangePasswordIfInputIsNotEmpty()
@@ -104,9 +89,9 @@ class UserRepositoryTest extends AbstractTestCase
             'profile_id' => 1,
         ];
 
-        $user = $this->repo->update($this->user->id, $data);
+        $user = $this->repo->update($this->model->id, $data);
 
-        $this->assertNotEquals($this->user->password, $user->password);
+        $this->assertNotEquals($this->model->password, $user->password);
     }
 
     public function testCreateShouldReturnUser()
@@ -136,7 +121,7 @@ class UserRepositoryTest extends AbstractTestCase
     {
         $employee = factory(Employee::class)->make();
 
-        $this->user->employee()->save($employee);
+        $this->model->employee()->save($employee);
 
         $results = $this->repo->getTablePaginator();
 
@@ -157,5 +142,23 @@ class UserRepositoryTest extends AbstractTestCase
     public function testDeleteShouldThrowExceptionWhenNullGiven()
     {
         $this->assertTrue($this->repo->delete(null));
+    }
+
+    /**
+     * Crea el repositorio necesario para esta prueba.
+     * @return \PCI\Repositories\AbstractRepository
+     */
+    protected function makeRepo()
+    {
+        return new UserRepository(new User);
+    }
+
+    /**
+     * Crea el modelo necesario para esta prueba.
+     * @return \PCI\Models\AbstractBaseModel
+     */
+    protected function makeModel()
+    {
+        return factory(User::class)->create();
     }
 }

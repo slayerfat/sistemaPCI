@@ -1,32 +1,28 @@
 <?php namespace Tests\PCI\Repositories\User;
 
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 use PCI\Models\Employee;
 use PCI\Models\User;
 use PCI\Repositories\User\EmployeeRepository;
 use PCI\Repositories\User\UserRepository;
-use Tests\AbstractTestCase;
+use Tests\PCI\Repositories\AbstractRepositoryTestCase;
 
-class EmployeeRepositoryTest extends AbstractTestCase
+class EmployeeRepositoryTest extends AbstractRepositoryTestCase
 {
-
-    use DatabaseTransactions, DatabaseMigrations;
 
     /**
      * @var \PCI\Repositories\User\AddressRepository
      */
-    private $repo;
+    protected $repo;
+
+    /**
+     * @var \PCI\Models\Employee
+     */
+    protected $model;
 
     /**
      * @var \PCI\Models\User
      */
     private $user;
-
-    /**
-     * @var \PCI\Models\Employee
-     */
-    private $employee;
 
     public function setUp()
     {
@@ -35,13 +31,6 @@ class EmployeeRepositoryTest extends AbstractTestCase
         $this->runDatabaseMigrations();
 
         $this->user = factory(User::class)->create();
-
-        $this->employee = factory(Employee::class)->create();
-
-        $this->repo = new EmployeeRepository(
-            new Employee(),
-            new UserRepository(new User())
-        );
     }
 
     public function testGetAllShouldNotBeEmpty()
@@ -51,7 +40,7 @@ class EmployeeRepositoryTest extends AbstractTestCase
 
     public function testFindParentShouldReturnUser()
     {
-        $result = $this->repo->findParent($this->employee->user->id);
+        $result = $this->repo->findParent($this->model->user->id);
 
         $this->assertInstanceOf(User::class, $result);
     }
@@ -74,7 +63,7 @@ class EmployeeRepositoryTest extends AbstractTestCase
 
     public function testFindShouldReturnEmployee()
     {
-        $repoResults = $this->repo->find($this->employee->id);
+        $repoResults = $this->repo->find($this->model->id);
 
         $this->assertInstanceOf(Employee::class, $repoResults);
     }
@@ -97,7 +86,7 @@ class EmployeeRepositoryTest extends AbstractTestCase
             'ci'            => '11122233',
         ];
 
-        $user = $this->repo->update($this->employee->id, $data);
+        $user = $this->repo->update($this->model->id, $data);
 
         $this->seeInDatabase('employees', [
             'first_name'    => 'test',
@@ -116,5 +105,26 @@ class EmployeeRepositoryTest extends AbstractTestCase
         $this->assertTrue($this->repo->delete($employee->id));
 
         $this->notSeeInDatabase('employees', ['id' => $employee->id]);
+    }
+
+    /**
+     * Crea el repositorio necesario para esta prueba.
+     * @return \PCI\Repositories\AbstractRepository
+     */
+    protected function makeRepo()
+    {
+        return new EmployeeRepository(
+            new Employee(),
+            new UserRepository(new User())
+        );
+    }
+
+    /**
+     * Crea el modelo necesario para esta prueba.
+     * @return \PCI\Models\AbstractBaseModel
+     */
+    protected function makeModel()
+    {
+        return factory(Employee::class)->create();
     }
 }
