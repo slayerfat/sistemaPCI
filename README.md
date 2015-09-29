@@ -48,8 +48,9 @@ y [TODO.md](https://github.com/slayerfat/sistemaPCI/blob/master/TODO.md).
 
 ## Instalacion Rapida
 
-Copiar y pegar en consola:
+Copiar (TODO) y pegar en consola:
 
+-------------------------> hay mas cosas
 ```bash
 git clone https://github.com/slayerfat/sistemaPCI sistemaPCI && chmod u+x sistemaPCI/caimanismo.sh && ./sistemaPCI/caimanismo.sh
 ```
