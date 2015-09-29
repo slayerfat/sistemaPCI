@@ -51,7 +51,7 @@ class DepotRepository extends AbstractRepository implements DepotRepositoryInter
      */
     public function create(array $data)
     {
-        $depot = $this->model->newInstance($data);
+        $depot = $this->newInstance($data);
 
         $owner = $this->checkOwner($data);
 
@@ -88,7 +88,15 @@ class DepotRepository extends AbstractRepository implements DepotRepositoryInter
      */
     public function update($id, array $data)
     {
-        // TODO: Implement update() method.
+        /** @var \PCI\Models\Depot $depot */
+        $depot = $this->getById($id);
+
+        $owner = $this->checkOwner($data);
+        $depot->fill($data);
+        $depot->user_id = $owner->id;
+        $depot->save();
+
+        return $depot;
     }
 
     /**
@@ -98,7 +106,7 @@ class DepotRepository extends AbstractRepository implements DepotRepositoryInter
      */
     public function delete($id)
     {
-        // TODO: Implement delete() method.
+        return $this->executeDelete($id);
     }
 
     /**

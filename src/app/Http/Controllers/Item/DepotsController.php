@@ -97,13 +97,16 @@ class DepotsController extends Controller
     /**
      * Show the form for editing the specified resource.
      * @param  int $id
+     * @param \PCI\Repositories\Interfaces\User\UserRepositoryInterface $userRepo
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, UserRepositoryInterface $userRepo)
     {
         $depot = $this->repo->find($id);
 
-        return $this->view->make('depots.edit', compact('depot'));
+        $admins = $userRepo->adminLists();
+
+        return $this->view->make('depots.edit', compact('depot', 'admins'));
     }
 
     /**
