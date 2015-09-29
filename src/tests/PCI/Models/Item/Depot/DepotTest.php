@@ -2,8 +2,8 @@
 
 use Mockery;
 use PCI\Models\Depot;
-use PCI\Models\Employee;
 use PCI\Models\Item;
+use PCI\Models\User;
 use Tests\AbstractTestCase;
 
 class DepotTest extends AbstractTestCase
@@ -11,12 +11,15 @@ class DepotTest extends AbstractTestCase
 
     public function testOwner()
     {
-        $this->mockBasicModelRelation(
-            Depot::class,
-            'owner',
-            'belongsTo',
-            Employee::class
-        );
+        $model = Mockery::mock(Depot::class)->makePartial();
+
+        $model->shouldReceive('belongsTo')
+              ->once()
+              ->with(User::class, 'user_id')
+              ->andReturn('mocked');
+
+        /** @var Depot $model */
+        $this->assertEquals('mocked', $model->owner());
     }
 
 
