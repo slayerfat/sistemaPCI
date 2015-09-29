@@ -5,13 +5,10 @@
         <h1>
             Almacen {{$depot->number}}
 
-            {!!
-
-            Button::withValue('Editar')
-                    ->asLinkTo(route('depots.edit', $depot->id))
-                    ->withIcon(Icon::create('edit'))
-
-            !!}
+            @include(
+                'partials.buttons.edit-delete',
+                ['resource' => 'depots', 'id' => $depot->id]
+            )
         </h1>
 
         <h2>
