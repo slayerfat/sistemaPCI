@@ -1,12 +1,12 @@
 <?php namespace Tests\PCI\Repositories\ViewVariable;
 
+use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use PCI\Models\User;
+use PCI\Repositories\ViewVariable\ViewCollectionVariable;
 use PCI\Repositories\ViewVariable\ViewModelVariable;
 use PCI\Repositories\ViewVariable\ViewPaginatorVariable;
 use Tests\AbstractTestCase;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-use PCI\Repositories\ViewVariable\ViewCollectionVariable;
 
 class GetXInterfaceTest extends AbstractTestCase
 {
@@ -25,9 +25,9 @@ class GetXInterfaceTest extends AbstractTestCase
         $this->runDatabaseMigrations();
 
         $this->variables = [
-            new ViewCollectionVariable(User::all(), 'tests'),
-            new ViewModelVariable(User::first(), 'tests'),
-            new ViewPaginatorVariable(User::paginate(), 'tests'),
+            new ViewCollectionVariable(User::all(), 'users'),
+            new ViewModelVariable(User::first(), 'users'),
+            new ViewPaginatorVariable(User::paginate(), 'users'),
         ];
     }
 
