@@ -188,6 +188,18 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
     }
 
     /**
+     * Regresa una arreglo de los usuarios que
+     * sean administradores del sistema.
+     * @return \Illuminate\Support\Collection
+     */
+    public function adminLists()
+    {
+        return $this->model
+            ->whereProfileId(\PCI\Models\User::ADMIN_ID)
+            ->get();
+    }
+
+    /**
      * genera la data necesaria que utilizara el paginator.
      * @param \PCI\Models\AbstractBaseModel|\PCI\Models\User $user
      * @return array

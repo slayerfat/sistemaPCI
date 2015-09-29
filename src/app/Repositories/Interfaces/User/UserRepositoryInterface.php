@@ -38,4 +38,11 @@ interface UserRepositoryInterface extends
      * @return bool Verdaredo si existe un usuario con este codigo.
      */
     public function confirmCode($code);
+
+    /**
+     * Regresa una arreglo de los usuarios que
+     * sean administradores del sistema.
+     * @return \Illuminate\Support\Collection
+     */
+    public function adminLists();
 }
