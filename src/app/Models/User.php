@@ -155,7 +155,7 @@ class User extends AbstractBaseModel implements
      * Regresa una coleccion de almacenes que maneja.
      * Esta relacion se refiere al Jefe de
      * Almacen administra/maneja almacen.
-     * @return Collection
+     * @return Depot
      */
     public function manages()
     {
