@@ -29,6 +29,21 @@ class ViewPaginatorVariable extends AbstractViewVariable implements GetPaginator
         $this->setModel($paginator);
 
         $this->setDefaults($resource);
+
+        $this->setModelPath();
+    }
+
+    /**
+     * Debido a que las vistas y los controladores no necesitan saber
+     * que el paginador necesita que se le diga cual es la ruta
+     * que deberia estar ojeando, lo hacemos directamente aqui,
+     * no obstante, los controladores y vistas tienen
+     * acceso a manipular esto.
+     * @return void
+     */
+    private function setModelPath()
+    {
+        $this->model->setPath(route($this->getRoutes()->index));
     }
 
     /**

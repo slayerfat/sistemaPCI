@@ -6,11 +6,29 @@ Todos los cambios significatiovos en este proyecto estaran documentados en este 
 
 ### Añadido
 
-- Recurso de Almacen, e Items.
+ver [En Desarrollo][unrele]
+
+## [v0.3.0] - 2015-09-29
+
+### Cambiado
+
+- Almacenes, parcialmente mejorado, preparando para item.
+
+## [v0.2.7] - 2015-09-29
+
+### Añadido
+
+- Recurso de Almacen **parcialmente.** Faltan detalles antes de hacer algunas interacciones entre almacen/item/pedidos, etc.
 
 ### Cambiado
 
 - Mejorado navbar: chequea al usuario y brinda links segun el perfil.
+
+## [v0.2.6] - 2015-09-26
+
+### Cambiado
+
+Pruebas de navbar.
 
 ## [v0.2.5] - 2015-09-26
 
@@ -193,7 +211,10 @@ Se crearon documentacion segun aspectos clave del sistema, para ser referenciado
   - `replace.php` deberia funcionar correctamente.
   - cypher deberia funcionar por cambio de strings de tamaño 32.
 
-[unrele]: https://github.com/slayerfat/sistemaPCI/compare/v0.2.5...develop
+[unrele]: https://github.com/slayerfat/sistemaPCI/compare/v0.3.0...develop
+[v0.3.0]: https://github.com/slayerfat/sistemaPCI/compare/v0.2.7...v0.3.0
+[v0.2.7]: https://github.com/slayerfat/sistemaPCI/compare/v0.2.6...v0.2.7
+[v0.2.6]: https://github.com/slayerfat/sistemaPCI/compare/v0.2.5...v0.2.6
 [v0.2.5]: https://github.com/slayerfat/sistemaPCI/compare/v0.2.4...v0.2.5
 [v0.2.4]: https://github.com/slayerfat/sistemaPCI/compare/v0.2.3...v0.2.4
 [v0.2.3]: https://github.com/slayerfat/sistemaPCI/compare/v0.2.2...v0.2.3

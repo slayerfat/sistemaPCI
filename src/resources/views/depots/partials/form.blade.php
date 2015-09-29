@@ -4,7 +4,7 @@ ControlGroup::generate(
     BSForm::label('number', 'Almacen N°'),
     // solamente un array con dos elementos
     // porque solo hay 2 almacenes en fisico.
-    BSForm::select('number', [1, 2]),
+    BSForm::select('number', [1 => 1, 2 => 2]),
     BSForm::help('&nbsp;'),
     2
 )

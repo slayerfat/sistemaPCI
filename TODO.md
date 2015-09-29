@@ -2,6 +2,16 @@
 
 Esto esta ~~completo~~, **incompleto**, *con errores*, no implementado
 
+## kanban
+
+En consideracion.
+
+## Queries
+
+Faltantes:
+
+todo.
+
 ## Resource
 
 el recurso es la combinacion de Rutas + Vistas + Controladores para brindar un Recurso.
