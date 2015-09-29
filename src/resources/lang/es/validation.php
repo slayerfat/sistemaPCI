@@ -61,7 +61,6 @@ return [
     "unique"               => "El campo :attribute ya ha sido tomado.",
     "url"                  => "El formato del campo :attribute es invalido.",
     "timezone"             => "El campo :attribute debe ser una una zona horaria valida.",
-
     'attributes'           => [
         'title'            => 'Titulo',
         'body'             => 'Cuerpo o Descripción',
@@ -100,5 +99,7 @@ return [
         'image'            => 'Imagen',
         'phone'            => 'Teléfono',
         'birth_date'       => 'Fecha de nacimiento',
+        'rack'  => 'Anaquel',
+        'shelf' => 'Alacena',
     ],
 ];
