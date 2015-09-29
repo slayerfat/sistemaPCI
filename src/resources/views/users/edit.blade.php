@@ -18,7 +18,7 @@
 
         <legend>{{trans('models.users.edit')}}</legend>
 
-        @include('users.partials.form', ['btnMsg' => 'Actualizar Cuenta'])
+        @include('users.partials.form', ['btnMsg' => trans('models.users.edit')])
 
         {!! BSForm::close() !!}
     </div>
