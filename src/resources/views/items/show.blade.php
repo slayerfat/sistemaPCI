@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <h1>
-            Almacen {{$item}}
+            Item {{$item}}
 
             @include(
                 'partials.buttons.edit-delete',
