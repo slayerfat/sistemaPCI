@@ -2,7 +2,9 @@
 
 use PCI\Models\AbstractBaseModel;
 use PCI\Repositories\AbstractRepository;
+use PCI\Repositories\Interfaces\Aux\CategoryRepositoryInterface;
 use PCI\Repositories\Interfaces\Item\ItemRepositoryInterface;
+use PCI\Repositories\Traits\IteratesCollectionRelationTrait;
 use PCI\Repositories\ViewVariable\ViewPaginatorVariable;
 
 /**
@@ -13,6 +15,26 @@ use PCI\Repositories\ViewVariable\ViewPaginatorVariable;
  */
 class ItemRepository extends AbstractRepository implements ItemRepositoryInterface
 {
+
+    use IteratesCollectionRelationTrait; // longNameIsLong
+
+    /**
+     * La implementacion del repositorio de categorias.
+     * @var \PCI\Repositories\Interfaces\Aux\CategoryRepositoryInterface
+     */
+    private $catRepo;
+
+    /**
+     * La instancia de este repositorio.
+     * Necesita el repo de categorias para el listado de crear/editar item.
+     * @param \PCI\Models\AbstractBaseModel $model
+     * @param \PCI\Repositories\Interfaces\Aux\CategoryRepositoryInterface $catRepo
+     */
+    public function __construct(AbstractBaseModel $model, CategoryRepositoryInterface $catRepo)
+    {
+        parent::__construct($model);
+        $this->catRepo = $catRepo;
+    }
 
     /**
      * Regresa variable con una coleccion y datos
@@ -61,7 +83,12 @@ class ItemRepository extends AbstractRepository implements ItemRepositoryInterfa
      */
     public function create(array $data)
     {
-        // TODO: Implement create() method.
+        $item = $this->model->newInstance();
+
+        $item->fill($data);
+        $item->save();
+
+        return $item;
     }
 
     /**
@@ -84,6 +111,18 @@ class ItemRepository extends AbstractRepository implements ItemRepositoryInterfa
     public function delete($id)
     {
         return $this->executeDelete($id);
+    }
+
+    /**
+     * Devuelve un array asociativo con
+     * las categorias y subcategorias.
+     * @return array[]
+     */
+    public function getSubCatsLists()
+    {
+        $catModels = $this->catRepo->getAll();
+
+        return $this->createCollectionRelationArray($catModels, 'subCategories');
     }
 
     /**

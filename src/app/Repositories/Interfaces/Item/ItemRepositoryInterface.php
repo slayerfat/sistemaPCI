@@ -24,4 +24,10 @@ interface ItemRepositoryInterface extends
     GetIndexViewableInterface
 {
 
+    /**
+     * Devuelve un array asociativo con
+     * las categorias y subcategorias.
+     * @return array|array[]
+     */
+    public function getSubCatsLists();
 }

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\ServiceProvider;
 use PCI\Models\Item;
+use PCI\Repositories\Interfaces\Aux\CategoryRepositoryInterface;
 use PCI\Repositories\Interfaces\Item\ItemRepositoryInterface;
 use PCI\Repositories\Item\ItemRepository;
 
@@ -21,7 +22,10 @@ class ItemRepositoryProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(ItemRepositoryInterface::class, function ($app) {
-            return new ItemRepository($app[Item::class]);
+            return new ItemRepository(
+                $app[Item::class],
+                $app[CategoryRepositoryInterface::class]
+            );
         });
     }
 }

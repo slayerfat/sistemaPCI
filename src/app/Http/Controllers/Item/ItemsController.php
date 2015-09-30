@@ -4,10 +4,11 @@ use Illuminate\Http\Request;
 use Illuminate\View\Factory as View;
 use PCI\Http\Controllers\Controller;
 use PCI\Http\Requests;
+use PCI\Http\Requests\Item\ItemRequest;
 use PCI\Models\ItemType;
 use PCI\Models\Maker;
-use PCI\Models\SubCategory;
 use PCI\Repositories\Interfaces\Item\ItemRepositoryInterface;
+use Redirect;
 
 /**
  * Class ItemsController
@@ -61,7 +62,7 @@ class ItemsController extends Controller
         $item = $this->repo->newInstance();
 
         // TODO: repositorio de este asunto
-        $subCats   = SubCategory::lists('desc', 'id');
+        $subCats = $this->repo->getSubCatsLists();
         $makers    = Maker::lists('desc', 'id');
         $itemTypes = ItemType::lists('desc', 'id');
 
@@ -73,12 +74,14 @@ class ItemsController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     * @param  \Illuminate\Http\Request $request
+     * @param \PCI\Http\Requests\Item\ItemRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ItemRequest $request)
     {
-        //
+        $item = $this->repo->create($request->all());
+
+        return Redirect::route('items.show', $item->id);
     }
 
     /**
@@ -88,7 +91,9 @@ class ItemsController extends Controller
      */
     public function show($id)
     {
-        //
+        $item = $this->repo->find($id);
+
+        return $this->view->make('items.show', compact('item'));
     }
 
     /**
