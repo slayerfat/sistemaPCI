@@ -71,7 +71,6 @@ $factory->define(PCI\Models\Item::class, function () use ($faker) {
         'desc'            => $faker->sentence,
         'stock'           => rand(0, 10000),
         'minimum'         => rand(0, 10000),
-        'due'             => $faker->dateTime,
     ];
 });
 

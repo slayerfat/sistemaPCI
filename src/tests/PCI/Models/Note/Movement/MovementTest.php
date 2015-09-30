@@ -41,7 +41,7 @@ class MovementTest extends AbstractTestCase
 
         $mock->shouldReceive('withPivot')
             ->once()
-            ->with('quantity')
+            ->with('quantity', 'due')
             ->andReturn('mocked');
 
         $this->assertEquals('mocked', $mock->items());

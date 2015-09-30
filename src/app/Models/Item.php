@@ -167,7 +167,8 @@ class Item extends AbstractBaseModel implements SluggableInterface
      */
     public function movements()
     {
-        return $this->belongsToMany(Movement::class)->withPivot('quantity');
+        return $this->belongsToMany(Movement::class)
+                    ->withPivot('quantity', 'due');
     }
 
     /**

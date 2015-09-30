@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
 class CreateItemsTable extends Migration
 {
@@ -32,7 +32,6 @@ class CreateItemsTable extends Migration
             $table->string('slug')->index();
             $table->unsignedInteger('stock');
             $table->unsignedInteger('minimum');
-            $table->date('due')->nullable();
             $table->timestamps();
             $table->unsignedInteger('created_by');
             $table->foreign('created_by')->references('id')->on('users');

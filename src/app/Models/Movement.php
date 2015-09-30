@@ -86,6 +86,7 @@ class Movement extends AbstractBaseModel
      */
     public function items()
     {
-        return $this->belongsToMany(Item::class)->withPivot('quantity');
+        return $this->belongsToMany(Item::class)
+                    ->withPivot('quantity', 'due');
     }
 }
