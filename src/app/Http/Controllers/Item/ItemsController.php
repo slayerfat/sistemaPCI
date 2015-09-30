@@ -44,9 +44,9 @@ class ItemsController extends Controller
      */
     public function index()
     {
-        $items = $this->repo->getIndexViewVariables();
-
-        return $this->view->make('items.index', compact('items'));
+        return $this->view
+            ->make('items.index')
+            ->with('items', $this->repo->getIndexViewVariables());
     }
 
     /**

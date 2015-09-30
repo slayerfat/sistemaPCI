@@ -3,6 +3,7 @@
 use PCI\Models\AbstractBaseModel;
 use PCI\Repositories\AbstractRepository;
 use PCI\Repositories\Interfaces\Item\ItemRepositoryInterface;
+use PCI\Repositories\ViewVariable\ViewPaginatorVariable;
 
 /**
  * Class ItemRepository
@@ -20,7 +21,27 @@ class ItemRepository extends AbstractRepository implements ItemRepositoryInterfa
      */
     public function getIndexViewVariables()
     {
-        // TODO: Implement getIndexViewVariables() method.
+        return new ViewPaginatorVariable($this->getTablePaginator(), 'items');
+    }
+
+    /**
+     * Genera un objeto LengthAwarePaginator con todos los
+     * modelos en el sistema y con eager loading (si aplica).
+     * @param int $quantity la cantidad a mostrar por pagina.
+     * @return \Illuminate\Pagination\LengthAwarePaginator
+     */
+    public function getTablePaginator($quantity = 25)
+    {
+        return $this->generatePaginator($this->getAll(), $quantity);
+    }
+
+    /**
+     * Consigue todos los elementos y devuelve una coleccion.
+     * @return \Illuminate\Database\Eloquent\Collection|null
+     */
+    public function getAll()
+    {
+        return $this->model->all();
     }
 
     /**
@@ -30,16 +51,7 @@ class ItemRepository extends AbstractRepository implements ItemRepositoryInterfa
      */
     public function find($id)
     {
-        // TODO: Implement find() method.
-    }
-
-    /**
-     * Consigue todos los elementos y devuelve una coleccion.
-     * @return \Illuminate\Database\Eloquent\Collection|null
-     */
-    public function getAll()
-    {
-        // TODO: Implement getAll() method.
+        return $this->getBySlugOrId($id);
     }
 
     /**
@@ -71,18 +83,7 @@ class ItemRepository extends AbstractRepository implements ItemRepositoryInterfa
      */
     public function delete($id)
     {
-        // TODO: Implement delete() method.
-    }
-
-    /**
-     * Genera un objeto LengthAwarePaginator con todos los
-     * modelos en el sistema y con eager loading (si aplica).
-     * @param int $quantity la cantidad a mostrar por pagina.
-     * @return \Illuminate\Pagination\LengthAwarePaginator
-     */
-    public function getTablePaginator($quantity = 25)
-    {
-        // TODO: Implement getTablePaginator() method.
+        return $this->executeDelete($id);
     }
 
     /**
@@ -92,11 +93,18 @@ class ItemRepository extends AbstractRepository implements ItemRepositoryInterfa
      * Como cada repositorio contiene modelos con
      * estructuras diferentes, necesitamos
      * manener este metodo abstracto.
-     * @param \PCI\Models\AbstractBaseModel $model
+     * @param \PCI\Models\AbstractBaseModel|\PCI\Models\Item $model
      * @return array<string, string> En donde el key es el titulo legible del campo.
      */
     protected function makePaginatorData(AbstractBaseModel $model)
     {
-        // TODO: Implement makePaginatorData() method.
+        // por ahora no necesitamos datos de forma condicional.
+        return [
+            'uid'         => $model->id,
+            'Descripción' => $model->desc,
+            'Stock'       => $model->stock,
+            'Rubro'       => $model->subCategory->desc,
+            'Fabricante'  => $model->maker->desc,
+        ];
     }
 }
