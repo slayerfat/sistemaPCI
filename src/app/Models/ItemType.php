@@ -36,7 +36,6 @@ class ItemType extends AbstractBaseModel implements SluggableInterface
 
     /**
      * The attributes that are mass assignable.
-     *
      * @var array
      */
     protected $fillable = ['desc'];

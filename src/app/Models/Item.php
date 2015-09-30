@@ -59,7 +59,6 @@ class Item extends AbstractBaseModel implements SluggableInterface
 
     /**
      * The attributes that are mass assignable.
-     *
      * @var array
      */
     protected $fillable = [
@@ -85,7 +84,6 @@ class Item extends AbstractBaseModel implements SluggableInterface
      * dates se refiere a Carbon\Carbon dates.
      * En otras palabras, genera una instancia
      * de Carbon\Carbon para cada campo.
-     *
      * @var array
      */
     protected $dates = ['due'];
