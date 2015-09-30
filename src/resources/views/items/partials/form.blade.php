@@ -76,8 +76,6 @@ ControlGroup::generate(
 
 !!}
 
-!!}
-
 {!!
 
 ControlGroup::generate(
