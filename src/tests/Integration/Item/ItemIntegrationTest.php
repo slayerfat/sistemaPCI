@@ -15,15 +15,16 @@ use PCI\Models\User;
 use Tests\Integration\User\AbstractUserIntegration;
 
 /**
- * Class DepotIntegrationTest
+ * Class ItemIntegrationTest
  * @package Tests\Integration\Item
+ * Nice copypasta. - bill machine learning gates.
  * @author Alejandro Granadillo <slayerfat@gmail.com>
  * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
  */
 class ItemIntegrationTest extends AbstractUserIntegration
 {
 
-    public function testCanSeeAndVisitDepotsIndex()
+    public function testCanSeeAndVisitItemsIndex()
     {
         $this->actingAs($this->user)
              ->visit(route('index'))
@@ -33,6 +34,28 @@ class ItemIntegrationTest extends AbstractUserIntegration
              ->see(trans('models.items.create'))
              ->click(trans('models.items.create'))
              ->seePageIs(route('items.create'));
+    }
+
+    public function testCreateItemsShouldPersistAndRedirect()
+    {
+        $this->actingAs($this->user)
+             ->visit(route('items.create'))
+             ->seePageIs(route('items.create'))
+             ->select('1', 'item_type_id')
+             ->select('1', 'maker_id')
+             ->select('1', 'sub_category_id')
+             ->type('random item', 'desc')
+             ->type('1', 'stock')
+             ->type('1', 'minimum')
+             ->see(trans('models.items.create'))
+             ->press(trans('models.items.create'))
+             ->dontSee('Oops!')
+             ->seePageIs(route('items.show', 2))
+             ->seeInDatabase('items', [
+                 'item_type_id'    => 1,
+                 'maker_id'        => 1,
+                 'sub_category_id' => 1
+             ]);
     }
 
     /**
@@ -54,6 +77,6 @@ class ItemIntegrationTest extends AbstractUserIntegration
         factory(Item::class)->create();
         factory(ItemType::class, 2)->create();
         factory(Maker::class, 2)->create();
-        factory(SubCategory::class, 2)->create();
+        factory(SubCategory::class, 4)->create();
     }
 }

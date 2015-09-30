@@ -114,7 +114,7 @@ $factory->define(PCI\Models\Petition::class, function () use ($faker) {
 $factory->define(PCI\Models\SubCategory::class, function () use ($faker) {
     return [
         'desc'        => $faker->text(40),
-        'category_id' => 1,
+        'category_id' => factory(\PCI\Models\Category::class)->create()->id,
     ];
 });
 
