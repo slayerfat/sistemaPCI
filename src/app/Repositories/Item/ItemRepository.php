@@ -100,7 +100,12 @@ class ItemRepository extends AbstractRepository implements ItemRepositoryInterfa
      */
     public function update($id, array $data)
     {
-        // TODO: Implement update() method.
+        $item = $this->getById($id);
+
+        $item->fill($data);
+        $item->save();
+
+        return $item;
     }
 
     /**

@@ -1,8 +1,8 @@
 <?php namespace PCI\Http\Controllers\Item;
 
-use Illuminate\Http\Request;
 use Illuminate\View\Factory as View;
 use PCI\Http\Controllers\Controller;
+use PCI\Http\Controllers\Traits\CheckDestroyStatusTrait;
 use PCI\Http\Requests;
 use PCI\Http\Requests\Item\ItemRequest;
 use PCI\Models\ItemType;
@@ -18,6 +18,8 @@ use Redirect;
  */
 class ItemsController extends Controller
 {
+
+    use CheckDestroyStatusTrait;
 
     /**
      * La implementacion del repositorio de items.
@@ -103,18 +105,30 @@ class ItemsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $item = $this->repo->find($id);
+
+        // TODO: repositorio de este asunto
+        $subCats   = $this->repo->getSubCatsLists();
+        $makers    = Maker::lists('desc', 'id');
+        $itemTypes = ItemType::lists('desc', 'id');
+
+        return $this->view->make(
+            'items.edit',
+            compact('item', 'subCats', 'makers', 'itemTypes')
+        );
     }
 
     /**
      * Update the specified resource in storage.
-     * @param  \Illuminate\Http\Request $request
      * @param  int $id
+     * @param \PCI\Http\Requests\Item\ItemRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update($id, ItemRequest $request)
     {
-        //
+        $item = $this->repo->update($id, $request->all());
+
+        return Redirect::route('items.show', $item->id);
     }
 
     /**
@@ -124,6 +138,8 @@ class ItemsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $results = $this->repo->delete($id);
+
+        return $this->checkDestroyStatus($results, 'items');
     }
 }

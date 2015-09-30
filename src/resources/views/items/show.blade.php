@@ -7,7 +7,7 @@
 
             @include(
                 'partials.buttons.edit-delete',
-                ['resource' => 'depots', 'id' => $item->id]
+                ['resource' => 'items', 'id' => $item->id]
             )
         </h1>
     </div>

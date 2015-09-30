@@ -58,6 +58,49 @@ class ItemIntegrationTest extends AbstractUserIntegration
              ]);
     }
 
+    public function testShowItemHasLinkToEditIt()
+    {
+        $this->actingAs($this->user)
+             ->visit(route('items.show', 1))
+             ->seePageIs(route('items.show', 1))
+             ->see('Editar')
+             ->see('Eliminar')
+             ->click('Editar')
+             ->seePageIs(route('items.edit', 1));
+    }
+
+    public function testEditItemsShouldPersistAndRedirect()
+    {
+        $item = factory(Item::class)->create();
+
+        $this->actingAs($this->user)
+             ->visit(route('items.edit', $item->id))
+             ->seePageIs(route('items.edit', $item->id))
+             ->select('1', 'item_type_id')
+             ->select('1', 'maker_id')
+             ->select('1', 'sub_category_id')
+             ->type('random item', 'desc')
+             ->type('1', 'stock')
+             ->type('1', 'minimum')
+             ->see(trans('models.items.edit'))
+             ->press(trans('models.items.edit'))
+             ->seePageIs(route('items.show', $item->id))
+             ->seeInDatabase('items', [
+                 'item_type_id'    => 1,
+                 'maker_id'        => 1,
+                 'sub_category_id' => 1
+             ]);
+    }
+
+    public function testDeleteDepotShouldRedirectToItemsIndex()
+    {
+        $this->withoutMiddleware()
+             ->delete(route('items.destroy', 1))
+             ->assertResponseStatus(302); //302 redirect
+
+        $this->notSeeInDatabase('items', ['id' => 1]);
+    }
+
     /**
      * @return \PCI\Models\User
      */
