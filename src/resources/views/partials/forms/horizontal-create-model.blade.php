@@ -1,5 +1,14 @@
 <div class="container">
-    {!! BSForm::horizontalModel($model, ['route' => "{$resource}.store"]) !!}
+    {!!
+
+    BSForm::horizontalModel(
+        $model,
+        [
+            'route' => isset($route) ? $route : "{$resource}.store"
+        ]
+    )
+
+    !!}
 
     <legend>{{trans("models.{$resource}.create")}}</legend>
 
