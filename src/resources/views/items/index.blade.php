@@ -4,7 +4,7 @@
 
     @include('partials.genericTable', [
         'data' => $items,
-        'title' => trans('models.depots.plural'),
+        'title' => trans('models.items.plural'),
         'delete' => false
     ])
 

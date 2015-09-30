@@ -31,6 +31,7 @@ class ItemIntegrationTest extends AbstractUserIntegration
              ->see(trans('models.items.plural'))
              ->visit(route('items.index'))
              ->seePageIs(route('items.index'))
+            ->see(trans('models.items.plural'))
              ->see(trans('models.items.create'))
              ->click(trans('models.items.create'))
              ->seePageIs(route('items.create'));
