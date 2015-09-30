@@ -99,7 +99,10 @@ return [
         'image'            => 'Imagen',
         'phone'            => 'Teléfono',
         'birth_date'       => 'Fecha de nacimiento',
-        'rack'  => 'Anaquel',
-        'shelf' => 'Alacena',
+        'rack'     => 'Anaquel',
+        'shelf'    => 'Alacena',
+        'asoc'     => 'Asociación',
+        'priority' => 'Prioridad',
+        'minimum'  => 'Mínimo',
     ],
 ];
