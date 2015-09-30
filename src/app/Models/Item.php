@@ -59,14 +59,18 @@ class Item extends AbstractBaseModel implements SluggableInterface
 
     /**
      * The attributes that are mass assignable.
+     * fabricante, y demas es ok.
      * @var array
      */
     protected $fillable = [
+        'maker_id',
+        'sub_category_id',
+        'item_type_id',
         'asoc',
         'priority',
         'desc',
         'stock',
-        'minimun',
+        'minimum',
         'due',
     ];
 
