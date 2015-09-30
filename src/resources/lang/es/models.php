@@ -4,16 +4,16 @@ return [
     /**
      * Almacen
      */
-    'depots.index'          => 'Ver Almacenes',
-    'depots.show'           => 'Ver Almacen',
-    'depots.create'         => 'Crear Almacen',
-    'depots.edit'           => 'Editar Almacen',
-    'depots.destroy'        => 'Eliminar Almacen',
-    'depots.plural'         => 'Almacenes',
-    'depots.singular'       => 'Almacen',
-    'depots.fa-icon'        => 'bars',
-    'depots.store.success'  => 'Almacen creada exitosamente.',
-    'depots.update.success' => 'Almacen actualizada exitosamente.',
+    'depots.index'               => 'Ver Almacenes',
+    'depots.show'                => 'Ver Almacen',
+    'depots.create'              => 'Crear Almacen',
+    'depots.edit'                => 'Editar Almacen',
+    'depots.destroy'             => 'Eliminar Almacen',
+    'depots.plural'              => 'Almacenes',
+    'depots.singular'            => 'Almacen',
+    'depots.fa-icon'             => 'bars',
+    'depots.store.success'       => 'Almacen creada exitosamente.',
+    'depots.update.success'      => 'Almacen actualizada exitosamente.',
     /**
      * Categoria
      */
@@ -27,7 +27,6 @@ return [
     'cats.fa-icon'                 => 'th-large',
     'cats.store.success'           => 'Categoria creada exitosamente.',
     'cats.update.success'          => 'Categoria actualizada exitosamente.',
-
     /**
      * Rubro
      */
@@ -41,7 +40,6 @@ return [
     'subCats.fa-icon'              => 'th',
     'subCats.store.success'        => 'Rubro creado exitosamente.',
     'subCats.update.success'       => 'Rubro actualizado exitosamente.',
-
     /**
      * Departamento
      */
@@ -55,21 +53,19 @@ return [
     'depts.fa-icon'                => 'puzzle-piece',
     'depts.store.success'          => 'Departamento creado exitosamente.',
     'depts.update.success'         => 'Departamento actualizado exitosamente.',
-
     /**
      * Direccion
      */
-    'addresses.index'          => 'Ver Direcciones',
-    'addresses.show'           => 'Ver Dirección',
-    'addresses.create'         => 'Crear Dirección',
-    'addresses.edit'           => 'Editar Dirección',
-    'addresses.destroy'        => 'Eliminar Dirección',
-    'addresses.plural'         => 'Direcciones',
-    'addresses.singular'       => 'Dirección',
-    'addresses.fa-icon'        => 'map-marker',
-    'addresses.store.success'  => 'Dirección creada exitosamente.',
-    'addresses.update.success' => 'Dirección actualizada exitosamente.',
-
+    'addresses.index'            => 'Ver Direcciones',
+    'addresses.show'             => 'Ver Dirección',
+    'addresses.create'           => 'Crear Dirección',
+    'addresses.edit'             => 'Editar Dirección',
+    'addresses.destroy'          => 'Eliminar Dirección',
+    'addresses.plural'           => 'Direcciones',
+    'addresses.singular'         => 'Dirección',
+    'addresses.fa-icon'          => 'map-marker',
+    'addresses.store.success'    => 'Dirección creada exitosamente.',
+    'addresses.update.success'   => 'Dirección actualizada exitosamente.',
     /**
      * Fabricante
      */
@@ -83,7 +79,6 @@ return [
     'makers.fa-icon'               => 'industry',
     'makers.store.success'         => 'Fabricante creado exitosamente.',
     'makers.update.success'        => 'Fabricante actualizado exitosamente.',
-
     /**
      * Genero
      */
@@ -97,7 +92,6 @@ return [
     'genders.fa-icon'              => 'venus-mars',
     'genders.store.success'        => 'Genero creado exitosamente.',
     'genders.update.success'       => 'Genero actualizado exitosamente.',
-
     /**
      * Nacionalidad
      */
@@ -111,7 +105,6 @@ return [
     'nats.fa-icon'                 => 'flag-o',
     'nats.store.success'           => 'Nacionalidad creada exitosamente.',
     'nats.update.success'          => 'Nacionalidad actualizada exitosamente.',
-
     /**
      * Tipo de Movimiento
      */
@@ -125,7 +118,6 @@ return [
     'movementTypes.fa-icon'        => 'angle-double-right',
     'movementTypes.store.success'  => 'Tipo de Movimiento creado exitosamente.',
     'movementTypes.update.success' => 'Tipo de Movimiento actualizado exitosamente.',
-
     /**
      * Tipos de Item
      */
@@ -139,7 +131,6 @@ return [
     'itemTypes.fa-icon'            => 'random',
     'itemTypes.store.success'      => 'Tipo de Item creado exitosamente.',
     'itemTypes.update.success'     => 'Tipo de Item actualizado exitosamente.',
-
     /**
      * Tipos de Nota
      */
@@ -153,7 +144,6 @@ return [
     'noteTypes.fa-icon'            => 'envelope-o',
     'noteTypes.store.success'      => 'Tipo de Nota creada exitosamente.',
     'noteTypes.update.success'     => 'Tipo de Nota actualizada exitosamente.',
-
     /**
      * Tipos de Pedido
      */
@@ -167,7 +157,6 @@ return [
     'petitionTypes.fa-icon'        => 'hand-scissors-o',
     'petitionTypes.store.success'  => 'Tipo de Pedido creado exitosamente.',
     'petitionTypes.update.success' => 'Tipo de Pedido actualizado exitosamente.',
-
     /**
      * Perfil
      */
@@ -181,7 +170,6 @@ return [
     'profiles.fa-icon'             => 'user-md',
     'profiles.store.success'       => 'Perfil creado exitosamente.',
     'profiles.update.success'      => 'Perfil actualizado exitosamente.',
-
     /**
      * Item
      */
@@ -192,10 +180,9 @@ return [
     'items.destroy'                => 'Eliminar Item',
     'items.plural'                 => 'Items',
     'items.singular'               => 'Item',
-    'items.fa-icon'         => 'cubes',
+    'items.fa-icon'              => 'cubes',
     'items.store.success'          => 'Item creado exitosamente.',
     'items.update.success'         => 'Item actualizado exitosamente.',
-
     /**
      * Nota
      */
@@ -209,7 +196,6 @@ return [
     'notes.fa-icon'                => 'envelope',
     'notes.store.success'          => 'Nota creada exitosamente.',
     'notes.update.success'         => 'Nota actualizada exitosamente.',
-
     /**
      * Usuario
      */
@@ -223,7 +209,6 @@ return [
     'users.fa-icon'                => 'users',
     'users.store.success'          => 'Cuenta creada exitosamente.',
     'users.update.success'         => 'Cuenta actualizada exitosamente.',
-
     /**
      * Employee (informacion personal)
      */
@@ -237,7 +222,6 @@ return [
     'employees.fa-icon'            => 'info',
     'employees.store.success'      => 'Información Personal creada exitosamente.',
     'employees.update.success'     => 'Información Personal actualizada exitosamente.',
-
     /**
      * Pedidos
      */
