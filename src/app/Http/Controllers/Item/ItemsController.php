@@ -4,6 +4,9 @@ use Illuminate\Http\Request;
 use Illuminate\View\Factory as View;
 use PCI\Http\Controllers\Controller;
 use PCI\Http\Requests;
+use PCI\Models\ItemType;
+use PCI\Models\Maker;
+use PCI\Models\SubCategory;
 use PCI\Repositories\Interfaces\Item\ItemRepositoryInterface;
 
 /**
@@ -55,7 +58,17 @@ class ItemsController extends Controller
      */
     public function create()
     {
-        //
+        $item = $this->repo->newInstance();
+
+        // TODO: repositorio de este asunto
+        $subCats   = SubCategory::lists('desc', 'id');
+        $makers    = Maker::lists('desc', 'id');
+        $itemTypes = ItemType::lists('desc', 'id');
+
+        return $this->view->make(
+            'items.create',
+            compact('item', 'subCats', 'makers', 'itemTypes')
+        );
     }
 
     /**
