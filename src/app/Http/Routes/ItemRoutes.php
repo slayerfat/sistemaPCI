@@ -25,6 +25,17 @@ class ItemRoutes extends AbstractPciRoutes
                 'resource' => '{depots}'
             ]
         ],
+        [
+            'routerOptions' => [
+                'prefix'     => 'items',
+                'middleware' => 'auth',
+            ],
+            'rtDetails'     => [
+                'uses'     => 'Item\ItemsController',
+                'as'       => 'items',
+                'resource' => '{items}'
+            ]
+        ],
     ];
 
     /**

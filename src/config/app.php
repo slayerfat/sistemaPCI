@@ -13,8 +13,7 @@ return [
     |
     */
 
-    'debug' => env('APP_DEBUG', false),
-
+    'debug'     => env('APP_DEBUG', false),
     /*
     |--------------------------------------------------------------------------
     | Application URL
@@ -26,8 +25,7 @@ return [
     |
     */
 
-    'url' => 'http://localhost',
-
+    'url'       => 'http://localhost',
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
@@ -39,8 +37,7 @@ return [
     |
     */
 
-    'timezone' => 'America/Caracas',
-
+    'timezone'  => 'America/Caracas',
     /*
     |--------------------------------------------------------------------------
     | Application Locale Configuration
@@ -52,8 +49,7 @@ return [
     |
     */
 
-    'locale' => 'es',
-
+    'locale'    => 'es',
     /*
     |--------------------------------------------------------------------------
     | Application Fallback Locale
@@ -66,7 +62,6 @@ return [
     */
 
     'fallback_locale' => 'en',
-
     /*
     |--------------------------------------------------------------------------
     | Encryption Key
@@ -78,10 +73,8 @@ return [
     |
     */
 
-    'key' => env('APP_KEY', 'another32CharactersLongStringYep'),
-
-    'cipher' => 'AES-256-CBC',
-
+    'key'       => env('APP_KEY', 'another32CharactersLongStringYep'),
+    'cipher'    => 'AES-256-CBC',
     /*
     |--------------------------------------------------------------------------
     | Logging Configuration
@@ -95,8 +88,7 @@ return [
     |
     */
 
-    'log' => 'daily',
-
+    'log'       => 'daily',
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
@@ -136,7 +128,6 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-
         /**
          * Vendor
          */
@@ -148,7 +139,6 @@ return [
         Bootstrapper\BootstrapperL5ServiceProvider::class,
         Jenssegers\Date\DateServiceProvider::class,
         Cviebrock\EloquentSluggable\SluggableServiceProvider::class,
-
         /*
          * Application Service Providers...
          */
@@ -173,12 +163,12 @@ return [
         PCI\Providers\Aux\SubCategoryRepositoryProvider::class,
         PCI\Providers\Aux\TypesRepositoriesProvider::class,
         PCI\Providers\Item\DepotRepositoryProvider::class,
+        PCI\Providers\Item\ItemRepositoryProvider::class,
         PCI\Providers\User\AddressRepositoryProvider::class,
         PCI\Providers\User\EmployeeRepositoryProvider::class,
         PCI\Providers\User\UsersRepositoriesServiceProvider::class,
         PCI\Providers\User\WorkDetailRepositoryProvider::class,
     ],
-
     /*
     |--------------------------------------------------------------------------
     | Class Aliases
@@ -190,7 +180,7 @@ return [
     |
     */
 
-    'aliases' => [
+    'aliases'   => [
 
         'Caimaneitor' => PCI\Mamarrachismo\Caimaneitor\Facades\Caimaneitor::class,
         'App'         => Illuminate\Support\Facades\App::class,
@@ -226,16 +216,14 @@ return [
         'URL'         => Illuminate\Support\Facades\URL::class,
         'Validator'   => Illuminate\Support\Facades\Validator::class,
         'View'        => Illuminate\Support\Facades\View::class,
-
         /**
          * Vendor
          */
-        'Date'  => Jenssegers\Date\Date::class,
-        'Flash' => Laracasts\Flash\Flash::class,
-        'Form'  => Collective\Html\FormFacade::class,
-        'Html'  => Collective\Html\HtmlFacade::class,
-        'SEO'   => Artesaos\SEOTools\Facades\SEOTools::class,
-
+        'Date'        => Jenssegers\Date\Date::class,
+        'Flash'       => Laracasts\Flash\Flash::class,
+        'Form'        => Collective\Html\FormFacade::class,
+        'Html'        => Collective\Html\HtmlFacade::class,
+        'SEO'         => Artesaos\SEOTools\Facades\SEOTools::class,
         /**
          * Bootstrapper
          */
