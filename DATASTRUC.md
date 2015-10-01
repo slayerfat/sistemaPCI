@@ -4,6 +4,14 @@ En este documento se pretende mantener la bitacora de cambios significativos en 
 
 ## v0.3.1
 
+Tipo de cantidad añadido.
+
+10 kilos.
+10 paquetes.
+10 toneladas.
+10 latas.
+10 etc.
+
 ### TL;DR
 
 *campo fecha de vencimento* se movio de ITEM a item_movimiento.
