@@ -2,6 +2,27 @@
 
 En este documento se pretende mantener la bitacora de cambios significativos en la estructura de datos del sistema.
 
+## v0.3.2
+
+Cantidad transladado de Item a la clase de asociacion almacen-item.
+
+Entonces, el stock o cantidad del Item seria la sumatoria de las catidades relacionadas con el item en los distintos anaqueles.
+
+```php
+class Item extends ElPitoYLaGuacharaca
+{
+    // ...
+    public function stock()
+    {
+        // $x = cantidades en el almacen del item tal
+        return sum($x);
+    }
+    // ...
+}
+```
+
+Soluciona https://github.com/slayerfat/sistemaPCI/issues/35
+
 ## v0.3.1
 
 Tipo de cantidad añadido.

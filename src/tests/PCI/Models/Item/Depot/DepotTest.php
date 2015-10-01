@@ -25,11 +25,19 @@ class DepotTest extends AbstractTestCase
 
     public function testItems()
     {
-        $this->mockBasicModelRelation(
-            Depot::class,
-            'items',
-            'belongsToMany',
-            Item::class
-        );
+        // v0.3.2
+        $mock = Mockery::mock(Depot::class)->makePartial();
+
+        $mock->shouldReceive('belongsToMany')
+             ->once()
+             ->with(Item::class)
+             ->andReturnSelf();
+
+        $mock->shouldReceive('withPivot')
+             ->once()
+             ->with('quantity')
+             ->andReturn('mocked');
+
+        $this->assertEquals('mocked', $mock->items());
     }
 }

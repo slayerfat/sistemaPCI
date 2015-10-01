@@ -69,7 +69,6 @@ class Item extends AbstractBaseModel implements SluggableInterface
         'asoc',
         'priority',
         'desc',
-        'stock',
         'minimum',
         'due',
     ];
@@ -134,11 +133,13 @@ class Item extends AbstractBaseModel implements SluggableInterface
 
     /**
      * Regresa una coleccion de almacenes en donde este item puede estar.
+     * @see v0.3.2 #35
+     * @link https://github.com/slayerfat/sistemaPCI/issues/35
      * @return Collection
      */
     public function depots()
     {
-        return $this->belongsToMany(Depot::class);
+        return $this->belongsToMany(Depot::class)->withPivot('quantity');
     }
 
     /**
