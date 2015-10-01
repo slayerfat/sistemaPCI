@@ -69,7 +69,6 @@ $factory->define(PCI\Models\Item::class, function () use ($faker) {
         'asoc'            => $faker->randomElement(['a', 'b', 'c']),
         'priority'        => rand(1, 100),
         'desc'            => $faker->sentence,
-        'stock'           => rand(0, 10000),
         'minimum'         => rand(0, 10000),
     ];
 });
