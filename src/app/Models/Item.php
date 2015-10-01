@@ -123,7 +123,9 @@ class Item extends AbstractBaseModel implements SluggableInterface
      */
     public function type()
     {
-        return $this->belongsTo(ItemType::class);
+        // otra vez por alguna razon el item type id
+        // no queria ser reconocido, investigar.
+        return $this->belongsTo(ItemType::class, 'item_type_id');
     }
 
     // -------------------------------------------------------------------------
