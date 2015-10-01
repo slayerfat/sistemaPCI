@@ -183,4 +183,13 @@ class Item extends AbstractBaseModel implements SluggableInterface
     {
         return $this->belongsToMany(Note::class)->withPivot('quantity');
     }
+
+    /**
+     * Regresa el porcentaje entre el stock y el stock minimo.
+     * @return float
+     */
+    public function percentageStock()
+    {
+        return ceil(($this->stock * 100) / $this->minimum);
+    }
 }

@@ -40,10 +40,15 @@
                     </p>
                 </div>
             </div>
+
+            <hr/>
+
+            @include('items.partials.stock-progressbar', ['title' => 'Stock'])
         </div>
 
         <div class="col-sm-4">
             <h1>Ultimos Movimientos</h1>
+            <?php //TODO: movimientos en vista de item ?>
         </div>
     </div>
 @stop
