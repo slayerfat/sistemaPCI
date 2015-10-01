@@ -57,4 +57,17 @@
             <?php //TODO: movimientos en vista de item ?>
         </div>
     </div>
+
+    <div class="container">
+        <div class="col-xs-8">
+            @include('items.partials.depots')
+        </div>
+
+        <div class="col-xs-4">
+            <section class="item-historial well">
+                <h1>historial</h1>
+                <?php //TODO: historial items ?>
+            </section>
+        </div>
+    </div>
 @stop
