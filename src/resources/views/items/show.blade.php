@@ -17,7 +17,9 @@
             <hr/>
 
             <h2>
-                En {!!link_to_route('subCats.show', $item->subCategory->desc, $item->subCategory->slug)!!}</h2>
+                En
+                {!!link_to_route('subCats.show', $item->subCategory->desc, $item->subCategory->slug)!!}
+            </h2>
 
             <div class="row">
                 <div class="col-xs-6">
@@ -44,6 +46,10 @@
             <hr/>
 
             @include('items.partials.stock-progressbar', ['title' => 'Stock'])
+
+            <hr/>
+
+            @include('items.partials.abc')
         </div>
 
         <div class="col-sm-4">

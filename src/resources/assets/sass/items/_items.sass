@@ -1,0 +1,49 @@
+.item-asoc
+  @include make-row()
+  font-size: 5em
+  color: white
+
+  // div estandar de bootstrap
+  div
+    @include make-xs-column(4)
+
+  // como css es retarded necesitamos
+  // decirle a cada hijo como se desea el padding.
+  div:first-child
+    padding-right: 0
+
+  div:nth-child(2)
+    padding-left: 0
+    padding-right: 0
+
+  div:last-child
+    padding-left: 0
+
+  // como css es retarded se especifica block
+  // para que llene su container.
+  span
+    display: block
+
+.item-asoc-a,
+.item-asoc-A
+  background-color: $brand-primary
+
+.item-asoc-a-disabled,
+.item-asoc-A-disabled
+  background-color: lighten($brand-primary, 25%)
+
+.item-asoc-b,
+.item-asoc-B
+  background-color: $brand-warning
+
+.item-asoc-b-disabled,
+.item-asoc-B-disabled
+  background-color: lighten($brand-warning, 25%)
+
+.item-asoc-c,
+.item-asoc-C
+  background-color: $brand-success
+
+.item-asoc-c-disabled,
+.item-asoc-C-disabled
+  background-color: lighten($brand-success, 25%)

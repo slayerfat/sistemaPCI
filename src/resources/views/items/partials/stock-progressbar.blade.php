@@ -1,4 +1,4 @@
-<div>
+<section class="item-stock">
     <h2>{{$title or null}}</h2>
 
     <?php
@@ -21,4 +21,17 @@
     }
     ?>
     {!!ProgressBar::$type($value)->visible($visible)->animated()!!}
-</div>
+
+    <h3>
+        <small>
+            {{$item->stock}}
+            <?php //TODO: a espera de tipo de unidades ?>
+            en existencia.
+
+            @if(auth()->user()->isAdmin())
+                {{$item->minimum <= 1 ?
+                    'Stock minimo no asignado.' : "La existencia minima es $item->minimum."}}
+            @endif
+        </small>
+    </h3>
+</section>
