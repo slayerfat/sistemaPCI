@@ -36,7 +36,6 @@ class Movement extends AbstractBaseModel
 
     /**
      * The attributes that are mass assignable.
-     *
      * @var array
      */
     protected $fillable = ['creation'];
@@ -46,7 +45,6 @@ class Movement extends AbstractBaseModel
      * dates se refiere a Carbon\Carbon dates.
      * En otras palabras, genera una instancia
      * de Carbon\Carbon para cada campo.
-     *
      * @var array
      */
     protected $dates = ['creation'];
@@ -86,6 +84,7 @@ class Movement extends AbstractBaseModel
      */
     public function items()
     {
-        return $this->belongsToMany(Item::class)->withPivot('quantity');
+        return $this->belongsToMany(Item::class)
+                    ->withPivot('quantity', 'due');
     }
 }

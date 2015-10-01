@@ -25,7 +25,6 @@ abstract class AbstractBaseModel extends Eloquent
      * en el modelo, por defecto es un array
      * con  'build_from' => 'desc',
      *      'save_to'    => 'slug',
-     *
      * @var Array
      */
     protected $sluggable;
@@ -57,7 +56,7 @@ abstract class AbstractBaseModel extends Eloquent
         } elseif (is_null($id) && ($env == 'local' || $env == 'testing')) {
             Log::critical(
                 __CLASS__ . ' no pudo encontrar en '
-                .__METHOD__ . ' ID para la manipulacion.'
+                . __METHOD__ . ' ID para la manipulacion.'
             );
 
             $id = 1;

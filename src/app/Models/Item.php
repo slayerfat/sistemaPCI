@@ -59,15 +59,18 @@ class Item extends AbstractBaseModel implements SluggableInterface
 
     /**
      * The attributes that are mass assignable.
-     *
+     * fabricante, y demas es ok.
      * @var array
      */
     protected $fillable = [
+        'maker_id',
+        'sub_category_id',
+        'item_type_id',
         'asoc',
         'priority',
         'desc',
         'stock',
-        'minimun',
+        'minimum',
         'due',
     ];
 
@@ -85,7 +88,6 @@ class Item extends AbstractBaseModel implements SluggableInterface
      * dates se refiere a Carbon\Carbon dates.
      * En otras palabras, genera una instancia
      * de Carbon\Carbon para cada campo.
-     *
      * @var array
      */
     protected $dates = ['due'];
@@ -121,7 +123,9 @@ class Item extends AbstractBaseModel implements SluggableInterface
      */
     public function type()
     {
-        return $this->belongsTo(ItemType::class);
+        // otra vez por alguna razon el item type id
+        // no queria ser reconocido, investigar.
+        return $this->belongsTo(ItemType::class, 'item_type_id');
     }
 
     // -------------------------------------------------------------------------
@@ -167,7 +171,8 @@ class Item extends AbstractBaseModel implements SluggableInterface
      */
     public function movements()
     {
-        return $this->belongsToMany(Movement::class)->withPivot('quantity');
+        return $this->belongsToMany(Movement::class)
+                    ->withPivot('quantity', 'due');
     }
 
     /**
@@ -177,5 +182,14 @@ class Item extends AbstractBaseModel implements SluggableInterface
     public function notes()
     {
         return $this->belongsToMany(Note::class)->withPivot('quantity');
+    }
+
+    /**
+     * Regresa el porcentaje entre el stock y el stock minimo.
+     * @return float
+     */
+    public function percentageStock()
+    {
+        return ceil(($this->stock * 100) / $this->minimum);
     }
 }

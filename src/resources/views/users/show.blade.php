@@ -29,6 +29,7 @@
             {{-- pedidos --}}
             <div class="col-sm-4">
                 <h1>Ultimos Pedidos</h1>
+                <?php //TODO: pedidos de usuarios en vista de usuarios ?>
             </div>
         </div>
     </div>

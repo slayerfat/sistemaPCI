@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
 class CreateItemMovementTable extends Migration
 {
@@ -18,6 +18,7 @@ class CreateItemMovementTable extends Migration
             $table->unsignedInteger('movement_id');
             $table->foreign('movement_id')->references('id')->on('movements');
             $table->unsignedInteger('quantity');
+            $table->date('due')->nullable();
         });
     }
 

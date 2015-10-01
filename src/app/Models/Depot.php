@@ -30,13 +30,13 @@ use Illuminate\Database\Eloquent\Collection;
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Depot whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Depot whereCreatedBy($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Depot whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Depot whereNumber($value)
  */
 class Depot extends AbstractBaseModel
 {
 
     /**
      * The attributes that are mass assignable.
-     *
      * @var array
      */
     protected $fillable = [

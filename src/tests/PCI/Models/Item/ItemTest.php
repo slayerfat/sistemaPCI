@@ -36,12 +36,14 @@ class ItemTest extends AbstractTestCase
 
     public function testType()
     {
-        $this->mockBasicModelRelation(
-            Item::class,
-            'type',
-            'belongsTo',
-            ItemType::class
-        );
+        $model = Mockery::mock(Item::class)->makePartial();
+
+        $model->shouldReceive('belongsTo')
+              ->once()
+              ->with(ItemType::class, 'item_type_id')
+              ->andReturn('mocked');
+
+        $this->assertEquals('mocked', $model->type());
     }
 
     public function testDepots()
@@ -98,7 +100,7 @@ class ItemTest extends AbstractTestCase
 
         $mock->shouldReceive('withPivot')
             ->once()
-            ->with('quantity')
+            ->with('quantity', 'due')
             ->andReturn('mocked');
 
         $this->assertEquals('mocked', $mock->movements());

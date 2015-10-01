@@ -2,6 +2,65 @@
 
 En este documento se pretende mantener la bitacora de cambios significativos en la estructura de datos del sistema.
 
+## v0.3.1
+
+Tipo de cantidad añadido.
+
+10 kilos.
+10 paquetes.
+10 toneladas.
+10 latas.
+10 etc.
+
+### TL;DR
+
+*campo fecha de vencimento* se movio de ITEM a item_movimiento.
+
+### Por que?
+
+Los items no deberian tener fecha de vencimiento como atributo, debido a que estos varian segun el bache de llegada, ejemplo:
+
+registramos item:
+
+id  | desc  | rubro_id | ... |fecha_vencimiento|
+--- | ----- | -------- | --- | --------------- |
+ 1  | arepa | 1        | ... | 10-11-7999      |
+
+suponiendo: si entran 10 toneladas de arepas, que vencen en 1 mes y lo registro hoy, mañana registro que entran 2 toneladas de arepas que vencen en 1 semana, donde escribo la fecha de vencimiento?
+
+considerando fecha por movimiento, entonces:
+
+Movimiento:
+
+id  | tipo_id | nota_id  | ... |fecha_vencimiento| este item vence? |
+--- | ------- | -------- | --- | --------------- | ---------------- |
+ 1  | 1       | 1        | ... | 10-11-7999      | sip.             |
+ 2  | 1       | 2        | ... | null            | no vence         |
+ 
+**PERO ESO NO SIRVE PORQUE LOS ITEMS PERCIBEN MUCHOS MOVIMIENTOS!**
+
+entonces:
+
+Movimiento:
+
+id  | tipo_id | nota_id  | ... |
+--- | ------- | -------- | --- |
+ 1  | 1       | 1        | ... |
+ 2  | 1       | 2        | ... |
+ 
+Item-Movimiento:
+
+id  | item_id | mov_id   | cantidad | fecha_vencimiento |
+--- | ------- | -------- | -------- | ----------------- |
+ 1  | 1       | 1        | 10000    | 10-11-7999        |
+ 2  | 1       | 2        | 2000     | 15-16-7999        |
+
+Item:
+
+id  | desc  | rubro_id | ... |fecha_vencimiento|
+--- | ----- | -------- | --- | --------------- |
+ 1  | arepa | 1        | ... | se elimina      |
+ 
 ## v0.2.7
 
 Almacen necesita el numero de almacen (actualmente no lo tiene)

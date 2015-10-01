@@ -3,13 +3,9 @@
 @section('content')
     @include('partials.errors')
 
-    <div class="container">
-        {!! BSForm::horizontalModel($employee, ['route' => ['employees.store', $user->name]]) !!}
-
-        <legend>{{trans('models.employees.create')}}</legend>
-
-        @include('employees.partials.form', ['btnMsg' => trans('models.employees.create')])
-
-        {!! BSForm::close() !!}
-    </div>
+    @include('partials.forms.horizontal-create-model', [
+        'model'    => $employee,
+        'resource' => 'employees',
+        'route'    => ['employees.store', $user->name]
+    ])
 @stop

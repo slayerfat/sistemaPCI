@@ -2,7 +2,7 @@
 
 namespace PCI\Models;
 
-/** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
+    /** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
 
 /**
  * PCI\Models\WorkDetail
@@ -35,6 +35,7 @@ namespace PCI\Models;
  */
 class WorkDetail extends AbstractBaseModel
 {
+
     /**
      * The attributes that are mass assignable.
      * el caso de departamento y cargo, no hay problema.
@@ -52,7 +53,6 @@ class WorkDetail extends AbstractBaseModel
      * dates se refiere a Carbon\Carbon dates.
      * En otras palabras, genera una instancia
      * de Carbon\Carbon para cada campo.
-     *
      * @var array
      */
     protected $dates = ['join_date', 'departure_date'];

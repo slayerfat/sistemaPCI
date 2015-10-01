@@ -41,7 +41,6 @@ class Petition extends AbstractBaseModel
 
     /**
      * The attributes that are mass assignable.
-     *
      * @var array
      */
     protected $fillable = [
@@ -55,7 +54,6 @@ class Petition extends AbstractBaseModel
      * dates se refiere a Carbon\Carbon dates.
      * En otras palabras, genera una instancia
      * de Carbon\Carbon para cada campo.
-     *
      * @var array
      */
     protected $dates = ['request_date'];
