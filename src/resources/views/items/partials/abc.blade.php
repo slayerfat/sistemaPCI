@@ -17,6 +17,6 @@
     <hr/>
 
     <section class="item-priority">
-        {!!ProgressBar::normal($item->priority)->value('Prioridad de ')!!}
+        {!!ProgressBar::normal($item->priority)->visible('Prioridad de %s%%')!!}
     </section>
 @endif
