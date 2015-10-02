@@ -61,6 +61,12 @@
     <div class="container">
         <div class="col-xs-8">
             @include('items.partials.depots')
+
+            @include('partials.admins.show-basic-audit', [
+                'model'    => $item,
+                'created'  => trans('models.items.singular') . ' creado',
+                'updated'  => trans('models.items.singular') . ' actualizado',
+            ])
         </div>
 
         <div class="col-xs-4">

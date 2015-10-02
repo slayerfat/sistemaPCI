@@ -6,7 +6,7 @@
         {{$model->created_at->diffForHumans()}}
         <small>
             por
-            <a href="{{route("{$resource}.show", $model->createdBy()->name)}}">
+            <a href="{{route("users.show", $model->createdBy()->name)}}">
                 {{$model->createdBy()->name}}
             </a>
         </small>
@@ -17,7 +17,7 @@
         {{$model->created_at->diffForHumans()}}
         <small>
             por
-            <a href="{{route("{$resource}.show", $model->updatedBy()->name)}}">
+            <a href="{{route("users.show", $model->updatedBy()->name)}}">
                 {{$model->updatedBy()->name}}
             </a>
         </small>
