@@ -11,7 +11,7 @@ use PCI\Models\Petition;
 use PCI\Models\SubCategory;
 use Tests\AbstractTestCase;
 
-class ItemTest extends AbstractTestCase
+class ItemRelationsTest extends AbstractTestCase
 {
 
     public function testSubCategory()
