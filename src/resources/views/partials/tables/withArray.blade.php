@@ -18,10 +18,10 @@ if (isset($total) && isset($data)) {
                    <td colspan=\"2\"><strong>$total</strong></td>
                </td>";
     } else {
-        $col = 0;
-
         $footer = '';
     }
+} elseif (!isset($total)) {
+    $footer = '';
 }
 ?>
 
