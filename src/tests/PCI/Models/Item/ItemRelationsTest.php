@@ -11,7 +11,7 @@ use PCI\Models\Petition;
 use PCI\Models\SubCategory;
 use Tests\AbstractTestCase;
 
-class ItemTest extends AbstractTestCase
+class ItemRelationsTest extends AbstractTestCase
 {
 
     public function testSubCategory()
@@ -48,12 +48,20 @@ class ItemTest extends AbstractTestCase
 
     public function testDepots()
     {
-        $this->mockBasicModelRelation(
-            Item::class,
-            'depots',
-            'belongsToMany',
-            Depot::class
-        );
+        // v0.3.2
+        $mock = Mockery::mock(Item::class)->makePartial();
+
+        $mock->shouldReceive('belongsToMany')
+             ->once()
+             ->with(Depot::class)
+             ->andReturnSelf();
+
+        $mock->shouldReceive('withPivot')
+             ->once()
+             ->with('quantity')
+             ->andReturn('mocked');
+
+        $this->assertEquals('mocked', $mock->depots());
     }
 
     public function testDependsOn()

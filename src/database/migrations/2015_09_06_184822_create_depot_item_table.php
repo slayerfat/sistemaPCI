@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
 class CreateDepotItemTable extends Migration
 {
@@ -21,6 +21,7 @@ class CreateDepotItemTable extends Migration
             $table->foreign('item_id')
                 ->references('id')
                 ->on('items');
+            $table->unsignedInteger('quantity'); // v0.3.2 #35
         });
     }
 

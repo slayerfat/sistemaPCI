@@ -102,6 +102,12 @@ class ItemSeeder extends AbstractSeeder
             $this->command->info("Uniendo Movimiento (id) {$movement->id} con Item (id) 1: cantidad: {$number}");
 
             $movement->items()->attach(1, ['quantity' => $number]);
+
+            $item = $movement->items->first();
+
+            $this->command->info("Uniendo Almacen (id) 1, con Item (id) 1: cantidad: {$number}");
+
+            $item->depots()->attach(1, ['quantity' => $number]);
         });
     }
 
