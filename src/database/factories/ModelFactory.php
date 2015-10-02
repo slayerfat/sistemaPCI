@@ -73,6 +73,16 @@ $factory->define(PCI\Models\Item::class, function () use ($faker) {
     ];
 });
 
+$factory->defineAs(PCI\Models\Item::class, 'full', function () use ($factory) {
+    $item = $factory->raw(PCI\Models\Item::class);
+
+    return array_merge($item, [
+        'sub_category_id' => factory(PCI\Models\SubCategory::class)->create()->id,
+        'maker_id'        => factory(PCI\Models\Maker::class)->create()->id,
+        'item_type_id'    => factory(PCI\Models\ItemType::class)->create()->id,
+    ]);
+});
+
 $factory->define(PCI\Models\Movement::class, function () use ($faker) {
     return [
         'movement_type_id' => 1,
