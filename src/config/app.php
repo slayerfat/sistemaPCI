@@ -159,6 +159,7 @@ return [
         PCI\Providers\Aux\CategoryRepositoryProvider::class,
         PCI\Providers\Aux\EmployeeRepositoriesProvider::class,
         PCI\Providers\Aux\MakerRepositoriesProvider::class,
+        PCI\Providers\Aux\PositionRepositoryProvider::class,
         PCI\Providers\Aux\ProfileRepositoryProvider::class,
         PCI\Providers\Aux\SubCategoryRepositoryProvider::class,
         PCI\Providers\Aux\TypesRepositoriesProvider::class,

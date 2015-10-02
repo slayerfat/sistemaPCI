@@ -24,7 +24,7 @@ return [
     'positions.destroy'        => 'Eliminar Cargo',
     'positions.plural'         => 'Cargos',
     'positions.singular'       => 'Cargo',
-    'positions.fa-icon'        => 'bars',
+    'positions.fa-icon' => 'briefcase',
     'positions.store.success'  => 'Cargo creado exitosamente.',
     'positions.update.success' => 'Cargo actualizado exitosamente.',
     /**
