@@ -8,8 +8,8 @@ if (!isset($delete)) {
 
 if (isset($total) && isset($data)) {
     // se determina el col con el tamaño del array
-    // mas 1 por el callback (acciones)
-    $col = count($data);
+    // -2 por el uid
+    $col = count($data[0]) - 2;
 
     // el HTML del footer
     $footer = "<tr>
