@@ -1,7 +1,7 @@
 <?php namespace PCI\Database;
 
-use DB;
 use Config;
+use DB;
 
 class DatabaseSeeder extends AbstractTableSeeder
 {
@@ -12,7 +12,7 @@ class DatabaseSeeder extends AbstractTableSeeder
      */
     public function run()
     {
-        $this->command->info("*** Empezando Migracion! ***");
+        $this->command->info("*** Empezando Seeding! ***");
 
         $this->toggleModelGuard();
 
@@ -27,7 +27,7 @@ class DatabaseSeeder extends AbstractTableSeeder
 
         $this->toggleModelGuard();
 
-        $this->command->info("*** Migracion terminada! ***");
+        $this->command->info("*** Seeding terminado! ***");
     }
 
     /**
