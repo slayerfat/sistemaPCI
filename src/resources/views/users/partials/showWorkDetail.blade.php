@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-xs-6">
                 <h4>
-                    Cargo:
+                    {{trans('models.positions.singular')}}:
                 </h4>
 
                 <p>
@@ -13,7 +13,7 @@
 
             <div class="col-xs-6">
                 <h4>
-                    Departamento:
+                    {{trans('models.depts.singular')}}:
                 </h4>
 
                 <p>
@@ -29,8 +29,7 @@
                 <h4>
                     Fecha de ingreso:
 
-                    {{$user->employee->workDetails->join_date->diffForHumans()}}
-                    .
+                    {{$user->employee->workDetails->join_date->diffForHumans() . '.'}}
 
                     <br/>
 
@@ -42,8 +41,7 @@
                 <h4>
                     Fecha de egreso:
 
-                    {{$user->employee->workDetails->departure_date->diffForHumans()}}
-                    .
+                    {{$user->employee->workDetails->departure_date->diffForHumans() . '.'}}
 
                     <br/>
 

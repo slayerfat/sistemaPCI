@@ -15,6 +15,19 @@ return [
     'depots.store.success'       => 'Almacen creada exitosamente.',
     'depots.update.success'      => 'Almacen actualizada exitosamente.',
     /**
+     * Cargo
+     */
+    'positions.index'          => 'Ver Cargos',
+    'positions.show'           => 'Ver Cargo',
+    'positions.create'         => 'Crear Cargo',
+    'positions.edit'           => 'Editar Cargo',
+    'positions.destroy'        => 'Eliminar Cargo',
+    'positions.plural'         => 'Cargos',
+    'positions.singular'       => 'Cargo',
+    'positions.fa-icon'        => 'bars',
+    'positions.store.success'  => 'Cargo creado exitosamente.',
+    'positions.update.success' => 'Cargo actualizado exitosamente.',
+    /**
      * Categoria
      */
     'cats.index'                   => 'Ver Categorias',
