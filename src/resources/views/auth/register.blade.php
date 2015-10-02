@@ -6,7 +6,7 @@
     <div class="container">
         {!! BSForm::horizontal() !!}
 
-        <legend>Registrarse en {!! trans('defaults.appName') !!}</legend>
+        <legend>Registro en el {!! trans('defaults.appName') !!}</legend>
 
         {!!
 
@@ -52,7 +52,7 @@
 
         !!}
 
-        {!! Button::primary('Registrarse en el sistemaPCI')->block()->submit() !!}
+        {!! Button::primary('Registro en el ' . trans('defaults.appName'))->block()->submit() !!}
 
         {!! BSForm::close() !!}
     </div>

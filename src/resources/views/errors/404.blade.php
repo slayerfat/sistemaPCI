@@ -39,7 +39,7 @@
     <body>
         <div class="container">
             <div class="content">
-                <div class="title">404 Pagina no encontrada.</div>
+                <div class="title">Error 404: Pagina no encontrada.</div>
             </div>
         </div>
     </body>

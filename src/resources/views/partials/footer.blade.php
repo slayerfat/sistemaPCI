@@ -5,9 +5,9 @@
 
     <p class="footer-enlaces">
         <a href="/">Inicio</a>
-        <a href="#">Items</a>
-        <a href="#">Solicitudes</a>
-        <a href="#">Notas</a>
+        <a href="#">{{trans('models.petitions.plural')}}</a>
+        <a href="#">{{trans('models.notes.plural')}}</a>
+        <a href="{{route('items.index')}}">{{trans('models.items.plural')}}</a>
     </p>
 
     <p class="footer-centered-text footer-authors">

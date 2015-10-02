@@ -3,7 +3,8 @@
 @section('content')
     <div class="container">
         <h1>
-            Almacen {{$depot->number}}
+            {{trans('models.depts.singular')}}
+            {{$depot->number}}
 
             @include(
                 'partials.buttons.edit-delete',

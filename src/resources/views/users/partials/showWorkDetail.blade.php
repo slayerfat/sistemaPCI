@@ -25,7 +25,7 @@
 
             <hr/>
 
-        @if(Auth::user()->isAdmin())
+            @if(Auth::user()->isAdmin())
                 <h4>
                     Fecha de ingreso:
 
