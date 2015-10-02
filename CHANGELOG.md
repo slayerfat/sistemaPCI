@@ -4,7 +4,14 @@ Todos los cambios significatiovos en este proyecto estaran documentados en este 
 
 ## [En Desarrollo][unrele]
 
-Cantidad de item en almacen, Tipo de Cantidad.
+### Añadido
+
+- Tipo de Cantidad.
+- Parciales adicionales, ver resources/partials
+
+### Cambiado
+
+- Stock de Item a depot-item.
 
 ## [v0.3.1] - 2015-10-01
 
