@@ -22,6 +22,11 @@ class CreateItemsTable extends Migration
             $table->foreign('maker_id')
                 ->references('id')
                 ->on('makers');
+            // stock esperado/por defecto
+            $table->unsignedInteger('stock_type_id');
+            $table->foreign('stock_type_id')
+                  ->references('id')
+                  ->on('stock_types');
             $table->unsignedInteger('sub_category_id');
             $table->foreign('sub_category_id')
                 ->references('id')
@@ -30,7 +35,7 @@ class CreateItemsTable extends Migration
             $table->unsignedInteger('priority')->nullable(); // 1-100%
             $table->string('desc')->index();
             $table->string('slug')->index();
-            $table->unsignedInteger('minimum');
+            $table->unsignedInteger('minimum'); // stock minimo
             $table->timestamps();
             $table->unsignedInteger('created_by');
             $table->foreign('created_by')->references('id')->on('users');

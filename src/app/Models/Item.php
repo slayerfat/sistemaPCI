@@ -66,6 +66,7 @@ class Item extends AbstractBaseModel implements SluggableInterface
         'maker_id',
         'sub_category_id',
         'item_type_id',
+        'stock_type_id',
         'asoc',
         'priority',
         'desc',
@@ -112,37 +113,16 @@ class Item extends AbstractBaseModel implements SluggableInterface
     // -------------------------------------------------------------------------
 
     /**
-     * Regresa el rubro asociado al item.
-     * @return SubCategory
+     * Busca en la base de datos y regresa la sumatoria
+     * de los movimientos del item en los almacenes.
+     * @return int
      */
-    public function subCategory()
+    public function stock()
     {
-        return $this->belongsTo(SubCategory::class);
+        return $this->attributes['stock'] = $this->depots()
+                                                 ->withPivot('quantity')
+                                                 ->sum('quantity');
     }
-
-    /**
-     * regresa el fabricante asociado.
-     * @return Maker
-     */
-    public function maker()
-    {
-        return $this->belongsTo(Maker::class);
-    }
-
-    /**
-     * Regresa el tipo de item.
-     * @return ItemType
-     */
-    public function type()
-    {
-        // otra vez por alguna razon el item type id
-        // no queria ser reconocido, investigar.
-        return $this->belongsTo(ItemType::class, 'item_type_id');
-    }
-
-    // -------------------------------------------------------------------------
-    // Belongs to many
-    // -------------------------------------------------------------------------
 
     /**
      * Regresa una coleccion de almacenes en donde este item puede estar.
@@ -152,7 +132,49 @@ class Item extends AbstractBaseModel implements SluggableInterface
      */
     public function depots()
     {
-        return $this->belongsToMany(Depot::class)->withPivot('quantity');
+        return $this->belongsToMany('PCI\Models\Depot')->withPivot('quantity');
+    }
+
+    /**
+     * Regresa el rubro asociado al item.
+     * @return SubCategory
+     */
+    public function subCategory()
+    {
+        return $this->belongsTo('PCI\Models\SubCategory');
+    }
+
+    /**
+     * regresa el fabricante asociado.
+     * @return Maker
+     */
+    public function maker()
+    {
+        return $this->belongsTo('PCI\Models\Maker');
+    }
+
+    // -------------------------------------------------------------------------
+    // Belongs to many
+    // -------------------------------------------------------------------------
+
+    /**
+     * Regresa el tipo de item.
+     * @return ItemType
+     */
+    public function type()
+    {
+        // otra vez por alguna razon el item type id
+        // no queria ser reconocido, investigar.
+        return $this->belongsTo('PCI\Models\ItemType', 'item_type_id');
+    }
+
+    /**
+     * Regresa el tipo de item.
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function stockType()
+    {
+        return $this->belongsTo('PCI\Models\StockType', 'item_type_id');
     }
 
     /**
@@ -176,7 +198,7 @@ class Item extends AbstractBaseModel implements SluggableInterface
      */
     public function petitions()
     {
-        return $this->belongsToMany(Petition::class)->withPivot('quantity');
+        return $this->belongsToMany('PCI\Models\Petition')->withPivot('quantity');
     }
 
     /**
@@ -185,7 +207,7 @@ class Item extends AbstractBaseModel implements SluggableInterface
      */
     public function movements()
     {
-        return $this->belongsToMany(Movement::class)
+        return $this->belongsToMany('PCI\Models\Movement')
                     ->withPivot('quantity', 'due');
     }
 
@@ -195,7 +217,7 @@ class Item extends AbstractBaseModel implements SluggableInterface
      */
     public function notes()
     {
-        return $this->belongsToMany(Note::class)->withPivot('quantity');
+        return $this->belongsToMany('PCI\Models\Note')->withPivot('quantity');
     }
 
     /**
@@ -205,17 +227,5 @@ class Item extends AbstractBaseModel implements SluggableInterface
     public function percentageStock()
     {
         return ceil(($this->stock * 100) / $this->minimum);
-    }
-
-    /**
-     * Busca en la base de datos y regresa la sumatoria
-     * de los movimientos del item en los almacenes.
-     * @return int
-     */
-    public function stock()
-    {
-        return $this->attributes['stock'] = $this->depots()
-            ->withPivot('quantity')
-            ->sum('quantity');
     }
 }

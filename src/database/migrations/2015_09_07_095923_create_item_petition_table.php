@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
 class CreateItemPetitionTable extends Migration
 {
@@ -18,6 +18,11 @@ class CreateItemPetitionTable extends Migration
             $table->unsignedInteger('petition_id');
             $table->foreign('petition_id')->references('id')->on('petitions');
             $table->unsignedInteger('quantity');
+            // tipo de cantidad
+            $table->unsignedInteger('stock_type_id');
+            $table->foreign('stock_type_id')
+                  ->references('id')
+                  ->on('stock_types');
         });
     }
 
