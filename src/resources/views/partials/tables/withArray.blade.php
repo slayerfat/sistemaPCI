@@ -9,13 +9,19 @@ if (!isset($delete)) {
 if (isset($total) && isset($data)) {
     // se determina el col con el tamaño del array
     // -2 por el uid
-    $col = count($data[0]) - 2;
+    if (count($data) > 0) {
+        $col = count($data[0]) - 2;
 
-    // el HTML del footer
-    $footer = "<tr>
+        // el HTML del footer
+        $footer = "<tr>
                    <td colspan=\"$col\"><strong>Total</strong></td>
                    <td colspan=\"2\"><strong>$total</strong></td>
                </td>";
+    } else {
+        $col = 0;
+
+        $footer = '';
+    }
 }
 ?>
 

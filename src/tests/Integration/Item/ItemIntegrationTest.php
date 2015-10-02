@@ -7,6 +7,7 @@
  * Considerando cambiar nombre de la clase de
  * AbstractUserIntegration -> AbstractGeneralIntegration o algo similar.
  */
+use PCI\Models\Depot;
 use PCI\Models\Item;
 use PCI\Models\ItemType;
 use PCI\Models\Maker;
@@ -23,6 +24,23 @@ use Tests\Integration\User\AbstractUserIntegration;
  */
 class ItemIntegrationTest extends AbstractUserIntegration
 {
+
+    public function testShowItemDisplaysCorrectInfo()
+    {
+        $item = factory(Item::class, 'full')->create(['minimum' => 60]);
+
+        $depots = factory(Depot::class, 3)->create();
+
+        foreach ($depots as $depot) {
+            $item->depots()->attach($depot->id, ['quantity' => 234]);
+        }
+
+        $this->actingAs($this->user)
+             ->visit(route('items.show', $item->id))
+             ->seePageIs(route('items.show', $item->id))
+             ->see('702')// 234 * 3 eh
+             ->see($item->desc);
+    }
 
     public function testCanSeeAndVisitItemsIndex()
     {
