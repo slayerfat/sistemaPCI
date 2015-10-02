@@ -92,6 +92,19 @@ class Item extends AbstractBaseModel implements SluggableInterface
     protected $dates = ['due'];
 
     // -------------------------------------------------------------------------
+    // Accessors
+    // -------------------------------------------------------------------------
+    /**
+     * Regresa el stock (cantidad total) en
+     * el inventario de este item.
+     * @return int
+     */
+    public function getStockAttribute()
+    {
+        return $this->stock();
+    }
+
+    // -------------------------------------------------------------------------
     // Relaciones
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
@@ -135,7 +148,7 @@ class Item extends AbstractBaseModel implements SluggableInterface
      * Regresa una coleccion de almacenes en donde este item puede estar.
      * @see v0.3.2 #35
      * @link https://github.com/slayerfat/sistemaPCI/issues/35
-     * @return Collection
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function depots()
     {
@@ -192,5 +205,17 @@ class Item extends AbstractBaseModel implements SluggableInterface
     public function percentageStock()
     {
         return ceil(($this->stock * 100) / $this->minimum);
+    }
+
+    /**
+     * Busca en la base de datos y regresa la sumatoria
+     * de los movimientos del item en los almacenes.
+     * @return int
+     */
+    public function stock()
+    {
+        return $this->attributes['stock'] = $this->depots()
+            ->withPivot('quantity')
+            ->sum('quantity');
     }
 }

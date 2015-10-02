@@ -5,12 +5,24 @@ if (!isset($edit)) {
 if (!isset($delete)) {
     $delete = false;
 }
+
+if (isset($total) && isset($data)) {
+    // se determina el col con el tamaño del array
+    // mas 1 por el callback (acciones)
+    $col = count($data);
+
+    // el HTML del footer
+    $footer = "<tr>
+                   <td colspan=\"$col\"><strong>Total</strong></td>
+                   <td colspan=\"2\"><strong>$total</strong></td>
+               </td>";
+}
 ?>
 
 <h1>{{$title}}</h1>
 
 {!!
-Table::withContents($data)
+Table::withContents($data)->withFooter($footer)
     ->ignore(['uid'])
     ->callback('Acciones', function ($id, $row) use ($resource, $edit, $delete) {
         $showButton = Button::link()
@@ -56,5 +68,6 @@ Table::withContents($data)
         }
 
         return  $buttons;
-})
+    })
+    ->striped()
 !!}

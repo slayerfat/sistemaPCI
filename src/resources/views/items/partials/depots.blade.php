@@ -8,7 +8,7 @@ foreach ($item->depots as $depot) {
         'Almacen'  => $depot->number,
         'Anaquel'  => $depot->rack,
         'Alacena'  => $depot->shelf,
-        'Cantidad' => $depot->pivot, //FIXME a espera de #35 en github
+        'Cantidad' => $depot->pivot->quantity,
     ];
 }
 
@@ -19,7 +19,8 @@ foreach ($item->depots as $depot) {
 @include('partials.tables.withArray', [
     'data' => $array,
     'title' => 'Existencias en los Almacenes',
-    'resource' => 'depots'
+    'resource' => 'depots',
+    'total' => $item->stock
 ])
 
 
