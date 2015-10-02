@@ -48,31 +48,12 @@
             </h3>
         @endif
 
-            <hr/>
-
-        @if(Auth::user()->isAdmin())
-            <h4>
-                Usuario creado
-                {{$user->created_at->diffForHumans()}}
-                <small>
-                    por
-                    <a href="{{route('users.show', $user->createdBy()->name)}}">
-                        {{$user->createdBy()->name}}
-                    </a>
-                </small>
-            </h4>
-
-            <h4>
-                Usuario actualizado
-                {{$user->created_at->diffForHumans()}}
-                <small>
-                    por
-                    <a href="{{route('users.show', $user->updatedBy()->name)}}">
-                        {{$user->updatedBy()->name}}
-                    </a>
-                </small>
-            </h4>
-        @endif
+            @include('partials.admins.show-basic-audit', [
+                'model' => $user,
+                'resource' => 'users',
+                'created' => trans('models.users.singular') . ' creada',
+                'updated' => trans('models.users.singular') . ' actualizada'
+            ])
     @endif
 </section>
 @endif
