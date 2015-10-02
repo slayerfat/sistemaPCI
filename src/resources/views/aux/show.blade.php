@@ -27,6 +27,12 @@
                 @if($variables->hasParent())
                     <h2>{{$variables->getParent()->count()}}</h2>
                 @endif
+
+                @include('partials.admins.show-basic-audit', [
+                    'model'    => $variables->getModel(),
+                    'created'  => trans("models.{$variables->getResource()}.singular") . ' creado',
+                    'updated'  => trans("models.{$variables->getResource()}.singular") . ' actualizado',
+                ])
             </div>
         </div>
     </div>
