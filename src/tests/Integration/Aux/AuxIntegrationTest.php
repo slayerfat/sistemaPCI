@@ -9,6 +9,7 @@ use PCI\Models\MovementType;
 use PCI\Models\Nationality;
 use PCI\Models\NoteType;
 use PCI\Models\PetitionType;
+use PCI\Models\Position;
 
 class AuxIntegrationTest extends AbstractAuxIntegration
 {
@@ -48,6 +49,11 @@ class AuxIntegrationTest extends AbstractAuxIntegration
             ],
             'test_8_petitionTypes' => [
                 'tipos-pedido', 'petitionTypes', PetitionType::class
+            ],
+            'test_9_positions'     => [
+                'cargos',
+                'positions',
+                Position::class
             ],
         ];
     }
