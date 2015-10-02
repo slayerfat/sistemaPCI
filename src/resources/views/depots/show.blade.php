@@ -3,8 +3,7 @@
 @section('content')
     <div class="container">
         <h1>
-            {{trans('models.depts.singular')}}
-            {{$depot->number}}
+            {{trans('models.depots.singular')}} {{$depot->number}}
 
             @include(
                 'partials.buttons.edit-delete',
