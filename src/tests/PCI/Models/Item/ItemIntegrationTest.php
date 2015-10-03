@@ -4,6 +4,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use PCI\Models\Depot;
 use PCI\Models\Item;
+use PCI\Models\StockType;
 use Tests\AbstractTestCase;
 
 class ItemIntegrationTest extends AbstractTestCase
@@ -36,12 +37,46 @@ class ItemIntegrationTest extends AbstractTestCase
         $depots = factory(Depot::class, 3)->create();
 
         foreach ($depots as $depot) {
-            $this->item->depots()->attach($depot->id, ['quantity'      => 10,
-                                                       'stock_type_id' => 1
+            $this->item->depots()->attach($depot->id, [
+                'quantity'      => 10,
+                'stock_type_id' => 1
             ]);
         }
 
         $this->assertEquals(30, $this->item->stock);
         $this->assertEquals(50, $this->item->percentageStock());
+    }
+
+    public function testFormattedStockShouldReturnValidNumbers()
+    {
+        $depots     = factory(Depot::class, 3)->create();
+        $type       = StockType::first();
+        $type->desc = 'Unidad';
+        $type->save();
+
+        foreach ($depots as $depot) {
+            $this->item->depots()->attach($depot->id, [
+                'quantity'      => 12,
+                'stock_type_id' => 1
+            ]);
+        }
+
+        $this->assertEquals('36 Unidades', $this->item->formattedStock());
+
+        foreach ($depots as $depot) {
+            $this->item->depots()->detach($depot->id);
+        }
+
+        $this->assertEquals('0 Unidades', $this->item->formattedStock());
+
+        $this->item->depots()->attach(
+            $depots->first()->id,
+            [
+                'quantity'      => 1,
+                'stock_type_id' => 1
+            ]
+        );
+
+        $this->assertEquals('1 Unidad', $this->item->formattedStock());
     }
 }

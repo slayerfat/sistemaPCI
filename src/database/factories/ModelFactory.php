@@ -81,6 +81,7 @@ $factory->defineAs(PCI\Models\Item::class, 'full', function () use ($factory) {
         'sub_category_id' => factory(PCI\Models\SubCategory::class)->create()->id,
         'maker_id'        => factory(PCI\Models\Maker::class)->create()->id,
         'item_type_id'    => factory(PCI\Models\ItemType::class)->create()->id,
+        'stock_type_id' => factory(PCI\Models\StockType::class)->create()->id,
     ]);
 });
 

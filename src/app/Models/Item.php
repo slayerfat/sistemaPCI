@@ -2,6 +2,7 @@
 
 use Cviebrock\EloquentSluggable\SluggableInterface;
 use Cviebrock\EloquentSluggable\SluggableTrait;
+use ICanBoogie\Inflector;
 
 /** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
 
@@ -24,7 +25,7 @@ use Cviebrock\EloquentSluggable\SluggableTrait;
  * @property \Carbon\Carbon $updated_at
  * @property integer $created_by
  * @property integer $updated_by
- * @property-read mixed $stock
+ * @property-read int $stock
  * @property-read \Illuminate\Database\Eloquent\Collection|\PCI\Models\Depot[] $depots
  * @property-read \PCI\Models\SubCategory $subCategory
  * @property-read \PCI\Models\Maker $maker
@@ -210,5 +211,24 @@ class Item extends AbstractBaseModel implements SluggableInterface
     public function percentageStock()
     {
         return ceil(($this->stock * 100) / $this->minimum);
+    }
+
+    /**
+     * Regresa la cantidad o stock existente del
+     * item en formato legible para el usuario.
+     * @return string si el item tiene 1, entonces 1 Unidad.
+     */
+    public function formattedStock()
+    {
+        $stock = $this->stock();
+
+        // como usualmente se dice cero unidades,
+        // entonces tambien se pluraliza.
+        if ($stock === 0 || $stock > 1) {
+            return $stock . ' ' . Inflector::get('es')
+                                           ->pluralize($this->stockType->desc);
+        }
+
+        return $stock . ' ' . $this->stockType->desc;
     }
 }
