@@ -10,6 +10,7 @@ use PCI\Models\Nationality;
 use PCI\Models\NoteType;
 use PCI\Models\PetitionType;
 use PCI\Models\Position;
+use PCI\Models\StockType;
 
 class AuxIntegrationTest extends AbstractAuxIntegration
 {
@@ -24,36 +25,59 @@ class AuxIntegrationTest extends AbstractAuxIntegration
     {
         return [
             'test_0_cats'          => [
-                'categorias', 'cats', Category::class
+                'categorias',
+                'cats',
+                Category::class
             ],
             'test_1_depts'         => [
-                'departamentos', 'depts', Department::class
+                'departamentos',
+                'depts',
+                Department::class
             ],
             'test_2_genders'       => [
-                'generos', 'genders', Gender::class
+                'generos',
+                'genders',
+                Gender::class
             ],
             'test_3_itemTypes'     => [
-                'tipos-item', 'itemTypes', ItemType::class
+                'tipos-item',
+                'itemTypes',
+                ItemType::class
             ],
             'test_4_makers'        => [
-                'fabricantes', 'makers', Maker::class
+                'fabricantes',
+                'makers',
+                Maker::class
             ],
             'test_5_movementTypes' => [
-                'tipos-movimiento', 'movementTypes', MovementType::class
+                'tipos-movimiento',
+                'movementTypes',
+                MovementType::class
             ],
             'test_6_nats'          => [
-                'nacionalidades', 'nats', Nationality::class
+                'nacionalidades',
+                'nats',
+                Nationality::class
             ],
             'test_7_noteTypes'     => [
-                'tipos-nota', 'noteTypes', NoteType::class
+                'tipos-nota',
+                'noteTypes',
+                NoteType::class
             ],
             'test_8_petitionTypes' => [
-                'tipos-pedido', 'petitionTypes', PetitionType::class
+                'tipos-pedido',
+                'petitionTypes',
+                PetitionType::class
             ],
             'test_9_positions'     => [
                 'cargos',
                 'positions',
                 Position::class
+            ],
+            'test_10_positions'    => [
+                'tipos-cantidad',
+                'stockTypes',
+                StockType::class
             ],
         ];
     }
