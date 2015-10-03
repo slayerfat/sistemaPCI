@@ -92,9 +92,6 @@ class Item extends AbstractBaseModel implements SluggableInterface
      */
     protected $dates = ['due'];
 
-    // -------------------------------------------------------------------------
-    // Accessors
-    // -------------------------------------------------------------------------
     /**
      * Regresa el stock (cantidad total) en
      * el inventario de este item.
@@ -104,13 +101,6 @@ class Item extends AbstractBaseModel implements SluggableInterface
     {
         return $this->stock();
     }
-
-    // -------------------------------------------------------------------------
-    // Relaciones
-    // -------------------------------------------------------------------------
-    // -------------------------------------------------------------------------
-    // Belongs to 1..* -> 1
-    // -------------------------------------------------------------------------
 
     /**
      * Busca en la base de datos y regresa la sumatoria
@@ -152,10 +142,6 @@ class Item extends AbstractBaseModel implements SluggableInterface
     {
         return $this->belongsTo('PCI\Models\Maker');
     }
-
-    // -------------------------------------------------------------------------
-    // Belongs to many
-    // -------------------------------------------------------------------------
 
     /**
      * Regresa el tipo de item.
