@@ -7,6 +7,12 @@ use PCI\Models\Movement;
 use PCI\Models\Note;
 use PCI\Models\Petition;
 
+/**
+ * Class ItemSeeder
+ * @package PCI\Database
+ * @author Alejandro Granadillo <slayerfat@gmail.com>
+ * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
+ */
 class ItemSeeder extends AbstractSeeder
 {
 
