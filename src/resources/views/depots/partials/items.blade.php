@@ -4,10 +4,15 @@
     $array = [];
 
     foreach ($depot->items as $item) {
+        // super mamarracho.
+        $number = $item->pivot->quantity;
+
+        $quantity = $item->formattedQuantity($number);
+
         $array[] = [
             'uid'         => $item->id,
             'Descripción' => $item->desc,
-            'Cantidad'    => $item->pivot->quantity,
+            'Cantidad' => $quantity,
         ];
     }
 

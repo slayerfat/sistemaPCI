@@ -222,13 +222,24 @@ class Item extends AbstractBaseModel implements SluggableInterface
     {
         $stock = $this->stock();
 
+        return $this->formattedQuantity($stock);
+    }
+
+    /**
+     * Genera un string con el tipo de cantidad en plural o singular.
+     * Solucion mamarracha.
+     * @param int $number
+     * @return string si el item tiene 1, entonces 1 Unidad.
+     */
+    public function formattedQuantity($number)
+    {
         // como usualmente se dice cero unidades,
         // entonces tambien se pluraliza.
-        if ($stock === 0 || $stock > 1) {
-            return $stock . ' ' . Inflector::get('es')
-                                           ->pluralize($this->stockType->desc);
+        if ($number == 1) {
+            return $number . ' ' . $this->stockType->desc;
         }
 
-        return $stock . ' ' . $this->stockType->desc;
+        return $number . ' ' . Inflector::get('es')
+                                        ->pluralize($this->stockType->desc);
     }
 }

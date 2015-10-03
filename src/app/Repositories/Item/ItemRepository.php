@@ -146,7 +146,7 @@ class ItemRepository extends AbstractRepository implements ItemRepositoryInterfa
         return [
             'uid'         => $model->id,
             'Descripción' => $model->desc,
-            'Stock'       => $model->stock,
+            'Stock' => $model->formattedStock(),
             'Rubro'       => $model->subCategory->desc,
             'Fabricante'  => $model->maker->desc,
         ];

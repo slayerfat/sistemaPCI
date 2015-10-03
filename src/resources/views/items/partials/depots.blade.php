@@ -20,7 +20,7 @@ foreach ($item->depots as $depot) {
     'data' => $array,
     'title' => 'Existencias en los Almacenes',
     'resource' => 'depots',
-    'total' => $item->stock
+    'total' => $item->formattedStock()
 ])
 
 
