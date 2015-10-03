@@ -5,6 +5,6 @@
 
     @include('partials.forms.horizontal-edit-model', [
         'model'    => $petition,
-        'resource' => 'depots'
+        'resource' => 'petitions'
     ])
 @stop

@@ -6,7 +6,9 @@ use Illuminate\View\Factory as View;
 use PCI\Http\Controllers\Controller;
 use PCI\Http\Requests;
 use PCI\Http\Requests\User\PetitionRequest;
+use PCI\Models\PetitionType;
 use PCI\Repositories\Interfaces\User\PetitionRepositoryInterface;
+use Redirect;
 
 class PetitionsController extends Controller
 {
@@ -52,7 +54,11 @@ class PetitionsController extends Controller
      */
     public function create()
     {
-        //
+        $petition = $this->repo->newInstance();
+
+        $types = PetitionType::lists('desc', 'id');
+
+        return $this->view->make('petitions.create', compact('petition', 'types'));
     }
 
     /**
@@ -62,7 +68,9 @@ class PetitionsController extends Controller
      */
     public function store(PetitionRequest $request)
     {
-        //
+        $petition = $this->repo->create($request->all());
+
+        return Redirect::route('petitions.show', $petition->id);
     }
 
     /**

@@ -26,7 +26,7 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
      */
     public function getIndexViewVariables()
     {
-        return new ViewPaginatorVariable($this->getTablePaginator(), 'items');
+        return new ViewPaginatorVariable($this->getTablePaginator(), 'petitions');
     }
 
     /**
@@ -65,7 +65,7 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
      */
     public function find($id)
     {
-        // TODO: Implement find() method.
+        return $this->getById($id);
     }
 
     /**
@@ -97,7 +97,7 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
      */
     public function delete($id)
     {
-        // TODO: Implement delete() method.
+        return $this->delete($id);
     }
 
     /**
