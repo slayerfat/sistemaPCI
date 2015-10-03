@@ -29,4 +29,12 @@ class StockType extends AbstractBaseModel implements SluggableInterface
         'save_to'    => 'slug',
     ];
 
+    /**
+     * Los items que estan asociados a esta entidad.
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function items()
+    {
+        return $this->hasMany('PCI\Models\Item');
+    }
 }
