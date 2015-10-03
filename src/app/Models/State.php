@@ -1,8 +1,4 @@
-<?php
-
-namespace PCI\Models;
-
-use Illuminate\Database\Eloquent\Collection;
+<?php namespace PCI\Models;
 
 /** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
 
@@ -28,16 +24,9 @@ use Illuminate\Database\Eloquent\Collection;
 class State extends AbstractPlacesModel
 {
 
-    // -------------------------------------------------------------------------
-    // Relaciones
-    // -------------------------------------------------------------------------
-    // -------------------------------------------------------------------------
-    // Has Many 1 -> 1..*
-    // -------------------------------------------------------------------------
-
     /**
      * Regresa una coleccion de minucipios asociados.
-     * @return Collection
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
      */
     public function towns()
     {

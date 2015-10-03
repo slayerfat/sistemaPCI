@@ -1,10 +1,7 @@
-<?php
-
-namespace PCI\Models;
+<?php namespace PCI\Models;
 
 use Cviebrock\EloquentSluggable\SluggableInterface;
 use Cviebrock\EloquentSluggable\SluggableTrait;
-use Illuminate\Database\Eloquent\Collection;
 
 /** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
 
@@ -49,16 +46,9 @@ class NoteType extends AbstractBaseModel implements SluggableInterface
         'save_to'    => 'slug',
     ];
 
-    // -------------------------------------------------------------------------
-    // Relaciones
-    // -------------------------------------------------------------------------
-    // -------------------------------------------------------------------------
-    // Has Many 1 -> 1..*
-    // -------------------------------------------------------------------------
-
     /**
      * Regresa una coleccion de notas asociadas.
-     * @return Collection
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
      */
     public function notes()
     {

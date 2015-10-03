@@ -1,8 +1,4 @@
-<?php
-
-namespace PCI\Models;
-
-use Illuminate\Database\Eloquent\Collection;
+<?php namespace PCI\Models;
 
 /** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
 
@@ -51,29 +47,18 @@ class Attendant extends AbstractBaseModel
      */
     protected $dates = ['selection'];
 
-    // -------------------------------------------------------------------------
-    // Relaciones
-    // -------------------------------------------------------------------------
-    // -------------------------------------------------------------------------
-    // belongs to
-    // -------------------------------------------------------------------------
-
     /**
      * Regresa al usuario relacionado.
-     * @return User
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    // -------------------------------------------------------------------------
-    // has Many
-    // -------------------------------------------------------------------------
-
     /**
      * Regresa una coleccion de notas.
-     * @return Collection
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function notes()
     {

@@ -1,10 +1,7 @@
-<?php
-
-namespace PCI\Models;
+<?php namespace PCI\Models;
 
 use Cviebrock\EloquentSluggable\SluggableInterface;
 use Cviebrock\EloquentSluggable\SluggableTrait;
-use Illuminate\Database\Eloquent\Collection;
 
 /** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
 
@@ -16,37 +13,37 @@ use Illuminate\Database\Eloquent\Collection;
  * @property integer $id
  * @property integer $item_type_id
  * @property integer $maker_id
+ * @property integer $stock_type_id
  * @property integer $sub_category_id
  * @property string $asoc
  * @property integer $priority
  * @property string $desc
  * @property string $slug
- * @property integer $stock
  * @property integer $minimum
- * @property \Carbon\Carbon $due
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property integer $created_by
  * @property integer $updated_by
- * @property-read SubCategory $subCategory
- * @property-read Maker $maker
- * @property-read ItemType $type
- * @property-read \Illuminate\Database\Eloquent\Collection|Depot[] $depots
- * @property-read \Illuminate\Database\Eloquent\Collection|\PCI\Models\Item[] $dependsOn
- * @property-read \Illuminate\Database\Eloquent\Collection|Petition[] $petitions
- * @property-read \Illuminate\Database\Eloquent\Collection|Movement[] $movements
- * @property-read \Illuminate\Database\Eloquent\Collection|Note[] $notes
+ * @property-read mixed $stock
+ * @property-read \Illuminate\Database\Eloquent\Collection|\PCI\Models\Depot[] $depots
+ * @property-read \PCI\Models\SubCategory $subCategory
+ * @property-read \PCI\Models\Maker $maker
+ * @property-read \PCI\Models\ItemType $type
+ * @property-read \PCI\Models\StockType $stockType
+ * @property-read \Illuminate\Database\Eloquent\Collection|Item[] $dependsOn
+ * @property-read \Illuminate\Database\Eloquent\Collection|\PCI\Models\Petition[] $petitions
+ * @property-read \Illuminate\Database\Eloquent\Collection|\PCI\Models\Movement[] $movements
+ * @property-read \Illuminate\Database\Eloquent\Collection|\PCI\Models\Note[] $notes
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Item whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Item whereItemTypeId($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Item whereMakerId($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Item whereStockTypeId($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Item whereSubCategoryId($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Item whereAsoc($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Item wherePriority($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Item whereDesc($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Item whereSlug($value)
- * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Item whereStock($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Item whereMinimum($value)
- * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Item whereDue($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Item whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Item whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Item whereCreatedBy($value)
@@ -105,7 +102,7 @@ class Item extends AbstractBaseModel implements SluggableInterface
     /**
      * Busca en la base de datos y regresa la sumatoria
      * de los movimientos del item en los almacenes.
-     * @return int
+     * @return int la suma de las cantidades en los almacenes.
      */
     public function stock()
     {
@@ -127,7 +124,7 @@ class Item extends AbstractBaseModel implements SluggableInterface
 
     /**
      * Regresa el rubro asociado al item.
-     * @return SubCategory
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
     public function subCategory()
     {
@@ -136,7 +133,7 @@ class Item extends AbstractBaseModel implements SluggableInterface
 
     /**
      * regresa el fabricante asociado.
-     * @return Maker
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
     public function maker()
     {
@@ -145,7 +142,7 @@ class Item extends AbstractBaseModel implements SluggableInterface
 
     /**
      * Regresa el tipo de item.
-     * @return ItemType
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
     public function type()
     {
@@ -156,7 +153,7 @@ class Item extends AbstractBaseModel implements SluggableInterface
 
     /**
      * Regresa el tipo de item.
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
     public function stockType()
     {
@@ -166,7 +163,7 @@ class Item extends AbstractBaseModel implements SluggableInterface
     /**
      * Relacion unaria.
      * Regresa los items que dependen de otros items.
-     * @return Collection
+     * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
      */
     public function dependsOn()
     {
@@ -180,7 +177,7 @@ class Item extends AbstractBaseModel implements SluggableInterface
 
     /**
      * Regresa una coleccion de peticiones relacionadas con el item.
-     * @return Collection
+     * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
      */
     public function petitions()
     {
@@ -189,7 +186,7 @@ class Item extends AbstractBaseModel implements SluggableInterface
 
     /**
      * Regresa una coleccion de movimientos relacionadas con el item.
-     * @return Collection
+     * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
      */
     public function movements()
     {
@@ -199,7 +196,7 @@ class Item extends AbstractBaseModel implements SluggableInterface
 
     /**
      * Regresa una coleccion de notas asociadas al item.
-     * @return Collection
+     * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
      */
     public function notes()
     {
