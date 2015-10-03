@@ -135,6 +135,7 @@ class AuxEntitiesSeeder extends AbstractSeeder
 
     /**
      * Arreglo de Entidades secundarias o auxiliares en el sistema.
+     * Esto es independiente de los seeds.
      * @return string[]
      */
     public static function getModels()
@@ -151,6 +152,7 @@ class AuxEntitiesSeeder extends AbstractSeeder
             'PCI\Models\Position',
             'PCI\Models\Profile',
             'PCI\Models\State',
+            'PCI\Models\StockType',
         ];
     }
 

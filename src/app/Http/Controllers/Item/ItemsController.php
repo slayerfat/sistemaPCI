@@ -7,6 +7,7 @@ use PCI\Http\Requests;
 use PCI\Http\Requests\Item\ItemRequest;
 use PCI\Models\ItemType;
 use PCI\Models\Maker;
+use PCI\Models\StockType;
 use PCI\Repositories\Interfaces\Item\ItemRepositoryInterface;
 use Redirect;
 
@@ -67,10 +68,11 @@ class ItemsController extends Controller
         $subCats = $this->repo->getSubCatsLists();
         $makers    = Maker::lists('desc', 'id');
         $itemTypes = ItemType::lists('desc', 'id');
+        $stockTypes = StockType::lists('desc', 'id');
 
         return $this->view->make(
             'items.create',
-            compact('item', 'subCats', 'makers', 'itemTypes')
+            compact('item', 'subCats', 'makers', 'itemTypes', 'stockTypes')
         );
     }
 
@@ -111,10 +113,11 @@ class ItemsController extends Controller
         $subCats   = $this->repo->getSubCatsLists();
         $makers    = Maker::lists('desc', 'id');
         $itemTypes = ItemType::lists('desc', 'id');
+        $stockTypes = StockType::lists('desc', 'id');
 
         return $this->view->make(
             'items.edit',
-            compact('item', 'subCats', 'makers', 'itemTypes')
+            compact('item', 'subCats', 'makers', 'itemTypes', 'stockTypes')
         );
     }
 

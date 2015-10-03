@@ -34,6 +34,17 @@ ControlGroup::generate(
 {!!
 
 ControlGroup::generate(
+    BSForm::label('stock_type_id', 'Tipo de Cantidad'),
+    BSForm::select('stock_type_id', $stockTypes),
+    BSForm::help('El tipo por defecto, necesario para operaciones aritmeticas.'),
+    2
+)
+
+!!}
+
+{!!
+
+ControlGroup::generate(
     BSForm::label('asoc', 'Tipo de Asociacion'),
     BSForm::select('asoc', ['a' => 'A', 'b' => 'B', 'c' => 'C']),
     BSForm::help("Tipo de asociacion de la Metodologia 'ABC'."),
@@ -58,7 +69,7 @@ ControlGroup::generate(
 ControlGroup::generate(
     BSForm::label('desc', 'Nombre o Descripcion'),
     BSForm::text('desc'),
-    BSForm::help('En procentaje.'),
+    BSForm::help('&nbsp;'),
     2
 )
 
