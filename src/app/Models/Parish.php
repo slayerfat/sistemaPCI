@@ -1,8 +1,4 @@
-<?php
-
-namespace PCI\Models;
-
-use Illuminate\Database\Eloquent\Collection;
+<?php namespace PCI\Models;
 
 /** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
 
@@ -31,29 +27,18 @@ use Illuminate\Database\Eloquent\Collection;
 class Parish extends AbstractPlacesModel
 {
 
-    // -------------------------------------------------------------------------
-    // Relaciones
-    // -------------------------------------------------------------------------
-    // -------------------------------------------------------------------------
-    // Belongs To 1..* -> 1
-    // -------------------------------------------------------------------------
-
     /**
      * Regresa el municipio asociado.
-     * @return Town
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function town()
     {
         return $this->belongsTo(Town::class);
     }
 
-    // -------------------------------------------------------------------------
-    // Has Many 1 -> 1..*
-    // -------------------------------------------------------------------------
-
     /**
      * Regresa una coleccion de direcciones asociadaos.
-     * @return Collection
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
      */
     public function addresses()
     {

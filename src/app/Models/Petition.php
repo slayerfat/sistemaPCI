@@ -1,8 +1,4 @@
-<?php
-
-namespace PCI\Models;
-
-use Illuminate\Database\Eloquent\Collection;
+<?php namespace PCI\Models;
 
 /** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
 
@@ -50,24 +46,17 @@ class Petition extends AbstractBaseModel
     ];
 
     /**
-     * Atributos que deben ser mutados a dates.
-     * dates se refiere a Carbon\Carbon dates.
+     * Atributos que deben ser mutados a dates, dates
+     * se refiere a Carbon\Carbon dates.
      * En otras palabras, genera una instancia
      * de Carbon\Carbon para cada campo.
      * @var array
      */
     protected $dates = ['request_date'];
 
-    // -------------------------------------------------------------------------
-    // Relaciones
-    // -------------------------------------------------------------------------
-    // -------------------------------------------------------------------------
-    // belongs to
-    // -------------------------------------------------------------------------
-
     /**
      * Regresa el tipo de pedido asociado.
-     * @return PetitionType
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
     public function type()
     {
@@ -76,33 +65,25 @@ class Petition extends AbstractBaseModel
 
     /**
      * Regresa el usuario asociado al pedido.
-     * @return User
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    // -------------------------------------------------------------------------
-    // belongs to many
-    // -------------------------------------------------------------------------
-
     /**
      * Regresa una coleccion de items asociados.
-     * @return Collection
+     * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
      */
     public function items()
     {
         return $this->belongsToMany(Item::class)->withPivot('quantity');
     }
 
-    // -------------------------------------------------------------------------
-    // has many 1 -> 1..*
-    // -------------------------------------------------------------------------
-
     /**
      * Regresa una coleccion de notas asociadas.
-     * @return Collection
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
      */
     public function notes()
     {

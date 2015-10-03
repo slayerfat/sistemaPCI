@@ -1,8 +1,4 @@
-<?php
-
-namespace PCI\Models;
-
-use Illuminate\Database\Eloquent\Collection;
+<?php namespace PCI\Models;
 
 /** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
 
@@ -20,7 +16,7 @@ use Illuminate\Database\Eloquent\Collection;
  * @property \Carbon\Carbon $updated_at
  * @property integer $created_by
  * @property integer $updated_by
- * @property-read string $formatted_details
+ * @property-read mixed $formatted_details
  * @property-read Parish $parish
  * @property-read Employee $employee
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Address whereId($value)
@@ -119,29 +115,18 @@ class Address extends AbstractBaseModel
         return $this->isAttrValid($attr) ? 'Av. ' . $this->av : null;
     }
 
-    // -------------------------------------------------------------------------
-    // Relaciones
-    // -------------------------------------------------------------------------
-    // -------------------------------------------------------------------------
-    // Belongs To 1..* -> 1
-    // -------------------------------------------------------------------------
-
     /**
      * Regresa la parroquia relacionada.
-     * @return Parish
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function parish()
     {
         return $this->belongsTo(Parish::class);
     }
 
-    // -------------------------------------------------------------------------
-    // hasOne 1 -> 1
-    // -------------------------------------------------------------------------
-
     /**
      * Regresa una coleccion de empleados relacionados.
-     * @return Collection
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function employee()
     {
