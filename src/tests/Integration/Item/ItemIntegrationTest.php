@@ -11,6 +11,7 @@ use PCI\Models\Depot;
 use PCI\Models\Item;
 use PCI\Models\ItemType;
 use PCI\Models\Maker;
+use PCI\Models\StockType;
 use PCI\Models\SubCategory;
 use PCI\Models\User;
 use Tests\Integration\User\AbstractUserIntegration;
@@ -32,7 +33,9 @@ class ItemIntegrationTest extends AbstractUserIntegration
         $depots = factory(Depot::class, 3)->create();
 
         foreach ($depots as $depot) {
-            $item->depots()->attach($depot->id, ['quantity' => 234]);
+            $item->depots()->attach($depot->id, ['quantity'      => 234,
+                                                 'stock_type_id' => 1
+            ]);
         }
 
         $this->actingAs($this->user)
@@ -63,6 +66,7 @@ class ItemIntegrationTest extends AbstractUserIntegration
              ->select('1', 'item_type_id')
              ->select('1', 'maker_id')
              ->select('1', 'sub_category_id')
+            ->select('1', 'stock_type_id')
              ->type('random item', 'desc')
              ->type('1', 'minimum')
              ->see(trans('models.items.create'))
@@ -97,6 +101,7 @@ class ItemIntegrationTest extends AbstractUserIntegration
              ->select('1', 'item_type_id')
              ->select('1', 'maker_id')
              ->select('1', 'sub_category_id')
+            ->select('1', 'stock_type_id')
              ->type('random item', 'desc')
              ->type('1', 'minimum')
              ->see(trans('models.items.edit'))
@@ -138,5 +143,6 @@ class ItemIntegrationTest extends AbstractUserIntegration
         factory(ItemType::class, 2)->create();
         factory(Maker::class, 2)->create();
         factory(SubCategory::class, 4)->create();
+        factory(StockType::class, 4)->create();
     }
 }
