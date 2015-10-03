@@ -145,6 +145,19 @@ return [
     'itemTypes.store.success'      => 'Tipo de Item creado exitosamente.',
     'itemTypes.update.success'     => 'Tipo de Item actualizado exitosamente.',
     /**
+     * Tipos de Cantidad
+     */
+    'stockTypes.index'          => 'Ver Tipos de Cantidad',
+    'stockTypes.show'           => 'Ver Tipo de Cantidad',
+    'stockTypes.create'         => 'Crear Tipo de Cantidad',
+    'stockTypes.edit'           => 'Editar Tipo de Cantidad',
+    'stockTypes.destroy'        => 'Eliminar Tipo de Cantidad',
+    'stockTypes.plural'         => 'Tipos de Cantidad',
+    'stockTypes.singular'       => 'Tipo de Cantidad',
+    'stockTypes.fa-icon'        => 'asterisk',
+    'stockTypes.store.success'  => 'Tipo de Cantidad creado exitosamente.',
+    'stockTypes.update.success' => 'Tipo de Cantidad actualizado exitosamente.',
+    /**
      * Tipos de Nota
      */
     'noteTypes.index'              => 'Ver Tipos de Nota',

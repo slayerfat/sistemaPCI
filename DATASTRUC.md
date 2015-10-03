@@ -2,7 +2,7 @@
 
 En este documento se pretende mantener la bitacora de cambios significativos en la estructura de datos del sistema.
 
-## v0.3.2
+## v0.3.4
 
 Entraron 10 arepas.
 
@@ -14,7 +14,7 @@ usuario hace peticion de 10 guacales de arepas.
 
 Creado en el sistema tipo de stock o cantidad en el sistema, para aliviar y ayudar a la manipulacion aritmetica del asunto.
 
-Tipo de Cantidad esta asociada con: ---
+Tipo de Cantidad esta asociada con: item-pedido, item-movimiento, item-depot, item, item-nota. ver d5dd258
 
 ## v0.3.2
 

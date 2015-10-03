@@ -6,6 +6,12 @@ use PCI\Models\Employee;
 use PCI\Models\User;
 use PCI\Models\WorkDetail;
 
+/**
+ * Class UserRelatedSeeder
+ * @package PCI\Database
+ * @author Alejandro Granadillo <slayerfat@gmail.com>
+ * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
+ */
 class UserRelatedSeeder extends AbstractSeeder
 {
 
@@ -51,6 +57,23 @@ class UserRelatedSeeder extends AbstractSeeder
     }
 
     /**
+     * @return Address
+     */
+    private function seedAdreess()
+    {
+        $this->command->comment('Empezando ' . __METHOD__);
+
+        $address            = factory(Address::class)->make();
+        $address->parish_id = 1;
+
+        $address->save();
+
+        $this->command->info("{$address->av}, {$address->street}.");
+
+        return $address;
+    }
+
+    /**
      * @param User $user
      * @param Address $address
      * @return Employee
@@ -70,23 +93,6 @@ class UserRelatedSeeder extends AbstractSeeder
         $this->command->info("{$employee->first_name}, {$employee->first_surname}.");
 
         return $employee;
-    }
-
-    /**
-     * @return Address
-     */
-    private function seedAdreess()
-    {
-        $this->command->comment('Empezando ' . __METHOD__);
-
-        $address = factory(Address::class)->make();
-        $address->parish_id = 1;
-
-        $address->save();
-
-        $this->command->info("{$address->av}, {$address->street}.");
-
-        return $address;
     }
 
     /**

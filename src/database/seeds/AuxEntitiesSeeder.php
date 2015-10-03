@@ -3,7 +3,12 @@
 use Faker\Factory;
 
 /**
- * @todo: a espera de @Phantom66 para la especificacion real de algunas entidades.
+ * Class AuxEntitiesSeeder
+ * @package PCI\Database
+ * FIXME a espera de {@Phantom66} para la especificacion real de algunas entidades.
+ * @author Alejandro Granadillo <slayerfat@gmail.com>
+ * @link https://github.com/slayerfat/sistemaPCI/issues/2
+ * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
  */
 class AuxEntitiesSeeder extends AbstractSeeder
 {
@@ -15,6 +20,11 @@ class AuxEntitiesSeeder extends AbstractSeeder
      */
     private $data;
 
+    /**
+     * creamos la instancia de esta clase.
+     * Basicamente generamos modelos iterando los arrays
+     * es especificados en self::setData()
+     */
     public function __construct()
     {
         parent::__construct();
@@ -110,11 +120,22 @@ class AuxEntitiesSeeder extends AbstractSeeder
                 ['desc' => 'Micelaneos', 'category_id' => 4],
                 ['desc' => 'Otro', 'category_id' => 4],
             ],
+            'PCI\Models\StockType'    => [
+                ['desc' => 'Unidad'],       // por defecto no tocar
+                ['desc' => 'Gramo'],        // no tocar
+                ['desc' => 'Kilo'],         // no tocar
+                ['desc' => 'Tonelada'],     // no tocar
+                ['desc' => 'Paquete'],      // de aqui en adelante si.
+                ['desc' => 'Guacal'],
+                ['desc' => 'Sobre'],
+                ['desc' => 'Lata'],
+            ],
         ];
     }
 
     /**
      * Arreglo de Entidades secundarias o auxiliares en el sistema.
+     * Esto es independiente de los seeds.
      * @return string[]
      */
     public static function getModels()
@@ -131,6 +152,7 @@ class AuxEntitiesSeeder extends AbstractSeeder
             'PCI\Models\Position',
             'PCI\Models\Profile',
             'PCI\Models\State',
+            'PCI\Models\StockType',
         ];
     }
 

@@ -161,6 +161,7 @@ return [
         PCI\Providers\Aux\MakerRepositoriesProvider::class,
         PCI\Providers\Aux\PositionRepositoryProvider::class,
         PCI\Providers\Aux\ProfileRepositoryProvider::class,
+        PCI\Providers\Aux\StockTypeRepositoryProvider::class,
         PCI\Providers\Aux\SubCategoryRepositoryProvider::class,
         PCI\Providers\Aux\TypesRepositoriesProvider::class,
         PCI\Providers\Item\DepotRepositoryProvider::class,
@@ -182,7 +183,6 @@ return [
     */
 
     'aliases'   => [
-
         'Caimaneitor' => PCI\Mamarrachismo\Caimaneitor\Facades\Caimaneitor::class,
         'App'         => Illuminate\Support\Facades\App::class,
         'Artisan'     => Illuminate\Support\Facades\Artisan::class,

@@ -1,9 +1,15 @@
 <?php namespace PCI\Database;
 
-use Storage;
-use PCI\Models\User;
 use Illuminate\Database\Seeder;
+use PCI\Models\User;
+use Storage;
 
+/**
+ * Class AbstractSeeder
+ * @package PCI\Database
+ * @author Alejandro Granadillo <slayerfat@gmail.com>
+ * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
+ */
 abstract class AbstractSeeder extends Seeder
 {
 

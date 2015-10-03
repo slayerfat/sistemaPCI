@@ -135,6 +135,17 @@ class AuxRoutes extends AbstractPciRoutes
                 'resource' => '{positions}'
             ]
         ],
+        [
+            'routerOptions' => [
+                'prefix'     => 'tipos-cantidad',
+                'middleware' => 'auth',
+            ],
+            'rtDetails'     => [
+                'uses'     => 'Aux\StockTypesController',
+                'as'       => 'stockTypes',
+                'resource' => '{stockTypes}'
+            ]
+        ],
     ];
 
     /**

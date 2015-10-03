@@ -66,6 +66,7 @@ $factory->define(PCI\Models\Item::class, function () use ($faker) {
         'sub_category_id' => rand(1, 2),
         'maker_id'        => rand(1, 2),
         'item_type_id'    => rand(1, 2),
+        'stock_type_id' => rand(1, 3),
         'asoc'            => $faker->randomElement(['a', 'b', 'c']),
         'priority'        => rand(1, 100),
         'desc'            => $faker->sentence,

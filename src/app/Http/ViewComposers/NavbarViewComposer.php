@@ -289,6 +289,7 @@ class NavbarViewComposer
                 $this->plainLink('cats'),
                 $this->plainLink('subCats'),
                 $this->plainLink('itemTypes'),
+                $this->plainLink('stockTypes'),
                 'divider',
                 $this->plainLink('makers'),
                 $this->plainLink('movementTypes'),
