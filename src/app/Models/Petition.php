@@ -60,7 +60,7 @@ class Petition extends AbstractBaseModel
      */
     public function type()
     {
-        return $this->belongsTo(PetitionType::class);
+        return $this->belongsTo(PetitionType::class, 'petition_type_id');
     }
 
     /**
