@@ -168,6 +168,7 @@ return [
         PCI\Providers\Item\ItemRepositoryProvider::class,
         PCI\Providers\User\AddressRepositoryProvider::class,
         PCI\Providers\User\EmployeeRepositoryProvider::class,
+        PCI\Providers\User\PetitionRepositoryProvider::class,
         PCI\Providers\User\UsersRepositoriesServiceProvider::class,
         PCI\Providers\User\WorkDetailRepositoryProvider::class,
     ],

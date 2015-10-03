@@ -90,6 +90,17 @@ class UserRoutes extends AbstractPciRoutes
                 ]
             ]
         ],
+        [
+            'routerOptions' => [
+                'prefix'     => 'pedidos',
+                'middleware' => 'auth',
+            ],
+            'rtDetails'     => [
+                'uses'     => 'User\PetitionsController',
+                'as'       => 'petitions',
+                'resource' => '{petitions}'
+            ]
+        ],
     ];
 
     /**
