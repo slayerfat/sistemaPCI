@@ -36,7 +36,9 @@ class ItemIntegrationTest extends AbstractTestCase
         $depots = factory(Depot::class, 3)->create();
 
         foreach ($depots as $depot) {
-            $this->item->depots()->attach($depot->id, ['quantity' => 10]);
+            $this->item->depots()->attach($depot->id, ['quantity'      => 10,
+                                                       'stock_type_id' => 1
+            ]);
         }
 
         $this->assertEquals(30, $this->item->stock);

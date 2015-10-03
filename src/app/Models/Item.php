@@ -66,6 +66,7 @@ class Item extends AbstractBaseModel implements SluggableInterface
         'maker_id',
         'sub_category_id',
         'item_type_id',
+        'stock_type_id',
         'asoc',
         'priority',
         'desc',
@@ -91,9 +92,6 @@ class Item extends AbstractBaseModel implements SluggableInterface
      */
     protected $dates = ['due'];
 
-    // -------------------------------------------------------------------------
-    // Accessors
-    // -------------------------------------------------------------------------
     /**
      * Regresa el stock (cantidad total) en
      * el inventario de este item.
@@ -104,12 +102,28 @@ class Item extends AbstractBaseModel implements SluggableInterface
         return $this->stock();
     }
 
-    // -------------------------------------------------------------------------
-    // Relaciones
-    // -------------------------------------------------------------------------
-    // -------------------------------------------------------------------------
-    // Belongs to 1..* -> 1
-    // -------------------------------------------------------------------------
+    /**
+     * Busca en la base de datos y regresa la sumatoria
+     * de los movimientos del item en los almacenes.
+     * @return int
+     */
+    public function stock()
+    {
+        return $this->attributes['stock'] = $this->depots()
+                                                 ->withPivot('quantity')
+                                                 ->sum('quantity');
+    }
+
+    /**
+     * Regresa una coleccion de almacenes en donde este item puede estar.
+     * @see v0.3.2 #35
+     * @link https://github.com/slayerfat/sistemaPCI/issues/35
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function depots()
+    {
+        return $this->belongsToMany('PCI\Models\Depot')->withPivot('quantity');
+    }
 
     /**
      * Regresa el rubro asociado al item.
@@ -117,7 +131,7 @@ class Item extends AbstractBaseModel implements SluggableInterface
      */
     public function subCategory()
     {
-        return $this->belongsTo(SubCategory::class);
+        return $this->belongsTo('PCI\Models\SubCategory');
     }
 
     /**
@@ -126,7 +140,7 @@ class Item extends AbstractBaseModel implements SluggableInterface
      */
     public function maker()
     {
-        return $this->belongsTo(Maker::class);
+        return $this->belongsTo('PCI\Models\Maker');
     }
 
     /**
@@ -137,22 +151,16 @@ class Item extends AbstractBaseModel implements SluggableInterface
     {
         // otra vez por alguna razon el item type id
         // no queria ser reconocido, investigar.
-        return $this->belongsTo(ItemType::class, 'item_type_id');
+        return $this->belongsTo('PCI\Models\ItemType', 'item_type_id');
     }
 
-    // -------------------------------------------------------------------------
-    // Belongs to many
-    // -------------------------------------------------------------------------
-
     /**
-     * Regresa una coleccion de almacenes en donde este item puede estar.
-     * @see v0.3.2 #35
-     * @link https://github.com/slayerfat/sistemaPCI/issues/35
+     * Regresa el tipo de item.
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function depots()
+    public function stockType()
     {
-        return $this->belongsToMany(Depot::class)->withPivot('quantity');
+        return $this->belongsTo('PCI\Models\StockType', 'item_type_id');
     }
 
     /**
@@ -176,7 +184,7 @@ class Item extends AbstractBaseModel implements SluggableInterface
      */
     public function petitions()
     {
-        return $this->belongsToMany(Petition::class)->withPivot('quantity');
+        return $this->belongsToMany('PCI\Models\Petition')->withPivot('quantity');
     }
 
     /**
@@ -185,7 +193,7 @@ class Item extends AbstractBaseModel implements SluggableInterface
      */
     public function movements()
     {
-        return $this->belongsToMany(Movement::class)
+        return $this->belongsToMany('PCI\Models\Movement')
                     ->withPivot('quantity', 'due');
     }
 
@@ -195,7 +203,7 @@ class Item extends AbstractBaseModel implements SluggableInterface
      */
     public function notes()
     {
-        return $this->belongsToMany(Note::class)->withPivot('quantity');
+        return $this->belongsToMany('PCI\Models\Note')->withPivot('quantity');
     }
 
     /**
@@ -205,17 +213,5 @@ class Item extends AbstractBaseModel implements SluggableInterface
     public function percentageStock()
     {
         return ceil(($this->stock * 100) / $this->minimum);
-    }
-
-    /**
-     * Busca en la base de datos y regresa la sumatoria
-     * de los movimientos del item en los almacenes.
-     * @return int
-     */
-    public function stock()
-    {
-        return $this->attributes['stock'] = $this->depots()
-            ->withPivot('quantity')
-            ->sum('quantity');
     }
 }

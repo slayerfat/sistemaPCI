@@ -1,8 +1,14 @@
 <?php namespace PCI\Database;
 
-use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Seeder;
 
+/**
+ * Class AbstractTableSeeder
+ * @package PCI\Database
+ * @author Alejandro Granadillo <slayerfat@gmail.com>
+ * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
+ */
 abstract class AbstractTableSeeder extends Seeder
 {
 

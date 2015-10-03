@@ -7,6 +7,12 @@ use PCI\Models\Movement;
 use PCI\Models\Note;
 use PCI\Models\Petition;
 
+/**
+ * Class ItemSeeder
+ * @package PCI\Database
+ * @author Alejandro Granadillo <slayerfat@gmail.com>
+ * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
+ */
 class ItemSeeder extends AbstractSeeder
 {
 
@@ -36,36 +42,14 @@ class ItemSeeder extends AbstractSeeder
             $this->command->info("Uniendo Item {$item->desc} con Depot (id) {$number}");
 
             /** @var Item $item */
-            $item->depots()->attach([$number]);
+            $item->depots()->attach([$number], ['quantity'      => rand(1, 10000),
+                                                'stock_type_id' => $this->getRand(1, 3)
+            ]);
         });
 
         $item = $items->random();
 
         $this->seedItemDependency($quantity, $item);
-    }
-
-    /**
-     * @param int $quantity
-     */
-    private function seedPetitions($quantity)
-    {
-        $this->command->comment('Empezando ' . __METHOD__);
-
-        $petitions = $this->createModels(Petition::class, $quantity);
-
-        $petitions->each(function ($petition) {
-            foreach (range(0, 2) as $index) {
-                $number = $index + $this->getRand(1, 8);
-
-                $this->command->info("Uniendo Pedido (id) {$petition->id} con Item (id) {$number}");
-
-                $petition->items()->attach($number, ['quantity' => $number]);
-            }
-
-            $note = $this->createModels(Note::class);
-
-            $petition->notes()->save($note);
-        });
     }
 
     /**
@@ -85,30 +69,6 @@ class ItemSeeder extends AbstractSeeder
         $items = factory($class, $quantity)->create();
 
         return $items;
-    }
-
-    /**
-     * @param int $quantity
-     */
-    private function seedMovements($quantity)
-    {
-        $this->command->comment('Empezando ' . __METHOD__);
-
-        $movements = $this->createModels(Movement::class, $quantity);
-
-        $movements->each(function ($movement) {
-            $number = $this->getRand(5, 20);
-
-            $this->command->info("Uniendo Movimiento (id) {$movement->id} con Item (id) 1: cantidad: {$number}");
-
-            $movement->items()->attach(1, ['quantity' => $number]);
-
-            $item = $movement->items->first();
-
-            $this->command->info("Uniendo Almacen (id) 1, con Item (id) 1: cantidad: {$number}");
-
-            $item->depots()->attach(1, ['quantity' => $number]);
-        });
     }
 
     /**
@@ -141,5 +101,59 @@ class ItemSeeder extends AbstractSeeder
         );
 
         $item->dependsOn()->attach($number);
+    }
+
+    /**
+     * @param int $quantity
+     */
+    private function seedPetitions($quantity)
+    {
+        $this->command->comment('Empezando ' . __METHOD__);
+
+        $petitions = $this->createModels(Petition::class, $quantity);
+
+        $petitions->each(function ($petition) {
+            foreach (range(0, 2) as $index) {
+                $number = $index + $this->getRand(1, 8);
+
+                $this->command->info("Uniendo Pedido (id) {$petition->id} con Item (id) {$number}");
+
+                $petition->items()->attach($number, ['quantity'      => $number,
+                                                     'stock_type_id' => $this->getRand(1, 3)
+                ]);
+            }
+
+            $note = $this->createModels(Note::class);
+
+            $petition->notes()->save($note);
+        });
+    }
+
+    /**
+     * @param int $quantity
+     */
+    private function seedMovements($quantity)
+    {
+        $this->command->comment('Empezando ' . __METHOD__);
+
+        $movements = $this->createModels(Movement::class, $quantity);
+
+        $movements->each(function ($movement) {
+            $number = $this->getRand(5, 20);
+
+            $this->command->info("Uniendo Movimiento (id) {$movement->id} con Item (id) 1: cantidad: {$number}");
+
+            $movement->items()->attach(1, ['quantity'      => $number,
+                                           'stock_type_id' => $this->getRand(1, 3)
+            ]);
+
+            $item = $movement->items->first();
+
+            $this->command->info("Uniendo Almacen (id) 1, con Item (id) 1: cantidad: {$number}");
+
+            $item->depots()->attach(1, ['quantity'      => $number,
+                                        'stock_type_id' => $this->getRand(1, 3)
+            ]);
+        });
     }
 }

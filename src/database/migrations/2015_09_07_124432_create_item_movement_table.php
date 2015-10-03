@@ -19,6 +19,11 @@ class CreateItemMovementTable extends Migration
             $table->foreign('movement_id')->references('id')->on('movements');
             $table->unsignedInteger('quantity');
             $table->date('due')->nullable();
+            // tipo de cantidad
+            $table->unsignedInteger('stock_type_id');
+            $table->foreign('stock_type_id')
+                  ->references('id')
+                  ->on('stock_types');
         });
     }
 

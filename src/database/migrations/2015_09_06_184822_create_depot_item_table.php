@@ -22,6 +22,11 @@ class CreateDepotItemTable extends Migration
                 ->references('id')
                 ->on('items');
             $table->unsignedInteger('quantity'); // v0.3.2 #35
+            // tipo de cantidad
+            $table->unsignedInteger('stock_type_id');
+            $table->foreign('stock_type_id')
+                  ->references('id')
+                  ->on('stock_types');
         });
     }
 

@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
 class CreateItemNoteTable extends Migration
 {
@@ -18,6 +18,11 @@ class CreateItemNoteTable extends Migration
             $table->unsignedInteger('note_id');
             $table->foreign('note_id')->references('id')->on('notes');
             $table->unsignedInteger('quantity');
+            // tipo de cantidad
+            $table->unsignedInteger('stock_type_id');
+            $table->foreign('stock_type_id')
+                  ->references('id')
+                  ->on('stock_types');
         });
     }
 
