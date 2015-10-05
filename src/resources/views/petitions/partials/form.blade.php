@@ -30,8 +30,6 @@ ControlGroup::generate(
             data.text = 'Buscando...';
             if (data.loading) return data.text;
 
-            console.log('ITS HAPPENING: ' + JSON.stringify(data));
-
             // poderosisimo copypasta.
             var markup = '<div class="clearfix">' +
                 '<div class="col-xs-12">' +
@@ -50,8 +48,9 @@ ControlGroup::generate(
         $("#itemList").select2({
             // hacemos una peticion ajax
             ajax: {
+                // por alguna razon el url no estaba siendo formateado
+                // correctamente, esta es una solucion temporal y mamarracha.
                 url: function (params) {
-                    console.log('url params: ' + JSON.stringify(params));
                     return "/api/items/search/" + params.term;
                 },
                 dataType: 'json',
@@ -59,7 +58,7 @@ ControlGroup::generate(
 
                 data: function (params) {
                     return {
-                        term: params.term, // search term
+                        term: params.term, // el termino a buscar
                         page: params.page
                     };
                 },
@@ -71,16 +70,15 @@ ControlGroup::generate(
                  * @returns {results: *, pagination: {more: boolean}}
                  */
                 processResults: function (data, params) {
-                    console.log('processResults data: ' + JSON.stringify(data));
-                    console.log('processResults params: ' + JSON.stringify(params));
-
-                    // a espera de determinar.
+                    // page es un atributo que maneja select2.
+                    // basicamente determina la pagina
+                    // en la que esta para la paginacion.
                     params.page = params.page || 1;
 
                     return {
                         results: data.data,
                         pagination: {
-                            more: (params.page * 30) < data.total_count
+                            more: (params.page * 10) < data.total
                         }
                     };
                 },
