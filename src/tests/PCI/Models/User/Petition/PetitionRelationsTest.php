@@ -13,12 +13,14 @@ class PetitionRelationsTest extends AbstractTestCase
 
     public function testType()
     {
-        $this->mockBasicModelRelation(
-            Petition::class,
-            'type',
-            'belongsTo',
-            PetitionType::class
-        );
+        $mock = Mockery::mock(Petition::class)->makePartial();
+
+        $mock->shouldReceive('belongsTo')
+             ->once()
+             ->with(PetitionType::class, 'petition_type_id')
+             ->andReturn('mocked');
+
+        $this->assertEquals('mocked', $mock->type());
     }
 
     public function testUser()
