@@ -16,8 +16,6 @@
   "dependencies": {
     "Select2": "github:select2/select2",
     "bootstrap-sass": "^3.0.0",
-    "laravel-elixir": "^3.0.0",
-    "vue": "^0.12.16",
-    "vue-resource": "^0.1.16"
+    "laravel-elixir": "^3.0.0"
   }
 }
