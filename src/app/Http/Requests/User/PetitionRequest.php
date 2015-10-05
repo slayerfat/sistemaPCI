@@ -1,6 +1,8 @@
 <?php namespace PCI\Http\Requests\User;
 
+use Gate;
 use PCI\Http\Requests\Request;
+use PCI\Models\Petition;
 
 /**
  * Class PetitionRequest
@@ -17,7 +19,7 @@ class PetitionRequest extends Request
      */
     public function authorize()
     {
-        return false;
+        return Gate::allows('create', new Petition);
     }
 
     /**

@@ -20,18 +20,13 @@ ControlGroup::generate(
 
 !!}
 
-{!!
-
-ControlGroup::generate(
-    BSForm::label('itemBag', '&nbsp;'),
-    BSForm::number('itemBag'),
-    BSForm::help('&nbsp;'),
-    8
-)
-
-!!}
+<div class="form-group" id="itemBag"></div>
 
 {!! Button::primary($btnMsg)->block()->submit() !!}
+
+@section('css')
+    <link rel="stylesheet" href="{{elixir('css/vendor.css')}}"/>
+@stop
 
 @section('js')
     <script>
@@ -152,11 +147,33 @@ ControlGroup::generate(
         $itemList.on("select2:select", function (e) {
             items.setItem(e.params.data);
 
-            var parent = $('#itemBag').parents('.form-group');
+            var itemBag = $('#itemBag');
 
-            parent.children('label').html(items.data.desc);
-            parent.find('input').attr('value', items.stock.plain);
-            parent.find('span').html(items.stock.formatted);
+            if (items.stock.plain < 1) {
+                var $error = $('<label for="itemBag" class="control-label col-sm-8">' +
+                items.data.desc + ' no se encuentra en existencia.' +
+                '</label>');
+
+                itemBag.append($error);
+
+                $error.animate({opacity: 1}, 10000, 'linear', function () {
+                    $error.animate({opacity: 0}, 2000, 'linear', function () {
+                        $error.remove();
+                    });
+                });
+
+                return;
+            }
+
+            itemBag.append(
+                '<label for="itemBag" class="control-label col-sm-8">'
+                + items.data.desc
+                + '</label>'
+                + '<div class="col-sm-4">' +
+                '<input class="form-control" name="item-id-' + items.data.id + '" type="number" min="1" value="' + items.stock.plain + '" max="' + items.stock.plain + '">' +
+                '<span class="help-block">' + items.stock.formatted + ' en total.' + '</span>' +
+                '</div>'
+            );
         });
     </script>
 @stop
