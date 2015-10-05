@@ -1,10 +1,32 @@
 {!!
 
 ControlGroup::generate(
+    BSForm::label('item_type_id', 'Tipo de solicitud'),
+    BSForm::select('item_type_id', $types),
+    BSForm::help('&nbsp;'),
+    2
+)
+
+!!}
+
+{!!
+
+ControlGroup::generate(
     BSForm::label('itemList', 'Items'),
     BSForm::select('itemList'),
     BSForm::help('Aqui puede seleccionar cuales items desea solicitar'),
     2
+)
+
+!!}
+
+{!!
+
+ControlGroup::generate(
+    BSForm::label('itemBag', '&nbsp;'),
+    BSForm::number('itemBag'),
+    BSForm::help('&nbsp;'),
+    8
 )
 
 !!}
@@ -21,7 +43,7 @@ ControlGroup::generate(
          */
         function formatRepo(data) {
             // Cambiamos el texto que se ve mientras se hace la busqueda.
-            data.text = 'Buscando...';
+            // data.text = 'Buscando...';
             if (data.loading) return data.text;
 
             // poderosisimo copypasta.
@@ -38,8 +60,12 @@ ControlGroup::generate(
             return markup;
         }
 
+        var $itemList = $("#itemList");
+
         // aqui empieza la mamarrachada principal
-        $("#itemList").select2({
+        $itemList.select2({
+            language: 'es',
+            placeholder: "Indique su busqueda",
             // hacemos una peticion ajax
             ajax: {
                 // por alguna razon el url no estaba siendo formateado
@@ -86,6 +112,51 @@ ControlGroup::generate(
 
             minimumInputLength: 1,
             templateResult: formatRepo
+        });
+
+
+        items = {
+            data: {
+                desc: ''
+            },
+
+            stock: {
+                plain: '',
+                formatted: ''
+            },
+
+            setItem: function (data) {
+                this.data = data;
+
+                this.grabItemStock(this.data);
+            },
+
+            grabItemStock: function (item) {
+                var self = this;
+
+                $.ajax({
+                    url: '/api/items/stock/' + item.id,
+                    dataType: 'json',
+                    async: false,
+                    success: function (data) {
+                        self.setStock(data);
+                    }
+                });
+            },
+
+            setStock: function (stock) {
+                this.stock = stock;
+            }
+        };
+
+        $itemList.on("select2:select", function (e) {
+            items.setItem(e.params.data);
+
+            var parent = $('#itemBag').parents('.form-group');
+
+            parent.children('label').html(items.data.desc);
+            parent.find('input').attr('value', items.stock.plain);
+            parent.find('span').html(items.stock.formatted);
         });
     </script>
 @stop

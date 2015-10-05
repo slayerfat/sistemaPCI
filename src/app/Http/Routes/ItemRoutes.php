@@ -59,6 +59,14 @@ class ItemRoutes extends AbstractPciRoutes
                 'as'   => 'api.items.indexTerm',
             ]
         ],
+        [
+            'method' => 'get',
+            'url'    => 'api/items/stock/{items}',
+            'data'   => [
+                'uses' => 'Api\Item\ItemsController@getStock',
+                'as'   => 'api.items.stock',
+            ]
+        ],
     ];
 
     /**

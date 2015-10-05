@@ -38,5 +38,12 @@ interface ItemRepositoryInterface extends
      * @param int $amount la cantidad a mostrar por pagina.
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    public function getIndexJsonWithSearch(array $data, $amount);
+    public function getIndexJsonWithSearch(array $data, $amount = 10);
+
+    /**
+     * Regresa el stock o cantidad en formato legible
+     * @param string|int $id el slug o id
+     * @return array el resultado con el stock
+     */
+    public function getStock($id);
 }

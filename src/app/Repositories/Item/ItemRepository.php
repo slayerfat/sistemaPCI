@@ -152,6 +152,24 @@ class ItemRepository extends AbstractRepository implements ItemRepositoryInterfa
     }
 
     /**
+     * Regresa el stock o cantidad en formato legible
+     * @param string|int $id el slug o id
+     * @return array el resultado con el stock
+     */
+    public function getStock($id)
+    {
+        /** @var \PCI\Models\Item $item */
+        $item = $this->getBySlugOrId($id);
+
+        $data = [
+            'plain'     => $item->stock,
+            'formatted' => $item->formattedStock(),
+        ];
+
+        return $data;
+    }
+
+    /**
      * Genera la data necesaria que utilizara el paginator,
      * contiene los datos relevantes para la tabla, esta
      * informacion debe ser un array asociativo.
