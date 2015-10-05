@@ -12,14 +12,8 @@ ControlGroup::generate(
 {!! Button::primary($btnMsg)->block()->submit() !!}
 
 @section('js')
-    <link
-        href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css"
-        rel="stylesheet"/>
-    <script
-        src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
     <script>
         /**
-         * FIXME inclur dependencias
          * la informacion html que es usada para generar
          * los elementos internos del select.
          * @param data

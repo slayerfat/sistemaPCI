@@ -11,7 +11,8 @@ var paths = {
     'jquery': './vendor/bower_components/jquery/',
     'bootstrap': './node_modules/bootstrap-sass/assets/',
     'fontAwesome': './vendor/bower_components/font-awesome/',
-    'datepicker': './vendor/bower_components/bootstrap-datepicker/'
+    'datepicker': './vendor/bower_components/bootstrap-datepicker/',
+    'select2': './node_modules/select2/'
 }
 
 // git bump (v0.1.2) <-- gulp release|feature|patch|pre
@@ -75,7 +76,8 @@ elixir(function (mix) {
         .scripts([
             '', //asqueroso, pero funciona
             paths.jquery + "dist/jquery.js",
-            paths.bootstrap + "javascripts/bootstrap.js"
+            paths.bootstrap + "javascripts/bootstrap.js",
+            paths.select2 + "dist/js/select2.js",
         ])
         .scripts([
             '../ajax/address/getAddress.js'
