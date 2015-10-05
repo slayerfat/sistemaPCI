@@ -30,6 +30,19 @@ abstract class AbstractBaseModel extends Eloquent
     protected $sluggable;
 
     /**
+     * Atributos que deben ser ocultos en array/json.
+     * Si por alguna razon esto debe cambiar, se puede
+     * hacer en las clases que concretan esta.
+     * @var array
+     */
+    protected $hidden = [
+        'created_by',
+        'updated_by',
+        'created_at',
+        'updated_at'
+    ];
+
+    /**
      * Automaticamente manipula los campos de control
      * created/update
      * @throws \LogicException

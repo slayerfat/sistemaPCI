@@ -92,7 +92,15 @@ class User extends AbstractBaseModel implements
      * The attributes excluded from the model's JSON form.
      * @var array
      */
-    protected $hidden = ['password', 'remember_token', 'confirmation_code'];
+    protected $hidden = [
+        'created_by',
+        'updated_by',
+        'created_at',
+        'updated_at',
+        'password',
+        'remember_token',
+        'confirmation_code'
+    ];
 
     /**
      * Regresa mamarrachamente a la direccion relacionada
