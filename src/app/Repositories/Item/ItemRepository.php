@@ -140,14 +140,15 @@ class ItemRepository extends AbstractRepository implements ItemRepositoryInterfa
      * Busca items en la base de datos segun la
      * data proveniente y regresa un paginador.
      * @param array $data
+     * @param int $amount la cantidad a mostrar por pagina.
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    public function getIndexJsonWithSearch(array $data)
+    public function getIndexJsonWithSearch(array $data, $amount = 10)
     {
         return $this->model
             ->with('maker', 'subCategory')
             ->where('desc', 'like', "%{$data['term']}%")
-            ->paginate(2);
+            ->paginate($amount);
     }
 
     /**
