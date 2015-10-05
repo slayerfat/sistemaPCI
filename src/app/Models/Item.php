@@ -69,7 +69,20 @@ class Item extends AbstractBaseModel implements SluggableInterface
         'priority',
         'desc',
         'minimum',
-        'due',
+    ];
+
+    /**
+     * Atributos que deben ser ocultos en array/json
+     * @var array
+     */
+    protected $hidden = [
+        'asoc',
+        'priority',
+        'minimum',
+        'created_by',
+        'created_at',
+        'updated_by',
+        'updated_at',
     ];
 
     /**

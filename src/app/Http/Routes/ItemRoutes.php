@@ -39,6 +39,29 @@ class ItemRoutes extends AbstractPciRoutes
     ];
 
     /**
+     * Las opciones para crear las rutas.
+     * @var array
+     */
+    protected $nonRestfulOptions = [
+        [
+            'method' => 'get',
+            'url'    => 'api/items',
+            'data'   => [
+                'uses' => 'Api\Item\ItemsController@index',
+                'as'   => 'api.items.index',
+            ]
+        ],
+        [
+            'method' => 'get',
+            'url'    => 'api/items/search/{term}',
+            'data'   => [
+                'uses' => 'Api\Item\ItemsController@indexWithTerm',
+                'as'   => 'api.items.indexTerm',
+            ]
+        ],
+    ];
+
+    /**
      * Genera todas las rutas relacionadas con esta clase
      * @return void
      */

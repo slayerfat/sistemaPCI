@@ -19,6 +19,12 @@ class ItemRepository extends AbstractRepository implements ItemRepositoryInterfa
     use IteratesCollectionRelationTrait; // longNameIsLong
 
     /**
+     * El modelo en este caso es item.
+     * @var \PCI\Models\Item
+     */
+    protected $model;
+
+    /**
      * La implementacion del repositorio de categorias.
      * @var \PCI\Repositories\Interfaces\Aux\CategoryRepositoryInterface
      */
@@ -128,6 +134,20 @@ class ItemRepository extends AbstractRepository implements ItemRepositoryInterfa
         $catModels = $this->catRepo->getAll();
 
         return $this->createCollectionRelationArray($catModels, 'subCategories');
+    }
+
+    /**
+     * Busca items en la base de datos segun la
+     * data proveniente y regresa un paginador.
+     * @param array $data
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function getIndexJsonWithSearch(array $data)
+    {
+        return $this->model
+            ->with('maker', 'subCategory')
+            ->where('desc', 'like', "%{$data['term']}%")
+            ->paginate(2);
     }
 
     /**

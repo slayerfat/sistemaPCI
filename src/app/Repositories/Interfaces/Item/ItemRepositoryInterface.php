@@ -30,4 +30,12 @@ interface ItemRepositoryInterface extends
      * @return array|array[]
      */
     public function getSubCatsLists();
+
+    /**
+     * Busca items en la base de datos segun la
+     * data proveniente y regresa un paginador.
+     * @param array $data
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function getIndexJsonWithSearch(array $data);
 }
