@@ -14,7 +14,7 @@ before_script:
   # - if [ $TRAVIS_PHP_VERSION != '7' ]; then wget -c http://static.phpmd.org/php/latest/phpmd.phar; fi
 
   - composer --working-dir=src/ install --no-interaction --prefer-source
-  - npm install -g npm@2
+  - npm install -g npm@3
   - npm install -g bower
   - (cd src/ && npm install && bower install && gulp)
   - pyrus install pear/PHP_CodeSniffer
