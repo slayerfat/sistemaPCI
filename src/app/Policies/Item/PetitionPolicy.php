@@ -1,5 +1,6 @@
 <?php namespace PCI\Policies\Item;
 
+use PCI\Models\Item;
 use PCI\Models\Petition;
 use PCI\Models\User;
 
@@ -24,5 +25,25 @@ class PetitionPolicy
         }
 
         return $user->isUser() || $user->isAdmin();
+    }
+
+    /**
+     * @param \PCI\Models\User $user
+     * @param \PCI\Models\Petition $petition
+     * @param \PCI\Models\Item $item
+     * @param int $amount
+     * @return bool
+     */
+    public function addItem(User $user, Petition $petition, Item $item, $amount)
+    {
+        if (!$petition) {
+            throw new \LogicException;
+        }
+
+        if ($user->isUser() || $user->isAdmin()) {
+            return $item->stock >= $amount;
+        }
+
+        return false;
     }
 }
