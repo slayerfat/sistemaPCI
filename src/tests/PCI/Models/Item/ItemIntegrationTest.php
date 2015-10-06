@@ -79,4 +79,28 @@ class ItemIntegrationTest extends AbstractTestCase
 
         $this->assertEquals('1 Unidad', $this->item->formattedStock());
     }
+
+    public function testFormattedStockShouldReturnCorrectType()
+    {
+        $depots     = factory(Depot::class, 2)->create();
+        $type       = StockType::first();
+        $type->desc = 'Unidad';
+        $type->save();
+
+        $stock = factory(StockType::class)->create(['desc' => 'Tonelada']);
+
+        $this->item->stock_type_id = $stock->id;
+        $this->item->save();
+
+        $this->assertEquals('Tonelada', $this->item->stockType->desc);
+
+        foreach ($depots as $depot) {
+            $this->item->depots()->attach($depot->id, [
+                'quantity'      => 12,
+                'stock_type_id' => 2
+            ]);
+        }
+
+        $this->assertEquals('24 Toneladas', $this->item->formattedStock());
+    }
 }

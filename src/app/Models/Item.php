@@ -171,7 +171,7 @@ class Item extends AbstractBaseModel implements SluggableInterface
      */
     public function stockType()
     {
-        return $this->belongsTo('PCI\Models\StockType', 'item_type_id');
+        return $this->belongsTo('PCI\Models\StockType', 'stock_type_id');
     }
 
     /**
