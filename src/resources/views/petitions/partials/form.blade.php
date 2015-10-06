@@ -49,7 +49,6 @@ ControlGroup::generate(
          */
         function formatRepo(data) {
             // Cambiamos el texto que se ve mientras se hace la busqueda.
-            // data.text = 'Buscando...';
             if (data.loading) return data.text;
 
             // poderosisimo copypasta.
@@ -120,11 +119,28 @@ ControlGroup::generate(
             templateResult: formatRepo
         });
 
+        // necesitamos los tipos de stock para generar el select
+        $(function () {
+            $.ajax({
+                url: '/api/tipos-cantidad',
+                dataType: 'json',
+                success: function (data) {
+                    stockTypes.types = data;
+                }
+            });
+        });
 
-        items = {
+        var stockTypes = {
+            types: {}
+        };
+
+        var items = {
             data: {
-                desc: ''
+                desc: '',
+                stock_type_id: null
             },
+
+            selected: [],
 
             stock: {
                 plain: '',
@@ -133,7 +149,6 @@ ControlGroup::generate(
 
             setItem: function (data) {
                 this.data = data;
-
                 this.grabItemStock(this.data);
             },
 
@@ -150,16 +165,37 @@ ControlGroup::generate(
                 });
             },
 
+            addSelected: function (id) {
+                this.selected.push(id);
+            },
+
             setStock: function (stock) {
                 this.stock = stock;
+            },
+
+            alreadySelected: function () {
+                var selected = false;
+
+                this.selected.forEach(function (key) {
+                    if (key == this.data.id) selected = true;
+                }.bind(this));
+
+                return selected;
             }
         };
 
+        // mamarrachada de segundo orden
         $itemList.on("select2:select", function (e) {
+            // iniciamos el objeto
             items.setItem(e.params.data);
+
+            if (items.alreadySelected()) {
+                return;
+            }
 
             var itemBag = $('#itemBag');
 
+            // chequeamos que el stock no sea 0
             if (items.stock.plain < 1) {
                 var $error = $('<label for="itemBag" class="control-label col-sm-8">' +
                 items.data.desc + ' no se encuentra en existencia.' +
@@ -167,6 +203,7 @@ ControlGroup::generate(
 
                 itemBag.append($error);
 
+                // espera 10 segundo y activa la animacion
                 $error.animate({opacity: 1}, 10000, 'linear', function () {
                     $error.animate({opacity: 0}, 2000, 'linear', function () {
                         $error.remove();
@@ -176,15 +213,33 @@ ControlGroup::generate(
                 return;
             }
 
-            itemBag.append(
-                '<label for="itemBag" class="control-label col-sm-8">'
+            // como esta mamarrachada es muy grande, la
+            // segmentamos para que pueda ser mas facil de digerir
+            var itemInput = '<label for="itemBag" class="control-label col-sm-7">'
                 + items.data.desc
                 + '</label>'
-                + '<div class="col-sm-4">' +
+                + '<div class="col-sm-2">' +
                 '<input class="form-control" name="item-id-' + items.data.id + '" type="number" min="1" value="' + items.stock.plain + '" max="' + items.stock.plain + '">' +
                 '<span class="help-block">' + items.stock.formatted + ' en total.' + '</span>' +
-                '</div>'
-            );
+                '</div>';
+
+            var options = '';
+
+            // generamos las opciones que van dentro del select
+            Object.keys(stockTypes.types).forEach(function (key) {
+                stockTypes.types[key].id == items.data.stock_type_id
+                    ? options += '<option value="' + stockTypes.types[key].id + '" selected="selected">' + stockTypes.types[key].desc + '</option>'
+                    : options += '<option value="' + stockTypes.types[key].id + '">' + stockTypes.types[key].desc + '</option>';
+            });
+
+            // este select contiene los tipos de cantidad
+            var select = '<div class="col-sm-3">'
+                + '<select class="form-control" name="stock_type_id">' + options + '</select>' +
+                '</div>';
+
+            itemBag.append(itemInput + select);
+
+            items.addSelected(items.data.id);
         });
     </script>
 @stop
