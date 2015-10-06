@@ -1,8 +1,8 @@
 {!!
 
 ControlGroup::generate(
-    BSForm::label('item_type_id', 'Tipo de solicitud'),
-    BSForm::select('item_type_id', $types),
+    BSForm::label('petition_type_id', 'Tipo de solicitud'),
+    BSForm::select('petition_type_id', $types),
     BSForm::help('&nbsp;'),
     2
 )
@@ -21,6 +21,17 @@ ControlGroup::generate(
 !!}
 
 <div class="form-group" id="itemBag"></div>
+
+{!!
+
+ControlGroup::generate(
+    BSForm::label('comments', 'Comentarios'),
+    BSForm::textarea('comments'),
+    BSForm::help('&nbsp;'),
+    2
+)
+
+!!}
 
 {!! Button::primary($btnMsg)->block()->submit() !!}
 
