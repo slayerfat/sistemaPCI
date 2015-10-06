@@ -1,7 +1,11 @@
 <?php namespace PCI\Repositories\User;
 
+use Carbon\Carbon;
+use Gate;
 use PCI\Models\AbstractBaseModel;
+use PCI\Models\Petition;
 use PCI\Repositories\AbstractRepository;
+use PCI\Repositories\Interfaces\Item\ItemRepositoryInterface;
 use PCI\Repositories\Interfaces\User\PetitionRepositoryInterface;
 use PCI\Repositories\ViewVariable\ViewPaginatorVariable;
 
@@ -15,9 +19,28 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
 {
 
     /**
+     * En esta caso es una peticion
      * @var \PCI\Models\Petition
      */
     protected $model;
+
+    /**
+     * La implementacion del repositorio de items
+     * @var \PCI\Repositories\Interfaces\Item\ItemRepositoryInterface
+     */
+    private $itemRepo;
+
+    /**
+     * Genera una nueva instancia de este repositorio
+     * @param \PCI\Models\AbstractBaseModel $model
+     * @param \PCI\Repositories\Interfaces\Item\ItemRepositoryInterface $itemRepo
+     */
+    public function __construct(AbstractBaseModel $model, ItemRepositoryInterface $itemRepo)
+    {
+        parent::__construct($model);
+
+        $this->itemRepo = $itemRepo;
+    }
 
     /**
      * Regresa variable con una coleccion y datos
@@ -71,11 +94,49 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
     /**
      * Persiste informacion referente a una entidad.
      * @param array $data El array con informacion del modelo.
-     * @return \PCI\Models\AbstractBaseModel
+     * @return \PCI\Models\AbstractBaseModel|\PCI\Models\Petition
      */
     public function create(array $data)
     {
-        // TODO: Implement create() method.
+        $petition = $this->model->newInstance();
+
+        // esta informacion no nos interesa al
+        // momento de crear los items asociados.
+        $petition->comments         = $data['comments'];
+        $petition->petition_type_id = $data['petition_type_id'];
+        $petition->request_date     = Carbon::now();
+
+        // asociamos la peticion al usuario en linea.
+        $this->getCurrentUser()->petitions()->save($petition);
+
+        return $this->attachItems($data['items'], $petition);
+    }
+
+    /**
+     * Añade los items solicitados y sus cantidades a la
+     * tabla correspondiente en la base de datos.
+     * @param array $items
+     * @param \PCI\Models\Petition $petition
+     * @return \PCI\Models\Petition
+     */
+    private function attachItems(array $items, Petition $petition)
+    {
+        // por cada item dentro de los items, lo asociamos
+        // con el modelo en la base de datos.
+        foreach ($items as $id => $data) {
+            $item = $this->itemRepo->getById($id);
+
+            if (Gate::denies('addItem', [$petition, $item, $data['amount']])) {
+                continue;
+            }
+
+            $petition->items()->attach($id, [
+                'quantity'      => $data['amount'],
+                'stock_type_id' => $data['type']
+            ]);
+        }
+
+        return $petition;
     }
 
     /**
