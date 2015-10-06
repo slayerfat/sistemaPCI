@@ -234,7 +234,7 @@ ControlGroup::generate(
 
             // este select contiene los tipos de cantidad
             var select = '<div class="col-sm-3">'
-                + '<select class="form-control" name="stock_type_id">' + options + '</select>' +
+                + '<select class="form-control" name="stock-type-id-' + items.data.id + '">' + options + '</select>' +
                 '</div>';
 
             itemBag.append(itemInput + select);
