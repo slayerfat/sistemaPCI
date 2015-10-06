@@ -45,6 +45,14 @@ class ItemRoutes extends AbstractPciRoutes
     protected $nonRestfulOptions = [
         [
             'method' => 'get',
+            'url'  => 'api/tipos-cantidad',
+            'data' => [
+                'uses' => 'Api\Item\StockTypesController@index',
+                'as'   => 'api.stockTypes.index',
+            ]
+        ],
+        [
+            'method' => 'get',
             'url'    => 'api/items',
             'data'   => [
                 'uses' => 'Api\Item\ItemsController@index',
