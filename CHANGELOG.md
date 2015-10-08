@@ -7,10 +7,11 @@ Todos los cambios significatiovos en este proyecto estaran documentados en este 
 ### Añadido
 
 - Tipo de Cantidad.
+- Nuevas Peticiones.
 
 ## [v0.3.3] - 2015-10-02
 
-### Añadido 
+### Añadido
 
 - Cargos completamente olvidados, ya añadidos al sistema.
 
