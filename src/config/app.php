@@ -148,7 +148,8 @@ return [
         PCI\Providers\RouteServiceProvider::class,
         PCI\Providers\ViewComposerServiceProvider::class,
         PCI\Providers\User\UserDeletingServiceProvider::class,
-        PCI\Providers\PhoneParserProvider::class,
+        \PCI\Providers\Mamarrachismo\PhoneParserProvider::class,
+        PCI\Providers\Mamarrachismo\StockTypeConverterProvider::class,
         /**
          * Caimaneitor servis provaider
          */
