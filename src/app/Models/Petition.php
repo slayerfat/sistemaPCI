@@ -55,6 +55,20 @@ class Petition extends AbstractBaseModel
     protected $dates = ['request_date'];
 
     /**
+     * Regresa el estatus en forma textual del pedido.
+     *
+     * @return string
+     */
+    public function getFormattedStatusAttribute()
+    {
+        if (is_null($this->status)) {
+            return 'Por aprobar';
+        }
+
+        return $this->status ? 'Aprobado' : 'No Aprobado';
+    }
+
+    /**
      * Regresa el tipo de pedido asociado.
      * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */

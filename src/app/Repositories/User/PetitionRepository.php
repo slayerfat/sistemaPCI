@@ -230,7 +230,7 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
             'Usuario'            => $model->user->name . ' ' . $model->user->email,
             'Tipo'               => $model->type->desc,
             'Fecha de solicitud' => $model->request_date->diffForHumans(),
-            'Status'             => $model->status ? 'Aprobado' : 'No Aprobado',
+            'Status' => $model->formattedStatus,
         ];
     }
 }
