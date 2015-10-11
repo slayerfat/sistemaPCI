@@ -134,6 +134,8 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
         // asociamos la peticion al usuario en linea.
         $this->getCurrentUser()->petitions()->save($petition);
 
+        // Añade los items solicitados y sus cantidades a la
+        // tabla correspondiente en la base de datos.
         foreach ($data['items'] as $id => $data) {
             $petition->items()->attach($id, [
                 'quantity'      => $data['amount'],
@@ -145,10 +147,10 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
     }
 
     /**
-     * Añade los items solicitados y sus cantidades a la
-     * tabla correspondiente en la base de datos.
+     * Chequea que los items solicitados sean adecuados.
      *
-     * @param array $items
+     * @param array $items                el request con el id del item,
+     *                                    cantidad y tipo de stock.
      * @param \PCI\Models\Petition $petition
      * @return \PCI\Models\Petition
      */
