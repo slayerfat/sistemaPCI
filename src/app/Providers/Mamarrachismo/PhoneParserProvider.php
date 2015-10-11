@@ -1,4 +1,4 @@
-<?php namespace PCI\Providers;
+<?php namespace PCI\Providers\Mamarrachismo;
 
 use Illuminate\Support\ServiceProvider;
 use PCI\Mamarrachismo\PhoneParser\Interfaces\PhoneParserInterface;
