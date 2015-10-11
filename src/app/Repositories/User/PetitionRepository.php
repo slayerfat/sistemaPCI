@@ -80,7 +80,9 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
      */
     public function getTablePaginator($quantity = 25)
     {
-        return $this->generatePaginator($this->getAll(), $quantity);
+        $results = $this->getAll()->load('type', 'user');
+
+        return $this->generatePaginator($results, $quantity);
     }
 
     /**
