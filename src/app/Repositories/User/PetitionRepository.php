@@ -151,7 +151,7 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
     /**
      * Chequea que los items solicitados sean adecuados.
      *
-     * @param array $items                el request con el id del item,
+     * @param array                $items el request con el id del item,
      *                                    cantidad y tipo de stock.
      * @param \PCI\Models\Petition $petition
      * @return array los items actualizados.
@@ -195,7 +195,7 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
      * Actualiza algun modelo y lo persiste
      * en la base de datos del sistema.
      *
-     * @param int $id El identificador unico.
+     * @param int   $id   El identificador unico.
      * @param array $data El arreglo con informacion relacionada al modelo.
      * @return \PCI\Models\AbstractBaseModel
      */
@@ -236,7 +236,7 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
             'Usuario'            => $model->user->name . ' ' . $model->user->email,
             'Tipo'               => $model->type->desc,
             'Fecha de solicitud' => $model->request_date->diffForHumans(),
-            'Status' => $model->formattedStatus,
+            'Status'             => $model->formattedStatus,
         ];
     }
 }
