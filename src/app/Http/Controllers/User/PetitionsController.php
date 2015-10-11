@@ -2,7 +2,10 @@
 
 namespace PCI\Http\Controllers\User;
 
+use Event;
+use Flash;
 use Illuminate\View\Factory as View;
+use PCI\Events\NewPetitionCreation;
 use PCI\Http\Controllers\Controller;
 use PCI\Http\Requests;
 use PCI\Http\Requests\User\PetitionRequest;
@@ -69,7 +72,12 @@ class PetitionsController extends Controller
      */
     public function store(PetitionRequest $request)
     {
+        /** @var \PCI\Models\Petition $petition */
         $petition = $this->repo->create($request->all());
+
+        Event::fire(new NewPetitionCreation($petition));
+
+        Flash::success("Peticion Nº $petition->id creada exitosamente.");
 
         return Redirect::route('petitions.show', $petition->id);
     }
