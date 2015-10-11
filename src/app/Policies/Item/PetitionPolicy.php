@@ -51,7 +51,7 @@ class PetitionPolicy
         $item = $converter->getItem();
 
         if (!$converter->isConvertible()) {
-            return false;
+            return $item->stock_type_id == $type;
         }
 
         $converted = $converter->convert($type, $amount);
