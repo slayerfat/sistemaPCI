@@ -32,7 +32,7 @@ class PetitionRequest extends Request
         $this->sanitizeRequest();
 
         $rules = [
-            'comments'         => 'alpha_dash|between:5,255',
+            'comments' => 'string|between:5,255',
             'petition_type_id' => 'numeric|exists:petition_types,id',
         ];
 
