@@ -2,6 +2,7 @@
 
 use Carbon\Carbon;
 use Gate;
+use PCI\Mamarrachismo\Converter\interfaces\StockTypeConverterInterface;
 use PCI\Models\AbstractBaseModel;
 use PCI\Models\Petition;
 use PCI\Repositories\AbstractRepository;
@@ -11,40 +12,58 @@ use PCI\Repositories\ViewVariable\ViewPaginatorVariable;
 
 /**
  * Class PetitionRepository
+ *
  * @package PCI\Repositories\User
- * @author Alejandro Granadillo <slayerfat@gmail.com>
- * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
+ * @author  Alejandro Granadillo <slayerfat@gmail.com>
+ * @link    https://github.com/slayerfat/sistemaPCI Repositorio en linea.
  */
 class PetitionRepository extends AbstractRepository implements PetitionRepositoryInterface
 {
 
     /**
      * En esta caso es una peticion
+     *
      * @var \PCI\Models\Petition
      */
     protected $model;
 
     /**
      * La implementacion del repositorio de items
+     *
      * @var \PCI\Repositories\Interfaces\Item\ItemRepositoryInterface
      */
     private $itemRepo;
 
     /**
-     * Genera una nueva instancia de este repositorio
-     * @param \PCI\Models\AbstractBaseModel $model
-     * @param \PCI\Repositories\Interfaces\Item\ItemRepositoryInterface $itemRepo
+     * La implementacion que se encarga de chequear y convertir el tipo de stock
+     * para los movimientos que se persisten en este repo.
+     *
+     * @var \PCI\Mamarrachismo\Converter\StockTypeConverter
      */
-    public function __construct(AbstractBaseModel $model, ItemRepositoryInterface $itemRepo)
-    {
+    private $converter;
+
+    /**
+     * Genera una nueva instancia de este repositorio
+     *
+     * @param \PCI\Models\AbstractBaseModel                             $model
+     * @param \PCI\Repositories\Interfaces\Item\ItemRepositoryInterface $itemRepo
+     * @param StockTypeConverterInterface                               $converter
+     */
+    public function __construct(
+        AbstractBaseModel $model,
+        ItemRepositoryInterface $itemRepo,
+        StockTypeConverterInterface $converter
+    ) {
         parent::__construct($model);
 
-        $this->itemRepo = $itemRepo;
+        $this->itemRepo  = $itemRepo;
+        $this->converter = $converter;
     }
 
     /**
      * Regresa variable con una coleccion y datos
      * adicionales necesarios para generar la vista.
+     *
      * @return \PCI\Repositories\ViewVariable\ViewPaginatorVariable
      */
     public function getIndexViewVariables()
@@ -55,6 +74,7 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
     /**
      * Genera un objeto LengthAwarePaginator con todos los
      * modelos en el sistema y con eager loading (si aplica).
+     *
      * @param int $quantity la cantidad a mostrar por pagina.
      * @return \Illuminate\Pagination\LengthAwarePaginator
      */
@@ -65,6 +85,7 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
 
     /**
      * Consigue todos los elementos y devuelve una coleccion.
+     *
      * @return \Illuminate\Database\Eloquent\Collection|null
      */
     public function getAll()
@@ -83,6 +104,7 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
 
     /**
      * Busca algun Elemento segun Id u otra regla.
+     *
      * @param  string|int $id El identificador unico (slug|name|etc|id).
      * @return \PCI\Models\AbstractBaseModel
      */
@@ -93,6 +115,7 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
 
     /**
      * Persiste informacion referente a una entidad.
+     *
      * @param array $data El array con informacion del modelo.
      * @return \PCI\Models\AbstractBaseModel|\PCI\Models\Petition
      */
@@ -115,6 +138,7 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
     /**
      * Añade los items solicitados y sus cantidades a la
      * tabla correspondiente en la base de datos.
+     *
      * @param array $items
      * @param \PCI\Models\Petition $petition
      * @return \PCI\Models\Petition
@@ -124,15 +148,23 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
         // por cada item dentro de los items, lo asociamos
         // con el modelo en la base de datos.
         foreach ($items as $id => $data) {
+            /** @var \PCI\Models\Item $item */
             $item = $this->itemRepo->getById($id);
+            $this->converter->setItem($item);
 
-            if (Gate::denies('addItem', [$petition, $item, $data['amount']])) {
+            if (Gate::denies('addItem', [
+                $petition,
+                $this->converter,
+                $data['amount'],
+                $data['type'],
+            ])
+            ) {
                 continue;
             }
 
             $petition->items()->attach($id, [
                 'quantity'      => $data['amount'],
-                'stock_type_id' => $data['type']
+                'stock_type_id' => $data['type'],
             ]);
         }
 
@@ -142,6 +174,7 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
     /**
      * Actualiza algun modelo y lo persiste
      * en la base de datos del sistema.
+     *
      * @param int $id El identificador unico.
      * @param array $data El arreglo con informacion relacionada al modelo.
      * @return \PCI\Models\AbstractBaseModel
@@ -153,6 +186,7 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
 
     /**
      * Elimina del sistema un modelo.
+     *
      * @param int $id El identificador unico.
      * @return boolean|\PCI\Models\AbstractBaseModel
      */
@@ -168,8 +202,10 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
      * Como cada repositorio contiene modelos con
      * estructuras diferentes, necesitamos
      * manener este metodo abstracto.
+     *
      * @param \PCI\Models\AbstractBaseModel|\PCI\Models\Petition $model
-     * @return array<string, string> En donde el key es el titulo legible del campo.
+     * @return array<string, string> En donde el key es el titulo legible del
+     *                       campo.
      */
     protected function makePaginatorData(AbstractBaseModel $model)
     {

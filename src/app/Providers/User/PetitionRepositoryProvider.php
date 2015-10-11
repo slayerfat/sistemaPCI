@@ -1,6 +1,7 @@
 <?php namespace PCI\Providers\User;
 
 use Illuminate\Support\ServiceProvider;
+use PCI\Mamarrachismo\Converter\interfaces\StockTypeConverterInterface;
 use PCI\Models\Petition;
 use PCI\Repositories\Interfaces\Item\ItemRepositoryInterface;
 use PCI\Repositories\Interfaces\User\PetitionRepositoryInterface;
@@ -24,7 +25,8 @@ class PetitionRepositoryProvider extends ServiceProvider
         $this->app->bind(PetitionRepositoryInterface::class, function ($app) {
             return new PetitionRepository(
                 $app[Petition::class],
-                $app[ItemRepositoryInterface::class]
+                $app[ItemRepositoryInterface::class],
+                $app[StockTypeConverterInterface::class]
             );
         });
     }
