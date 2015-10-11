@@ -2,7 +2,7 @@
 
 use PCI\Models\Item;
 
-interface StockTypeCheckerInterface
+interface StockTypeConverterInterface
 {
 
     /**

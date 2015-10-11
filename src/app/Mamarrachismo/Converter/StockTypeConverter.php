@@ -1,15 +1,16 @@
 <?php namespace PCI\Mamarrachismo\Converter;
 
-use PCI\Mamarrachismo\Converter\interfaces\StockTypeCheckerInterface;
+use PCI\Mamarrachismo\Converter\interfaces\StockTypeConverterInterface;
 use PCI\Models\Item;
 
 /**
  * Class StockTypeConverter
+ *
  * @package PCI\Mamarrachismo\Converter
- * @author Alejandro Granadillo <slayerfat@gmail.com>
- * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
+ * @author  Alejandro Granadillo <slayerfat@gmail.com>
+ * @link    https://github.com/slayerfat/sistemaPCI Repositorio en linea.
  */
-class StockTypeConverter implements StockTypeCheckerInterface
+class StockTypeConverter implements StockTypeConverterInterface
 {
 
     /**
@@ -20,6 +21,7 @@ class StockTypeConverter implements StockTypeCheckerInterface
     /**
      * Los tipos de item que pueden ser convertidos.
      * FIXME?
+     *
      * @var array
      */
     private $convertibleTypes = [
@@ -33,13 +35,12 @@ class StockTypeConverter implements StockTypeCheckerInterface
      */
     public function __construct(Item $item)
     {
-
         $this->item = $item;
     }
 
     /**
-     * @param $type
-     * @param $amount
+     * @param                  $type
+     * @param                  $amount
      * @param \PCI\Models\Item $item
      * @return \PCI\Models\Item
      */
@@ -49,8 +50,8 @@ class StockTypeConverter implements StockTypeCheckerInterface
     }
 
     /**
-     * @param $type
-     * @param $amount
+     * @param                  $type
+     * @param                  $amount
      * @param \PCI\Models\Item $item
      * @return \PCI\Models\Item
      */
