@@ -4,6 +4,7 @@
 
 /**
  * PCI\Models\Depot
+ *
  * @package PCI\Models
  * @author Alejandro Granadillo <slayerfat@gmail.com>
  * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.

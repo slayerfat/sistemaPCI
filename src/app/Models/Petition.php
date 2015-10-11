@@ -4,6 +4,7 @@
 
 /**
  * PCI\Models\Petition
+ *
  * @package PCI\Models
  * @author Alejandro Granadillo <slayerfat@gmail.com>
  * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
@@ -19,6 +20,7 @@
  * @property integer $updated_by
  * @property-read PetitionType $type
  * @property-read User $user
+ * @property-read string $formatted_status
  * @property-read \Illuminate\Database\Eloquent\Collection|Item[] $items
  * @property-read \Illuminate\Database\Eloquent\Collection|Note[] $notes
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Petition whereId($value)

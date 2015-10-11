@@ -8,6 +8,7 @@ use ICanBoogie\Inflector;
 
 /**
  * PCI\Models\Item
+ *
  * @package PCI\Models
  * @author Alejandro Granadillo <slayerfat@gmail.com>
  * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.

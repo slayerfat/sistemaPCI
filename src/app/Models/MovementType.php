@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Collection;
 
 /**
  * PCI\Models\MovementType
+ *
  * @package PCI\Models
  * @author Alejandro Granadillo <slayerfat@gmail.com>
  * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.

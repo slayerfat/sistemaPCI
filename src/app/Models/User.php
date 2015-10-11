@@ -11,6 +11,7 @@ use Illuminate\Foundation\Auth\Access\Authorizable;
 
 /**
  * PCI\Models\User
+ *
  * @package PCI\Models
  * @author Alejandro Granadillo <slayerfat@gmail.com>
  * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
