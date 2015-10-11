@@ -131,14 +131,14 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
         $petition->petition_type_id = $data['petition_type_id'];
         $petition->request_date     = Carbon::now();
 
-        $petition = $this->checkItems($data['items'], $petition);
+        $items = $this->checkItems($data['items'], $petition);
 
         // asociamos la peticion al usuario en linea.
         $this->getCurrentUser()->petitions()->save($petition);
 
         // Añade los items solicitados y sus cantidades a la
         // tabla correspondiente en la base de datos.
-        foreach ($data['items'] as $id => $data) {
+        foreach ($items as $id => $data) {
             $petition->items()->attach($id, [
                 'quantity'      => $data['amount'],
                 'stock_type_id' => $data['type'],
@@ -154,9 +154,9 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
      * @param array $items                el request con el id del item,
      *                                    cantidad y tipo de stock.
      * @param \PCI\Models\Petition $petition
-     * @return \PCI\Models\Petition
+     * @return array los items actualizados.
      */
-    private function checkItems(array $items, Petition $petition)
+    private function checkItems(array $items, Petition &$petition)
     {
         // por cada item dentro de los items, lo asociamos
         // con el modelo en la base de datos.
@@ -182,11 +182,13 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
                     . "({$item->stock}:{$item->stock_type_id}) "
                     . "disponibles del Item {$item->desc}\r\n";
 
+                unset($items[$id]);
+
                 continue;
             }
         }
 
-        return $petition;
+        return $items;
     }
 
     /**
