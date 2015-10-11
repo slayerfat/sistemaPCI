@@ -67,7 +67,17 @@ class StockTypeConverter implements StockTypeConverterInterface
      */
     public function isConvertible()
     {
-        return array_key_exists($this->item->stock_type_id, $this->convertibleTypes);
+        return $this->isKeyValid($this->item->stock_type_id, $this->convertibleTypes);
+    }
+
+    /**
+     * @param int $key
+     * @param array $search
+     * @return bool
+     */
+    private function isKeyValid($key, array $search)
+    {
+        return array_key_exists($key, $search);
     }
 
     /**
@@ -85,6 +95,10 @@ class StockTypeConverter implements StockTypeConverterInterface
             return $amount;
         }
 
+        if ($this->invalidSubType($type)) {
+            return $amount + 1;
+        }
+
         // nos interesa buscar en el arreglo cual es
         // el que esta relacionado con el item actual.
         $id    = $this->item->stock_type_id;
@@ -97,6 +111,23 @@ class StockTypeConverter implements StockTypeConverterInterface
         $operand = $array[1];
 
         return $this->$method($amount, $operand);
+    }
+
+    /**
+     * @param int $type
+     * @return bool
+     */
+    private function invalidSubType($type)
+    {
+        $valid = true;
+
+        foreach ($this->convertibleTypes as $array) {
+            if (!$this->isKeyValid($type, $array)) {
+                $valid = false;
+            }
+        }
+
+        return $valid;
     }
 
     /**

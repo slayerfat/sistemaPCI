@@ -129,10 +129,19 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
         $petition->petition_type_id = $data['petition_type_id'];
         $petition->request_date     = Carbon::now();
 
+        $petition = $this->checkItems($data['items'], $petition);
+
         // asociamos la peticion al usuario en linea.
         $this->getCurrentUser()->petitions()->save($petition);
 
-        return $this->attachItems($data['items'], $petition);
+        foreach ($data['items'] as $id => $data) {
+            $petition->items()->attach($id, [
+                'quantity'      => $data['amount'],
+                'stock_type_id' => $data['type'],
+            ]);
+        }
+
+        return $petition;
     }
 
     /**
@@ -143,7 +152,7 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
      * @param \PCI\Models\Petition $petition
      * @return \PCI\Models\Petition
      */
-    private function attachItems(array $items, Petition $petition)
+    private function checkItems(array $items, Petition $petition)
     {
         // por cada item dentro de los items, lo asociamos
         // con el modelo en la base de datos.
@@ -152,6 +161,8 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
             $item = $this->itemRepo->getById($id);
             $this->converter->setItem($item);
 
+            // debemos chequear que los items tengan
+            // los tipos y cantidades correctos.
             if (Gate::denies('addItem', [
                 $petition,
                 $this->converter,
@@ -159,13 +170,16 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
                 $data['type'],
             ])
             ) {
+                $petition->comments .= sizeof($petition->comments) <= 1 ? "" : "\r\n";
+
+                $petition->comments .= "El usuario {$this->getCurrentUser()->name} "
+                    . "solicito {$data['amount']} ({$data['amount']}:{$data['type']}) "
+                    . "y existe un stock de {$item->formattedStock()} "
+                    . "({$item->stock}:{$item->stock_type_id}) "
+                    . "disponibles del Item {$item->desc}\r\n";
+
                 continue;
             }
-
-            $petition->items()->attach($id, [
-                'quantity'      => $data['amount'],
-                'stock_type_id' => $data['type'],
-            ]);
         }
 
         return $petition;
