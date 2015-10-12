@@ -37,7 +37,7 @@ class EmailPetitionEventToCreator extends AbstractEmailListener
                 /** @var Message $message */
                 $message->to($email)
                     ->subject(
-                        "sistemaPCI: Su ."
+                        "sistemaPCI: Su "
                         . trans('models.petitions.singular')
                         . " #" . $petition->id
                         . " con fecha de " . $date

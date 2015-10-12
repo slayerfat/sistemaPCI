@@ -41,7 +41,7 @@ class EmailPetitionEventToAttendants extends AbstractEmailListener
                 $message->to($emails['attendants'])
                     ->bcc($emails['owner'])
                     ->subject(
-                        "sistemaPCI: Nuevo ."
+                        "sistemaPCI: Nuevo "
                         . trans('models.petitions.singular')
                         . " #" . $petition->id
                         . " ha sido creado por " . $user->email

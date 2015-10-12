@@ -21,7 +21,7 @@ class EventServiceProvider extends ServiceProvider
         ],
         'PCI\Events\NewPetitionCreation' => [
             'PCI\Listeners\Email\EmailPetitionEventToAttendants',
-            'PCI\Listeners\Email\EmailPetitionEventToDepotOwner',
+            'PCI\Listeners\Email\EmailPetitionEventToCreator',
         ],
     ];
 
