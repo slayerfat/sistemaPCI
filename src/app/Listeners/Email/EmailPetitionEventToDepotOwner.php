@@ -1,6 +1,4 @@
-<?php namespace PCI\Listeners;
-
-use PCI\Listeners\Email\AbstractEmailListener;
+<?php namespace PCI\Listeners\Email;
 
 /**
  * Class EmailPetitionEventToDepotOwner

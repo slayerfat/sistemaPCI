@@ -1,7 +1,6 @@
-<?php namespace PCI\Listeners;
+<?php namespace PCI\Listeners\Email;
 
 use PCI\Events\NewPetitionCreation;
-use PCI\Listeners\Email\AbstractEmailListener;
 
 /**
  * Class EmailPetitionEventToAttendants
