@@ -61,7 +61,7 @@ class EmailPetitionEventToAttendants extends AbstractEmailListener
         $emails = [];
 
         // TODO: repo
-        Attendant::all()->load('users')
+        Attendant::all()->load('user')
             ->each(function ($attendant) use (&$emails) {
                 $emails[] = $attendant->user->email;
             });
