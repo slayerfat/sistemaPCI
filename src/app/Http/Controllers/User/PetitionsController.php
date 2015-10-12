@@ -77,7 +77,7 @@ class PetitionsController extends Controller
 
         Event::fire(new NewPetitionCreation($petition));
 
-        Flash::success("Peticion Nº $petition->id creada exitosamente.");
+        Flash::success("Petición #$petition->id creada exitosamente.");
 
         return Redirect::route('petitions.show', $petition->id);
     }
