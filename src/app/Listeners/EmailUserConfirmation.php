@@ -2,9 +2,9 @@
 
 namespace PCI\Listeners;
 
-use Illuminate\Contracts\Mail\Mailer;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use PCI\Events\NewUserRegistration;
+use PCI\Listeners\Email\AbstractEmailListener;
 
 /**
  * Class EmailUserConfirmation
@@ -12,23 +12,8 @@ use PCI\Events\NewUserRegistration;
  * @author Alejandro Granadillo <slayerfat@gmail.com>
  * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
  */
-class EmailUserConfirmation implements ShouldQueue
+class EmailUserConfirmation extends AbstractEmailListener implements ShouldQueue
 {
-
-    /**
-     * La implementacion del Mailer para enviar correos.
-     * @var Mailer
-     */
-    private $mail;
-
-    /**
-     * Create the event listener.
-     * @param Mailer $mail
-     */
-    public function __construct(Mailer $mail)
-    {
-        $this->mail = $mail;
-    }
 
     /**
      * En este evento, enviamos el correo con los datos

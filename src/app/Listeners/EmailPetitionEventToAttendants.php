@@ -1,6 +1,7 @@
 <?php namespace PCI\Listeners;
 
 use PCI\Events\NewPetitionCreation;
+use PCI\Listeners\Email\AbstractEmailListener;
 
 /**
  * Class EmailPetitionEventToAttendants
@@ -9,18 +10,8 @@ use PCI\Events\NewPetitionCreation;
  * @author  Alejandro Granadillo <slayerfat@gmail.com>
  * @link    https://github.com/slayerfat/sistemaPCI Repositorio en linea.
  */
-class EmailPetitionEventToAttendants
+class EmailPetitionEventToAttendants extends AbstractEmailListener
 {
-
-    /**
-     * Create the event listener.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        //
-    }
 
     /**
      * Handle the event.
