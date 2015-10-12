@@ -4,6 +4,7 @@ namespace PCI\Http\Controllers\User;
 
 use Event;
 use Flash;
+use Illuminate\Contracts\Auth\Guard;
 use Illuminate\View\Factory as View;
 use PCI\Events\NewPetitionCreation;
 use PCI\Http\Controllers\Controller;
@@ -67,15 +68,20 @@ class PetitionsController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     *
      * @param \PCI\Http\Requests\User\PetitionRequest $request
+     * @param \Illuminate\Contracts\Auth\Guard        $auth
      * @return \Illuminate\Http\Response
      */
-    public function store(PetitionRequest $request)
+    public function store(PetitionRequest $request, Guard $auth)
     {
         /** @var \PCI\Models\Petition $petition */
         $petition = $this->repo->create($request->all());
 
-        Event::fire(new NewPetitionCreation($petition));
+        /** @var \PCI\Models\User $user */
+        $user = $auth->user();
+
+        Event::fire(new NewPetitionCreation($petition, $user));
 
         Flash::success("Petición #$petition->id creada exitosamente.");
 

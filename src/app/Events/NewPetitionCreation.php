@@ -2,6 +2,7 @@
 
 use Illuminate\Queue\SerializesModels;
 use PCI\Models\Petition;
+use PCI\Models\User;
 
 /**
  * Class NewPetitionCreation
@@ -21,12 +22,19 @@ class NewPetitionCreation extends Event
     public $petition;
 
     /**
+     * @var \PCI\Models\User
+     */
+    public $user;
+
+    /**
      * Create a new event instance.
      *
      * @param \PCI\Models\Petition $petition
+     * @param \PCI\Models\User     $user
      */
-    public function __construct(Petition $petition)
+    public function __construct(Petition $petition, User $user)
     {
         $this->petition = $petition;
+        $this->user = $user;
     }
 }
