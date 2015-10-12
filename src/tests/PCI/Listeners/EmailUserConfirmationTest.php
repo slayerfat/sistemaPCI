@@ -3,9 +3,8 @@
 use Illuminate\Contracts\Mail\Mailer;
 use Mockery;
 use PCI\Events\NewUserRegistration;
-use PCI\Listeners\EmailUserConfirmation;
+use PCI\Listeners\Email\EmailUserConfirmation;
 use PCI\Models\User;
-use stdClass;
 use Tests\AbstractTestCase;
 
 class EmailUserConfirmationTest extends AbstractTestCase

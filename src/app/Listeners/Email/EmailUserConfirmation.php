@@ -1,10 +1,9 @@
 <?php
 
-namespace PCI\Listeners;
+namespace PCI\Listeners\Email;
 
 use Illuminate\Contracts\Queue\ShouldQueue;
 use PCI\Events\NewUserRegistration;
-use PCI\Listeners\Email\AbstractEmailListener;
 
 /**
  * Class EmailUserConfirmation
