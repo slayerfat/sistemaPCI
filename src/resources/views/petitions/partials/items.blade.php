@@ -16,15 +16,21 @@
         ];
     }
 
+    if (isset($title)) {
+        $title = trans('models.items.plural')
+        . ' registrados en el '
+        . trans('models.petitions.singular');
+    } else {
+        $title = null;
+    }
+
     ?>
 
     <hr/>
 
     @include('partials.tables.withArray', [
         'data' => $array,
-        'title' => trans('models.items.plural')
-            . ' registrados en el '
-            . trans('models.petitions.singular'),
+        'title' => $title,
         'resource' => 'items',
     ])
 @endunless

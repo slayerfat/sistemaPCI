@@ -23,9 +23,12 @@ if (isset($total) && isset($data)) {
 } elseif (!isset($total)) {
     $footer = '';
 }
+
+$html = $title ? "<h1>{$title}</h1>" : '';
+
 ?>
 
-<h1>{{$title}}</h1>
+{!! $html !!}
 
 {!!
 Table::withContents($data)->withFooter($footer)

@@ -1,6 +1,7 @@
 <?php namespace PCI\Models;
 
 /** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
+use Illuminate\Database\Query\Builder;
 
 /**
  * PCI\Models\Petition
@@ -81,6 +82,15 @@ class Petition extends AbstractBaseModel
     public function getCommentsAttribute($value)
     {
         return strlen($value) > 1 ? $value : 'Sin comentarios.';
+    }
+
+    /**
+     * @param Builder $query
+     * @return Petition[]
+     */
+    public function scopeLatest($query)
+    {
+        return $query->orderBy('updated_at', 'desc')->take(4)->get();
     }
 
     /**
