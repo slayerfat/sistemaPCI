@@ -4,29 +4,29 @@ return [
     /**
      * Almacen
      */
-    'depots.index'               => 'Ver Almacenes',
-    'depots.show'                => 'Ver Almacen',
-    'depots.create'              => 'Crear Almacen',
-    'depots.edit'                => 'Editar Almacen',
-    'depots.destroy'             => 'Eliminar Almacen',
-    'depots.plural'              => 'Almacenes',
-    'depots.singular'            => 'Almacen',
-    'depots.fa-icon'             => 'bars',
-    'depots.store.success'       => 'Almacen creada exitosamente.',
-    'depots.update.success'      => 'Almacen actualizada exitosamente.',
+    'depots.index'                 => 'Ver Almacenes',
+    'depots.show'                  => 'Ver Almacen',
+    'depots.create'                => 'Crear Almacen',
+    'depots.edit'                  => 'Editar Almacen',
+    'depots.destroy'               => 'Eliminar Almacen',
+    'depots.plural'                => 'Almacenes',
+    'depots.singular'              => 'Almacen',
+    'depots.fa-icon'               => 'bars',
+    'depots.store.success'         => 'Almacen creada exitosamente.',
+    'depots.update.success'        => 'Almacen actualizada exitosamente.',
     /**
      * Cargo
      */
-    'positions.index'          => 'Ver Cargos',
-    'positions.show'           => 'Ver Cargo',
-    'positions.create'         => 'Crear Cargo',
-    'positions.edit'           => 'Editar Cargo',
-    'positions.destroy'        => 'Eliminar Cargo',
-    'positions.plural'         => 'Cargos',
-    'positions.singular'       => 'Cargo',
-    'positions.fa-icon' => 'briefcase',
-    'positions.store.success'  => 'Cargo creado exitosamente.',
-    'positions.update.success' => 'Cargo actualizado exitosamente.',
+    'positions.index'              => 'Ver Cargos',
+    'positions.show'               => 'Ver Cargo',
+    'positions.create'             => 'Crear Cargo',
+    'positions.edit'               => 'Editar Cargo',
+    'positions.destroy'            => 'Eliminar Cargo',
+    'positions.plural'             => 'Cargos',
+    'positions.singular'           => 'Cargo',
+    'positions.fa-icon'            => 'briefcase',
+    'positions.store.success'      => 'Cargo creado exitosamente.',
+    'positions.update.success'     => 'Cargo actualizado exitosamente.',
     /**
      * Categoria
      */
@@ -69,16 +69,16 @@ return [
     /**
      * Direccion
      */
-    'addresses.index'            => 'Ver Direcciones',
-    'addresses.show'             => 'Ver Dirección',
-    'addresses.create'           => 'Crear Dirección',
-    'addresses.edit'             => 'Editar Dirección',
-    'addresses.destroy'          => 'Eliminar Dirección',
-    'addresses.plural'           => 'Direcciones',
-    'addresses.singular'         => 'Dirección',
-    'addresses.fa-icon'          => 'map-marker',
-    'addresses.store.success'    => 'Dirección creada exitosamente.',
-    'addresses.update.success'   => 'Dirección actualizada exitosamente.',
+    'addresses.index'              => 'Ver Direcciones',
+    'addresses.show'               => 'Ver Dirección',
+    'addresses.create'             => 'Crear Dirección',
+    'addresses.edit'               => 'Editar Dirección',
+    'addresses.destroy'            => 'Eliminar Dirección',
+    'addresses.plural'             => 'Direcciones',
+    'addresses.singular'           => 'Dirección',
+    'addresses.fa-icon'            => 'map-marker',
+    'addresses.store.success'      => 'Dirección creada exitosamente.',
+    'addresses.update.success'     => 'Dirección actualizada exitosamente.',
     /**
      * Fabricante
      */
@@ -147,16 +147,16 @@ return [
     /**
      * Tipos de Cantidad
      */
-    'stockTypes.index'          => 'Ver Tipos de Cantidad',
-    'stockTypes.show'           => 'Ver Tipo de Cantidad',
-    'stockTypes.create'         => 'Crear Tipo de Cantidad',
-    'stockTypes.edit'           => 'Editar Tipo de Cantidad',
-    'stockTypes.destroy'        => 'Eliminar Tipo de Cantidad',
-    'stockTypes.plural'         => 'Tipos de Cantidad',
-    'stockTypes.singular'       => 'Tipo de Cantidad',
-    'stockTypes.fa-icon'        => 'asterisk',
-    'stockTypes.store.success'  => 'Tipo de Cantidad creado exitosamente.',
-    'stockTypes.update.success' => 'Tipo de Cantidad actualizado exitosamente.',
+    'stockTypes.index'             => 'Ver Tipos de Cantidad',
+    'stockTypes.show'              => 'Ver Tipo de Cantidad',
+    'stockTypes.create'            => 'Crear Tipo de Cantidad',
+    'stockTypes.edit'              => 'Editar Tipo de Cantidad',
+    'stockTypes.destroy'           => 'Eliminar Tipo de Cantidad',
+    'stockTypes.plural'            => 'Tipos de Cantidad',
+    'stockTypes.singular'          => 'Tipo de Cantidad',
+    'stockTypes.fa-icon'           => 'asterisk',
+    'stockTypes.store.success'     => 'Tipo de Cantidad creado exitosamente.',
+    'stockTypes.update.success'    => 'Tipo de Cantidad actualizado exitosamente.',
     /**
      * Tipos de Nota
      */
@@ -206,7 +206,7 @@ return [
     'items.destroy'                => 'Eliminar Item',
     'items.plural'                 => 'Items',
     'items.singular'               => 'Item',
-    'items.fa-icon'              => 'cubes',
+    'items.fa-icon'                => 'cubes',
     'items.store.success'          => 'Item creado exitosamente.',
     'items.update.success'         => 'Item actualizado exitosamente.',
     /**
@@ -258,20 +258,20 @@ return [
     'petitions.destroy'            => 'Eliminar Pedido',
     'petitions.plural'             => 'Pedidos',
     'petitions.singular'           => 'Pedido',
-    'petitions.fa-icon'            => 'check',
+    'petitions.fa-icon'            => 'tasks',
     'petitions.store.success'      => 'Pedido creado exitosamente.',
     'petitions.update.success'     => 'Pedido actualizado exitosamente.',
     /**
      * Datos Laborales
      */
-    'workDetails.index'          => 'Ver Datos Laborales',
-    'workDetails.show'           => 'Ver Datos Laborales',
-    'workDetails.create'         => 'Crear Datos Laborales',
-    'workDetails.edit'           => 'Editar Datos Laborales',
-    'workDetails.destroy'        => 'Eliminar Datos Laborales',
-    'workDetails.plural'         => 'Datos Laborales',
-    'workDetails.singular'       => 'Datos Laborales',
-    'workDetails.fa-icon'        => 'briefcase',
-    'workDetails.store.success'  => 'Datos Laborales creados exitosamente.',
-    'workDetails.update.success' => 'Datos Laborales actualizados exitosamente.',
+    'workDetails.index'            => 'Ver Datos Laborales',
+    'workDetails.show'             => 'Ver Datos Laborales',
+    'workDetails.create'           => 'Crear Datos Laborales',
+    'workDetails.edit'             => 'Editar Datos Laborales',
+    'workDetails.destroy'          => 'Eliminar Datos Laborales',
+    'workDetails.plural'           => 'Datos Laborales',
+    'workDetails.singular'         => 'Datos Laborales',
+    'workDetails.fa-icon'          => 'briefcase',
+    'workDetails.store.success'    => 'Datos Laborales creados exitosamente.',
+    'workDetails.update.success'   => 'Datos Laborales actualizados exitosamente.',
 ];
