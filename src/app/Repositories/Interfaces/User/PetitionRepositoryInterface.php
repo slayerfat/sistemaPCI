@@ -24,4 +24,11 @@ interface PetitionRepositoryInterface extends
     GetIndexViewableInterface
 {
 
+    /**
+     * Cambia el estado del pedido.
+     * @param int $id
+     * @param bool $status
+     * @return bool
+     */
+    public function changeStatus($id, $status);
 }

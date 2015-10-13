@@ -108,7 +108,7 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
      * Busca algun Elemento segun Id u otra regla.
      *
      * @param  string|int $id El identificador unico (slug|name|etc|id).
-     * @return \PCI\Models\AbstractBaseModel
+     * @return \PCI\Models\AbstractBaseModel|\PCI\Models\Petition
      */
     public function find($id)
     {
@@ -238,5 +238,24 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
             'Fecha de solicitud' => $model->request_date->diffForHumans(),
             'Status'             => $model->formattedStatus,
         ];
+    }
+
+    /**
+     * Cambia el estado del pedido.
+     *
+     * @param int  $id
+     * @param bool $status
+     * @return bool
+     */
+    public function changeStatus($id, $status)
+    {
+        if (is_bool($status)) {
+            return false;
+        }
+
+        $petition         = $this->getById($id);
+        $petition->status = $status;
+
+        return $petition->save();
     }
 }

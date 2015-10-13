@@ -37,3 +37,7 @@
         ])
     </div>
 @stop
+
+@section('js')
+    @yield('js-buttons')
+@stop
