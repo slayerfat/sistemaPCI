@@ -1,13 +1,18 @@
 # Change Log
 
-Todos los cambios significatiovos en este proyecto estaran documentados en este archivo. Este proyecto intenta seguir el [Versionamiento Semantico](http://semver.org/).
+Todos los cambios significativos en este proyecto estaran documentados en este archivo. Este proyecto intenta seguir el [Versionamiento Semantico](http://semver.org/).
 
 ## [En Desarrollo][unrele]
 
 ### Añadido
 
+- Nuevas Peticiones, estas pueden enviar correos a todas las partes interesadas en la creacion de una nueva.
+
+## [v0.3.4] - 2015-10-02
+
+### Añadido
+
 - Tipo de Cantidad.
-- Nuevas Peticiones.
 
 ## [v0.3.3] - 2015-10-02
 

@@ -13,8 +13,8 @@ Misión Alma Mater, Programa Nacional de Formación: Informatica, Trayecto 3, IU
 - [x] v0.2 Empleado
 - [x] v0.3 Almacen
 - [x] v0.3.x Item
-- [ ] v0.3.x Otros
-- [ ] v0.4 Pedidos
+- [x] v0.3.x Otros
+- [x] v0.4 Pedidos
 - [ ] v0.4.x Notas
 
 [Ver Bitacora](https://github.com/slayerfat/sistemaPCI/blob/master/CHANGELOG.md)
