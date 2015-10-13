@@ -21,7 +21,7 @@
         </p>
 
         @include('emails.petitions.partials.item-table')
-
+        @include('emails.petitions.partials.comments')
         @include('emails.petitions.partials.timestamp')
     </section>
 </div>
