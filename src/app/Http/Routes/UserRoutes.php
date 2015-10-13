@@ -174,6 +174,17 @@ class UserRoutes extends AbstractPciRoutes
                 'middleware' => 'auth'
             ]
         ],
+        /**
+         * Ajax de pedidos
+         */
+        [
+            'method' => 'POST',
+            'url'    => 'api/pedidos/status/{id}',
+            'data'   => [
+                'uses'       => 'Api\User\PetitionsController@changeStatus',
+                'as'         => 'api.petitions.status',
+            ]
+        ],
     ];
 
     /**
