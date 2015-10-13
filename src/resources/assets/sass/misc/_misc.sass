@@ -6,3 +6,12 @@
 
 .yellow
   color: $brand-warning
+
+
+.message-float
+  @include make-xs-column(4)
+  @include make-xs-column-offset(4)
+  bottom: 0
+  float: right
+  position: fixed
+  z-index: 1
