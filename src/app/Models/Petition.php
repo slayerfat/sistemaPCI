@@ -39,6 +39,7 @@ class Petition extends AbstractBaseModel
 
     /**
      * The attributes that are mass assignable.
+     *
      * @var array
      */
     protected $fillable = [
@@ -52,6 +53,7 @@ class Petition extends AbstractBaseModel
      * se refiere a Carbon\Carbon dates.
      * En otras palabras, genera una instancia
      * de Carbon\Carbon para cada campo.
+     *
      * @var array
      */
     protected $dates = ['request_date'];
@@ -71,7 +73,19 @@ class Petition extends AbstractBaseModel
     }
 
     /**
+     * Regresa los comentarios, si estan vacios, regresa 'sin comentarios'.
+     *
+     * @param string $value
+     * @return string
+     */
+    public function getCommentsAttribute($value)
+    {
+        return sizeof($value) > 1 ? $value : 'Sin comentarios.';
+    }
+
+    /**
      * Regresa el tipo de pedido asociado.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
     public function type()
@@ -81,6 +95,7 @@ class Petition extends AbstractBaseModel
 
     /**
      * Regresa el usuario asociado al pedido.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
     public function user()
@@ -90,6 +105,7 @@ class Petition extends AbstractBaseModel
 
     /**
      * Regresa una coleccion de items asociados.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
      */
     public function items()
@@ -99,6 +115,7 @@ class Petition extends AbstractBaseModel
 
     /**
      * Regresa una coleccion de notas asociadas.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\hasMany
      */
     public function notes()
