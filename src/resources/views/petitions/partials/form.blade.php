@@ -42,6 +42,20 @@ ControlGroup::generate(
 @section('js')
     <script>
         /**
+         * Como los comentarios llegan sucios, debemos limpiarlos
+         * cuando estamos creando una nueva peticion.
+         */
+        $(function () {
+            var $comments = $('#comments');
+            var val = $comments.val();
+
+            if(val.length > 1) {
+                $comments.val('').prop('placeholder', 'Introduzca un comentario.');
+            }
+        });
+    </script>
+    <script>
+        /**
          * la informacion html que es usada para generar
          * los elementos internos del select.
          * @param data
