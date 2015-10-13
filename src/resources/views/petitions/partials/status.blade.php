@@ -1,56 +1,64 @@
 <?php
 
-// si el estatus no es nulo entonces ha sido aprobado/rechazado
-$buttons = '';
-
-$route = route('api.petitions.status', $petition->id);
-
-// debemos chequear el estado para determinar
-// que tipo de colores debemos botar, con o sin botones.
 if (is_null($petition->status)) {
-    $status  = '<span class="yellow">';
-    $icon    = ' <i class="fa fa-exclamation-circle"></i>';
-    $buttons = '<a  href="' . $route . '" id="petition-true">
-                    <button class="btn btn-success">
-                        <i class="fa fa-check-circle"></i> Aprobar
-                    </button>
-                </a>
-                <a href="' . $route . '" id="petition-false">
-                    <button class="btn btn-danger">
-                        <i class="fa fa-times-circle"></i> Rechazar
-                    </button>
-                </a>';
+    $status = 'null';
 } elseif ($petition->status) {
-    $status = '<span class="green">';
-    $icon   = ' <i class="fa fa-check-circle"></i>';
+    $status = 'true';
 } else {
-    $status = '<span class="red">';
-    $icon   = ' <i class="fa fa-times-circle"></i>';
+    $status = 'false';
 }
-
-$status .= $petition->formattedStatus . $icon . $buttons . '</span>'
 
 ?>
 
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
 <h3 id="petition-status"
-    data-status="{{ is_null($petition->status) ? 'null' : 'bool'}}">
-    Estado: {!! $status !!}
+    data-route="{{ route('api.petitions.status', $petition->id) }}"
+    data-status="{{ $status }}">
 </h3>
 
 @section('js-buttons')
     <script type="text/javascript">
         $(function () {
+            var $statusElement = $('#petition-status');
+            var url = $statusElement.data('route');
+
             var status = {
 
-                status: null,
+                status: $statusElement.data('status'),
 
-                buttons: {
-                    text: 'Estado: ',
-                    green: this.text + '<span class="green">Aprobado <i class="fa fa-check-circle"></i></span>',
-                    red: this.text + '<span class="red">No Aprobado <i class="fa fa-times-circle"></i></span>',
-                    yellow: ''
+                html: {
+                    green: 'Estado: ' + '<span class="green">Aprobado ' +
+                    '<i class="fa fa-check-circle"></i>' +
+                    '</span>',
+
+                    red: 'Estado: ' + '<span class="red">No Aprobado ' +
+                    '<i class="fa fa-times-circle"></i>' +
+                    '</span>',
+
+                    yellow: 'Estado: ' + '<span class="yellow">Por aprobar ' +
+                    '<i class="fa fa-exclamation-circle"></i> ' +
+                    '<a href="' + url + '" id="petition-true">' +
+                    '<button class="btn btn-success">' +
+                    '<i class="fa fa-check-circle"></i> Aprobar ' +
+                    '</button>' +
+                    '</a> ' +
+                    '<a href="' + url + '" id="petition-false">' +
+                    '<button class="btn btn-danger">' +
+                    '<i class="fa fa-times-circle"></i> Rechazar ' +
+                    '</button>' +
+                    '</a>' +
+                    '</span>'
+                },
+
+                start: function () {
+                    if (this.status == null) {
+                        return $statusElement.append(this.html.yellow);
+                    } else if (this.status) {
+                        return $statusElement.append(this.html.green);
+                    }
+
+                    return $statusElement.append(this.html.red);
                 },
 
                 change: function (url, status) {
@@ -69,13 +77,7 @@ $status .= $petition->formattedStatus . $icon . $buttons . '</span>'
                 }
             };
 
-            var $statusElement = $('#petition-status');
-
-            if ($statusElement.data('status') == null) {
-                status.buttons.yellow = $statusElement.html();
-            }
-
-            console.log(status);
+            status.start();
 
             // http://laravel.com/docs/master/routing#csrf-x-csrf-token
             $.ajaxSetup({
