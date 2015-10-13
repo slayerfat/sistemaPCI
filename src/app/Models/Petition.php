@@ -80,6 +80,17 @@ class Petition extends AbstractBaseModel
         return $this->status ? 'Aprobado' : 'No Aprobado';
     }
 
+    public function getStatusAttribute($value)
+    {
+        if ($value == 1) {
+            return true;
+        } elseif ($value == 0) {
+            return false;
+        }
+
+        return null;
+    }
+
     public function setStatusAttribute($value)
     {
         if ($value == "true") {
