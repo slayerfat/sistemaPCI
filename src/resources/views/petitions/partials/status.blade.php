@@ -10,12 +10,12 @@ $route = route('api.petitions.status', $petition->id);
 if (is_null($petition->status)) {
     $status  = '<span class="yellow">';
     $icon    = ' <i class="fa fa-exclamation-circle"></i>';
-    $buttons = '<a  href="'. $route .'" id="petition-true">
+    $buttons = '<a  href="' . $route . '" id="petition-true">
                     <button class="btn btn-success">
                         <i class="fa fa-check-circle"></i> Aprobar
                     </button>
                 </a>
-                <a href="'. $route .'" id="petition-false">
+                <a href="' . $route . '" id="petition-false">
                     <button class="btn btn-danger">
                         <i class="fa fa-times-circle"></i> Rechazar
                     </button>
@@ -34,47 +34,67 @@ $status .= $petition->formattedStatus . $icon . $buttons . '</span>'
 
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
-<h3>
+<h3 id="petition-status"
+    data-status="{{ is_null($petition->status) ? 'null' : 'bool'}}">
     Estado: {!! $status !!}
 </h3>
 
 @section('js-buttons')
-<script type="text/javascript">
-$(function (){
-    function changeStatus(url, status){
-        $.ajax({
-            url: url,
-            type: 'POST',
-            dataType: 'json',
-            data: {status: status}
-        }).done(function() {
-            console.log("success");
-        }).fail(function() {
-            console.log("error");
-        });
-    }
-    // http://laravel.com/docs/master/routing#csrf-x-csrf-token
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
+    <script type="text/javascript">
+        $(function () {
+            var status = {
 
-    $('#petition-true').click(function(evt) {
-        evt.preventDefault();
+                status: null,
 
-        var url = $(this).prop('href');
+                buttons: {
+                    text: 'Estado: ',
+                    green: this.text + '<span class="green">Aprobado <i class="fa fa-check-circle"></i></span>',
+                    red: this.text + '<span class="red">No Aprobado <i class="fa fa-times-circle"></i></span>',
+                    yellow: ''
+                },
 
-        changeStatus(url, true);
-    });
+                change: function (url, status) {
+                    this.status = status;
 
-    $('#petition-false').click(function(evt) {
-        evt.preventDefault();
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        dataType: 'json',
+                        data: {status: status}
+                    }).done(function () {
+                        console.log("success");
+                    }).fail(function () {
+                        console.log("error");
+                    });
+                }
+            };
 
-        var url = $(this).prop('href');
+            var $statusElement = $('#petition-status');
 
-        changeStatus(url, false);
-    });
-})
-</script>
+            if ($statusElement.data('status') == null) {
+                status.buttons.yellow = $statusElement.html();
+            }
+
+            console.log(status);
+
+            // http://laravel.com/docs/master/routing#csrf-x-csrf-token
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $('#petition-true').click(function (evt) {
+                evt.preventDefault();
+
+                status.change($(this).prop('href'), true);
+            });
+
+            $('#petition-false').click(function (evt) {
+                evt.preventDefault();
+
+                status.change($(this).prop('href'), false);
+            });
+        })
+    </script>
 @stop
