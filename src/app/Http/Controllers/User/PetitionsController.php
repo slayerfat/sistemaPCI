@@ -95,7 +95,9 @@ class PetitionsController extends Controller
      */
     public function show($id)
     {
-        //
+        $petition = $this->repo->find($id);
+
+        return $this->view->make('petitions.show', compact('petition'));
     }
 
     /**

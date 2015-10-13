@@ -112,7 +112,7 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
      */
     public function find($id)
     {
-        return $this->getById($id);
+        return $this->getById($id)->load('items', 'user');
     }
 
     /**
