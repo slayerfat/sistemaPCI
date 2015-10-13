@@ -84,6 +84,8 @@ class Petition extends AbstractBaseModel
     {
         if ($value == "true") {
             return $this->attributes['status'] = 1;
+        } elseif ($value == "null" || $value == null) {
+            return $this->attributes['status'] = null;
         }
 
         return $this->attributes['status'] = 0;
