@@ -6,6 +6,11 @@ En este archivo estaran los cambios pertinentes en el DED y el Documento de Espe
 
 Detalles, observaciones u otros:
 
+#### 12-10-15
+
+¿Porque pedido tiene fecha de pedido si el mismo ya posee campos de creado y actualizado?
+este campo es inutil bajo su proposito.
+
 #### 27-09-15
 
 Almacen necesita el numero de almacen (actualmente no lo tiene)
