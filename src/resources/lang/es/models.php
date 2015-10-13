@@ -5,15 +5,15 @@ return [
      * Almacen
      */
     'depots.index'                 => 'Ver Almacenes',
-    'depots.show'                  => 'Ver Almacen',
-    'depots.create'                => 'Crear Almacen',
-    'depots.edit'                  => 'Editar Almacen',
-    'depots.destroy'               => 'Eliminar Almacen',
+    'depots.show'                  => 'Ver Almacén',
+    'depots.create'                => 'Crear Almacén',
+    'depots.edit'                  => 'Editar Almacén',
+    'depots.destroy'               => 'Eliminar Almacén',
     'depots.plural'                => 'Almacenes',
-    'depots.singular'              => 'Almacen',
+    'depots.singular'              => 'Almacén',
     'depots.fa-icon'               => 'bars',
-    'depots.store.success'         => 'Almacen creada exitosamente.',
-    'depots.update.success'        => 'Almacen actualizada exitosamente.',
+    'depots.store.success'         => 'Almacén creada exitosamente.',
+    'depots.update.success'        => 'Almacén actualizada exitosamente.',
     /**
      * Cargo
      */
@@ -30,16 +30,16 @@ return [
     /**
      * Categoria
      */
-    'cats.index'                   => 'Ver Categorias',
-    'cats.show'                    => 'Ver Categoria',
-    'cats.create'                  => 'Crear Categoria',
-    'cats.edit'                    => 'Editar Categoria',
-    'cats.destroy'                 => 'Eliminar Categoria',
-    'cats.plural'                  => 'Categorias',
-    'cats.singular'                => 'Categoria',
+    'cats.index'                   => 'Ver Categorías',
+    'cats.show'                    => 'Ver Categoría',
+    'cats.create'                  => 'Crear Categoría',
+    'cats.edit'                    => 'Editar Categoría',
+    'cats.destroy'                 => 'Eliminar Categoría',
+    'cats.plural'                  => 'Categorías',
+    'cats.singular'                => 'Categoría',
     'cats.fa-icon'                 => 'th-large',
-    'cats.store.success'           => 'Categoria creada exitosamente.',
-    'cats.update.success'          => 'Categoria actualizada exitosamente.',
+    'cats.store.success'           => 'Categoría creada exitosamente.',
+    'cats.update.success'          => 'Categoría actualizada exitosamente.',
     /**
      * Rubro
      */
@@ -95,16 +95,16 @@ return [
     /**
      * Genero
      */
-    'genders.index'                => 'Ver Generos',
-    'genders.show'                 => 'Ver Genero',
-    'genders.create'               => 'Crear Genero',
-    'genders.edit'                 => 'Editar Genero',
-    'genders.destroy'              => 'Eliminar Genero',
-    'genders.plural'               => 'Generos',
-    'genders.singular'             => 'Genero',
+    'genders.index'                => 'Ver Géneros',
+    'genders.show'                 => 'Ver Género',
+    'genders.create'               => 'Crear Género',
+    'genders.edit'                 => 'Editar Género',
+    'genders.destroy'              => 'Eliminar Género',
+    'genders.plural'               => 'Géneros',
+    'genders.singular'             => 'Género',
     'genders.fa-icon'              => 'venus-mars',
-    'genders.store.success'        => 'Genero creado exitosamente.',
-    'genders.update.success'       => 'Genero actualizado exitosamente.',
+    'genders.store.success'        => 'Género creado exitosamente.',
+    'genders.update.success'       => 'Género actualizado exitosamente.',
     /**
      * Nacionalidad
      */
