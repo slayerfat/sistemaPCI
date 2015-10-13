@@ -60,6 +60,13 @@ class Petition extends AbstractBaseModel
     protected $dates = ['request_date'];
 
     /**
+     * The attributes that should be casted to native types.
+     *
+     * @var array
+     */
+    protected $casts = ['status' => 'boolean'];
+
+    /**
      * Regresa el estatus en forma textual del pedido.
      *
      * @return string
@@ -71,6 +78,15 @@ class Petition extends AbstractBaseModel
         }
 
         return $this->status ? 'Aprobado' : 'No Aprobado';
+    }
+
+    public function setStatusAttribute($value)
+    {
+        if ($value == "true") {
+            return $this->attributes['status'] = 1;
+        }
+
+        return $this->attributes['status'] = 0;
     }
 
     /**
