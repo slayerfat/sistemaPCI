@@ -80,7 +80,7 @@ class Petition extends AbstractBaseModel
      */
     public function getCommentsAttribute($value)
     {
-        return sizeof($value) > 1 ? $value : 'Sin comentarios.';
+        return strlen($value) > 1 ? $value : 'Sin comentarios.';
     }
 
     /**
