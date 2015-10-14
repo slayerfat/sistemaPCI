@@ -82,13 +82,11 @@ class Petition extends AbstractBaseModel
 
     public function getStatusAttribute($value)
     {
-        if ($value == 1) {
-            return true;
-        } elseif ($value == 0) {
-            return false;
+        if (is_null($value)) {
+            return null;
         }
 
-        return null;
+        return $value ? 1 : 0;
     }
 
     public function setStatusAttribute($value)

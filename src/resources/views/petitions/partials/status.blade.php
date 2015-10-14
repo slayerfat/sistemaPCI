@@ -34,16 +34,23 @@ if (is_null($petition->status)) {
 
                 $msg: $('.message-float'),
 
+                // contiene el html necesario para los botones.
+                // considerar mover esto a un template.
                 html: {
-                    green: 'Estado: ' + '<span class="green">Aprobado ' +
+                    green: '<span id="green">Estado: ' +
+                    '<span class="green">Aprobado ' +
                     '<i class="fa fa-check-circle"></i>' +
+                    '</span>' +
                     '</span>',
 
-                    red: 'Estado: ' + '<span class="red">No Aprobado ' +
+                    red: '<span id="red">Estado: ' +
+                    '<span class="red">No Aprobado ' +
                     '<i class="fa fa-times-circle"></i>' +
+                    '</span>' +
                     '</span>',
 
-                    yellow: 'Estado: ' + '<span class="yellow">Por aprobar ' +
+                    yellow: '<span id="yellow">Estado: ' +
+                    '<span class="yellow">Por aprobar ' +
                     '<i class="fa fa-exclamation-circle"></i> ' +
                     '<a href="' + url + '" id="petition-true">' +
                     '<button class="btn btn-success">' +
@@ -55,6 +62,7 @@ if (is_null($petition->status)) {
                     '<i class="fa fa-times-circle"></i> Rechazar ' +
                     '</button>' +
                     '</a>' +
+                    '</span>' +
                     '</span>'
                 },
 
@@ -65,6 +73,7 @@ if (is_null($petition->status)) {
                  */
                 start: function () {
                     if (this.status == null) {
+                        this.previousStatus = null;
                         return $statusElement.append(this.html.yellow);
                     } else if (this.status) {
                         return $statusElement.append(this.html.green);
@@ -80,29 +89,56 @@ if (is_null($petition->status)) {
                  * @param bool status
                  */
                 change: function (url, status) {
+                    var self = this;
                     this.previousStatus = this.status;
                     this.status = status;
 
-                    var self = this;
+                    // mandamos el texto 'null' porque llega al servidor como ''
+                    data = status == null ? 'null' : status;
 
                     $.ajax({
                         url: url,
                         type: 'POST',
                         dataType: 'json',
-                        data: {status: status}
+                        data: {status: data}
                     }).done(function (data) {
                         var element;
+                        var next;
+                        var previous;
 
+                        // debemos determinar cual es el elemento que
+                        // estaba activo cuando se hizo la peticion.
+                        if (self.status == self.previousStatus) {
+                            return console.log('status iguales');
+                        } else if (self.previousStatus == null) {
+                            previous = 'yellow';
+                        } else {
+                            previous = self.previousStatus ? 'green' : 'red';
+                        }
+
+                        // luego debemos determinar cual es el
+                        // elemento que debemos activar.
                         if (status == null && data.status) {
                             element = self.html.yellow;
+                            next = 'yellow';
                         } else {
-                            element = data.status ? self.html.green : self.html.red;
+                            element = self.status ? self.html.green : self.html.red;
+                            next = self.status ? 'green' : 'red';
                         }
 
                         // esperamos 250 milsegs, luego limpiamos
                         // el contenido html y lo cambiamos por el elemento.
                         $statusElement.animate({opacity: 0}, 250, 'linear', function () {
-                            $statusElement.empty().html(element);
+                            var $next = $('#' + next);
+
+                            // si el elemento no existe se introduce,
+                            // de lo contrario se ignora
+                            if (!$next.length) {
+                                $statusElement.append(element);
+                            }
+
+                            $next.removeClass('hidden');
+                            $('#' + previous).addClass('hidden');
                         }).animate({opacity: 1}, 250, 'linear');
 
                         // creamos un mensaje segun este metodo.
@@ -136,6 +172,7 @@ if (is_null($petition->status)) {
 
                     this.$msg.children().children().click(function () {
                         status.change(url, self.previousStatus);
+                        self.toggleMessage();
                     });
 
                     setTimeout(this.toggleMessage, 10000);
@@ -153,6 +190,8 @@ if (is_null($petition->status)) {
 
             // aqui empieza el mamarrachismo.
             status.start();
+
+            console.log(status);
 
             // http://laravel.com/docs/master/routing#csrf-x-csrf-token
             $.ajaxSetup({
