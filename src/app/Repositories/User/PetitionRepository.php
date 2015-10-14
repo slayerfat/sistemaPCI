@@ -212,7 +212,26 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
      */
     public function delete($id)
     {
-        return $this->delete($id);
+        return $this->executeDelete($id);
+    }
+
+    /**
+     * Cambia el estado del pedido.
+     *
+     * @param int  $id
+     * @param bool $status
+     * @return bool
+     */
+    public function changeStatus($id, $status)
+    {
+        if (!is_bool($status) && !is_null($status)) {
+            return false;
+        }
+
+        $petition         = $this->getById($id);
+        $petition->status = $status;
+
+        return $petition->save();
     }
 
     /**
@@ -238,24 +257,5 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
             'Fecha de solicitud' => $model->request_date->diffForHumans(),
             'Status'             => $model->formattedStatus,
         ];
-    }
-
-    /**
-     * Cambia el estado del pedido.
-     *
-     * @param int  $id
-     * @param bool $status
-     * @return bool
-     */
-    public function changeStatus($id, $status)
-    {
-        if (is_bool($status)) {
-            return false;
-        }
-
-        $petition         = $this->getById($id);
-        $petition->status = $status;
-
-        return $petition->save();
     }
 }
