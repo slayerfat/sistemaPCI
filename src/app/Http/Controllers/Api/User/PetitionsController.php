@@ -2,9 +2,12 @@
 
 namespace PCI\Http\Controllers\Api\User;
 
-use PCI\Http\Requests;
-use PCI\Http\Controllers\Controller;
+use Auth;
+use Event;
 use Illuminate\Http\Request;
+use PCI\Events\Petition\PetitionApprovalRequest;
+use PCI\Http\Controllers\Controller;
+use PCI\Http\Requests;
 use PCI\Repositories\Interfaces\User\PetitionRepositoryInterface;
 use Response;
 
@@ -40,5 +43,24 @@ class PetitionsController extends Controller
         $results = $this->repo->changeStatus($id, $request->input('status'));
 
         return Response::json(['status' => $results]);
+    }
+
+    /**
+     * Dispara un evento de aprobacion de pedido.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function approvalRequest($id)
+    {
+        /** @var \PCI\Models\Petition $petition */
+        $petition = $this->repo->find($id);
+
+        /** @var \PCI\Models\User $user */
+        $user = Auth::user();
+
+        Event::fire(new PetitionApprovalRequest($petition, $user));
+
+        return Response::json(['status' => true]);
     }
 }

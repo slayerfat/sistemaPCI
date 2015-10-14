@@ -56,7 +56,7 @@ class EmailPetitionEventToAttendants extends AbstractEmailListener
      *
      * @return array
      */
-    private function getAttendantsEmail()
+    protected function getAttendantsEmail()
     {
         $emails = [];
 
@@ -74,7 +74,7 @@ class EmailPetitionEventToAttendants extends AbstractEmailListener
      *
      * @return string
      */
-    private function getOwnerEmail()
+    protected function getOwnerEmail()
     {
         // TODO: repo
         return Depot::first()->owner->email;

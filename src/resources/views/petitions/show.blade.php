@@ -13,20 +13,7 @@
                 {!! Html::mailto($petition->user->email) !!}
             </small>
 
-            <span style="float: right">
-                @if (is_null($petition->status))
-                    {!!
-
-                    Button::withValue('Solicitar Aprobación')
-                            ->withIcon(Icon::create('exclamation-circle'))
-
-                    !!}
-                    @include(
-                        'partials.buttons.edit-delete',
-                        ['resource' => 'petitions', 'id' => $petition->id]
-                    )
-                @endif
-            </span>
+            @include('petitions.partials.show-buttons')
         </h1>
 
         <h2>
@@ -55,4 +42,5 @@
 
 @section('js')
     @yield('js-buttons')
+    @yield('js-show-buttons')
 @stop
