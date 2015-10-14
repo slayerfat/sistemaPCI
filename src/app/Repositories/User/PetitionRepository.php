@@ -225,7 +225,9 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
     public function changeStatus($id, $status)
     {
         if (!is_bool($status) && !is_null($status)) {
-            return false;
+            if ($status != 'true' && $status != 'false' && $status != 'null') {
+                return false;
+            }
         }
 
         $petition         = $this->getById($id);

@@ -57,7 +57,7 @@ class PetitionPolicy
         $converted = $converter->convert($type, $amount);
 
         if ($user->isUser() || $user->isAdmin()) {
-            return $item->stock >= $converted;
+            return $item->stock >= $converted && $converted > 0;
         }
 
         return false;

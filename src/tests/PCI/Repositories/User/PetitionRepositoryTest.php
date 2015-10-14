@@ -4,6 +4,7 @@ use PCI\Mamarrachismo\Converter\StockTypeConverter;
 use PCI\Models\Category;
 use PCI\Models\Item;
 use PCI\Models\Petition;
+use PCI\Models\StockType;
 use PCI\Models\User;
 use PCI\Repositories\Aux\CategoryRepository;
 use PCI\Repositories\Item\ItemRepository;
@@ -59,24 +60,44 @@ class PetitionRepositoryTest extends AbstractRepositoryTestCase
         $this->assertInstanceOf(Petition::class, $this->repo->find(1));
     }
 
-    public function testCreateShouldReturnItem()
+    /**
+     * @dataProvider createDataProvider
+     * @param array $data
+     */
+    public function testCreateShouldReturnItem($data)
     {
-        $data = [
-            'comments'         => 'testing comment',
-            'petition_type_id' => 1,
-            'request_date'     => '1999-09-09',
-            'items'            => [
-                1 => ['amount' => 1, 'type' => 1],
-                2 => ['amount' => 1, 'type' => 1],
-            ],
-        ];
-
         $this->actingAs($this->user)->assertInstanceOf(
             Petition::class,
             $petition = $this->repo->create($data)
         );
 
         $this->seeInDatabase('petitions', ['request_date' => $petition->request_date]);
+    }
+
+    public function createDataProvider()
+    {
+        return [
+            [
+                'sameType'      => [
+                    'comments'         => 'testing comment',
+                    'petition_type_id' => 1,
+                    'request_date'     => '1999-09-09',
+                    'items'            => [
+                        1 => ['amount' => 1, 'type' => 1],
+                        2 => ['amount' => 1, 'type' => 1],
+                    ],
+                ],
+                'differentType' => [
+                    'comments'         => 'testing comment',
+                    'petition_type_id' => 1,
+                    'request_date'     => '1999-09-09',
+                    'items'            => [
+                        1 => ['amount' => 1, 'type' => 2],
+                        2 => ['amount' => 1, 'type' => 3],
+                    ],
+                ],
+            ],
+        ];
     }
 
     public function testDeleteShouldReturnBoolean()
@@ -98,8 +119,11 @@ class PetitionRepositoryTest extends AbstractRepositoryTestCase
     {
         return [
             'true'          => [true, true],
+            'stringTrue'    => ['true', true],
             'false'         => [false, true],
+            'stringFalse'   => ['false', true],
             'null'          => [null, true],
+            'stringNull'    => ['null', true],
             'invalidInput1' => ['a', false],
             'invalidInput2' => ['1', false],
         ];
@@ -133,8 +157,11 @@ class PetitionRepositoryTest extends AbstractRepositoryTestCase
     {
         $this->user = factory(User::class)->create();
 
+        // lastimosamente el pedido necesita muchos modelos.
         factory(Petition::class)->create(['user_id' => $this->user->id]);
         factory(Petition::class, 5)->create();
-        factory(Item::class, 2)->create();
+        factory(StockType::class, 5)->create();
+        factory(Item::class)->create(['stock_type_id' => 1]);
+        factory(Item::class)->create(['stock_type_id' => 2]);
     }
 }

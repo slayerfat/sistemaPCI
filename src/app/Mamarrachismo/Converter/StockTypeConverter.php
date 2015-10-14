@@ -96,7 +96,7 @@ class StockTypeConverter implements StockTypeConverterInterface
         }
 
         if ($this->invalidSubType($type)) {
-            return $amount + 1;
+            return 0;
         }
 
         // nos interesa buscar en el arreglo cual es
@@ -119,15 +119,13 @@ class StockTypeConverter implements StockTypeConverterInterface
      */
     private function invalidSubType($type)
     {
-        $valid = true;
-
         foreach ($this->convertibleTypes as $array) {
             if (!$this->isKeyValid($type, $array)) {
-                $valid = false;
+                return true;
             }
         }
 
-        return $valid;
+        return false;
     }
 
     /**
