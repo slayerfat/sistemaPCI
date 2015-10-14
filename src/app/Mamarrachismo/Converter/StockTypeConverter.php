@@ -27,9 +27,9 @@ class StockTypeConverter implements StockTypeConverterInterface
      * @var array
      */
     private $convertibleTypes = [
-        2 => [3 => ['div', 1000], 4 => ['div', (1000 * 1000)]],
+        2 => [3 => ['div', 1000], 4 => ['div', 1000000]],
         3 => [2 => ['mul', 1000], 4 => ['div', 1000]],
-        4 => [2 => ['mul', (1000 * 1000)], 3 => ['div', 1000]],
+        4 => [2 => ['mul', 1000000], 3 => ['div', 1000]],
     ];
 
     /**
