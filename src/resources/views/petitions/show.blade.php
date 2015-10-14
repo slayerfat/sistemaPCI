@@ -12,6 +12,21 @@
                 </a>
                 {!! Html::mailto($petition->user->email) !!}
             </small>
+
+            <span style="float: right">
+                @if (is_null($petition->status))
+                    {!!
+
+                    Button::withValue('Solicitar Aprobación')
+                            ->withIcon(Icon::create('exclamation-circle'))
+
+                    !!}
+                    @include(
+                        'partials.buttons.edit-delete',
+                        ['resource' => 'petitions', 'id' => $petition->id]
+                    )
+                @endif
+            </span>
         </h1>
 
         <h2>
