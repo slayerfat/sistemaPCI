@@ -147,7 +147,7 @@ class Petition extends AbstractBaseModel
      */
     public function items()
     {
-        return $this->belongsToMany(Item::class)->withPivot('quantity');
+        return $this->belongsToMany(Item::class)->withPivot('quantity', 'stock_type_id');
     }
 
     /**

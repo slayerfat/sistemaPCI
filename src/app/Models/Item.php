@@ -196,7 +196,7 @@ class Item extends AbstractBaseModel implements SluggableInterface
      */
     public function petitions()
     {
-        return $this->belongsToMany('PCI\Models\Petition')->withPivot('quantity');
+        return $this->belongsToMany('PCI\Models\Petition')->withPivot('quantity', 'stock_type_id');
     }
 
     /**
