@@ -232,7 +232,8 @@ ControlGroup::generate(
 
                 // como esta mamarrachada es muy grande, la
                 // segmentamos para que pueda ser mas facil de digerir
-                var itemInput = '<label for="itemBag" class="control-label col-sm-7">'
+                var itemInput = '<div class="itemBag-item">'
+                        + '<label for="itemBag" class="control-label col-sm-7">'
                         + items.data.desc
                         + '</label>'
                         + '<div class="col-sm-2">' +
@@ -250,8 +251,13 @@ ControlGroup::generate(
                 });
 
                 // este select contiene los tipos de cantidad
-                var select = '<div class="col-sm-3">'
-                        + '<select class="form-control" name="stock-type-id-' + items.data.id + '">' + options + '</select>' +
+                var select = '<div class="col-sm-3">  <div class="input-group">' +
+                        '<select class="form-control" name="stock-type-id-' +
+                        items.data.id + '">' + options + '</select>' +
+                        '<span class="input-group-addon itemBag-remove-item" ' +
+                        'data-id="' + items.data.id + '">' +
+                        '<i class="fa fa-times"></i></span>' +
+                        '</div>' +
                         '</div>';
 
                 itemBag.append(itemInput + select);
@@ -262,7 +268,14 @@ ControlGroup::generate(
 
         // mamarrachada de segundo orden
         $itemList.on("select2:select", function (e) {
-            items.appendItem(e)
+            items.appendItem(e);
+
+            $('.itemBag-remove-item').click(function () {
+                var $item = $(this).closest('.itemBag-item');
+                $item.toggle(function () {
+                    $item.remove()
+                });
+            });
         });
     </script>
 
@@ -279,24 +292,46 @@ ControlGroup::generate(
             // si no se esta editando, entonces no ocurre nada aca.
             if (!$formData.data('editing')) return;
 
-            $.ajax({
-                url: $formData.data('petition-items-url'),
-                method: 'POST',
-                dataType: 'json',
-                success: function (data) {
-                    Object.keys(data).forEach(function (key) {
-                        var item = {
-                            params: {
-                                data: null
-                            }
-                        };
+            var html = '<div class="col-xs-push-4 col-xs-4 text-center">' +
+                    '<i class="fa fa-spinner fa-spin fa-5x"></i>' +
+                    '</div>';
 
-                        item.params.data = data[key];
+            function startAjax() {
+                $.ajax({
+                    url: $formData.data('petition-items-url'),
+                    method: 'POST',
+                    dataType: 'json',
+                    success: function (data) {
+                        var self = this;
+                        $('#itemBag').empty();
+                        Object.keys(data).forEach(function (key) {
+                            var item = {
+                                params: {
+                                    data: null
+                                }
+                            };
 
-                        items.appendItem(item);
-                    });
-                }
-            })
+                            item.params.data = data[key];
+                            items.appendItem(item);
+                        });
+
+                        $('.itemBag-remove-item').click(function () {
+                            self.removeItem($(this))
+                        });
+                    },
+                    removeItem: function ($element) {
+                        var $item = $element.closest('.itemBag-item');
+                        $item.toggle(function () {
+                            $item.remove()
+                        });
+                    }
+                })
+            }
+
+            $('#itemBag').fadeOut(250, function () {
+                $('#itemBag').append(html).fadeIn(250);
+                startAjax();
+            });
         })
     </script>
 @stop
