@@ -1,6 +1,4 @@
-<?php
-
-namespace PCI\Http\Controllers\Api\User;
+<?php namespace PCI\Http\Controllers\Api\User;
 
 use Auth;
 use Event;
