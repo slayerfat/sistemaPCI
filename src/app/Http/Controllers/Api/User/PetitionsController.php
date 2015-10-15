@@ -61,4 +61,13 @@ class PetitionsController extends Controller
 
         return Response::json(['status' => true]);
     }
+
+    public function items($id)
+    {
+        $petition = $this->repo->find($id);
+
+        $items = $this->repo->getItemsCollection($petition->items);
+
+        return Response::json($items->toArray());
+    }
 }

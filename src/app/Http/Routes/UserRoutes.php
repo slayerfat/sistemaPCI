@@ -193,6 +193,14 @@ class UserRoutes extends AbstractPciRoutes
                 'as'   => 'api.petitions.approvalRequest',
             ],
         ],
+        [
+            'method' => 'POST',
+            'url'    => 'api/pedidos/items/{id}',
+            'data'   => [
+                'uses' => 'Api\User\PetitionsController@items',
+                'as'   => 'api.petitions.items',
+            ],
+        ],
     ];
 
     /**
