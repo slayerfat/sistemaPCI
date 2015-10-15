@@ -11,6 +11,10 @@
             {{ trans('models.petitions.singular') }} #{{ $petition->id }}.
         </p>
         <p>
+            Este {{ trans('models.petitions.singular') }}
+            fue generado {{ $petition->created_at->diffForHumans()  }}.
+        </p>
+        <p>
             Para ver este {{ trans('models.petitions.singular') }}, Ud.
             puede visitar el siguiente enlace:
         </p>

@@ -20,21 +20,45 @@
 @section('js-show-buttons')
     <script type="text/javascript">
         $('#petition-approval-request').click(function () {
-            var sent = $(this).data('sent');
-            var url = $(this).data('url');
-            if (sent) return;
+            var $sent = $(this);
+
+            // si la peticion ha sido enviada, se regresa prematuramente.
+            if ($sent.data('sent')) return;
 
             $.ajax({
-                url: url,
+                url: $sent.data('url'),
                 method: 'POST',
-                dataType: 'json'
+                dataType: 'json',
+                beforeSend: function() {
+                    $('#petition-approval-request')
+                            .removeClass('btn-default')
+                            .addClass('btn-warning')
+                            .find('span').removeClass('fa-exclamation-circle')
+                            .addClass('fa-spinner fa-spin');
+                },
+                complete: function() {
+                    $('#petition-approval-request')
+                            .removeClass('btn-warning')
+                            .find('span').removeClass('fa-spinner fa-spin');
+                }
             }).success(function (data) {
                 if (data.status == true) {
                     $('#petition-approval-request')
                             .removeClass('btn-default')
-                            .addClass('btn-success');
+                            .addClass('btn-success')
+                            .find('span')
+                            .addClass('fa-check-circle');
+
+                    $sent.data('sent', true);
                 }
-            }).fail()
+            }).fail(function () {
+                $('#petition-approval-request')
+                        .removeClass('btn-default')
+                        .addClass('btn-danger')
+                        .find('span')
+                        .removeClass('*')
+                        .addClass('fa-times-circle');
+            })
         })
     </script>
 @stop
