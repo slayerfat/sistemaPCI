@@ -58,7 +58,9 @@ y [TODO.md](https://github.com/slayerfat/sistemaPCI/blob/master/TODO.md).
 
 ```bash
 git clone https://github.com/slayerfat/sistemaPCI sistemaPCI 
+
 chmod u+x sistemaPCI/caimanismo.sh 
+
 ./sistemaPCI/caimanismo.sh
 ```
 
