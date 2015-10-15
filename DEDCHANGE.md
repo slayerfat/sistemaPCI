@@ -6,6 +6,10 @@ En este archivo estaran los cambios pertinentes en el DED y el Documento de Espe
 
 Detalles, observaciones u otros:
 
+#### 15-10-15
+
+usuario puede solicitar la aprobacion de pedido ya creado.
+
 #### 12-10-15
 
 ¿Porque pedido tiene fecha de pedido si el mismo ya posee campos de creado y actualizado?
