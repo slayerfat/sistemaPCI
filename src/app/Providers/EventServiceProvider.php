@@ -26,6 +26,9 @@ class EventServiceProvider extends ServiceProvider
         'PCI\Events\Petition\PetitionApprovalRequest' => [
             'PCI\Listeners\Email\EmailApprovalRequestToAttendants',
         ],
+        'PCI\Events\Petition\PetitionUpdatedByCreator' => [
+            'PCI\Listeners\Email\EmailPetitionUpdatedToAttendants',
+        ],
     ];
 
     /**

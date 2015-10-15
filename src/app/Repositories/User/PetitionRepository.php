@@ -106,17 +106,6 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
     }
 
     /**
-     * Busca algun Elemento segun Id u otra regla.
-     *
-     * @param  string|int $id El identificador unico (slug|name|etc|id).
-     * @return \PCI\Models\AbstractBaseModel|\PCI\Models\Petition
-     */
-    public function find($id)
-    {
-        return $this->getById($id)->load('items', 'user');
-    }
-
-    /**
      * Persiste informacion referente a una entidad.
      *
      * @param array $data El array con informacion del modelo.
@@ -202,7 +191,43 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
      */
     public function update($id, array $data)
     {
-        // TODO: Implement update() method.
+        $petition = $this->find($id);
+
+        // esta informacion no nos interesa al
+        // momento de crear los items asociados.
+        $petition->comments         = $data['comments'];
+        $petition->petition_type_id = $data['petition_type_id'];
+        $petition->request_date     = Carbon::now();
+
+        $items = $this->checkItems($data['items'], $petition);
+
+        // como posiblemente los items cambiaron, entonces
+        // limpiamos la tabla para re-añadir los items.
+        $petition->items()->sync([]);
+
+        // Añade los items solicitados y sus cantidades a la
+        // tabla correspondiente en la base de datos.
+        foreach ($items as $id => $data) {
+            $petition->items()->attach($id, [
+                'quantity'      => $data['amount'],
+                'stock_type_id' => $data['type'],
+            ]);
+        }
+
+        $petition->save();
+
+        return $petition;
+    }
+
+    /**
+     * Busca algun Elemento segun Id u otra regla.
+     *
+     * @param  string|int $id El identificador unico (slug|name|etc|id).
+     * @return \PCI\Models\AbstractBaseModel|\PCI\Models\Petition
+     */
+    public function find($id)
+    {
+        return $this->getById($id)->load('items', 'user');
     }
 
     /**

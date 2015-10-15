@@ -7,6 +7,7 @@ use Flash;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\View\Factory as View;
 use PCI\Events\NewPetitionCreation;
+use PCI\Events\Petition\PetitionUpdatedByCreator;
 use PCI\Http\Controllers\Controller;
 use PCI\Http\Requests;
 use PCI\Http\Requests\User\PetitionRequest;
@@ -83,7 +84,7 @@ class PetitionsController extends Controller
 
         Event::fire(new NewPetitionCreation($petition, $user));
 
-        Flash::success("Petición #$petition->id creada exitosamente.");
+        Flash::success(trans('models.petitions.store.success'));
 
         return Redirect::route('petitions.show', $petition->id);
     }
@@ -123,7 +124,17 @@ class PetitionsController extends Controller
      */
     public function update(PetitionRequest $request, $id)
     {
-        //
+        /** @var \PCI\Models\Petition $petition */
+        $petition = $this->repo->update($id, $request->all());
+
+        /** @var \PCI\Models\User $user */
+        $user = auth()->user();
+
+        Event::fire(new PetitionUpdatedByCreator($petition, $user));
+
+        Flash::success(trans('models.petitions.update.success'));
+
+        return Redirect::route('petitions.show', $petition->id);
     }
 
     /**

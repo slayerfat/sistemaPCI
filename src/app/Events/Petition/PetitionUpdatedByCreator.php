@@ -3,13 +3,13 @@
 use PCI\Events\NewPetitionCreation;
 
 /**
- * Class PetitionApprovalRequest
+ * Class PetitionUpdatedByCreator
  *
  * @package PCI\Events\Petition
  * @author  Alejandro Granadillo <slayerfat@gmail.com>
  * @link    https://github.com/slayerfat/sistemaPCI Repositorio en linea.
  */
-class PetitionApprovalRequest extends NewPetitionCreation
+class PetitionUpdatedByCreator extends NewPetitionCreation
 {
 
     //
