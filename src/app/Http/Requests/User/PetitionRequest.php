@@ -3,6 +3,7 @@
 use Gate;
 use PCI\Http\Requests\Request;
 use PCI\Models\Petition;
+use PCI\Repositories\Interfaces\User\PetitionRepositoryInterface;
 
 /**
  * Class PetitionRequest
@@ -14,12 +15,34 @@ class PetitionRequest extends Request
 {
 
     /**
+     * @var \PCI\Repositories\Interfaces\User\PetitionRepositoryInterface
+     */
+    private $repo;
+
+    /**
+     * PetitionRequest constructor.
+     *
+     * @param \PCI\Repositories\Interfaces\User\PetitionRepositoryInterface $repo
+     */
+    public function __construct(PetitionRepositoryInterface $repo)
+    {
+        parent::__construct();
+
+
+        $this->repo = $repo;
+    }
+
+    /**
      * Determine if the user is authorized to make this request.
      * @return bool
      */
     public function authorize()
     {
-        return Gate::allows('create', new Petition);
+        if ($this->isMethod('POST')) {
+            return Gate::allows('create', new Petition);
+        }
+
+        return Gate::allows('update', $this->repo->find($this->route('petitions')));
     }
 
     /**

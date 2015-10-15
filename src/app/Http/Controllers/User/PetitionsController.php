@@ -4,11 +4,13 @@ namespace PCI\Http\Controllers\User;
 
 use Event;
 use Flash;
+use Gate;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\View\Factory as View;
 use PCI\Events\NewPetitionCreation;
 use PCI\Events\Petition\PetitionUpdatedByCreator;
 use PCI\Http\Controllers\Controller;
+use PCI\Http\Controllers\Traits\CheckDestroyStatusTrait;
 use PCI\Http\Requests;
 use PCI\Http\Requests\User\PetitionRequest;
 use PCI\Models\PetitionType;
@@ -18,22 +20,27 @@ use Redirect;
 class PetitionsController extends Controller
 {
 
+    use CheckDestroyStatusTrait;
+
     /**
      * La implementacion del repositorio de pedidos.
+     *
      * @var \PCI\Repositories\Interfaces\User\PetitionRepositoryInterface
      */
     private $repo;
 
     /**
      * La factoria de las vistas.
+     *
      * @var \Illuminate\View\Factory
      */
     private $view;
 
     /**
      * Genera la instancia de este controlador.
+     *
      * @param \PCI\Repositories\Interfaces\User\PetitionRepositoryInterface $repo
-     * @param \Illuminate\View\Factory $view
+     * @param \Illuminate\View\Factory                                      $view
      */
     public function __construct(PetitionRepositoryInterface $repo, View $view)
     {
@@ -44,6 +51,7 @@ class PetitionsController extends Controller
 
     /**
      * Display a listing of the resource.
+     *
      * @return \Illuminate\Http\Response
      */
     public function index()
@@ -55,6 +63,7 @@ class PetitionsController extends Controller
 
     /**
      * Show the form for creating a new resource.
+     *
      * @return \Illuminate\Http\Response
      */
     public function create()
@@ -91,6 +100,7 @@ class PetitionsController extends Controller
 
     /**
      * Display the specified resource.
+     *
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
@@ -103,12 +113,21 @@ class PetitionsController extends Controller
 
     /**
      * Show the form for editing the specified resource.
+     *
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
         $petition = $this->repo->find($id);
+
+        if (Gate::denies('update', $petition)) {
+            return $this->redirectBack(
+                'Los '
+                . trans('models.petitions.plural')
+                . ' solo pueden ser editados si están por aprobar.'
+            );
+        }
 
         // todo: segun perfil, usuario no hace entrada
         $types = PetitionType::lists('desc', 'id');
@@ -118,8 +137,9 @@ class PetitionsController extends Controller
 
     /**
      * Update the specified resource in storage.
+     *
      * @param \PCI\Http\Requests\User\PetitionRequest $request
-     * @param  int $id
+     * @param  int                                    $id
      * @return \Illuminate\Http\Response
      */
     public function update(PetitionRequest $request, $id)
@@ -139,11 +159,17 @@ class PetitionsController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     *
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        //
+        return $this->checkDestroyStatus(
+            $this->repo->delete($id),
+            'petitions',
+            'Para eliminar un ' . trans('models.petitions.singular')
+            . ', este no debe estar asociado a otros recursos y debe estar en estado de por aprobar.'
+        );
     }
 }

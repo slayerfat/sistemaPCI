@@ -238,7 +238,7 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
      */
     public function delete($id)
     {
-        return $this->executeDelete($id);
+        return $this->executeDelete($id, trans('models.petitions.plural'), trans('models.items.plural'));
     }
 
     /**

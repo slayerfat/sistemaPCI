@@ -30,6 +30,25 @@ class PetitionPolicy
     }
 
     /**
+     * @param \PCI\Models\User $user
+     * @param \PCI\Models\Petition $petition
+     * @return bool
+     */
+    public function update(User $user, Petition $petition)
+    {
+        if (!$petition instanceof Petition) {
+            throw new \LogicException;
+        }
+
+        // si no es falso entonces ha sido aprobado o rechazado.
+        if (!is_null($petition->status)) {
+            return false;
+        }
+
+        return $user->isOwnerOrAdmin($petition->id);
+    }
+
+    /**
      * @param \PCI\Models\User                               $user
      * @param \PCI\Models\Petition                           $petition
      * @param StockTypeConverterInterface|StockTypeConverter $converter
