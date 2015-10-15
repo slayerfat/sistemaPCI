@@ -147,6 +147,15 @@ $factory->define(PCI\Models\User::class, function () use ($faker) {
     ];
 });
 
+$factory->defineAs(PCI\Models\User::class, 'admin', function () use ($factory) {
+    $item = $factory->raw(PCI\Models\User::class);
+
+    return array_merge($item, [
+        'profile_id'        => PCI\Models\User::ADMIN_ID,
+        'confirmation_code' => null,
+    ]);
+});
+
 $factory->define(PCI\Models\WorkDetail::class, function () use ($faker) {
     return [
         'department_id' => factory(\PCI\Models\Department::class)->create()->id,
