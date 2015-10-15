@@ -282,20 +282,21 @@ ControlGroup::generate(
             $.ajax({
                 url: $formData.data('petition-items-url'),
                 method: 'POST',
-                dataType: 'json'
-            }).success(function (data) {
-                Object.keys(data).forEach(function (key) {
-                    var item = {
-                        params: {
-                            data: null
-                        }
-                    };
+                dataType: 'json',
+                success: function (data) {
+                    Object.keys(data).forEach(function (key) {
+                        var item = {
+                            params: {
+                                data: null
+                            }
+                        };
 
-                    item.params.data = data[key];
+                        item.params.data = data[key];
 
-                    items.appendItem(item);
-                });
-            }).fail(console.log('fail'))
+                        items.appendItem(item);
+                    });
+                }
+            })
         })
     </script>
 @stop
