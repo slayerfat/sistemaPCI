@@ -1,21 +1,23 @@
-<span style="float: right">
-    @if (is_null($petition->status))
-        {!!
+@if(auth()->user()->isAdmin())
+    <span style="float: right">
+        @if (is_null($petition->status))
+            {!!
 
-        Button::withValue('Solicitar Aprobación')
-            ->withAttributes([
-                'id' => 'petition-approval-request',
-                'data-sent' => 'false',
-                'data-url' => route('api.petitions.approvalRequest', $petition->id),
-            ])->withIcon(Icon::create('exclamation-circle'))
+            Button::withValue('Solicitar Aprobación')
+                ->withAttributes([
+                    'id'        => 'petition-approval-request',
+                    'data-sent' => 'false',
+                    'data-url'  => route('api.petitions.approvalRequest', $petition->id),
+                ])->withIcon(Icon::create('exclamation-circle'))
 
-        !!}
-        @include(
-            'partials.buttons.edit-delete',
-            ['resource' => 'petitions', 'id' => $petition->id]
-        )
-    @endif
-</span>
+            !!}
+            @include(
+                'partials.buttons.edit-delete',
+                ['resource' => 'petitions', 'id' => $petition->id]
+            )
+        @endif
+    </span>
+@endif
 
 @section('js-show-buttons')
     <script type="text/javascript">
@@ -29,14 +31,14 @@
                 url: $sent.data('url'),
                 method: 'POST',
                 dataType: 'json',
-                beforeSend: function() {
+                beforeSend: function () {
                     $('#petition-approval-request')
                             .removeClass('btn-default')
                             .addClass('btn-warning')
                             .find('span').removeClass('fa-exclamation-circle')
                             .addClass('fa-spinner fa-spin');
                 },
-                complete: function() {
+                complete: function () {
                     $('#petition-approval-request')
                             .removeClass('btn-warning')
                             .find('span').removeClass('fa-spinner fa-spin');

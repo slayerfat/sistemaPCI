@@ -14,6 +14,7 @@ if (is_null($petition->status)) {
 
 <h3 id="petition-status"
     data-route="{{ route('api.petitions.status', $petition->id) }}"
+    data-admin="{{ auth()->user()->isAdmin() }}"
     data-status="{{ $status }}">
 </h3>
 
@@ -34,6 +35,8 @@ if (is_null($petition->status)) {
 
                 $msg: $('.message-float'),
 
+                isAdmin: $statusElement.data('admin'),
+
                 // contiene el html necesario para los botones.
                 // considerar mover esto a un template.
                 html: {
@@ -46,6 +49,12 @@ if (is_null($petition->status)) {
                     red: '<span id="red">Estado: ' +
                     '<span class="red">No Aprobado ' +
                     '<i class="fa fa-times-circle"></i>' +
+                    '</span>' +
+                    '</span>',
+
+                    nonAdminYellow: '<span id="yellow">Estado: ' +
+                    '<span class="yellow">Por aprobar ' +
+                    '<i class="fa fa-exclamation-circle"></i> ' +
                     '</span>' +
                     '</span>',
 
@@ -72,13 +81,23 @@ if (is_null($petition->status)) {
                  * @returns {*}
                  */
                 start: function () {
+                    // si el estatus es nulo, entonces por aprobar
                     if (this.status == null) {
                         this.previousStatus = null;
-                        return $statusElement.append(this.html.yellow);
+                        // como el usuario puede ser o no administrador
+                        // debemos saberlo para ver si incluimos
+                        // o no los botones para aprobar/rechazar.
+                        if (this.isAdmin) {
+                            return $statusElement.append(this.html.yellow);
+                        }
+
+                        return $statusElement.append(this.html.nonAdminYellow);
                     } else if (this.status) {
                         return $statusElement.append(this.html.green);
                     }
 
+                    // si el estatus no es nulo o verdadero entonces
+                    // es falso y se muestra el estado rojo/no aprobado.
                     return $statusElement.append(this.html.red);
                 },
 
@@ -188,10 +207,8 @@ if (is_null($petition->status)) {
                 }
             };
 
-            // aqui empieza el mamarrachismo.
+            // aqui empieza.
             status.start();
-
-            console.log(status);
 
             // http://laravel.com/docs/master/routing#csrf-x-csrf-token
             $.ajaxSetup({
