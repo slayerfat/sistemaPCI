@@ -2,8 +2,13 @@
 if (!isset($edit)) {
     $edit = false;
 }
+
 if (!isset($delete)) {
     $delete = false;
+}
+
+if (!isset($title)) {
+    $title = false;
 }
 
 if (isset($total) && isset($data)) {
