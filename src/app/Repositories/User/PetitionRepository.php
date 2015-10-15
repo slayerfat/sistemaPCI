@@ -2,6 +2,7 @@
 
 use Carbon\Carbon;
 use Gate;
+use Illuminate\Support\Collection;
 use PCI\Mamarrachismo\Converter\interfaces\StockTypeConverterInterface;
 use PCI\Models\AbstractBaseModel;
 use PCI\Models\Petition;
@@ -234,6 +235,31 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
         $petition->status = $status;
 
         return $petition->save();
+    }
+
+    /**
+     * Genera una coleccion de items relacionados
+     * con el pedido en formato para HTML.
+     *
+     * @param \Illuminate\Support\Collection $items
+     * @return \Illuminate\Support\Collection
+     */
+    public function getItemsCollection(Collection $items)
+    {
+        $results = collect();
+
+        $items->each(function ($item) use (&$results) {
+            /** @var \PCI\Models\Item $item */
+            $results->push([
+                'id'            => $item->id,
+                'desc'          => $item->desc,
+                'stock'         => $item->formattedStock(),
+                'quantity'      => $item->pivot->quantity,
+                'stock_type_id' => $item->pivot->stock_type_id,
+            ]);
+        });
+
+        return $results;
     }
 
     /**

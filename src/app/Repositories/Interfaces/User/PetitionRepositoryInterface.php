@@ -14,6 +14,7 @@
 
 namespace PCI\Repositories\Interfaces\User;
 
+use Illuminate\Support\Collection;
 use PCI\Repositories\Interfaces\ModelRepositoryInterface;
 use PCI\Repositories\Interfaces\RepositoryPaginatorInterface;
 use PCI\Repositories\Interfaces\Viewable\GetIndexViewableInterface;
@@ -31,4 +32,13 @@ interface PetitionRepositoryInterface extends
      * @return bool
      */
     public function changeStatus($id, $status);
+
+    /**
+     * Genera una coleccion de items relacionados
+     * con el pedido en formato para HTML.
+     *
+     * @param \Illuminate\Support\Collection $items
+     * @return \Illuminate\Support\Collection
+     */
+    public function getItemsCollection(Collection $items);
 }

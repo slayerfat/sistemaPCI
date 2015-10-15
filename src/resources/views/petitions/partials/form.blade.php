@@ -1,3 +1,6 @@
+<meta name="form-data"
+      data-petition-items-url="{{ route('api.petitions.items', $petition->id) }}"
+      data-editing="{{ $petition->id ? "true" : "false" }}">
 {!!
 
 ControlGroup::generate(
@@ -49,7 +52,9 @@ ControlGroup::generate(
             var $comments = $('#comments');
             var val = $comments.val();
 
-            if(val.length > 1) {
+            if ($('meta[name="form-data"]').data('editing')) return;
+
+            if (val.length > 1) {
                 $comments.val('').prop('placeholder', 'Introduzca un comentario.');
             }
         });
@@ -67,12 +72,12 @@ ControlGroup::generate(
 
             // poderosisimo copypasta.
             var markup = '<div class="clearfix">' +
-                '<div class="col-xs-12">' +
-                '<div class="clearfix">' +
-                '<div class="col-sm-6">' + data.desc + '</div>' +
-                '<div class="col-sm-3"><i class="fa fa-industry"></i> ' + data.maker.desc + '</div>' +
-                '<div class="col-sm-3"><i class="fa fa-random"></i> ' + data.sub_category.desc + '</div>' +
-                '</div>';
+                    '<div class="col-xs-12">' +
+                    '<div class="clearfix">' +
+                    '<div class="col-sm-6">' + data.desc + '</div>' +
+                    '<div class="col-sm-3"><i class="fa fa-industry"></i> ' + data.maker.desc + '</div>' +
+                    '<div class="col-sm-3"><i class="fa fa-random"></i> ' + data.sub_category.desc + '</div>' +
+                    '</div>';
 
             markup += '</div></div>';
 
@@ -195,65 +200,102 @@ ControlGroup::generate(
                 }.bind(this));
 
                 return selected;
+            },
+
+            appendItem: function (e) {
+                // iniciamos el objeto
+                items.setItem(e.params.data);
+
+                if (items.alreadySelected()) {
+                    return;
+                }
+
+                var itemBag = $('#itemBag');
+
+                // chequeamos que el stock no sea 0
+                if (items.stock.plain < 1) {
+                    var $error = $('<label for="itemBag" class="control-label col-sm-8">' +
+                            items.data.desc + ' no se encuentra en existencia.' +
+                            '</label>');
+
+                    itemBag.append($error);
+
+                    // espera 10 segundo y activa la animacion
+                    $error.animate({opacity: 1}, 10000, 'linear', function () {
+                        $error.animate({opacity: 0}, 2000, 'linear', function () {
+                            $error.remove();
+                        });
+                    });
+
+                    return;
+                }
+
+                // como esta mamarrachada es muy grande, la
+                // segmentamos para que pueda ser mas facil de digerir
+                var itemInput = '<label for="itemBag" class="control-label col-sm-7">'
+                        + items.data.desc
+                        + '</label>'
+                        + '<div class="col-sm-2">' +
+                        '<input class="form-control" name="item-id-' + items.data.id + '" type="number" min="1" value="' + items.stock.plain + '" max="' + items.stock.plain + '">' +
+                        '<span class="help-block">' + items.stock.formatted + ' en total.' + '</span>' +
+                        '</div>';
+
+                var options = '';
+
+                // generamos las opciones que van dentro del select
+                Object.keys(stockTypes.types).forEach(function (key) {
+                    stockTypes.types[key].id == items.data.stock_type_id
+                            ? options += '<option value="' + stockTypes.types[key].id + '" selected="selected">' + stockTypes.types[key].desc + '</option>'
+                            : options += '<option value="' + stockTypes.types[key].id + '">' + stockTypes.types[key].desc + '</option>';
+                });
+
+                // este select contiene los tipos de cantidad
+                var select = '<div class="col-sm-3">'
+                        + '<select class="form-control" name="stock-type-id-' + items.data.id + '">' + options + '</select>' +
+                        '</div>';
+
+                itemBag.append(itemInput + select);
+
+                items.addSelected(items.data.id);
             }
         };
 
         // mamarrachada de segundo orden
         $itemList.on("select2:select", function (e) {
-            // iniciamos el objeto
-            items.setItem(e.params.data);
+            items.appendItem(e)
+        });
+    </script>
 
-            if (items.alreadySelected()) {
-                return;
-            }
-
-            var itemBag = $('#itemBag');
-
-            // chequeamos que el stock no sea 0
-            if (items.stock.plain < 1) {
-                var $error = $('<label for="itemBag" class="control-label col-sm-8">' +
-                items.data.desc + ' no se encuentra en existencia.' +
-                '</label>');
-
-                itemBag.append($error);
-
-                // espera 10 segundo y activa la animacion
-                $error.animate({opacity: 1}, 10000, 'linear', function () {
-                    $error.animate({opacity: 0}, 2000, 'linear', function () {
-                        $error.remove();
-                    });
-                });
-
-                return;
-            }
-
-            // como esta mamarrachada es muy grande, la
-            // segmentamos para que pueda ser mas facil de digerir
-            var itemInput = '<label for="itemBag" class="control-label col-sm-7">'
-                + items.data.desc
-                + '</label>'
-                + '<div class="col-sm-2">' +
-                '<input class="form-control" name="item-id-' + items.data.id + '" type="number" min="1" value="' + items.stock.plain + '" max="' + items.stock.plain + '">' +
-                '<span class="help-block">' + items.stock.formatted + ' en total.' + '</span>' +
-                '</div>';
-
-            var options = '';
-
-            // generamos las opciones que van dentro del select
-            Object.keys(stockTypes.types).forEach(function (key) {
-                stockTypes.types[key].id == items.data.stock_type_id
-                    ? options += '<option value="' + stockTypes.types[key].id + '" selected="selected">' + stockTypes.types[key].desc + '</option>'
-                    : options += '<option value="' + stockTypes.types[key].id + '">' + stockTypes.types[key].desc + '</option>';
+    <script>
+        $(function () {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('input[name="_token"]').attr('value')
+                }
             });
 
-            // este select contiene los tipos de cantidad
-            var select = '<div class="col-sm-3">'
-                + '<select class="form-control" name="stock-type-id-' + items.data.id + '">' + options + '</select>' +
-                '</div>';
+            var $formData = $('meta[name="form-data"]');
 
-            itemBag.append(itemInput + select);
+            // si no se esta editando, entonces no ocurre nada aca.
+            if (!$formData.data('editing')) return;
 
-            items.addSelected(items.data.id);
-        });
+            $.ajax({
+                url: $formData.data('petition-items-url'),
+                method: 'POST',
+                dataType: 'json'
+            }).success(function (data) {
+                Object.keys(data).forEach(function (key) {
+                    var item = {
+                        params: {
+                            data: null
+                        }
+                    };
+
+                    item.params.data = data[key];
+
+                    items.appendItem(item);
+                });
+            }).fail(console.log('fail'))
+        })
     </script>
 @stop

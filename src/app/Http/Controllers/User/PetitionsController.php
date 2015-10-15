@@ -107,7 +107,12 @@ class PetitionsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $petition = $this->repo->find($id);
+
+        // todo: segun perfil, usuario no hace entrada
+        $types = PetitionType::lists('desc', 'id');
+
+        return $this->view->make('petitions.edit', compact('petition', 'types'));
     }
 
     /**
