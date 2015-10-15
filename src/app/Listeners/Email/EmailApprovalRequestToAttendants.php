@@ -34,8 +34,9 @@ class EmailApprovalRequestToAttendants extends EmailPetitionEventToAttendants
                 /** @var \Illuminate\Mail\Message $message */
                 $message->to($emails['attendants'])->bcc($emails['owner'])->subject(
                     "sistemaPCI: Usuario " . $user->name
-                    . " ha solicitado la aprobación del pedido #"
-                    . $petition->id
+                    . " ha solicitado la aprobación del "
+                    . trans('models.petitions.singular')
+                    . " #$petition->id"
                 );
             }
         );
