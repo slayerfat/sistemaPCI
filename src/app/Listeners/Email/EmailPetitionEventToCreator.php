@@ -41,7 +41,7 @@ class EmailPetitionEventToCreator extends AbstractEmailListener
                         . trans('models.petitions.singular')
                         . " #" . $petition->id
                         . " con fecha de " . $date
-                        . " ha sido creado por correctamente!" . $user->email
+                        . " ha sido creado por correctamente!"
                     );
             }
         );
