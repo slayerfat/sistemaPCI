@@ -1,17 +1,21 @@
 {!!
 
 Button::withValue('Editar')
-        ->asLinkTo(route("{$resource}.edit", $id))
-        ->withIcon(Icon::create('edit'))
+    ->asLinkTo(route("{$resource}.edit", $id))
+    ->withIcon(Icon::create('edit'))
+    ->withAttributes(['id' => "model-edit-{$id}"])
 
 !!}
 
 {!!
 
 Button::danger('Eliminar')
-        ->asLinkTo('#')
-        ->withIcon(Icon::create('trash-o'))
-        ->withAttributes(['onClick' => "deleteResourceFromAnchor($id)"])
+    ->asLinkTo('#')
+    ->withIcon(Icon::create('trash-o'))
+    ->withAttributes([
+        'onClick' => "deleteResourceFromAnchor($id)",
+        'id'      => "model-delete-{$id}"
+    ])
 
 !!}
 
