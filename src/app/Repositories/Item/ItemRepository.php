@@ -19,6 +19,12 @@ class ItemRepository extends AbstractRepository implements ItemRepositoryInterfa
     use IteratesCollectionRelationTrait; // longNameIsLong
 
     /**
+     * El modelo en este caso es item.
+     * @var \PCI\Models\Item
+     */
+    protected $model;
+
+    /**
      * La implementacion del repositorio de categorias.
      * @var \PCI\Repositories\Interfaces\Aux\CategoryRepositoryInterface
      */
@@ -131,6 +137,39 @@ class ItemRepository extends AbstractRepository implements ItemRepositoryInterfa
     }
 
     /**
+     * Busca items en la base de datos segun la
+     * data proveniente y regresa un paginador.
+     * @param array $data
+     * @param int $amount la cantidad a mostrar por pagina.
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function getIndexJsonWithSearch(array $data, $amount = 10)
+    {
+        return $this->model
+            ->with('maker', 'subCategory')
+            ->where('desc', 'like', "%{$data['term']}%")
+            ->paginate($amount);
+    }
+
+    /**
+     * Regresa el stock o cantidad en formato legible
+     * @param string|int $id el slug o id
+     * @return array el resultado con el stock
+     */
+    public function getStock($id)
+    {
+        /** @var \PCI\Models\Item $item */
+        $item = $this->getBySlugOrId($id);
+
+        $data = [
+            'plain'     => $item->stock,
+            'formatted' => $item->formattedStock(),
+        ];
+
+        return $data;
+    }
+
+    /**
      * Genera la data necesaria que utilizara el paginator,
      * contiene los datos relevantes para la tabla, esta
      * informacion debe ser un array asociativo.
@@ -146,7 +185,7 @@ class ItemRepository extends AbstractRepository implements ItemRepositoryInterfa
         return [
             'uid'         => $model->id,
             'Descripción' => $model->desc,
-            'Stock'       => $model->stock,
+            'Stock' => $model->formattedStock(),
             'Rubro'       => $model->subCategory->desc,
             'Fabricante'  => $model->maker->desc,
         ];

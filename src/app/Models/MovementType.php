@@ -1,6 +1,4 @@
-<?php
-
-namespace PCI\Models;
+<?php namespace PCI\Models;
 
 use Cviebrock\EloquentSluggable\SluggableInterface;
 use Cviebrock\EloquentSluggable\SluggableTrait;
@@ -10,6 +8,7 @@ use Illuminate\Database\Eloquent\Collection;
 
 /**
  * PCI\Models\MovementType
+ *
  * @package PCI\Models
  * @author Alejandro Granadillo <slayerfat@gmail.com>
  * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
@@ -48,13 +47,6 @@ class MovementType extends AbstractBaseModel implements SluggableInterface
         'build_from' => 'desc',
         'save_to'    => 'slug',
     ];
-
-    // -------------------------------------------------------------------------
-    // Relaciones
-    // -------------------------------------------------------------------------
-    // -------------------------------------------------------------------------
-    // Has Many 1 -> 1..*
-    // -------------------------------------------------------------------------
 
     /**
      * Regresa una coleccion de movimientos asociados.

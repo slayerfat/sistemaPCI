@@ -1,15 +1,13 @@
-<?php
-
-namespace PCI\Models;
+<?php namespace PCI\Models;
 
 use Cviebrock\EloquentSluggable\SluggableInterface;
 use Cviebrock\EloquentSluggable\SluggableTrait;
-use Illuminate\Database\Eloquent\Collection;
 
 /** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
 
 /**
  * PCI\Models\Department
+ *
  * @package PCI\Models
  * @author Alejandro Granadillo <slayerfat@gmail.com>
  * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
@@ -60,7 +58,7 @@ class Department extends AbstractBaseModel implements SluggableInterface
 
     /**
      * Regresa una coleccion de datos laborales.
-     * @return Collection
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function workDetails()
     {

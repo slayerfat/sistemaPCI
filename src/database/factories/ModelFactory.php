@@ -81,6 +81,7 @@ $factory->defineAs(PCI\Models\Item::class, 'full', function () use ($factory) {
         'sub_category_id' => factory(PCI\Models\SubCategory::class)->create()->id,
         'maker_id'        => factory(PCI\Models\Maker::class)->create()->id,
         'item_type_id'    => factory(PCI\Models\ItemType::class)->create()->id,
+        'stock_type_id' => factory(PCI\Models\StockType::class)->create()->id,
     ]);
 });
 
@@ -114,7 +115,7 @@ $factory->define(PCI\Models\Parish::class, function () use ($faker) {
 $factory->define(PCI\Models\Petition::class, function () use ($faker) {
     return [
         'user_id'          => 1,
-        'petition_type_id' => 1,
+        'petition_type_id' => factory(\PCI\Models\PetitionType::class)->create()->id,
         'request_date'     => $faker->dateTime,
         'comments'         => $faker->paragraph,
         'status'           => true,
@@ -144,6 +145,15 @@ $factory->define(PCI\Models\User::class, function () use ($faker) {
         'remember_token'    => str_random(10),
         'confirmation_code' => str_random(32),
     ];
+});
+
+$factory->defineAs(PCI\Models\User::class, 'admin', function () use ($factory) {
+    $item = $factory->raw(PCI\Models\User::class);
+
+    return array_merge($item, [
+        'profile_id'        => PCI\Models\User::ADMIN_ID,
+        'confirmation_code' => null,
+    ]);
 });
 
 $factory->define(PCI\Models\WorkDetail::class, function () use ($faker) {

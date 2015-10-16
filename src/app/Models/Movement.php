@@ -1,13 +1,10 @@
-<?php
-
-namespace PCI\Models;
-
-use Illuminate\Database\Eloquent\Collection;
+<?php namespace PCI\Models;
 
 /** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
 
 /**
  * PCI\Models\Movement
+ *
  * @package PCI\Models
  * @author Alejandro Granadillo <slayerfat@gmail.com>
  * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
@@ -49,16 +46,9 @@ class Movement extends AbstractBaseModel
      */
     protected $dates = ['creation'];
 
-    // -------------------------------------------------------------------------
-    // Relaciones
-    // -------------------------------------------------------------------------
-    // -------------------------------------------------------------------------
-    // belongs to
-    // -------------------------------------------------------------------------
-
     /**
      * Regresa el tipo de movimiento relacionado.
-     * @return MovementType
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
     public function type()
     {
@@ -67,20 +57,16 @@ class Movement extends AbstractBaseModel
 
     /**
      * Regresa la nota relacionada a este movimiento.
-     * @return Note
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
     public function note()
     {
         return $this->belongsTo(Note::class);
     }
 
-    // -------------------------------------------------------------------------
-    // belongs to many
-    // -------------------------------------------------------------------------
-
     /**
      * Regresa una coleccion de items asociados.
-     * @return Collection
+     * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
      */
     public function items()
     {

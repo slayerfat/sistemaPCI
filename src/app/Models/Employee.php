@@ -1,11 +1,10 @@
-<?php
-
-namespace PCI\Models;
+<?php namespace PCI\Models;
 
     /** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
 
 /**
  * PCI\Models\Employee
+ *
  * @package PCI\Models
  * @author Alejandro Granadillo <slayerfat@gmail.com>
  * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
@@ -87,29 +86,18 @@ class Employee extends AbstractBaseModel
         return $this->attributes['ci'] = (int) $value;
     }
 
-    // -------------------------------------------------------------------------
-    // Relaciones
-    // -------------------------------------------------------------------------
-    // -------------------------------------------------------------------------
-    // Has one 1 -> 1
-    // -------------------------------------------------------------------------
-
     /**
      * Regresa los datos laborales del empleado.
-     * @return WorkDetail
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function workDetails()
     {
         return $this->hasOne(WorkDetail::class);
     }
 
-    // -------------------------------------------------------------------------
-    // Belongs to 1..* -> 1
-    // -------------------------------------------------------------------------
-
     /**
      * Regresa el usuario relacionado con el empleado.
-     * @return User
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function user()
     {
@@ -118,7 +106,7 @@ class Employee extends AbstractBaseModel
 
     /**
      * Regresa la nacionalidad relacionada con el empleado.
-     * @return Nationality
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function nationality()
     {
@@ -127,7 +115,7 @@ class Employee extends AbstractBaseModel
 
     /**
      * Regresa el genero relacionado con el empleado.
-     * @return Gender
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function gender()
     {
@@ -136,16 +124,12 @@ class Employee extends AbstractBaseModel
 
     /**
      * Regresa la direccion relacionada con el empleado.
-     * @return Address
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function address()
     {
         return $this->belongsTo(Address::class);
     }
-
-    // -------------------------------------------------------------------------
-    // Metodos Publicos
-    // -------------------------------------------------------------------------
 
     /**
      * Genera los nombres en formato legible para
@@ -167,10 +151,6 @@ class Employee extends AbstractBaseModel
 
         return $this->formattedNamesWithLast($firstSurname, $firstName);
     }
-
-    // -------------------------------------------------------------------------
-    // Metodos Privados
-    // -------------------------------------------------------------------------
 
     /**
      * Genera los nombres en formato legible con los nombres y apellidos.

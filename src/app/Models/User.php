@@ -1,19 +1,17 @@
-<?php
-
-namespace PCI\Models;
+<?php namespace PCI\Models;
 
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Auth\Access\Authorizable;
 
 /** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
 
 /**
  * PCI\Models\User
+ *
  * @package PCI\Models
  * @author Alejandro Granadillo <slayerfat@gmail.com>
  * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
@@ -28,11 +26,12 @@ use Illuminate\Foundation\Auth\Access\Authorizable;
  * @property \Carbon\Carbon $updated_at
  * @property integer $created_by
  * @property integer $updated_by
- * @property-read Address $address
+ * @property-read \PCI\Models\Address $address
  * @property-read Employee $employee
  * @property-read Attendant $attendant
  * @property-read \Illuminate\Database\Eloquent\Collection|Note[] $notes
  * @property-read \Illuminate\Database\Eloquent\Collection|Petition[] $petitions
+ * @property-read \Illuminate\Database\Eloquent\Collection|Depot[] $manages
  * @property-read Profile $profile
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\User whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\User whereProfileId($value)
@@ -45,7 +44,6 @@ use Illuminate\Foundation\Auth\Access\Authorizable;
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\User whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\User whereCreatedBy($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\User whereUpdatedBy($value)
- * @property-read \Illuminate\Database\Eloquent\Collection|Depot[] $manages
  */
 class User extends AbstractBaseModel implements
     AuthenticatableContract,
@@ -95,11 +93,15 @@ class User extends AbstractBaseModel implements
      * The attributes excluded from the model's JSON form.
      * @var array
      */
-    protected $hidden = ['password', 'remember_token', 'confirmation_code'];
-
-    // -------------------------------------------------------------------------
-    // Accessor
-    // -------------------------------------------------------------------------
+    protected $hidden = [
+        'created_by',
+        'updated_by',
+        'created_at',
+        'updated_at',
+        'password',
+        'remember_token',
+        'confirmation_code'
+    ];
 
     /**
      * Regresa mamarrachamente a la direccion relacionada
@@ -111,16 +113,9 @@ class User extends AbstractBaseModel implements
         return $this->employee->address;
     }
 
-    // -------------------------------------------------------------------------
-    // Relaciones
-    // -------------------------------------------------------------------------
-    // -------------------------------------------------------------------------
-    // Has one 1 -> 1
-    // -------------------------------------------------------------------------
-
     /**
      * Regresa la informacion de empleado relacionado al usuario.
-     * @return Employee
+     * @return \Illuminate\Database\Eloquent\Relations\hasOne
      */
     public function employee()
     {
@@ -129,20 +124,16 @@ class User extends AbstractBaseModel implements
 
     /**
      * Regresa informacion de encargado de almacen, si este posee.
-     * @return Attendant
+     * @return \Illuminate\Database\Eloquent\Relations\hasOne
      */
     public function attendant()
     {
         return $this->hasOne(Attendant::class);
     }
 
-    // -------------------------------------------------------------------------
-    // has Many 1 -> 1..*
-    // -------------------------------------------------------------------------
-
     /**
      * Regresa una coleccion de notas asociadas.
-     * @return Collection
+     * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
      */
     public function notes()
     {
@@ -151,7 +142,7 @@ class User extends AbstractBaseModel implements
 
     /**
      * Regresa una coleccion de pedidos asociados.
-     * @return Collection
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
      */
     public function petitions()
     {
@@ -162,29 +153,21 @@ class User extends AbstractBaseModel implements
      * Regresa una coleccion de almacenes que maneja.
      * Esta relacion se refiere al Jefe de
      * Almacen administra/maneja almacen.
-     * @return Depot
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
      */
     public function manages()
     {
         return $this->hasMany(Depot::class);
     }
 
-    // -------------------------------------------------------------------------
-    // belongs to 1..* -> 1
-    // -------------------------------------------------------------------------
-
     /**
      * Regresa el perfil asociado.
-     * @return Profile
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
     public function profile()
     {
         return $this->belongsTo(Profile::class);
     }
-
-    // -------------------------------------------------------------------------
-    // Helpers
-    // -------------------------------------------------------------------------
 
     /**
      * Determina si el usuario es de perfil

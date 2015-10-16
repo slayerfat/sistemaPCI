@@ -2,8 +2,13 @@
 if (!isset($edit)) {
     $edit = false;
 }
+
 if (!isset($delete)) {
     $delete = false;
+}
+
+if (!isset($title)) {
+    $title = false;
 }
 
 if (isset($total) && isset($data)) {
@@ -23,9 +28,12 @@ if (isset($total) && isset($data)) {
 } elseif (!isset($total)) {
     $footer = '';
 }
+
+$html = $title ? "<h1>{$title}</h1>" : '';
+
 ?>
 
-<h1>{{$title}}</h1>
+{!! $html !!}
 
 {!!
 Table::withContents($data)->withFooter($footer)
@@ -36,6 +44,7 @@ Table::withContents($data)->withFooter($footer)
             ->withIcon(Icon::create('eye'))
             ->withAttributes([
                 'class' => 'text-success',
+                'id' => 'model-show-' . $row['uid'],
                 'data-toggle' => 'tooltip',
                 'title' => 'Consultar'
             ])->extraSmall();
@@ -49,6 +58,7 @@ Table::withContents($data)->withFooter($footer)
             ->withIcon(Icon::create('edit'))
             ->withAttributes([
                 'data-toggle' => 'tooltip',
+                'id' => 'model-edit-' . $row['uid'],
                 'title' => 'Editar'
             ])->extraSmall();
 
@@ -61,6 +71,7 @@ Table::withContents($data)->withFooter($footer)
                 ->withAttributes([
                     'onClick' => "deleteResourceFromAnchor({$row['uid']})",
                     'class' => 'text-danger',
+                    'id' => 'model-delete-' . $row['uid'],
                     'data-toggle' => 'tooltip',
                     'title' => 'Eliminar'
                 ])->extraSmall();

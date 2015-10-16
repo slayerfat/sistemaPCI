@@ -1,13 +1,10 @@
-<?php
-
-namespace PCI\Models;
-
-use Illuminate\Database\Eloquent\Collection;
+<?php namespace PCI\Models;
 
 /** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
 
 /**
  * PCI\Models\Attendant
+ *
  * @package PCI\Models
  * @author Alejandro Granadillo <slayerfat@gmail.com>
  * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
@@ -51,29 +48,18 @@ class Attendant extends AbstractBaseModel
      */
     protected $dates = ['selection'];
 
-    // -------------------------------------------------------------------------
-    // Relaciones
-    // -------------------------------------------------------------------------
-    // -------------------------------------------------------------------------
-    // belongs to
-    // -------------------------------------------------------------------------
-
     /**
      * Regresa al usuario relacionado.
-     * @return User
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    // -------------------------------------------------------------------------
-    // has Many
-    // -------------------------------------------------------------------------
-
     /**
      * Regresa una coleccion de notas.
-     * @return Collection
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function notes()
     {

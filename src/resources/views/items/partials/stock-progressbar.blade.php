@@ -24,9 +24,7 @@
 
     <h3>
         <small>
-            {{$item->stock}}
-            <?php //TODO: a espera de tipo de unidades ?>
-            en existencia.
+            {{$item->formattedStock()}} en existencia.
 
             @if(auth()->user()->isAdmin())
                 {{$item->minimum <= 1 ?

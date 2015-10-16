@@ -91,7 +91,7 @@ class ItemRelationsTest extends AbstractTestCase
 
         $mock->shouldReceive('withPivot')
             ->once()
-            ->with('quantity')
+            ->with('quantity', 'stock_type_id')
             ->andReturn('mocked');
 
         $this->assertEquals('mocked', $mock->petitions());

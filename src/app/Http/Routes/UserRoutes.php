@@ -90,6 +90,17 @@ class UserRoutes extends AbstractPciRoutes
                 ]
             ]
         ],
+        [
+            'routerOptions' => [
+                'prefix'     => 'pedidos',
+                'middleware' => 'auth',
+            ],
+            'rtDetails'     => [
+                'uses'     => 'User\PetitionsController',
+                'as'       => 'petitions',
+                'resource' => '{petitions}'
+            ]
+        ],
     ];
 
     /**
@@ -162,6 +173,33 @@ class UserRoutes extends AbstractPciRoutes
                 'as'   => 'workDetails.store',
                 'middleware' => 'auth'
             ]
+        ],
+        /**
+         * Ajax de pedidos
+         */
+        [
+            'method' => 'POST',
+            'url'    => 'api/pedidos/status/{id}',
+            'data'   => [
+                'uses'       => 'Api\User\PetitionsController@changeStatus',
+                'as'         => 'api.petitions.status',
+            ]
+        ],
+        [
+            'method' => 'POST',
+            'url'    => 'api/pedidos/approval-request/{id}',
+            'data'   => [
+                'uses' => 'Api\User\PetitionsController@approvalRequest',
+                'as'   => 'api.petitions.approvalRequest',
+            ],
+        ],
+        [
+            'method' => 'POST',
+            'url'    => 'api/pedidos/items/{id}',
+            'data'   => [
+                'uses' => 'Api\User\PetitionsController@items',
+                'as'   => 'api.petitions.items',
+            ],
         ],
     ];
 

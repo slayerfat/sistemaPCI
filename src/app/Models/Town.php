@@ -1,13 +1,10 @@
-<?php
-
-namespace PCI\Models;
-
-use Illuminate\Database\Eloquent\Collection;
+<?php namespace PCI\Models;
 
 /** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
 
 /**
  * PCI\Models\Town
+ *
  * @package PCI\Models
  * @author Alejandro Granadillo <slayerfat@gmail.com>
  * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
@@ -31,29 +28,18 @@ use Illuminate\Database\Eloquent\Collection;
 class Town extends AbstractPlacesModel
 {
 
-    // -------------------------------------------------------------------------
-    // Relaciones
-    // -------------------------------------------------------------------------
-    // -------------------------------------------------------------------------
-    // Belongs To 1..* -> 1
-    // -------------------------------------------------------------------------
-
     /**
      * Regresa al estado asociado al municipio.
-     * @return State
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
     public function state()
     {
         return $this->belongsTo(State::class);
     }
 
-    // -------------------------------------------------------------------------
-    // Has Many 1 -> 1..*
-    // -------------------------------------------------------------------------
-
     /**
      * Regresa una coleccion de parroquias asociadas.
-     * @return Collection
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
      */
     public function parishes()
     {

@@ -1,11 +1,10 @@
-<?php
-
-namespace PCI\Models;
+<?php namespace PCI\Models;
 
     /** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
 
 /**
  * PCI\Models\WorkDetail
+ *
  * @package PCI\Models
  * @author Alejandro Granadillo <slayerfat@gmail.com>
  * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
@@ -79,16 +78,9 @@ class WorkDetail extends AbstractBaseModel
         return $this->getDateInstance($value);
     }
 
-    // -------------------------------------------------------------------------
-    // Relaciones
-    // -------------------------------------------------------------------------
-    // -------------------------------------------------------------------------
-    // Belongs to 1..* -> 1
-    // -------------------------------------------------------------------------
-
     /**
      * Regresa al empleado relacionado.
-     * @return Employee
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
     public function employee()
     {
@@ -97,7 +89,7 @@ class WorkDetail extends AbstractBaseModel
 
     /**
      * Regresa el cargo relacionado.
-     * @return Position
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
     public function position()
     {
@@ -106,7 +98,7 @@ class WorkDetail extends AbstractBaseModel
 
     /**
      * Regresa el departamento relacionado.
-     * @return Department
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
     public function department()
     {

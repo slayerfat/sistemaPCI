@@ -11,7 +11,8 @@ var paths = {
     'jquery': './vendor/bower_components/jquery/',
     'bootstrap': './node_modules/bootstrap-sass/assets/',
     'fontAwesome': './vendor/bower_components/font-awesome/',
-    'datepicker': './vendor/bower_components/bootstrap-datepicker/'
+    'datepicker': './vendor/bower_components/bootstrap-datepicker/',
+    'select2': './node_modules/Select2/dist/'
 }
 
 // git bump (v0.1.2) <-- gulp release|feature|patch|pre
@@ -62,7 +63,6 @@ gulp.task('release', function() { return inc('major'); });
 elixir(function (mix) {
     mix
         .sass('app.sass')
-
         // copiamos los fonts de bootstrap para que no se queje.
         // otra opcion seria un symlink o algo asi.
         .copy(paths.bootstrap + 'fonts/bootstrap/**', paths.public + '/fonts')
@@ -75,7 +75,9 @@ elixir(function (mix) {
         .scripts([
             '', //asqueroso, pero funciona
             paths.jquery + "dist/jquery.js",
-            paths.bootstrap + "javascripts/bootstrap.js"
+            paths.bootstrap + "javascripts/bootstrap.js",
+            paths.select2 + "js/select2.js",
+            paths.select2 + "js/i18n/es.js",
         ])
         .scripts([
             '../ajax/address/getAddress.js'
@@ -89,16 +91,17 @@ elixir(function (mix) {
         ], paths.public + '/js/datepicker.js')
         .styles([
             paths.datepicker + 'dist/css/bootstrap-datepicker3.css',
-        ], paths.public + '/css/datepicker.css')
+            paths.select2 + "css/select2.css",
+        ], paths.public + '/css/vendor.css')
 
         // 'versiona' los archivos para obtener copias actualizadas
         // y no versiones de cache del explorador (firefox es el peor)
         .version([
             'css/app.css',
+            '/css/vendor.css',
             'js/all.js',
             'js/setAddress.js',
             'js/getAddress.js',
-            '/js/datepicker.js',
-            '/css/datepicker.css'
+            '/js/datepicker.js'
         ]);
 });

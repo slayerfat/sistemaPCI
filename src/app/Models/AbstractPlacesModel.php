@@ -20,16 +20,4 @@ abstract class AbstractPlacesModel extends AbstractBaseModel
      * @var array
      */
     protected $fillable = ['desc'];
-
-    /**
-     * Los campos que seran ocultados cuando el
-     * modelo se convierte en array y json
-     * @var string[]
-     */
-    protected $hidden = [
-        'created_at',
-        'updated_at',
-        'created_by',
-        'updated_by'
-    ];
 }

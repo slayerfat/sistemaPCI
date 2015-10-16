@@ -1,15 +1,13 @@
-<?php
-
-namespace PCI\Models;
+<?php namespace PCI\Models;
 
 use Cviebrock\EloquentSluggable\SluggableInterface;
 use Cviebrock\EloquentSluggable\SluggableTrait;
-use Illuminate\Database\Eloquent\Collection;
 
 /** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
 
 /**
  * PCI\Models\Position
+ *
  * @package PCI\Models
  * @author Alejandro Granadillo <slayerfat@gmail.com>
  * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
@@ -49,16 +47,9 @@ class Position extends AbstractBaseModel implements SluggableInterface
         'save_to'    => 'slug',
     ];
 
-    // -------------------------------------------------------------------------
-    // Relaciones
-    // -------------------------------------------------------------------------
-    // -------------------------------------------------------------------------
-    // Has Many 1 -> 1..*
-    // -------------------------------------------------------------------------
-
     /**
      * Regresa una coleccion de datos laborales asociados.
-     * @return Collection
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
      */
     public function workDetails()
     {

@@ -1,13 +1,10 @@
-<?php
-
-namespace PCI\Models;
-
-use Illuminate\Database\Eloquent\Collection;
+<?php namespace PCI\Models;
 
 /** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
 
 /**
  * PCI\Models\Note
+ *
  * @package PCI\Models
  * @author Alejandro Granadillo <slayerfat@gmail.com>
  * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
@@ -67,16 +64,9 @@ class Note extends AbstractBaseModel
      */
     protected $dates = ['creation'];
 
-    // -------------------------------------------------------------------------
-    // Relaciones
-    // -------------------------------------------------------------------------
-    // -------------------------------------------------------------------------
-    // belongs to
-    // -------------------------------------------------------------------------
-
     /**
      * Regresa la peticion relacionada a esta nota.
-     * @return Petition
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
     public function petition()
     {
@@ -85,7 +75,7 @@ class Note extends AbstractBaseModel
 
     /**
      * Regresa al usuario relacionado a esta nota.
-     * @return User
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
     public function requestedBy()
     {
@@ -94,7 +84,7 @@ class Note extends AbstractBaseModel
 
     /**
      * Regresa el usuario destinatario de la nota.
-     * @return User
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
     public function toUser()
     {
@@ -103,7 +93,7 @@ class Note extends AbstractBaseModel
 
     /**
      * Regresa el encargado de almacen.
-     * @return Attendant
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
     public function attendant()
     {
@@ -112,33 +102,25 @@ class Note extends AbstractBaseModel
 
     /**
      * Regresa una el tipo de nota relacionado.
-     * @return NoteType
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
     public function type()
     {
         return $this->belongsTo(NoteType::class);
     }
 
-    // -------------------------------------------------------------------------
-    // belongs to many
-    // -------------------------------------------------------------------------
-
     /**
      * Regresa una coleccion de items asociados.
-     * @return Collection
+     * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
      */
     public function items()
     {
         return $this->belongsToMany(Item::class)->withPivot('quantity');
     }
 
-    // -------------------------------------------------------------------------
-    // has many
-    // -------------------------------------------------------------------------
-
     /**
      * Regresa una coleccion de movimientos asociados.
-     * @return Movement
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
      */
     public function movements()
     {

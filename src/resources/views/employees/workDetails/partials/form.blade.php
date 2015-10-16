@@ -45,7 +45,7 @@ ControlGroup::generate(
 {!! Button::primary($btnMsg)->block()->submit() !!}
 
 @section('css')
-    <link rel="stylesheet" href="{{elixir('css/datepicker.css')}}"/>
+    <link rel="stylesheet" href="{{elixir('css/vendor.css')}}"/>
 @stop
 
 @section('js')

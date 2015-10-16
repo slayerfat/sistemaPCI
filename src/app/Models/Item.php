@@ -1,52 +1,51 @@
-<?php
-
-namespace PCI\Models;
+<?php namespace PCI\Models;
 
 use Cviebrock\EloquentSluggable\SluggableInterface;
 use Cviebrock\EloquentSluggable\SluggableTrait;
-use Illuminate\Database\Eloquent\Collection;
+use ICanBoogie\Inflector;
 
 /** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
 
 /**
  * PCI\Models\Item
+ *
  * @package PCI\Models
  * @author Alejandro Granadillo <slayerfat@gmail.com>
  * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
  * @property integer $id
  * @property integer $item_type_id
  * @property integer $maker_id
+ * @property integer $stock_type_id
  * @property integer $sub_category_id
  * @property string $asoc
  * @property integer $priority
  * @property string $desc
  * @property string $slug
- * @property integer $stock
  * @property integer $minimum
- * @property \Carbon\Carbon $due
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property integer $created_by
  * @property integer $updated_by
- * @property-read SubCategory $subCategory
- * @property-read Maker $maker
- * @property-read ItemType $type
- * @property-read \Illuminate\Database\Eloquent\Collection|Depot[] $depots
- * @property-read \Illuminate\Database\Eloquent\Collection|\PCI\Models\Item[] $dependsOn
- * @property-read \Illuminate\Database\Eloquent\Collection|Petition[] $petitions
- * @property-read \Illuminate\Database\Eloquent\Collection|Movement[] $movements
- * @property-read \Illuminate\Database\Eloquent\Collection|Note[] $notes
+ * @property-read int $stock
+ * @property-read \Illuminate\Database\Eloquent\Collection|\PCI\Models\Depot[] $depots
+ * @property-read \PCI\Models\SubCategory $subCategory
+ * @property-read \PCI\Models\Maker $maker
+ * @property-read \PCI\Models\ItemType $type
+ * @property-read \PCI\Models\StockType $stockType
+ * @property-read \Illuminate\Database\Eloquent\Collection|Item[] $dependsOn
+ * @property-read \Illuminate\Database\Eloquent\Collection|\PCI\Models\Petition[] $petitions
+ * @property-read \Illuminate\Database\Eloquent\Collection|\PCI\Models\Movement[] $movements
+ * @property-read \Illuminate\Database\Eloquent\Collection|\PCI\Models\Note[] $notes
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Item whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Item whereItemTypeId($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Item whereMakerId($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Item whereStockTypeId($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Item whereSubCategoryId($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Item whereAsoc($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Item wherePriority($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Item whereDesc($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Item whereSlug($value)
- * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Item whereStock($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Item whereMinimum($value)
- * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Item whereDue($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Item whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Item whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Item whereCreatedBy($value)
@@ -71,7 +70,20 @@ class Item extends AbstractBaseModel implements SluggableInterface
         'priority',
         'desc',
         'minimum',
-        'due',
+    ];
+
+    /**
+     * Atributos que deben ser ocultos en array/json
+     * @var array
+     */
+    protected $hidden = [
+        'asoc',
+        'priority',
+        'minimum',
+        'created_by',
+        'created_at',
+        'updated_by',
+        'updated_at',
     ];
 
     /**
@@ -105,7 +117,7 @@ class Item extends AbstractBaseModel implements SluggableInterface
     /**
      * Busca en la base de datos y regresa la sumatoria
      * de los movimientos del item en los almacenes.
-     * @return int
+     * @return int la suma de las cantidades en los almacenes.
      */
     public function stock()
     {
@@ -127,7 +139,7 @@ class Item extends AbstractBaseModel implements SluggableInterface
 
     /**
      * Regresa el rubro asociado al item.
-     * @return SubCategory
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
     public function subCategory()
     {
@@ -136,7 +148,7 @@ class Item extends AbstractBaseModel implements SluggableInterface
 
     /**
      * regresa el fabricante asociado.
-     * @return Maker
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
     public function maker()
     {
@@ -145,7 +157,7 @@ class Item extends AbstractBaseModel implements SluggableInterface
 
     /**
      * Regresa el tipo de item.
-     * @return ItemType
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
     public function type()
     {
@@ -156,17 +168,17 @@ class Item extends AbstractBaseModel implements SluggableInterface
 
     /**
      * Regresa el tipo de item.
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
     public function stockType()
     {
-        return $this->belongsTo('PCI\Models\StockType', 'item_type_id');
+        return $this->belongsTo('PCI\Models\StockType', 'stock_type_id');
     }
 
     /**
      * Relacion unaria.
      * Regresa los items que dependen de otros items.
-     * @return Collection
+     * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
      */
     public function dependsOn()
     {
@@ -180,16 +192,16 @@ class Item extends AbstractBaseModel implements SluggableInterface
 
     /**
      * Regresa una coleccion de peticiones relacionadas con el item.
-     * @return Collection
+     * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
      */
     public function petitions()
     {
-        return $this->belongsToMany('PCI\Models\Petition')->withPivot('quantity');
+        return $this->belongsToMany('PCI\Models\Petition')->withPivot('quantity', 'stock_type_id');
     }
 
     /**
      * Regresa una coleccion de movimientos relacionadas con el item.
-     * @return Collection
+     * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
      */
     public function movements()
     {
@@ -199,7 +211,7 @@ class Item extends AbstractBaseModel implements SluggableInterface
 
     /**
      * Regresa una coleccion de notas asociadas al item.
-     * @return Collection
+     * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
      */
     public function notes()
     {
@@ -213,5 +225,35 @@ class Item extends AbstractBaseModel implements SluggableInterface
     public function percentageStock()
     {
         return ceil(($this->stock * 100) / $this->minimum);
+    }
+
+    /**
+     * Regresa la cantidad o stock existente del
+     * item en formato legible para el usuario.
+     * @return string si el item tiene 1, entonces 1 Unidad.
+     */
+    public function formattedStock()
+    {
+        $stock = $this->stock();
+
+        return $this->formattedQuantity($stock);
+    }
+
+    /**
+     * Genera un string con el tipo de cantidad en plural o singular.
+     * Solucion mamarracha.
+     * @param int $number
+     * @return string si el item tiene 1, entonces 1 Unidad.
+     */
+    public function formattedQuantity($number)
+    {
+        // como usualmente se dice cero unidades,
+        // entonces tambien se pluraliza.
+        if ($number == 1) {
+            return $number . ' ' . $this->stockType->desc;
+        }
+
+        return $number . ' ' . Inflector::get('es')
+                                        ->pluralize($this->stockType->desc);
     }
 }

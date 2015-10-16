@@ -14,7 +14,7 @@
 
     <h4>
         {{$updated or 'Recurso actualizado'}}
-        {{$model->created_at->diffForHumans()}}
+        {{$model->updated_at->diffForHumans()}}
         <small>
             por
             <a href="{{route("users.show", $model->updatedBy()->name)}}">

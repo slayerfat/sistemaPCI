@@ -1,8 +1,44 @@
 # Change Log
 
-Todos los cambios significatiovos en este proyecto estaran documentados en este archivo. Este proyecto intenta seguir el [Versionamiento Semantico](http://semver.org/).
+Todos los cambios significativos en este proyecto estaran documentados en este archivo. Este proyecto intenta seguir el [Versionamiento Semantico](http://semver.org/).
 
 ## [En Desarrollo][unrele]
+
+### Añadido
+
+- Notas...
+
+## [v0.4.0] - 2015-10-16
+
+### Añadido
+
+- Documentacion
+
+## [v0.3.6] - 2015-10-16
+
+### Añadido
+
+- Nuevas Peticiones, estas pueden enviar correos a todas las partes interesadas en la creacion de una nueva.
+- Apis de pedido y tipo de stock (necesario para crear/actualizar pedido).
+
+### Cambiado
+
+- Modelos tienen campos ocultos de creado/actualizado en/por por defecto, ver AbstractBaseModel.
+- Eventos y Listeners parcialmente jerarquizados.
+
+### Arreglado
+
+- Pivote de Pedido no tenia tipo de stock.
+- Añadido trans en algunas vistas.
+
+
+## [v0.3.5] - 2015-10-03
+
+### Añadido
+
+- Inflector para manejo de plurales en tipo de stock.
+
+## [v0.3.4] - 2015-10-02
 
 ### Añadido
 
@@ -10,7 +46,7 @@ Todos los cambios significatiovos en este proyecto estaran documentados en este 
 
 ## [v0.3.3] - 2015-10-02
 
-### Añadido 
+### Añadido
 
 - Cargos completamente olvidados, ya añadidos al sistema.
 
