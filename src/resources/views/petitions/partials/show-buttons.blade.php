@@ -4,6 +4,7 @@
             {!!
 
             Button::withValue('Solicitar Aprobación')
+                ->asLinkTo('#')
                 ->withAttributes([
                     'id'        => 'petition-approval-request',
                     'data-sent' => 'false',

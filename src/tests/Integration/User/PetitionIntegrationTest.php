@@ -97,6 +97,40 @@ class PetitionIntegrationTest extends AbstractUserIntegration
             ->see(trans('models.petitions.edit'));
     }
 
+    public function testPetitionCantEditIfStatusIsNotNull()
+    {
+        $petition = factory(Petition::class)->create(['status' => true]);
+
+        $this->actingAs($this->user)
+            ->visit(route('petitions.edit', $petition->id))
+            ->see('Los Pedidos solo pueden ser editados si est&aacute;n por aprobar.');
+    }
+
+    public function testPetitionShowViewDoesShowEditDeleteButtonsIfStatusIsNull(
+    )
+    {
+        $petition = factory(Petition::class)->create(['status' => null]);
+
+        $this->actingAs($this->user)
+            ->visit(route('petitions.show', $petition->id))
+            ->seePageIs(route('petitions.show', $petition->id))
+            ->seeLink("Solicitar Aprobación")
+            ->see("model-edit-{$petition->id}")
+            ->see("model-delete-{$petition->id}");
+    }
+
+    public function testPetitionShowViewDoesNotShowEditDeleteButtons()
+    {
+        $petition = factory(Petition::class)->create(['status' => true]);
+
+        $this->actingAs($this->user)
+            ->visit(route('petitions.show', $petition->id))
+            ->seePageIs(route('petitions.show', $petition->id))
+            ->dontSeeLink("Solicitar Aprobación")
+            ->dontSee("model-edit-{$petition->id}")
+            ->dontSee("model-delete-{$petition->id}");
+    }
+
     /**
      * @return \PCI\Models\User
      */
