@@ -72,12 +72,12 @@ ControlGroup::generate(
 
             // poderosisimo copypasta.
             var markup = '<div class="clearfix">' +
-                    '<div class="col-xs-12">' +
-                    '<div class="clearfix">' +
-                    '<div class="col-sm-6">' + data.desc + '</div>' +
-                    '<div class="col-sm-3"><i class="fa fa-industry"></i> ' + data.maker.desc + '</div>' +
-                    '<div class="col-sm-3"><i class="fa fa-random"></i> ' + data.sub_category.desc + '</div>' +
-                    '</div>';
+                '<div class="col-xs-12">' +
+                '<div class="clearfix">' +
+                '<div class="col-sm-6">' + data.desc + '</div>' +
+                '<div class="col-sm-3"><i class="fa fa-industry"></i> ' + data.maker.desc + '</div>' +
+                '<div class="col-sm-3"><i class="fa fa-random"></i> ' + data.sub_category.desc + '</div>' +
+                '</div>';
 
             markup += '</div></div>';
 
@@ -185,7 +185,11 @@ ControlGroup::generate(
             },
 
             addSelected: function (id) {
-                this.selected.push(id);
+                this.selected.push(parseInt(id));
+            },
+
+            removeSelected: function (id) {
+                this.selected.splice(this.selected.indexOf(parseInt(id)), 1);
             },
 
             setStock: function (stock) {
@@ -215,8 +219,8 @@ ControlGroup::generate(
                 // chequeamos que el stock no sea 0
                 if (items.stock.plain < 1) {
                     var $error = $('<label for="itemBag" class="control-label col-sm-8">' +
-                            items.data.desc + ' no se encuentra en existencia.' +
-                            '</label>');
+                        items.data.desc + ' no se encuentra en existencia.' +
+                        '</label>');
 
                     itemBag.append($error);
 
@@ -232,33 +236,33 @@ ControlGroup::generate(
 
                 // como esta mamarrachada es muy grande, la
                 // segmentamos para que pueda ser mas facil de digerir
-                var itemInput = '<div class="itemBag-item">'
-                        + '<label for="itemBag" class="control-label col-sm-7">'
-                        + items.data.desc
-                        + '</label>'
-                        + '<div class="col-sm-2">' +
-                        '<input class="form-control" name="item-id-' + items.data.id + '" type="number" min="1" value="' + items.stock.plain + '" max="' + items.stock.plain + '">' +
-                        '<span class="help-block">' + items.stock.formatted + ' en total.' + '</span>' +
-                        '</div>';
+                var itemInput = '<div class="itemBag-item" data-id="' + items.data.id + '">'
+                    + '<label for="itemBag" class="control-label col-sm-7">'
+                    + items.data.desc
+                    + '</label>'
+                    + '<div class="col-sm-2">' +
+                    '<input class="form-control" name="item-id-' + items.data.id + '" type="number" min="1" value="' + items.stock.plain + '" max="' + items.stock.plain + '">' +
+                    '<span class="help-block">' + items.stock.formatted + ' en total.' + '</span>' +
+                    '</div>';
 
                 var options = '';
 
                 // generamos las opciones que van dentro del select
                 Object.keys(stockTypes.types).forEach(function (key) {
                     stockTypes.types[key].id == items.data.stock_type_id
-                            ? options += '<option value="' + stockTypes.types[key].id + '" selected="selected">' + stockTypes.types[key].desc + '</option>'
-                            : options += '<option value="' + stockTypes.types[key].id + '">' + stockTypes.types[key].desc + '</option>';
+                        ? options += '<option value="' + stockTypes.types[key].id + '" selected="selected">' + stockTypes.types[key].desc + '</option>'
+                        : options += '<option value="' + stockTypes.types[key].id + '">' + stockTypes.types[key].desc + '</option>';
                 });
 
                 // este select contiene los tipos de cantidad
                 var select = '<div class="col-sm-3">  <div class="input-group">' +
-                        '<select class="form-control" name="stock-type-id-' +
-                        items.data.id + '">' + options + '</select>' +
-                        '<span class="input-group-addon itemBag-remove-item" ' +
-                        'data-id="' + items.data.id + '">' +
-                        '<i class="fa fa-times"></i></span>' +
-                        '</div>' +
-                        '</div>';
+                    '<select class="form-control" name="stock-type-id-' +
+                    items.data.id + '">' + options + '</select>' +
+                    '<span class="input-group-addon itemBag-remove-item" ' +
+                    'data-id="' + items.data.id + '">' +
+                    '<i class="fa fa-times"></i></span>' +
+                    '</div>' +
+                    '</div>';
 
                 itemBag.append(itemInput + select);
 
@@ -272,7 +276,9 @@ ControlGroup::generate(
 
             $('.itemBag-remove-item').click(function () {
                 var $item = $(this).closest('.itemBag-item');
+                var id = $item.data('id');
                 $item.toggle(function () {
+                    items.removeSelected(id);
                     $item.remove()
                 });
             });
@@ -293,8 +299,8 @@ ControlGroup::generate(
             if (!$formData.data('editing')) return;
 
             var html = '<div class="col-xs-push-4 col-xs-4 text-center">' +
-                    '<i class="fa fa-spinner fa-spin fa-5x"></i>' +
-                    '</div>';
+                '<i class="fa fa-spinner fa-spin fa-5x"></i>' +
+                '</div>';
 
             function startAjax() {
                 $.ajax({
@@ -321,7 +327,10 @@ ControlGroup::generate(
                     },
                     removeItem: function ($element) {
                         var $item = $element.closest('.itemBag-item');
+                        var id = $item.data('id');
+
                         $item.toggle(function () {
+                            items.removeSelected(id);
                             $item.remove()
                         });
                     }
