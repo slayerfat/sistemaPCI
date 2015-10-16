@@ -1,6 +1,8 @@
 <?php namespace Tests\PCI\Api\User;
 
 use Illuminate\Foundation\Testing\WithoutMiddleware;
+use PCI\Events\Petition\PetitionApprovalRequest;
+use PCI\Models\Item;
 use PCI\Models\Petition;
 use PCI\Models\User;
 use Tests\Integration\User\AbstractUserIntegration;
@@ -65,6 +67,33 @@ class PetitionControllerTest extends AbstractUserIntegration
             ]);
     }
 
+    public function testItemsShouldReturnOk()
+    {
+        $this->post(route('api.petitions.items', 1))
+            ->assertResponseOk();
+    }
+
+    public function testItemsShouldReturnValidJson()
+    {
+        $item = Item::first();
+
+        $this->post(route('api.petitions.items', 1))
+            ->seeJson([
+                'id'       => $item->id,
+                'desc'     => $item->desc,
+                'stock'    => $item->formattedStock(),
+                'quantity' => $item->petitions->first()->pivot->quantity,
+            ]);
+    }
+
+    public function testApprovalRequestShouldReturnOk()
+    {
+        $this->actingAs($this->user)
+            ->expectsEvents(PetitionApprovalRequest::class)
+            ->post(route('api.petitions.approvalRequest', 1))
+            ->assertResponseOk();
+    }
+
     /**
      * @return \PCI\Models\User
      */
@@ -78,6 +107,11 @@ class PetitionControllerTest extends AbstractUserIntegration
      */
     protected function persistData()
     {
-        factory(Petition::class)->create();
+        $petition = factory(Petition::class)->create();
+        $item     = factory(Item::class, 'full')->create();
+        $petition->items()->attach($item->id, [
+            'quantity'      => $item->stock,
+            'stock_type_id' => $item->stock_type_id,
+        ]);
     }
 }
