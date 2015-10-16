@@ -64,6 +64,39 @@ class PetitionIntegrationTest extends AbstractUserIntegration
             ->see($petition->items->first()->desc);
     }
 
+    public function testPetitionCreateShowsForm()
+    {
+        $this->actingAs($this->user)
+            ->visit(route('petitions.index'))
+            ->click(trans('models.petitions.create'))
+            ->seePageIs(route('petitions.create'));
+    }
+
+    public function testPetitionCantCreateWithoutItems()
+    {
+        $this->actingAs($this->user)
+            ->visit(route('petitions.create'))
+            ->seePageIs(route('petitions.create'))
+            ->see(trans('models.petitions.create'))
+            ->press(trans('models.petitions.create'))
+            ->see('Oops!');
+    }
+
+    public function testPetitionShowsEditForm()
+    {
+        $petition = factory(Petition::class)->create(['status' => null]);
+        $item     = factory(Item::class, 'full')->create();
+        $petition->items()->attach($item->id, [
+            'quantity'      => $item->stock,
+            'stock_type_id' => $item->stock_type_id,
+        ]);
+
+        $this->actingAs($this->user)
+            ->visit(route('petitions.edit', $petition->id))
+            ->seePageIs(route('petitions.edit', $petition->id))
+            ->see(trans('models.petitions.edit'));
+    }
+
     /**
      * @return \PCI\Models\User
      */
