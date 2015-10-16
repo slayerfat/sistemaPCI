@@ -6,6 +6,13 @@ En este archivo estaran los cambios pertinentes en el DED y el Documento de Espe
 
 Detalles, observaciones u otros:
 
+#### 16-10-15
+
+Usuario no debe poder modificar/eliminar Pedido que ya haya sido aprobado/rechazado.
+Usuario no debe poder modificar/eliminar Pedido que ya haya generado notas.
+
+lo anterior aplica a Nota y Movimientos.
+
 #### 15-10-15
 
 usuario puede solicitar la aprobacion de pedido ya creado.
