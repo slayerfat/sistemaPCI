@@ -44,6 +44,7 @@ Table::withContents($data)->withFooter($footer)
             ->withIcon(Icon::create('eye'))
             ->withAttributes([
                 'class' => 'text-success',
+                'id' => 'model-show-' . $row['uid'],
                 'data-toggle' => 'tooltip',
                 'title' => 'Consultar'
             ])->extraSmall();
@@ -57,6 +58,7 @@ Table::withContents($data)->withFooter($footer)
             ->withIcon(Icon::create('edit'))
             ->withAttributes([
                 'data-toggle' => 'tooltip',
+                'id' => 'model-edit-' . $row['uid'],
                 'title' => 'Editar'
             ])->extraSmall();
 
@@ -69,6 +71,7 @@ Table::withContents($data)->withFooter($footer)
                 ->withAttributes([
                     'onClick' => "deleteResourceFromAnchor({$row['uid']})",
                     'class' => 'text-danger',
+                    'id' => 'model-delete-' . $row['uid'],
                     'data-toggle' => 'tooltip',
                     'title' => 'Eliminar'
                 ])->extraSmall();

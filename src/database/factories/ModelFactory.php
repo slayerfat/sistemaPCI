@@ -115,7 +115,7 @@ $factory->define(PCI\Models\Parish::class, function () use ($faker) {
 $factory->define(PCI\Models\Petition::class, function () use ($faker) {
     return [
         'user_id'          => 1,
-        'petition_type_id' => 1,
+        'petition_type_id' => factory(\PCI\Models\PetitionType::class)->create()->id,
         'request_date'     => $faker->dateTime,
         'comments'         => $faker->paragraph,
         'status'           => true,
