@@ -38,6 +38,10 @@ class PetitionsController extends Controller
      */
     public function changeStatus($id, Request $request)
     {
+        if (!$request->exists('status')) {
+            return Response::json(['status' => false]);
+        }
+
         $results = $this->repo->changeStatus($id, $request->input('status'));
 
         return Response::json(['status' => $results]);
@@ -62,6 +66,12 @@ class PetitionsController extends Controller
         return Response::json(['status' => true]);
     }
 
+    /**
+     * Devuelve una coleccion de items asociados al pedido.
+     *
+     * @param string|int $id el identificador del pedido.
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function items($id)
     {
         $petition = $this->repo->find($id);
