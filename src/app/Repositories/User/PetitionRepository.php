@@ -102,7 +102,18 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
             return $this->model->all();
         }
 
-        return $this->model->whereUserId($user->id)->get();
+        return $this->findByUserId($user->id);
+    }
+
+    /**
+     * Busca las peticiones segun el Id de algun usuario.
+     *
+     * @param string|int $id del usuario.
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function findByUserId($id)
+    {
+        return $this->model->whereUserId($id)->get();
     }
 
     /**

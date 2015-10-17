@@ -41,4 +41,12 @@ interface PetitionRepositoryInterface extends
      * @return \Illuminate\Support\Collection
      */
     public function getItemsCollection(Collection $items);
+
+    /**
+     * Busca las peticiones segun el Id de algun usuario.
+     *
+     * @param string|int $id del usuario.
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function findByUserId($id);
 }

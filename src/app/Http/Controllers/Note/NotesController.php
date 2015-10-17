@@ -5,9 +5,25 @@ namespace PCI\Http\Controllers\Note;
 use Illuminate\Http\Request;
 use PCI\Http\Controllers\Controller;
 use PCI\Http\Requests;
+use PCI\Repositories\Interfaces\Note\NoteRepositoryInterface;
+use View;
 
 class NotesController extends Controller
 {
+
+    /**
+     * @var \PCI\Repositories\Note\NoteRepository
+     */
+    private $repo;
+
+    /**
+     * @param \PCI\Repositories\Interfaces\Note\NoteRepositoryInterface $repo
+     */
+    public function __construct(NoteRepositoryInterface $repo)
+    {
+
+        $this->repo = $repo;
+    }
 
     /**
      * Display a listing of the resource.
@@ -16,7 +32,9 @@ class NotesController extends Controller
      */
     public function index()
     {
-        //
+        $notes = $this->repo->getIndexViewVariables();
+
+        return View::make('notes.index', compact('notes'));
     }
 
     /**
@@ -26,7 +44,9 @@ class NotesController extends Controller
      */
     public function create()
     {
-        //
+        $note = $this->repo->newInstance();
+
+        return View::make('notes.create', compact('note'));
     }
 
     /**

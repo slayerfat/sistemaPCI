@@ -3,6 +3,7 @@
 use PCI\Models\AbstractBaseModel;
 use PCI\Repositories\AbstractRepository;
 use PCI\Repositories\Interfaces\Note\NoteRepositoryInterface;
+use PCI\Repositories\ViewVariable\ViewPaginatorVariable;
 
 /**
  * Class NoteRepository
@@ -15,6 +16,11 @@ class NoteRepository extends AbstractRepository implements NoteRepositoryInterfa
 {
 
     /**
+     * @var \PCI\Models\Note
+     */
+    protected $model;
+
+    /**
      * Regresa variable con una coleccion y datos
      * adicionales necesarios para generar la vista.
      *
@@ -22,7 +28,38 @@ class NoteRepository extends AbstractRepository implements NoteRepositoryInterfa
      */
     public function getIndexViewVariables()
     {
-        // TODO: Implement getIndexViewVariables() method.
+        return new ViewPaginatorVariable($this->getTablePaginator(), 'notes');
+    }
+
+    /**
+     * Genera un objeto LengthAwarePaginator con todos los
+     * modelos en el sistema y con eager loading (si aplica).
+     *
+     * @param int $quantity la cantidad a mostrar por pagina.
+     * @return \Illuminate\Pagination\LengthAwarePaginator
+     */
+    public function getTablePaginator($quantity = 25)
+    {
+        // TODO: eager loading
+        $results = $this->getAll();
+
+        return $this->generatePaginator($results, $quantity);
+    }
+
+    /**
+     * Consigue todos los elementos y devuelve una coleccion.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection|null
+     */
+    public function getAll()
+    {
+        $user = $this->getCurrentUser();
+
+        if (!$user->isAdmin()) {
+            return $this->model->all();
+        }
+
+        return $this->model->whereUserId($user->id)->get();
     }
 
     /**
@@ -34,16 +71,6 @@ class NoteRepository extends AbstractRepository implements NoteRepositoryInterfa
     public function find($id)
     {
         // TODO: Implement find() method.
-    }
-
-    /**
-     * Consigue todos los elementos y devuelve una coleccion.
-     *
-     * @return \Illuminate\Database\Eloquent\Collection|null
-     */
-    public function getAll()
-    {
-        // TODO: Implement getAll() method.
     }
 
     /**
@@ -82,18 +109,6 @@ class NoteRepository extends AbstractRepository implements NoteRepositoryInterfa
     }
 
     /**
-     * Genera un objeto LengthAwarePaginator con todos los
-     * modelos en el sistema y con eager loading (si aplica).
-     *
-     * @param int $quantity la cantidad a mostrar por pagina.
-     * @return \Illuminate\Pagination\LengthAwarePaginator
-     */
-    public function getTablePaginator($quantity = 25)
-    {
-        // TODO: Implement getTablePaginator() method.
-    }
-
-    /**
      * Genera la data necesaria que utilizara el paginator,
      * contiene los datos relevantes para la tabla, esta
      * informacion debe ser un array asociativo.
@@ -101,12 +116,26 @@ class NoteRepository extends AbstractRepository implements NoteRepositoryInterfa
      * estructuras diferentes, necesitamos
      * manener este metodo abstracto.
      *
-     * @param \PCI\Models\AbstractBaseModel $model
+     * @param \PCI\Models\AbstractBaseModel|\PCI\Models\Note $model
      * @return array<string, string> En donde el key es el titulo legible del
      *                       campo.
      */
     protected function makePaginatorData(AbstractBaseModel $model)
     {
-        // TODO: Implement makePaginatorData() method.
+        return [
+            'uid'             => $model->id,
+            '#'               => $model->id,
+            'Tipo'            => $model->type->desc,
+            'Pedido #'        => $model->id,
+            'Solicitado por'  => $model->requestedBy->name
+                . ', '
+                . $model->requestedBy->email,
+            'Dirigido a'      => $model->toUser ? $model->toUser->name : '-',
+            'Encargado'       => $model->attendant->user->name
+                . ', '
+                . $model->attendant->user->email,
+            'Items asociados' => "{$model->items->count()} Items",
+            'Estatus'         => $model->status,
+        ];
     }
 }
