@@ -5,24 +5,38 @@ namespace PCI\Http\Controllers\Note;
 use Illuminate\Http\Request;
 use PCI\Http\Controllers\Controller;
 use PCI\Http\Requests;
+use PCI\Models\NoteType;
 use PCI\Repositories\Interfaces\Note\NoteRepositoryInterface;
+use PCI\Repositories\Interfaces\User\PetitionRepositoryInterface;
 use View;
 
 class NotesController extends Controller
 {
 
     /**
+     * La implementacion del repo de Notas.
+     *
      * @var \PCI\Repositories\Note\NoteRepository
      */
     private $repo;
 
     /**
-     * @param \PCI\Repositories\Interfaces\Note\NoteRepositoryInterface $repo
+     * La implementacion del repo de Pedidos.
+     *
+     * @var \PCI\Repositories\Interfaces\User\PetitionRepositoryInterface
      */
-    public function __construct(NoteRepositoryInterface $repo)
-    {
+    private $petitionRepo;
 
-        $this->repo = $repo;
+    /**
+     * @param \PCI\Repositories\Interfaces\Note\NoteRepositoryInterface     $repo
+     * @param \PCI\Repositories\Interfaces\User\PetitionRepositoryInterface $petitionRepo
+     */
+    public function __construct(
+        NoteRepositoryInterface $repo,
+        PetitionRepositoryInterface $petitionRepo
+    ) {
+        $this->repo         = $repo;
+        $this->petitionRepo = $petitionRepo;
     }
 
     /**
@@ -46,7 +60,25 @@ class NotesController extends Controller
     {
         $note = $this->repo->newInstance();
 
-        return View::make('notes.create', compact('note'));
+        // TODO: repo
+        $types = NoteType::lists('desc', 'id');
+
+        $petitions = [];
+        $this->petitionRepo->findWithoutNotes()
+            ->each(function ($petition) use (&$petitions) {
+                $petitions[$petition->id] = "#$petition->id"
+                . ", "
+                . "Items: "
+                . $petition->itemCount . ", "
+                . "Solicitado por: " . $petition->user->name
+                . ", " . $petition->user->email;
+            });
+
+        //$petitions = $this->petitionRepo->findWithoutNotes()->lists('status', 'id');
+
+        //dd($petitions);
+
+        return View::make('notes.create', compact('note', 'types', 'petitions'));
     }
 
     /**
