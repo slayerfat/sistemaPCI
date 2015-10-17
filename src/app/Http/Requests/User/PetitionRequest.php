@@ -7,9 +7,10 @@ use PCI\Repositories\Interfaces\User\PetitionRepositoryInterface;
 
 /**
  * Class PetitionRequest
+ *
  * @package PCI\Http\Requests\User
- * @author Alejandro Granadillo <slayerfat@gmail.com>
- * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
+ * @author  Alejandro Granadillo <slayerfat@gmail.com>
+ * @link    https://github.com/slayerfat/sistemaPCI Repositorio en linea.
  */
 class PetitionRequest extends Request
 {
@@ -34,6 +35,7 @@ class PetitionRequest extends Request
 
     /**
      * Determine if the user is authorized to make this request.
+     *
      * @return bool
      */
     public function authorize()
@@ -47,6 +49,7 @@ class PetitionRequest extends Request
 
     /**
      * Get the validation rules that apply to the request.
+     *
      * @return array
      */
     public function rules()
@@ -55,7 +58,7 @@ class PetitionRequest extends Request
         $this->sanitizeRequest();
 
         $rules = [
-            'comments' => 'string|between:5,255',
+            'comments'         => 'string|between:5,255',
             'petition_type_id' => 'numeric|exists:petition_types,id',
         ];
 
@@ -69,6 +72,7 @@ class PetitionRequest extends Request
 
     /**
      * Crea un array asociativo apropiado para este request.
+     *
      * @return void
      */
     private function sanitizeRequest()
@@ -93,13 +97,14 @@ class PetitionRequest extends Request
         $this->request->replace([
             'comments'         => $comments,
             'petition_type_id' => $type,
-            'items'            => $items
+            'items'            => $items,
         ]);
     }
 
     /**
      * Como el id del item viene de forma irregular del formulario,
      * se manipula y regresa un array asociativo con id => catidad.
+     *
      * @param array $data
      * @return array[] Array de [item_id => [cantidad, tipo]]
      */
@@ -124,7 +129,7 @@ class PetitionRequest extends Request
             // el item y no el tipo de stock.
             if ($id[0] == 'item') {
                 $results[$id[2]] = [
-                    'amount' => $value
+                    'amount' => $value,
                 ];
 
                 continue;
