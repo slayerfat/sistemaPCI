@@ -299,6 +299,25 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
     }
 
     /**
+     * Regresa una coleccion de pedidos sin notas asociadas.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function findWithoutNotes()
+    {
+        // http://laravel.com/docs/5.1/collections#method-reject
+        return $this->getAll()->reject(function ($petition) {
+            if ($petition->notes->isEmpty()) {
+                // solo nos interesan los pedidos
+                // vacios que hayan sido aprobados.
+                return !$petition->status;
+            }
+
+            return true;
+        });
+    }
+
+    /**
      * Genera la data necesaria que utilizara el paginator,
      * contiene los datos relevantes para la tabla, esta
      * informacion debe ser un array asociativo.

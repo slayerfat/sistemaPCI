@@ -8,8 +8,9 @@
  * decir, si algun solicita la interfaz de arepas,
  * hay que darle la implementacion de arepas.
  * Pudiera ser mejorado.
+ *
  * @author Alejandro Granadillo <slayerfat@gmail.com>
- * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
+ * @link   https://github.com/slayerfat/sistemaPCI Repositorio en linea.
  */
 
 namespace PCI\Repositories\Interfaces\User;
@@ -27,7 +28,8 @@ interface PetitionRepositoryInterface extends
 
     /**
      * Cambia el estado del pedido.
-     * @param int $id
+     *
+     * @param int  $id
      * @param bool $status
      * @return bool
      */
@@ -49,4 +51,11 @@ interface PetitionRepositoryInterface extends
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function findByUserId($id);
+
+    /**
+     * Regresa una coleccion de pedidos sin notas asociadas.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function findWithoutNotes();
 }
