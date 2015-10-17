@@ -69,12 +69,17 @@ class PetitionsController extends Controller
     /**
      * Devuelve una coleccion de items asociados al pedido.
      *
-     * @param string|int $id el identificador del pedido.
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\JsonResponse
+     * @internal param int|string $id el identificador del pedido.
      */
-    public function items($id)
+    public function items(Request $request)
     {
-        $petition = $this->repo->find($id);
+        if (!$request->has('id')) {
+            return Response::json(['status' => 'Id necesario para continuar.']);
+        }
+
+        $petition = $this->repo->find($request->input('id'));
 
         $items = $this->repo->getItemsCollection($petition->items);
 
