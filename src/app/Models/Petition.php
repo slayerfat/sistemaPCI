@@ -1,7 +1,8 @@
 <?php namespace PCI\Models;
 
-/** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
 use Illuminate\Database\Query\Builder;
+
+/** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
 
 /**
  * PCI\Models\Petition
@@ -65,6 +66,16 @@ class Petition extends AbstractBaseModel
      * @var array
      */
     protected $casts = ['status' => 'boolean'];
+
+    /**
+     * Regresa la cantidad en numeros de items asociados.
+     *
+     * @return int
+     */
+    public function getItemCountAttribute()
+    {
+        return $this->items->count();
+    }
 
     /**
      * Regresa el estatus en forma textual del pedido.
