@@ -308,9 +308,9 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
         // http://laravel.com/docs/5.1/collections#method-reject
         return $this->getAll()->reject(function ($petition) {
             if ($petition->notes->isEmpty()) {
-                // solo nos interesan los pedidos
-                // vacios que hayan sido aprobados.
-                return !$petition->status;
+                // solo nos interesan los pedidos que hayan
+                // sido aprobados y que tengan items.
+                return !($petition->status && $petition->itemCount > 0);
             }
 
             return true;

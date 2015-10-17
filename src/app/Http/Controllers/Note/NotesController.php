@@ -63,22 +63,20 @@ class NotesController extends Controller
         // TODO: repo
         $types = NoteType::lists('desc', 'id');
 
-        $petitions = [];
-        $this->petitionRepo->findWithoutNotes()
-            ->each(function ($petition) use (&$petitions) {
-                $petitions[$petition->id] = "#$petition->id"
-                . ", "
-                . "Items: "
-                . $petition->itemCount . ", "
-                . "Solicitado por: " . $petition->user->name
-                . ", " . $petition->user->email;
-            });
+        $petitions = $this->petitionRepo->findWithoutNotes();
 
-        //$petitions = $this->petitionRepo->findWithoutNotes()->lists('status', 'id');
+        $list = [];
 
-        //dd($petitions);
+        $petitions->each(function ($petition) use (&$list) {
+            $list[$petition->id] = "#$petition->id"
+            . ", "
+            . "Items: "
+            . $petition->itemCount . ", "
+            . "Solicitado por: " . $petition->user->name
+            . ", " . $petition->user->email;
+        });
 
-        return View::make('notes.create', compact('note', 'types', 'petitions'));
+        return View::make('notes.create', compact('note', 'types', 'petitions', 'list'));
     }
 
     /**
