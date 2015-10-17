@@ -47,12 +47,13 @@ class Note extends AbstractBaseModel
 
     /**
      * The attributes that are mass assignable.
+     *
      * @var array
      */
     protected $fillable = [
         'creation',
         'comments',
-        'status'
+        'status',
     ];
 
     /**
@@ -60,12 +61,14 @@ class Note extends AbstractBaseModel
      * dates se refiere a Carbon\Carbon dates.
      * En otras palabras, genera una instancia
      * de Carbon\Carbon para cada campo.
+     *
      * @var array
      */
     protected $dates = ['creation'];
 
     /**
      * Regresa la peticion relacionada a esta nota.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
     public function petition()
@@ -75,24 +78,27 @@ class Note extends AbstractBaseModel
 
     /**
      * Regresa al usuario relacionado a esta nota.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
     public function requestedBy()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     /**
      * Regresa el usuario destinatario de la nota.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
     public function toUser()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'to_user_id');
     }
 
     /**
      * Regresa el encargado de almacen.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
     public function attendant()
@@ -102,15 +108,17 @@ class Note extends AbstractBaseModel
 
     /**
      * Regresa una el tipo de nota relacionado.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
     public function type()
     {
-        return $this->belongsTo(NoteType::class);
+        return $this->belongsTo(NoteType::class, 'note_type_id');
     }
 
     /**
      * Regresa una coleccion de items asociados.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
      */
     public function items()
@@ -120,6 +128,7 @@ class Note extends AbstractBaseModel
 
     /**
      * Regresa una coleccion de movimientos asociados.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\hasMany
      */
     public function movements()
