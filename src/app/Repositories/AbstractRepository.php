@@ -1,23 +1,25 @@
 <?php namespace PCI\Repositories;
 
 use Exception;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\QueryException;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 use PCI\Models\AbstractBaseModel;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 /**
  * Class AbstractRepository
+ *
  * @package PCI\Repositories
- * @author Alejandro Granadillo <slayerfat@gmail.com>
- * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
+ * @author  Alejandro Granadillo <slayerfat@gmail.com>
+ * @link    https://github.com/slayerfat/sistemaPCI Repositorio en linea.
  */
 abstract class AbstractRepository
 {
 
     /**
      * El modelo a ser manipulado
+     *
      * @var \PCI\Models\AbstractBaseModel
      */
     protected $model;
@@ -26,6 +28,7 @@ abstract class AbstractRepository
      * Genera la instancia de la clase concreta.
      * Esta necesita un modelo, que es debe
      * Implementar AbstractBaseModel.
+     *
      * @param \PCI\Models\AbstractBaseModel $model
      */
     public function __construct(AbstractBaseModel $model)
@@ -36,6 +39,7 @@ abstract class AbstractRepository
     /**
      * Busca en la base de datos algun modelo
      * que tenga un campo slug y/o id.
+     *
      * @param  string|int $id El identificador unico (slug|id).
      * @return \PCI\Models\AbstractBaseModel
      */
@@ -47,8 +51,9 @@ abstract class AbstractRepository
     /**
      * Busca el modelo por alguna columna,
      * adicionalmente al id que este posee.
+     *
      * @param string|int $id
-     * @param string $column
+     * @param string     $column
      * @return \PCI\Models\AbstractBaseModel
      */
     protected function getByIdOrAnother($id, $column)
@@ -66,6 +71,7 @@ abstract class AbstractRepository
     /**
      * Chequea si el id es valido para ser procesado,
      * de lo contrario bota una excepcion.
+     *
      * @param string|int $id
      * @return void
      * @throws HttpException
@@ -85,6 +91,7 @@ abstract class AbstractRepository
     /**
      * Devuelve una nueva instancia del modelo (Products, User, etc).
      * Este modelo debe ser una implementacion de AbstractBaseModel.
+     *
      * @param  array $data
      * @return \PCI\Models\AbstractBaseModel
      */
@@ -95,6 +102,7 @@ abstract class AbstractRepository
 
     /**
      * Busca al usuario actual que se encuentra en el sistema.
+     *
      * @return \PCI\Models\User|null
      */
     protected function getCurrentUser()
@@ -107,13 +115,18 @@ abstract class AbstractRepository
      * y genera un flash de exito o fracaso.
      * adicionalmente ataja error de tabla con
      * hijos o genera exception cuando sea otro.
-     * @param int $id El identificador unico.
+     *
+     * @param int    $id       El identificador unico.
      * @param string $resource El termino relacionado en texto legible.
-     * @param string $child El termino relacionado en texto legible de la relacion hija.
+     * @param string $child    El termino relacionado en texto legible de la
+     *                         relacion hija.
      * @return bool|\PCI\Models\User
      */
-    protected function executeDelete($id, $resource = 'Recurso', $child = 'Recursos')
-    {
+    protected function executeDelete(
+        $id,
+        $resource = 'Recurso',
+        $child = 'Recursos'
+    ) {
         $model = $this->getById($id);
 
         return $this->deleteDestroyPrototype($model, $resource, $child, 'delete');
@@ -121,6 +134,7 @@ abstract class AbstractRepository
 
     /**
      * Busca un modelo solo por el Id que posea.
+     *
      * @param  string|int $id
      * @return \PCI\Models\AbstractBaseModel
      */
@@ -137,15 +151,24 @@ abstract class AbstractRepository
      * de sesion relacion a la actividad por medio de
      * los parametros establecidos de recurso e hijo
      * junto al metodo (tal vez borrar parametro).
+     *
      * @param \PCI\Models\AbstractBaseModel $model
-     * @param string $resource El nombre del recurso en texto legible.
-     * @param string $child El nombre del recurso hijo en texto legible.
-     * @param string $method el tipo de metodo a ejecutar (delete|forceDelete)
+     * @param string                        $resource El nombre del recurso en
+     *                                                texto legible.
+     * @param string                        $child    El nombre del recurso
+     *                                                hijo en texto legible.
+     * @param string                        $method   el tipo de metodo a
+     *                                                ejecutar
+     *                                                (delete|forceDelete)
      * @return bool|\PCI\Models\User bool si pudo eliminar o \PCI\Models\User
      * @throws \Symfony\Component\HttpKernel\Exception\HttpException
      */
-    private function deleteDestroyPrototype(AbstractBaseModel $model, $resource, $child, $method)
-    {
+    private function deleteDestroyPrototype(
+        AbstractBaseModel $model,
+        $resource,
+        $child,
+        $method
+    ) {
         try {
             $model->$method();
         } catch (Exception $e) {
@@ -170,9 +193,11 @@ abstract class AbstractRepository
 
     /**
      * Genera un objeto LengthAwarePaginator con una coleccion paginada.
+     *
      * @link http://stackoverflow.com/a/29527744
-     * @param \Illuminate\Database\Eloquent\Collection $results la coleccion de modelos.
-     * @param int $quantity la cantidad por pagina a mostrar en la vista.
+     * @param \Illuminate\Support\Collection $results  la coleccion de modelos.
+     * @param int                            $quantity la cantidad por pagina a
+     *                                                 mostrar en la vista.
      * @return \Illuminate\Pagination\LengthAwarePaginator
      */
     protected function generatePaginator(Collection $results, $quantity = 25)
@@ -194,7 +219,8 @@ abstract class AbstractRepository
     /**
      * Itera la coleccion y genera la informacion final
      * que se vera en la tabla de index.
-     * @param \Illuminate\Database\Eloquent\Collection $results
+     *
+     * @param \Illuminate\Support\Collection $results
      * @return \Illuminate\Support\Collection
      */
     protected function generatePaginatorContents(Collection $results)
@@ -220,8 +246,10 @@ abstract class AbstractRepository
      * Como cada repositorio contiene modelos con
      * estructuras diferentes, necesitamos
      * manener este metodo abstracto.
+     *
      * @param \PCI\Models\AbstractBaseModel $model
-     * @return array<string, string> En donde el key es el titulo legible del campo.
+     * @return array<string, string> En donde el key es el titulo legible del
+     *                       campo.
      */
     abstract protected function makePaginatorData(AbstractBaseModel $model);
 }
