@@ -24,22 +24,26 @@ class NoteTest extends AbstractTestCase
 
     public function testRequestedBy()
     {
-        $this->mockBasicModelRelation(
-            Note::class,
-            'requestedBy',
-            'belongsTo',
-            User::class
-        );
+        $mock = Mockery::mock(Note::class)->makePartial();
+
+        $mock->shouldReceive('belongsTo')
+            ->once()
+            ->with(User::class, 'user_id')
+            ->andReturn('mocked');
+
+        $this->assertEquals('mocked', $mock->requestedBy());
     }
 
     public function testToUser()
     {
-        $this->mockBasicModelRelation(
-            Note::class,
-            'toUser',
-            'belongsTo',
-            User::class
-        );
+        $mock = Mockery::mock(Note::class)->makePartial();
+
+        $mock->shouldReceive('belongsTo')
+            ->once()
+            ->with(User::class, 'to_user_id')
+            ->andReturn('mocked');
+
+        $this->assertEquals('mocked', $mock->toUser());
     }
 
     public function testAttendant()
@@ -54,12 +58,14 @@ class NoteTest extends AbstractTestCase
 
     public function testType()
     {
-        $this->mockBasicModelRelation(
-            Note::class,
-            'type',
-            'belongsTo',
-            NoteType::class
-        );
+        $mock = Mockery::mock(Note::class)->makePartial();
+
+        $mock->shouldReceive('belongsTo')
+            ->once()
+            ->with(NoteType::class, 'note_type_id')
+            ->andReturn('mocked');
+
+        $this->assertEquals('mocked', $mock->type());
     }
 
     public function testMovements()
