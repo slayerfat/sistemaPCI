@@ -43,10 +43,13 @@ class NoteRequest extends Request
     public function authorize()
     {
         if ($this->isMethod('POST')) {
-            return Gate::allows('create', new Note);
+            return Gate::allows('create', [new Note, $this->repo]);
         }
 
-        return Gate::allows('update', $this->repo->find($this->route('notes')));
+        return Gate::allows('update', [
+            $this->repo->find($this->route('notes')),
+            $this->repo,
+        ]);
     }
 
     /**
