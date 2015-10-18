@@ -20,6 +20,26 @@ class EmailNewNoteToUser extends AbstractEmailListener
      */
     public function handle(NewNoteCreation $event)
     {
-        // TODO
+        $user     = $event->note->petition->user;
+        $note     = $event->note;
+        $petition = $event->note->petition;
+
+        $this->mail->send(
+            [
+                'emails.notes.created-to-user',
+                'emails.notes.created-to-user-plain',
+            ],
+            compact('user', 'petition', 'note'),
+            function ($message) use ($user, $note, $petition) {
+                /** @var \Illuminate\Mail\Message $message */
+                $message->to($user->email)->subject(
+                    "sistemaPCI: La "
+                    . trans('models.notes.singular')
+                    . " #$note->id" . " Relacionada con "
+                    . trans('models.notes.singular')
+                    . " #$petition->id, creada con exitosamente."
+                );
+            }
+        );
     }
 }
