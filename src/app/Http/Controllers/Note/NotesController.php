@@ -87,7 +87,9 @@ class NotesController extends Controller
             return $this->redirectBack(
                 "No existen "
                 . trans('models.petitions.plural')
-                . " activos en el sistema."
+                . " aprobados que necesiten alguna "
+                . trans('models.notes.singular')
+                . " en el sistema."
             );
         }
 
