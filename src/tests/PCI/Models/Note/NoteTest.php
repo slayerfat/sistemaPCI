@@ -22,7 +22,7 @@ class NoteTest extends AbstractTestCase
         );
     }
 
-    public function testRequestedBy()
+    public function testUser()
     {
         $mock = Mockery::mock(Note::class)->makePartial();
 
@@ -31,7 +31,7 @@ class NoteTest extends AbstractTestCase
             ->with(User::class, 'user_id')
             ->andReturn('mocked');
 
-        $this->assertEquals('mocked', $mock->requestedBy());
+        $this->assertEquals('mocked', $mock->user());
     }
 
     public function testToUser()

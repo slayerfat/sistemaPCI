@@ -149,15 +149,15 @@ class NoteRepository extends AbstractRepository implements NoteRepositoryInterfa
             '#'               => $model->id,
             'Tipo'            => $model->type->desc,
             'Pedido #'        => $model->id,
-            'Solicitado por'  => $model->requestedBy->name
+            'Creador'         => $model->user->name
                 . ', '
-                . $model->requestedBy->email,
+                . $model->user->email,
             'Dirigido a'      => $model->toUser ? $model->toUser->name : '-',
             'Encargado'       => $model->attendant->user->name
                 . ', '
                 . $model->attendant->user->email,
             'Items asociados' => "{$model->items->count()} Items",
-            'Estatus'         => $model->status,
+            'Estatus'         => $model->formattedStatus,
         ];
     }
 }
