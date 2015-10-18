@@ -1,5 +1,6 @@
 <?php namespace PCI\Repositories\Note;
 
+use Date;
 use PCI\Models\AbstractBaseModel;
 use PCI\Repositories\AbstractRepository;
 use PCI\Repositories\Interfaces\Note\NoteRepositoryInterface;
@@ -70,7 +71,7 @@ class NoteRepository extends AbstractRepository implements NoteRepositoryInterfa
      */
     public function find($id)
     {
-        // TODO: Implement find() method.
+        return $this->getById($id);
     }
 
     /**
@@ -81,7 +82,28 @@ class NoteRepository extends AbstractRepository implements NoteRepositoryInterfa
      */
     public function create(array $data)
     {
-        // TODO: Implement create() method.
+        $note = $this->model->newInstance();
+
+        // FIXME: esperando por analisis
+        $note->to_user_id   = $note->attendant_id = $data['to_user_id'];
+        $note->comments     = $data['comments'];
+        $note->petition_id  = $data['petition_id'];
+        $note->note_type_id = $data['note_type_id'];
+        $note->creation     = Date::now();
+
+        // asociamos la peticion al usuario en linea.
+        $this->getCurrentUser()->notes()->save($note);
+
+        // Añade los items solicitados y sus cantidades a la
+        // tabla correspondiente en la base de datos.
+        foreach ($data['items'] as $id => $data) {
+            $note->items()->attach($id, [
+                'quantity'      => $data['amount'],
+                'stock_type_id' => $data['type'],
+            ]);
+        }
+
+        return $note;
     }
 
     /**

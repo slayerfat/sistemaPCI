@@ -2,6 +2,18 @@
       data-petition-items-url="{{ route('api.petitions.items') }}"
       data-petition-items-id="{{ $petitions->first()->id }}"
       data-editing="{{ $petitions->first()->id ? "true" : "false" }}">
+
+{!!
+
+ControlGroup::generate(
+    BSForm::label('to_user_id', 'Dirigido a'),
+    BSForm::select('to_user_id', $users),
+    BSForm::help('&nbsp;'),
+    2
+)
+
+!!}
+
 {!!
 
 ControlGroup::generate(

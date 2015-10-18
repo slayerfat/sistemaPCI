@@ -1,15 +1,24 @@
-<?php
+<?php namespace PCI\Http\Controllers\Note;
 
-namespace PCI\Http\Controllers\Note;
-
-use Illuminate\Http\Request;
+use Event;
+use Flash;
+use PCI\Events\Note\NewNoteCreation;
 use PCI\Http\Controllers\Controller;
-use PCI\Http\Requests;
+use PCI\Http\Requests\Note\NoteRequest;
 use PCI\Models\NoteType;
 use PCI\Repositories\Interfaces\Note\NoteRepositoryInterface;
 use PCI\Repositories\Interfaces\User\PetitionRepositoryInterface;
+use PCI\Repositories\Interfaces\User\UserRepositoryInterface;
+use Redirect;
 use View;
 
+/**
+ * Class NotesController
+ *
+ * @package PCI\Http\Controllers\Note
+ * @author  Alejandro Granadillo <slayerfat@gmail.com>
+ * @link    https://github.com/slayerfat/sistemaPCI Repositorio en linea.
+ */
 class NotesController extends Controller
 {
 
@@ -28,15 +37,27 @@ class NotesController extends Controller
     private $petitionRepo;
 
     /**
+     * La implementacion del repo de usuarios.
+     *
+     * @var \PCI\Repositories\Interfaces\User\UserRepositoryInterface
+     */
+    private $userRepo;
+
+    /**
+     * Genera una instancia de este controlador.
+     *
      * @param \PCI\Repositories\Interfaces\Note\NoteRepositoryInterface     $repo
      * @param \PCI\Repositories\Interfaces\User\PetitionRepositoryInterface $petitionRepo
+     * @param \PCI\Repositories\Interfaces\User\UserRepositoryInterface     $userRepo
      */
     public function __construct(
         NoteRepositoryInterface $repo,
-        PetitionRepositoryInterface $petitionRepo
+        PetitionRepositoryInterface $petitionRepo,
+        UserRepositoryInterface $userRepo
     ) {
         $this->repo         = $repo;
         $this->petitionRepo = $petitionRepo;
+        $this->userRepo = $userRepo;
     }
 
     /**
@@ -62,32 +83,71 @@ class NotesController extends Controller
 
         // TODO: repo
         $types = NoteType::lists('desc', 'id');
-
         $petitions = $this->petitionRepo->findWithoutNotes();
+        $list  = $this->makePetitionsList($petitions);
+        $users = $this->makeUsersList();
 
+        return View::make(
+            'notes.create',
+            compact('note', 'types', 'petitions', 'list', 'users')
+        );
+    }
+
+    /**
+     * @param \Illuminate\Support\Collection $petitions
+     * @return array
+     */
+    private function makePetitionsList($petitions)
+    {
         $list = [];
 
         $petitions->each(function ($petition) use (&$list) {
             $list[$petition->id] = "#$petition->id"
-            . ", "
-            . "Items: "
-            . $petition->itemCount . ", "
-            . "Solicitado por: " . $petition->user->name
-            . ", " . $petition->user->email;
+                . ", "
+                . "Items: "
+                . $petition->itemCount . ", "
+                . "Solicitado por: " . $petition->user->name
+                . ", " . $petition->user->email;
         });
 
-        return View::make('notes.create', compact('note', 'types', 'petitions', 'list'));
+        return $list;
+    }
+
+    /**
+     * Regresa un arreglo de usuarios con seudonimo y correo.
+     *
+     * @return array
+     */
+    private function makeUsersList()
+    {
+        $list = [];
+
+        $users = $this->userRepo->usersList();
+
+        $users->each(function ($user) use (&$list) {
+            $list[$user->id] = $user->name
+                . ", " . $user->email;
+        });
+
+        return $list;
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param \PCI\Http\Requests\Note\NoteRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(NoteRequest $request)
     {
-        //
+        /** @var \PCI\Models\Note $note */
+        $note = $this->repo->create($request->all());
+
+        Event::fire(new NewNoteCreation($note));
+
+        Flash::success(trans('models.notes.store.success'));
+
+        return Redirect::route('notes.show', $note->id);
     }
 
     /**
@@ -115,11 +175,11 @@ class NotesController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int                      $id
+     * @param \PCI\Http\Requests\Note\NoteRequest $request
+     * @param  int                                $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(NoteRequest $request, $id)
     {
         //
     }
