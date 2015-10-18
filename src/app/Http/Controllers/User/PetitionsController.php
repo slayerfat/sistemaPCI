@@ -7,7 +7,7 @@ use Flash;
 use Gate;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\View\Factory as View;
-use PCI\Events\NewPetitionCreation;
+use PCI\Events\Petition\NewPetitionCreation;
 use PCI\Events\Petition\PetitionUpdatedByCreator;
 use PCI\Http\Controllers\Controller;
 use PCI\Http\Controllers\Traits\CheckDestroyStatusTrait;

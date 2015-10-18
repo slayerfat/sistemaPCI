@@ -1,7 +1,10 @@
 <?php namespace PCI\Models;
 
-/** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
 use Illuminate\Database\Query\Builder;
+use PCI\Models\Traits\HasCommentsAttribute;
+use PCI\Models\Traits\HasTernaryStatusAttribute;
+
+/** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
 
 /**
  * PCI\Models\Petition
@@ -38,6 +41,8 @@ use Illuminate\Database\Query\Builder;
 class Petition extends AbstractBaseModel
 {
 
+    use HasTernaryStatusAttribute, HasCommentsAttribute;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -67,48 +72,13 @@ class Petition extends AbstractBaseModel
     protected $casts = ['status' => 'boolean'];
 
     /**
-     * Regresa el estatus en forma textual del pedido.
+     * Regresa la cantidad en numeros de items asociados.
      *
-     * @return string
+     * @return int
      */
-    public function getFormattedStatusAttribute()
+    public function getItemCountAttribute()
     {
-        if (is_null($this->status)) {
-            return 'Por aprobar';
-        }
-
-        return $this->status ? 'Aprobado' : 'No Aprobado';
-    }
-
-    public function getStatusAttribute($value)
-    {
-        if (is_null($value)) {
-            return null;
-        }
-
-        return $value ? 1 : 0;
-    }
-
-    public function setStatusAttribute($value)
-    {
-        if ($value == "true") {
-            return $this->attributes['status'] = 1;
-        } elseif ($value == "null" || $value == null) {
-            return $this->attributes['status'] = null;
-        }
-
-        return $this->attributes['status'] = 0;
-    }
-
-    /**
-     * Regresa los comentarios, si estan vacios, regresa 'sin comentarios'.
-     *
-     * @param string $value
-     * @return string
-     */
-    public function getCommentsAttribute($value)
-    {
-        return strlen($value) > 1 ? $value : 'Sin comentarios.';
+        return $this->items->count();
     }
 
     /**
@@ -158,5 +128,19 @@ class Petition extends AbstractBaseModel
     public function notes()
     {
         return $this->hasMany(Note::class);
+    }
+
+    /**
+     * El mensaje a mostrar ['null|true|false'] string
+     *
+     * @return array
+     */
+    public function getStatusMessage()
+    {
+        return [
+            'null'  => 'Por aprobar',
+            'true'  => 'Aprobado',
+            'false' => 'No aprobado',
+        ];
     }
 }

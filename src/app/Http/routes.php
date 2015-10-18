@@ -29,6 +29,7 @@ $routes->push(new \PCI\Http\Routes\MiscRoutes);
 $routes->push(new \PCI\Http\Routes\UserRoutes);
 $routes->push(new \PCI\Http\Routes\AuxRoutes);
 $routes->push(new \PCI\Http\Routes\ItemRoutes);
+$routes->push(new \PCI\Http\Routes\NoteRoutes);
 
 foreach ($routes as $route) {
     $route->execute();

@@ -77,7 +77,7 @@ class PetitionControllerTest extends AbstractUserIntegration
     {
         $item = Item::first();
 
-        $this->post(route('api.petitions.items', 1))
+        $this->post(route('api.petitions.items'), ['id' => 1])
             ->seeJson([
                 'id'       => $item->id,
                 'desc'     => $item->desc,

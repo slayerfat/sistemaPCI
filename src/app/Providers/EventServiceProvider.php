@@ -19,7 +19,7 @@ class EventServiceProvider extends ServiceProvider
         'PCI\Events\ConfirmationCodeRequest' => [
             'PCI\Listeners\Email\EmailUserConfirmation',
         ],
-        'PCI\Events\NewPetitionCreation' => [
+        'PCI\Events\Petition\NewPetitionCreation' => [
             'PCI\Listeners\Email\EmailPetitionEventToAttendants',
             'PCI\Listeners\Email\EmailPetitionEventToCreator',
         ],
@@ -28,6 +28,10 @@ class EventServiceProvider extends ServiceProvider
         ],
         'PCI\Events\Petition\PetitionUpdatedByCreator' => [
             'PCI\Listeners\Email\EmailPetitionUpdatedToAttendants',
+        ],
+        'PCI\Events\Note\NewNoteCreation' => [
+            'PCI\Listeners\Email\Note\EmailNewNoteToUser',
+            'PCI\Listeners\Email\Note\EmailNewNoteToCreator',
         ],
     ];
 

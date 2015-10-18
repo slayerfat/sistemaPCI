@@ -1,7 +1,5 @@
 <?php namespace PCI\Events\Petition;
 
-use PCI\Events\NewPetitionCreation;
-
 /**
  * Class PetitionUpdatedByCreator
  *

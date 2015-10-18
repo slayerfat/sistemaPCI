@@ -3,6 +3,7 @@
 use Illuminate\Pagination\LengthAwarePaginator;
 use PCI\Mamarrachismo\PhoneParser\PhoneParser;
 use PCI\Models\AbstractBaseModel;
+use PCI\Models\User;
 use PCI\Repositories\AbstractRepository;
 use PCI\Repositories\Interfaces\GetByNameOrIdInterface;
 use PCI\Repositories\Interfaces\User\UserRepositoryInterface;
@@ -10,15 +11,17 @@ use PCI\Repositories\ViewVariable\ViewPaginatorVariable;
 
 /**
  * Class UserRepository
+ *
  * @package PCI\Repositories\User
- * @author Alejandro Granadillo <slayerfat@gmail.com>
- * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
+ * @author  Alejandro Granadillo <slayerfat@gmail.com>
+ * @link    https://github.com/slayerfat/sistemaPCI Repositorio en linea.
  */
 class UserRepository extends AbstractRepository implements UserRepositoryInterface, GetByNameOrIdInterface
 {
 
     /**
      * El repositorio del que depende este.
+     *
      * @var \PCI\Models\User
      */
     protected $model;
@@ -26,6 +29,7 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
     /**
      * genera un codigo de 32 caracteres para validar
      * al usuario por correo por primera vez.
+     *
      * @return \PCI\Models\User
      */
     public function generateConfirmationCode()
@@ -41,6 +45,7 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
 
     /**
      * confirma el codigo previamente creado.
+     *
      * @param string $code El codigo de 32 caracteres.
      * @return bool Verdaredo si existe un usuario con este codigo.
      */
@@ -66,6 +71,7 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
      * Persiste informacion referente a una entidad.
      * Se sobrescribe del padre porque es
      * necesaria logica adicional.
+     *
      * @param array $data El array con informacion del modelo.
      * @return \PCI\Models\User
      */
@@ -77,10 +83,10 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
         // detallese que se guarda la contraseña
         // de forma encriptada por medio de
         // la funcion global bcrypt.
-        $user->name       = $data['name'];
-        $user->email      = $data['email'];
-        $user->password   = bcrypt($data['password']);
-        $user->profile_id = $data['profile_id'];
+        $user->name              = $data['name'];
+        $user->email             = $data['email'];
+        $user->password          = bcrypt($data['password']);
+        $user->profile_id        = $data['profile_id'];
         $user->confirmation_code = str_random(32);
 
         $user->save();
@@ -91,7 +97,8 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
     /**
      * Actualiza algun modelo y lo persiste
      * en la base de datos del sistema.
-     * @param int $id El identificador unico.
+     *
+     * @param int   $id   El identificador unico.
      * @param array $data El arreglo con informacion relacioada al modelo.
      * @return \PCI\Models\User
      */
@@ -117,6 +124,7 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
 
     /**
      * Busca algun Elemento segun Id u otra regla.
+     *
      * @param  string|int $id El identificador unico (slug|name|etc|id).
      * @return \PCI\Models\AbstractBaseModel
      */
@@ -130,6 +138,7 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
     /**
      * Busca en la base de datos algun modelo
      * que tenga un campo nombre y/o id.
+     *
      * @param  string|int $id El identificador (name|id)
      * @return \PCI\Models\User
      */
@@ -140,6 +149,7 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
 
     /**
      * Elimina del sistema un modelo.
+     *
      * @param int $id El identificador unico.
      * @return boolean|\PCI\Models\AbstractBaseModel
      */
@@ -151,6 +161,7 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
     /**
      * Regresa variable con una coleccion y datos
      * adicionales necesarios para generar la vista.
+     *
      * @return \PCI\Repositories\ViewVariable\ViewPaginatorVariable
      */
     public function getIndexViewVariables()
@@ -165,6 +176,7 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
     /**
      * Genera un objeto LengthAwarePaginator con todos los
      * usuarios en el sistema y con eager loading.
+     *
      * @param int $quantity la cantidad a mostrar por pagina.
      * @return LengthAwarePaginator
      */
@@ -178,6 +190,7 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
 
     /**
      * Consigue todos los elementos y devuelve una coleccion.
+     *
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function getAll()
@@ -190,6 +203,7 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
     /**
      * Regresa una arreglo de los usuarios que
      * sean administradores del sistema.
+     *
      * @return \Illuminate\Support\Collection
      */
     public function adminLists()
@@ -200,7 +214,21 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
     }
 
     /**
+     * Regresa una coleccion de los usuarios activos en el sistema.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function usersList()
+    {
+        return $this->model
+            ->where('profile_id', User::USER_ID)
+            ->orWhere('profile_id', User::ADMIN_ID)
+            ->get();
+    }
+
+    /**
      * genera la data necesaria que utilizara el paginator.
+     *
      * @param \PCI\Models\AbstractBaseModel|\PCI\Models\User $user
      * @return array
      */
@@ -212,7 +240,7 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
             'uid'       => $user->name,
             'Seudonimo' => $user->name,
             'Email'     => $user->email,
-            'Perfil'    => $user->profile->desc
+            'Perfil'    => $user->profile->desc,
         ];
 
         // si el usuario tiene informacion de empleado
@@ -225,7 +253,7 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
             $employee = [
                 'Nombres'  => $user->employee->formattedNames(),
                 'C.I.'     => $user->employee->ci,
-                'Telefono' => $phone
+                'Telefono' => $phone,
             ];
 
             // una vez complado unimos los dos arreglos en uno solo
@@ -238,7 +266,7 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
         $defaults = [
             'Nombres'  => '-',
             'C.I.'     => '-',
-            'Telefono' => '-'
+            'Telefono' => '-',
         ];
 
         return array_merge($partial, $defaults);

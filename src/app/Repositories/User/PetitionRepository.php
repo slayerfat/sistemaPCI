@@ -102,7 +102,18 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
             return $this->model->all();
         }
 
-        return $this->model->whereUserId($user->id)->get();
+        return $this->findByUserId($user->id);
+    }
+
+    /**
+     * Busca las peticiones segun el Id de algun usuario.
+     *
+     * @param string|int $id del usuario.
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function findByUserId($id)
+    {
+        return $this->model->whereUserId($id)->get();
     }
 
     /**
@@ -285,6 +296,25 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
         });
 
         return $results;
+    }
+
+    /**
+     * Regresa una coleccion de pedidos sin notas asociadas.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function findWithoutNotes()
+    {
+        // http://laravel.com/docs/5.1/collections#method-reject
+        return $this->getAll()->reject(function ($petition) {
+            if ($petition->notes->isEmpty()) {
+                // solo nos interesan los pedidos que hayan
+                // sido aprobados y que tengan items.
+                return !($petition->status && $petition->itemCount > 0);
+            }
+
+            return true;
+        });
     }
 
     /**

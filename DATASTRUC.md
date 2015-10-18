@@ -2,6 +2,10 @@
 
 En este documento se pretende mantener la bitacora de cambios significativos en la estructura de datos del sistema.
 
+## v0.4.1
+
+campo encargado_id removido de la Nota, redundante.
+
 ## v0.3.4
 
 Entraron 10 arepas.

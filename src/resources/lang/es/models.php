@@ -119,6 +119,19 @@ return [
     'nats.store.success'           => 'Nacionalidad creada exitosamente.',
     'nats.update.success'          => 'Nacionalidad actualizada exitosamente.',
     /**
+     * Movimiento
+     */
+    'movements.index'              => 'Ver Movimiento',
+    'movements.show'               => 'Ver Movimiento',
+    'movements.create'             => 'Crear Movimiento',
+    'movements.edit'               => 'Editar Movimiento',
+    'movements.destroy'            => 'Eliminar Movimiento',
+    'movements.plural'             => 'Movimientos',
+    'movements.singular'           => 'Movimiento',
+    'movements.fa-icon'            => 'forward',
+    'movements.store.success'      => 'Movimiento creado exitosamente.',
+    'movements.update.success'     => 'Movimiento actualizado exitosamente.',
+    /**
      * Tipo de Movimiento
      */
     'movementTypes.index'          => 'Ver Tipos de Movimiento',

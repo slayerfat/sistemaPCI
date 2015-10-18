@@ -1,5 +1,6 @@
 <meta name="form-data"
-      data-petition-items-url="{{ route('api.petitions.items', $petition->id) }}"
+      data-petition-items-url="{{ route('api.petitions.items') }}"
+      data-petition-items-id="{{ $petition->id }}"
       data-editing="{{ $petition->id ? "true" : "false" }}">
 {!!
 
@@ -307,6 +308,9 @@ ControlGroup::generate(
                     url: $formData.data('petition-items-url'),
                     method: 'POST',
                     dataType: 'json',
+                    data: {
+                        id: $formData.data('petition-items-id')
+                    },
                     success: function (data) {
                         var self = this;
                         $('#itemBag').empty();
