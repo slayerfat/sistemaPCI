@@ -29,6 +29,9 @@ class EventServiceProvider extends ServiceProvider
         'PCI\Events\Petition\PetitionUpdatedByCreator' => [
             'PCI\Listeners\Email\EmailPetitionUpdatedToAttendants',
         ],
+        'PCI\Events\Note\NewNoteCreation' => [
+            'PCI\Listeners\Email\Note\EmailNewNoteToUser',
+        ],
     ];
 
     /**
