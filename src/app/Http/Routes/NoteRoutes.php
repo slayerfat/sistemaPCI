@@ -34,7 +34,16 @@ class NoteRoutes extends AbstractPciRoutes
      *
      * @var array
      */
-    protected $nonRestfulOptions = [];
+    protected $nonRestfulOptions = [
+        [
+            'method' => 'any',
+            'url' => 'api/notas/pdf/{notes}',
+            'data'   => [
+                'uses' => 'Api\Note\NotesController@makeNewPdf',
+                'as'   => 'api.notes.pdf',
+            ],
+        ],
+    ];
 
     /**
      * Genera todas las rutas relacionadas con esta clase
