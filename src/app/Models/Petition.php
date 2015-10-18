@@ -129,4 +129,18 @@ class Petition extends AbstractBaseModel
     {
         return $this->hasMany(Note::class);
     }
+
+    /**
+     * El mensaje a mostrar ['null|true|false'] string
+     *
+     * @return array
+     */
+    public function getStatusMessage()
+    {
+        return [
+            'null'  => 'Por aprobar',
+            'true'  => 'Aprobado',
+            'false' => 'No aprobado',
+        ];
+    }
 }

@@ -93,7 +93,7 @@ class Note extends AbstractBaseModel
      *
      * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
-    public function requestedBy()
+    public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
     }
@@ -146,5 +146,19 @@ class Note extends AbstractBaseModel
     public function movements()
     {
         return $this->hasMany(Movement::class);
+    }
+
+    /**
+     * El mensaje a mostrar ['null|true|false'] string
+     *
+     * @return array
+     */
+    public function getStatusMessage()
+    {
+        return [
+            'null' => 'Por entregar',
+            'true' => 'Entregado',
+            'false' => 'No entregado',
+        ];
     }
 }

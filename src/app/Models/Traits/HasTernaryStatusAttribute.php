@@ -17,12 +17,20 @@ trait HasTernaryStatusAttribute
      */
     public function getFormattedStatusAttribute()
     {
+        $messages = $this->getStatusMessage();
+
         if (is_null($this->status)) {
-            return 'Por aprobar';
+            return $messages['null'];
         }
 
-        return $this->status ? 'Aprobado' : 'No Aprobado';
+        return $this->status ? $messages['true'] : $messages['false'];
     }
+
+    /**
+     * El mensaje a mostrar ['null|true|false'] string
+     * @return array
+     */
+    abstract public function getStatusMessage();
 
     /**
      * Regresa el valor correcto del status segun su estado.
