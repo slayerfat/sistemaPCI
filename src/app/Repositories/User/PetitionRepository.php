@@ -9,6 +9,7 @@ use PCI\Models\Petition;
 use PCI\Repositories\AbstractRepository;
 use PCI\Repositories\Interfaces\Item\ItemRepositoryInterface;
 use PCI\Repositories\Interfaces\User\PetitionRepositoryInterface;
+use PCI\Repositories\Traits\CanChangeStatus;
 use PCI\Repositories\ViewVariable\ViewPaginatorVariable;
 
 /**
@@ -20,6 +21,8 @@ use PCI\Repositories\ViewVariable\ViewPaginatorVariable;
  */
 class PetitionRepository extends AbstractRepository implements PetitionRepositoryInterface
 {
+
+    use CanChangeStatus;
 
     /**
      * En esta caso es una peticion
@@ -250,27 +253,6 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
     public function delete($id)
     {
         return $this->executeDelete($id, trans('models.petitions.plural'), trans('models.items.plural'));
-    }
-
-    /**
-     * Cambia el estado del pedido.
-     *
-     * @param int  $id
-     * @param bool $status
-     * @return bool
-     */
-    public function changeStatus($id, $status)
-    {
-        if (!is_bool($status) && !is_null($status)) {
-            if ($status != 'true' && $status != 'false' && $status != 'null') {
-                return false;
-            }
-        }
-
-        $petition         = $this->getById($id);
-        $petition->status = $status;
-
-        return $petition->save();
     }
 
     /**
