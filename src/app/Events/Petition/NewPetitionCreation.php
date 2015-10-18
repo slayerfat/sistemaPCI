@@ -1,6 +1,7 @@
-<?php namespace PCI\Events;
+<?php namespace PCI\Events\Petition;
 
 use Illuminate\Queue\SerializesModels;
+use PCI\Events\Event;
 use PCI\Models\Petition;
 use PCI\Models\User;
 

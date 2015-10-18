@@ -2,7 +2,7 @@
 
 use Date;
 use Illuminate\Mail\Message;
-use PCI\Events\NewPetitionCreation;
+use PCI\Events\Petition\NewPetitionCreation;
 
 /**
  * Class EmailPetitionEventToCreator
@@ -17,7 +17,7 @@ class EmailPetitionEventToCreator extends AbstractEmailListener
     /**
      * Handle the event.
      *
-     * @param  NewPetitionCreation $event
+     * @param  \PCI\Events\Petition\NewPetitionCreation $event
      * @return void
      */
     public function handle(NewPetitionCreation $event)
