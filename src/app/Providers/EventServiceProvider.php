@@ -31,6 +31,7 @@ class EventServiceProvider extends ServiceProvider
         ],
         'PCI\Events\Note\NewNoteCreation' => [
             'PCI\Listeners\Email\Note\EmailNewNoteToUser',
+            'PCI\Listeners\Email\Note\EmailNewNoteToCreator',
         ],
     ];
 

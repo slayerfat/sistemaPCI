@@ -4,13 +4,13 @@ use PCI\Events\Note\NewNoteCreation;
 use PCI\Listeners\Email\AbstractEmailListener;
 
 /**
- * Class EmailNewNoteToUser
+ * Class EmailNewNoteToCreator
  *
  * @package PCI\Listeners\Email\Note
  * @author  Alejandro Granadillo <slayerfat@gmail.com>
  * @link    https://github.com/slayerfat/sistemaPCI Repositorio en linea.
  */
-class EmailNewNoteToUser extends AbstractEmailListener
+class EmailNewNoteToCreator extends AbstractEmailListener
 {
 
     /**
@@ -20,14 +20,14 @@ class EmailNewNoteToUser extends AbstractEmailListener
      */
     public function handle(NewNoteCreation $event)
     {
-        $user     = $event->note->petition->user;
+        $user     = $event->note->user;
         $note     = $event->note;
         $petition = $event->note->petition;
 
         $this->mail->send(
             [
-                'emails.notes.created-to-user',
-                'emails.notes.created-to-user-plain',
+                'emails.notes.created-to-creator',
+                'emails.notes.created-to-creator-plain',
             ],
             compact('user', 'petition', 'note'),
             function ($message) use ($user, $note, $petition) {
