@@ -57,7 +57,7 @@ class PetitionRequest extends Request
     public function rules()
     {
         // ajustamos el request
-        $this->sanitizeRequest('petition_type_id');
+        $this->sanitizeRequest();
 
         $rules = [
             'comments'         => 'string|between:5,255',

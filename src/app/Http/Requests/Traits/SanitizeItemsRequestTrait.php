@@ -6,31 +6,15 @@ trait SanitizeItemsRequestTrait
     /**
      * Crea un array asociativo apropiado para este request.
      *
-     * @param $typeName
      * @return void
      */
-    private function sanitizeRequest($typeName)
+    private function sanitizeRequest()
     {
-        // Debido a que los items solicitados son generados dinamicamente en
-        // la vista, no podemos saber cual es el nombre del campo que
-        // van a tomar, es por ello que debemos crear un nuevo
-        // array que representa la peticion del usuario.
-        $comments = $this->request->get('comments');
-        $type     = $this->request->get($typeName);
-
-        // removemos los valores que ya no nos interesan.
-        $this->request->remove('comments');
-        $this->request->remove($typeName);
-        $this->request->remove('_token');
-        $this->request->remove('itemList');
-
         // 'limpiamos' los items
         $items = $this->sanitizeItemBag($this->request->all());
 
         // remplazamos el request por uno a nuestra conveniencia.
-        $this->request->replace([
-            'comments' => $comments,
-            $typeName  => $type,
+        $this->request->add([
             'items'    => $items,
         ]);
     }
