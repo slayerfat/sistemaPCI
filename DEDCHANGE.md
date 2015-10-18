@@ -6,6 +6,30 @@ En este archivo estaran los cambios pertinentes en el DED y el Documento de Espe
 
 Detalles, observaciones u otros:
 
+#### 17-10-15
+
+Notas tiene el campo encargado repetido, en otras palabras parece ser redundante con el campo solicitado por.
+
+en otras palabras: 
+
+```php
+<?php
+
+// esto funciona perfectamente:
+$nota = Nota::find(1);
+
+$nota->solicitante  // el usuario que creo la nota (encargado/jefe/administrador)
+$nota->dirigido     // usuario a donde va la nota (el que creo el pedido)
+
+// para salvar la nota
+$usuario = usuarioActualEnSistema();
+$usuario->notas()->salvar($nota);
+
+// si quiero el usuario que hizo
+// el pedido a lo caiman:
+$nota->pedido->usuario; // usuario que lo solicito
+```
+
 #### 16-10-15
 
 Usuario no debe poder modificar/eliminar Pedido que ya haya sido aprobado/rechazado.
