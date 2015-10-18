@@ -170,7 +170,9 @@ class NotesController extends Controller
      */
     public function show($id)
     {
-        //
+        $note = $this->repo->find($id);
+
+        return View::make('notes.show', compact('note'));
     }
 
     /**
