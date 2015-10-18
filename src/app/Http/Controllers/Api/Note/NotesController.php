@@ -3,6 +3,7 @@
 namespace PCI\Http\Controllers\Api\Note;
 
 use PCI\Http\Controllers\Controller;
+use PCI\Http\Controllers\Traits\RespondsToChangeStatus;
 use PCI\Http\Requests;
 use Response;
 
@@ -15,6 +16,8 @@ use Response;
  */
 class NotesController extends Controller
 {
+
+    use RespondsToChangeStatus;
 
     /**
      * Genera un nuevo PDF relacionada con la nota.

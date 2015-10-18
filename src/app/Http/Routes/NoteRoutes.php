@@ -43,6 +43,14 @@ class NoteRoutes extends AbstractPciRoutes
                 'as'   => 'api.notes.pdf',
             ],
         ],
+        [
+            'method' => 'POST',
+            'url'    => 'api/notas/status/{id}',
+            'data'   => [
+                'uses' => 'Api\Note\NotesController@changeStatus',
+                'as'   => 'api.notes.status',
+            ],
+        ],
     ];
 
     /**

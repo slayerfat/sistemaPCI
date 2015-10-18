@@ -5,12 +5,15 @@ use Event;
 use Illuminate\Http\Request;
 use PCI\Events\Petition\PetitionApprovalRequest;
 use PCI\Http\Controllers\Controller;
+use PCI\Http\Controllers\Traits\RespondsToChangeStatus;
 use PCI\Http\Requests;
 use PCI\Repositories\Interfaces\User\PetitionRepositoryInterface;
 use Response;
 
 class PetitionsController extends Controller
 {
+
+    use RespondsToChangeStatus;
 
     /**
      * La implementacion de este repositorio.
@@ -27,24 +30,6 @@ class PetitionsController extends Controller
     public function __construct(PetitionRepositoryInterface $repo)
     {
         $this->repo = $repo;
-    }
-
-    /**
-     * Cambia el estado de algun pedido.
-     *
-     * @param int $id
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function changeStatus($id, Request $request)
-    {
-        if (!$request->exists('status')) {
-            return Response::json(['status' => false]);
-        }
-
-        $results = $this->repo->changeStatus($id, $request->input('status'));
-
-        return Response::json(['status' => $results]);
     }
 
     /**
