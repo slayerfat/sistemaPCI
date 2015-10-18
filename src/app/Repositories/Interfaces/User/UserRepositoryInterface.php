@@ -9,8 +9,9 @@
  * hay que darle la implementacion de arepas.
  * Pudiera ser mejorado.
  * Al menos esta interfaz demanda implementacion adicional.
+ *
  * @author Alejandro Granadillo <slayerfat@gmail.com>
- * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
+ * @link   https://github.com/slayerfat/sistemaPCI Repositorio en linea.
  */
 
 namespace PCI\Repositories\Interfaces\User;
@@ -28,21 +29,31 @@ interface UserRepositoryInterface extends
     /**
      * genera un codigo de 32 caracteres para validar
      * al usuario por correo por primera vez.
+     *
      * @return \PCI\Models\User
      */
     public function generateConfirmationCode();
 
     /**
      * confirma el codigo previamente creado.
+     *
      * @param string $code El codigo de 32 caracteres.
      * @return bool Verdaredo si existe un usuario con este codigo.
      */
     public function confirmCode($code);
 
     /**
-     * Regresa una arreglo de los usuarios que
+     * Regresa una coleccion de los usuarios que
      * sean administradores del sistema.
+     *
      * @return \Illuminate\Support\Collection
      */
     public function adminLists();
+
+    /**
+     * Regresa una coleccion de los usuarios activos en el sistema.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function usersList();
 }
