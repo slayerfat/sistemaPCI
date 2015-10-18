@@ -1,5 +1,8 @@
 <?php namespace PCI\Models;
 
+use PCI\Models\Traits\HasCommentsAttribute;
+use PCI\Models\Traits\HasTernaryStatusAttribute;
+
 /** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
 
 /**
@@ -45,6 +48,8 @@
 class Note extends AbstractBaseModel
 {
 
+    use HasTernaryStatusAttribute, HasCommentsAttribute;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -65,6 +70,13 @@ class Note extends AbstractBaseModel
      * @var array
      */
     protected $dates = ['creation'];
+
+    /**
+     * The attributes that should be casted to native types.
+     *
+     * @var array
+     */
+    protected $casts = ['status' => 'boolean'];
 
     /**
      * Regresa la peticion relacionada a esta nota.

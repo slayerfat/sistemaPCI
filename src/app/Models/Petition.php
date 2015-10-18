@@ -1,6 +1,8 @@
 <?php namespace PCI\Models;
 
 use Illuminate\Database\Query\Builder;
+use PCI\Models\Traits\HasCommentsAttribute;
+use PCI\Models\Traits\HasTernaryStatusAttribute;
 
 /** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
 
@@ -39,6 +41,8 @@ use Illuminate\Database\Query\Builder;
 class Petition extends AbstractBaseModel
 {
 
+    use HasTernaryStatusAttribute, HasCommentsAttribute;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -75,51 +79,6 @@ class Petition extends AbstractBaseModel
     public function getItemCountAttribute()
     {
         return $this->items->count();
-    }
-
-    /**
-     * Regresa el estatus en forma textual del pedido.
-     *
-     * @return string
-     */
-    public function getFormattedStatusAttribute()
-    {
-        if (is_null($this->status)) {
-            return 'Por aprobar';
-        }
-
-        return $this->status ? 'Aprobado' : 'No Aprobado';
-    }
-
-    public function getStatusAttribute($value)
-    {
-        if (is_null($value)) {
-            return null;
-        }
-
-        return $value ? 1 : 0;
-    }
-
-    public function setStatusAttribute($value)
-    {
-        if ($value == "true") {
-            return $this->attributes['status'] = 1;
-        } elseif ($value == "null" || $value == null) {
-            return $this->attributes['status'] = null;
-        }
-
-        return $this->attributes['status'] = 0;
-    }
-
-    /**
-     * Regresa los comentarios, si estan vacios, regresa 'sin comentarios'.
-     *
-     * @param string $value
-     * @return string
-     */
-    public function getCommentsAttribute($value)
-    {
-        return strlen($value) > 1 ? $value : 'Sin comentarios.';
     }
 
     /**
