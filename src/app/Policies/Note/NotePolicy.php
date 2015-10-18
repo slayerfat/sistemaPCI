@@ -2,6 +2,7 @@
 
 use PCI\Models\Note;
 use PCI\Models\User;
+use PCI\Repositories\Interfaces\User\PetitionRepositoryInterface;
 
 /**
  * Class NotePolicy
@@ -26,16 +27,20 @@ class NotePolicy
     }
 
     /**
-     * @param \PCI\Models\User $user
-     * @param \PCI\Models\Note $note
+     * @param \PCI\Models\User            $user
+     * @param \PCI\Models\Note            $note
+     * @param PetitionRepositoryInterface $repo
      * @return bool
      */
-    public function create(User $user, Note $note)
-    {
+    public function create(
+        User $user,
+        Note $note,
+        PetitionRepositoryInterface $repo
+    ) {
         if (!$note instanceof Note) {
             throw new \LogicException;
         }
 
-        return $user->isAdmin();
+        return $user->isAdmin() && $repo->findWithoutNotes()->count() > 0;
     }
 }

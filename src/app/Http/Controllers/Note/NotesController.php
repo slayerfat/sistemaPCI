@@ -2,6 +2,8 @@
 
 use Event;
 use Flash;
+use Gate;
+use Illuminate\Support\Collection;
 use PCI\Events\Note\NewNoteCreation;
 use PCI\Http\Controllers\Controller;
 use PCI\Http\Requests\Note\NoteRequest;
@@ -81,6 +83,14 @@ class NotesController extends Controller
     {
         $note = $this->repo->newInstance();
 
+        if (Gate::denies('create', [$note, $this->petitionRepo])) {
+            return $this->redirectBack(
+                "No existen "
+                . trans('models.petitions.plural')
+                . " activos en el sistema."
+            );
+        }
+
         // TODO: repo
         $types = NoteType::lists('desc', 'id');
         $petitions = $this->petitionRepo->findWithoutNotes();
@@ -97,7 +107,7 @@ class NotesController extends Controller
      * @param \Illuminate\Support\Collection $petitions
      * @return array
      */
-    private function makePetitionsList($petitions)
+    private function makePetitionsList(Collection $petitions)
     {
         $list = [];
 
