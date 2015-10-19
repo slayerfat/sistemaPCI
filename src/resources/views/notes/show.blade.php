@@ -23,7 +23,7 @@
 
         <h3>
             <small>
-                <a href="{{ route('users.show', $note->user->name) }}">
+                <a href="{{ route('users.show', $note->toUser->name) }}">
                     Dirigido a {{ $note->toUser->name }}
                 </a>
                 {!! Html::mailto($note->toUser->email) !!}
