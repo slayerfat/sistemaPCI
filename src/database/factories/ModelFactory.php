@@ -96,6 +96,7 @@ $factory->define(PCI\Models\Movement::class, function () use ($faker) {
 $factory->define(PCI\Models\Note::class, function () use ($faker) {
     return [
         'user_id'      => 1,
+        'to_user_id' => factory(PCI\Models\User::class)->create()->id,
         'note_type_id' => 1,
         'attendant_id' => factory(PCI\Models\Attendant::class)->create()->id,
         'petition_id'  => factory(PCI\Models\Petition::class)->create()->id,
