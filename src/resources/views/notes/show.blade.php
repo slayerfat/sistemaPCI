@@ -30,7 +30,7 @@
             </small>
         </h3>
 
-        {{--@include('notes.partials.status')--}}
+        @include('notes.partials.status')
         @include('notes.partials.items')
 
         <hr>
