@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
 class CreateNotesTable extends Migration
 {
@@ -26,7 +26,7 @@ class CreateNotesTable extends Migration
             $table->foreign('petition_id')->references('id')->on('petitions');
             $table->date('creation');
             $table->string('comments');
-            $table->boolean('status');
+            $table->boolean('status')->nullable();
             $table->timestamps();
             $table->unsignedInteger('created_by');
             $table->foreign('created_by')->references('id')->on('users');
