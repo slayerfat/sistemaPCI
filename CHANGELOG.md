@@ -11,6 +11,7 @@ Todos los cambios significativos en este proyecto estaran documentados en este a
 ### Arreglado
 
 - Notas necesitan usuario dirigido a, seeding actualizado para eso.
+- Envio de correos por defecto desactivado en el sistema.
 
 ## [v0.4.1] - 2015-10-18
 
