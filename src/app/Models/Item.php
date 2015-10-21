@@ -143,6 +143,30 @@ class Item extends AbstractBaseModel implements SluggableInterface
     }
 
     /**
+     * convierte el stock de diferentes tipos compatibles
+     * existente dentro de los almacenes.
+     *
+     * @param StockTypeConverterInterface $converter
+     * @return float
+     */
+    protected function convertStock(StockTypeConverterInterface $converter)
+    {
+        $stock  = 0;
+        $depots = $this->depots()
+            ->withPivot('quantity', 'stock_type_id')
+            ->get();
+
+        foreach ($depots as $depot) {
+            $stock += $converter->convert(
+                $depot->pivot->stock_type_id,
+                $depot->pivot->quantity
+            );
+        }
+
+        return $stock;
+    }
+
+    /**
      * Regresa una coleccion de almacenes en donde este item puede estar.
      *
      * @see  v0.3.2 #35
@@ -151,7 +175,8 @@ class Item extends AbstractBaseModel implements SluggableInterface
      */
     public function depots()
     {
-        return $this->belongsToMany('PCI\Models\Depot')->withPivot('quantity');
+        return $this->belongsToMany('PCI\Models\Depot')
+            ->withPivot('quantity', 'stock_type_id');
     }
 
     /**
@@ -270,42 +295,21 @@ class Item extends AbstractBaseModel implements SluggableInterface
      * Genera un string con el tipo de cantidad en plural o singular.
      * Solucion mamarracha.
      *
-     * @param int $number
+     * @param int         $number el stock del item
+     * @param string|null $type   el tipo de stock
      * @return string si el item tiene 1, entonces 1 Unidad.
      */
-    public function formattedQuantity($number)
+    public function formattedQuantity($number, $type = null)
     {
+        $type = $type ? $type : $this->stockType->desc;
+
         // como usualmente se dice cero unidades,
         // entonces tambien se pluraliza.
         if ($number == 1) {
-            return $number . ' ' . $this->stockType->desc;
+            return $number . ' ' . $type;
         }
 
         return $number . ' ' . Inflector::get('es')
-            ->pluralize($this->stockType->desc);
-    }
-
-    /**
-     * convierte el stock de diferentes tipos compatibles
-     * existente dentro de los almacenes.
-     *
-     * @param StockTypeConverterInterface $converter
-     * @return float
-     */
-    protected function convertStock(StockTypeConverterInterface $converter)
-    {
-        $stock  = 0;
-        $depots = $this->depots()
-            ->withPivot('quantity', 'stock_type_id')
-            ->get();
-
-        foreach ($depots as $depot) {
-            $stock += $converter->convert(
-                $depot->pivot->stock_type_id,
-                $depot->pivot->quantity
-            );
-        }
-
-        return $stock;
+            ->pluralize($type);
     }
 }
