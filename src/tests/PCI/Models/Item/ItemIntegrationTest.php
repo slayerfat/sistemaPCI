@@ -29,6 +29,15 @@ class ItemIntegrationTest extends AbstractTestCase
         );
     }
 
+    private function createStockTypes()
+    {
+        $data = ['Unidad', 'Gramo', 'Kilo', 'Tonelada', 'Lata'];
+
+        foreach ($data as $value) {
+            factory(StockType::class)->create(['desc' => $value]);
+        }
+    }
+
     public function testStockShouldReturnACeroWhenNoQuantityFound()
     {
         $this->assertEquals(0, $this->item->stock);
@@ -83,22 +92,17 @@ class ItemIntegrationTest extends AbstractTestCase
     public function testFormattedStockShouldReturnCorrectType()
     {
         $depots = factory(Depot::class, 2)->create();
-
         $stock = StockType::whereDesc('Tonelada')->first();
-
-        $this->item->stock_type_id = $stock->id;
-        $this->item->save();
-
-        $this->assertEquals('Tonelada', $this->item->stockType->desc);
+        $item = factory(Item::class)->create(['stock_type_id' => $stock->id]);
 
         foreach ($depots as $depot) {
-            $this->item->depots()->attach($depot->id, [
+            $item->depots()->attach($depot->id, [
                 'quantity'      => 12,
-                'stock_type_id' => 2,
+                'stock_type_id' => $stock->id,
             ]);
         }
 
-        $this->assertEquals('24 Toneladas', $this->item->formattedStock());
+        $this->assertEquals('24 Toneladas', $item->formattedStock());
     }
 
     /**
@@ -133,14 +137,5 @@ class ItemIntegrationTest extends AbstractTestCase
             'set_4' => [4, '1.001001 Toneladas'],
             'set_5' => [5, '3 Latas'],
         ];
-    }
-
-    private function createStockTypes()
-    {
-        $data = ['Unidad', 'Gramo', 'Kilo', 'Tonelada', 'Lata'];
-
-        foreach ($data as $value) {
-            factory(StockType::class)->create(['desc' => $value]);
-        }
     }
 }
