@@ -138,7 +138,7 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
         $items = $this->checkItems($data['items'], $petition);
 
         // asociamos la peticion al usuario en linea.
-        //$this->getCurrentUser()->petitions()->save($petition);
+        $this->getCurrentUser()->petitions()->save($petition);
 
         // Añade los items solicitados y sus cantidades a la
         // tabla correspondiente en la base de datos.

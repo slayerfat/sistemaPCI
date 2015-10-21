@@ -88,8 +88,6 @@ class PetitionsController extends Controller
         /** @var \PCI\Models\Petition $petition */
         $petition = $this->repo->create($request->all());
 
-        dd();
-
         /** @var \PCI\Models\User $user */
         $user = $auth->user();
 
