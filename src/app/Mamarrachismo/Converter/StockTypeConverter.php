@@ -22,14 +22,13 @@ class StockTypeConverter implements StockTypeConverterInterface
 
     /**
      * Los tipos de item que pueden ser convertidos.
-     * FIXME?
      *
      * @var array
      */
     private $convertibleTypes = [
-        2 => [3 => ['div', 1000], 4 => ['div', 1000000]],
-        3 => [2 => ['mul', 1000], 4 => ['div', 1000]],
-        4 => [2 => ['mul', 1000000], 3 => ['div', 1000]],
+        2 => [3 => ['mul', 1000], 4 => ['mul', 1000000]],   // gramos
+        3 => [2 => ['div', 1000], 4 => ['mul', 1000]],      // kilos
+        4 => [2 => ['div', 1000000], 3 => ['mul', 1000]],   // toneladas
     ];
 
     /**
@@ -71,7 +70,7 @@ class StockTypeConverter implements StockTypeConverterInterface
     }
 
     /**
-     * @param int $key
+     * @param int   $key
      * @param array $search
      * @return bool
      */
@@ -95,7 +94,7 @@ class StockTypeConverter implements StockTypeConverterInterface
             return $amount;
         }
 
-        if ($this->invalidSubType($type)) {
+        if (!$this->isValidSubType($type)) {
             return 0;
         }
 
@@ -106,9 +105,8 @@ class StockTypeConverter implements StockTypeConverterInterface
 
         // como ya sabemos en que array estamos, tenemos que saber
         // cual de los tipos disponibles es el compatible con la operacion.
-        $array   = $array[$type];
-        $method  = $array[0];
-        $operand = $array[1];
+        $method  = $array[$type][0];
+        $operand = $array[$type][1];
 
         return $this->$method($amount, $operand);
     }
@@ -117,10 +115,12 @@ class StockTypeConverter implements StockTypeConverterInterface
      * @param int $type
      * @return bool
      */
-    private function invalidSubType($type)
+    private function isValidSubType($type)
     {
-        foreach ($this->convertibleTypes as $array) {
-            if (!$this->isKeyValid($type, $array)) {
+        $key = $this->item->stock_type_id;
+
+        foreach (array_keys($this->convertibleTypes[$key]) as $allowedKey) {
+            if ($allowedKey == $type) {
                 return true;
             }
         }
@@ -147,5 +147,33 @@ class StockTypeConverter implements StockTypeConverterInterface
     public function setItem(Item $item)
     {
         return $this->item = $item;
+    }
+
+    /**
+     * Operacion basica de multiplicacion.
+     *
+     * @param $amount
+     * @param $operand
+     * @return int|float
+     */
+    protected function mul($amount, $operand)
+    {
+        return $amount * $operand;
+    }
+
+    /**
+     * Operacion basica de division.
+     *
+     * @param $amount
+     * @param $operand
+     * @return int|float
+     */
+    protected function div($amount, $operand)
+    {
+        if ($operand == 0) {
+            return 0;
+        }
+
+        return $amount / $operand;
     }
 }
