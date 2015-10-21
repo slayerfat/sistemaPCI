@@ -22,8 +22,11 @@ class ItemIntegrationTest extends AbstractTestCase
         parent::setUp();
 
         $this->runDatabaseMigrations();
+        $this->createStockTypes();
 
-        $this->item = factory(Item::class, 'full')->create(['minimum' => 60]);
+        $this->item = factory(Item::class, 'full')->create(
+            ['minimum' => 60, 'stock_type_id' => 1]
+        );
     }
 
     public function testStockShouldReturnACeroWhenNoQuantityFound()
@@ -39,7 +42,7 @@ class ItemIntegrationTest extends AbstractTestCase
         foreach ($depots as $depot) {
             $this->item->depots()->attach($depot->id, [
                 'quantity'      => 10,
-                'stock_type_id' => 1
+                'stock_type_id' => 1,
             ]);
         }
 
@@ -49,15 +52,12 @@ class ItemIntegrationTest extends AbstractTestCase
 
     public function testFormattedStockShouldReturnValidNumbers()
     {
-        $depots     = factory(Depot::class, 3)->create();
-        $type       = StockType::first();
-        $type->desc = 'Unidad';
-        $type->save();
+        $depots = factory(Depot::class, 3)->create();
 
         foreach ($depots as $depot) {
             $this->item->depots()->attach($depot->id, [
                 'quantity'      => 12,
-                'stock_type_id' => 1
+                'stock_type_id' => 1,
             ]);
         }
 
@@ -73,7 +73,7 @@ class ItemIntegrationTest extends AbstractTestCase
             $depots->first()->id,
             [
                 'quantity'      => 1,
-                'stock_type_id' => 1
+                'stock_type_id' => 1,
             ]
         );
 
@@ -82,12 +82,9 @@ class ItemIntegrationTest extends AbstractTestCase
 
     public function testFormattedStockShouldReturnCorrectType()
     {
-        $depots     = factory(Depot::class, 2)->create();
-        $type       = StockType::first();
-        $type->desc = 'Unidad';
-        $type->save();
+        $depots = factory(Depot::class, 2)->create();
 
-        $stock = factory(StockType::class)->create(['desc' => 'Tonelada']);
+        $stock = StockType::whereDesc('Tonelada')->first();
 
         $this->item->stock_type_id = $stock->id;
         $this->item->save();
@@ -97,10 +94,39 @@ class ItemIntegrationTest extends AbstractTestCase
         foreach ($depots as $depot) {
             $this->item->depots()->attach($depot->id, [
                 'quantity'      => 12,
-                'stock_type_id' => 2
+                'stock_type_id' => 2,
             ]);
         }
 
         $this->assertEquals('24 Toneladas', $this->item->formattedStock());
+    }
+
+    public function testItemShouldReturnCorrectStockConversion()
+    {
+        $depots = factory(Depot::class, 3)->create();
+        $i = 1;
+        $item = $this->item = factory(Item::class, 'full')->create(
+            ['minimum' => 50, 'stock_type_id' => 3]
+        );
+
+        foreach ($depots as $depot) {
+            $this->item->depots()->attach($depot->id, [
+                'quantity'      => 1,
+                'stock_type_id' => $i++,
+            ]);
+        }
+
+        $this->assertEquals('1001.1 Kilos', $item->formattedStock());
+
+        $this->markTestIncomplete();
+    }
+
+    private function createStockTypes()
+    {
+        $data = ['Unidad', 'Gramo', 'Kilo', 'Tonelada', 'Lata'];
+
+        foreach ($data as $value) {
+            factory(StockType::class)->create(['desc' => $value]);
+        }
     }
 }
