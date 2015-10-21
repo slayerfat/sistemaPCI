@@ -28,7 +28,7 @@ class StockTypeConverter implements StockTypeConverterInterface
     private $convertibleTypes = [
         2 => [3 => ['mul', 1000], 4 => ['mul', 1000000]],   // gramos
         3 => [2 => ['div', 1000], 4 => ['mul', 1000]],      // kilos
-        4 => [2 => ['div', 1000000], 3 => ['mul', 1000]],   // toneladas
+        4 => [2 => ['div', 1000000], 3 => ['div', 1000]],   // toneladas
     ];
 
     /**
