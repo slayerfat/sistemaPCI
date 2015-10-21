@@ -101,12 +101,17 @@ class ItemIntegrationTest extends AbstractTestCase
         $this->assertEquals('24 Toneladas', $this->item->formattedStock());
     }
 
-    public function testItemShouldReturnCorrectStockConversion()
+    /**
+     * @param $id
+     * @param $message
+     * @dataProvider stockTypeConversionDataProvider
+     */
+    public function testItemShouldReturnCorrectStockConversion($id, $message)
     {
         $depots = factory(Depot::class, 3)->create();
-        $i = 1;
-        $item = $this->item = factory(Item::class, 'full')->create(
-            ['minimum' => 50, 'stock_type_id' => 3]
+        $i      = 2;
+        $item   = $this->item = factory(Item::class, 'full')->create(
+            ['minimum' => 50, 'stock_type_id' => $id]
         );
 
         foreach ($depots as $depot) {
@@ -116,9 +121,18 @@ class ItemIntegrationTest extends AbstractTestCase
             ]);
         }
 
-        $this->assertEquals('1001.1 Kilos', $item->formattedStock());
+        $this->assertEquals($message, $item->formattedStock());
+    }
 
-        $this->markTestIncomplete();
+    public function stockTypeConversionDataProvider()
+    {
+        return [
+            'set_1' => [1, '3 Unidades'],
+            'set_2' => [2, '1001001 Gramos'],
+            'set_3' => [3, '1001.001 Kilos'],
+            'set_4' => [4, '1.001001 Toneladas'],
+            'set_5' => [5, '3 Latas'],
+        ];
     }
 
     private function createStockTypes()

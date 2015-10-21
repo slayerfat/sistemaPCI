@@ -3,6 +3,8 @@
 use Cviebrock\EloquentSluggable\SluggableInterface;
 use Cviebrock\EloquentSluggable\SluggableTrait;
 use ICanBoogie\Inflector;
+use PCI\Mamarrachismo\Converter\interfaces\StockTypeConverterInterface;
+use PCI\Mamarrachismo\Converter\StockTypeConverter;
 
 /** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
 
@@ -127,6 +129,14 @@ class Item extends AbstractBaseModel implements SluggableInterface
      */
     public function stock()
     {
+        $converter = new StockTypeConverter($this);
+
+        if ($converter->isConvertible()) {
+            return $this->attributes['stock'] = $this->convertStock($converter);
+        }
+
+        // si el stock no es convertible, entonces se devuelve
+        // la suma del stock en todos los almacenes.
         return $this->attributes['stock'] = $this->depots()
             ->withPivot('quantity')
             ->sum('quantity');
@@ -273,5 +283,29 @@ class Item extends AbstractBaseModel implements SluggableInterface
 
         return $number . ' ' . Inflector::get('es')
             ->pluralize($this->stockType->desc);
+    }
+
+    /**
+     * convierte el stock de diferentes tipos compatibles
+     * existente dentro de los almacenes.
+     *
+     * @param StockTypeConverterInterface $converter
+     * @return float
+     */
+    protected function convertStock(StockTypeConverterInterface $converter)
+    {
+        $stock  = 0;
+        $depots = $this->depots()
+            ->withPivot('quantity', 'stock_type_id')
+            ->get();
+
+        foreach ($depots as $depot) {
+            $stock += $converter->convert(
+                $depot->pivot->stock_type_id,
+                $depot->pivot->quantity
+            );
+        }
+
+        return $stock;
     }
 }
