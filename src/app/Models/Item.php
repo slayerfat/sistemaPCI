@@ -59,6 +59,7 @@ class Item extends AbstractBaseModel implements SluggableInterface
     /**
      * The attributes that are mass assignable.
      * fabricante, y demas es ok.
+     *
      * @var array
      */
     protected $fillable = [
@@ -74,6 +75,7 @@ class Item extends AbstractBaseModel implements SluggableInterface
 
     /**
      * Atributos que deben ser ocultos en array/json
+     *
      * @var array
      */
     protected $hidden = [
@@ -88,6 +90,7 @@ class Item extends AbstractBaseModel implements SluggableInterface
 
     /**
      * Los datos necesarios para generarar un slug en el modelo.
+     *
      * @var array
      */
     protected $sluggable = [
@@ -100,6 +103,7 @@ class Item extends AbstractBaseModel implements SluggableInterface
      * dates se refiere a Carbon\Carbon dates.
      * En otras palabras, genera una instancia
      * de Carbon\Carbon para cada campo.
+     *
      * @var array
      */
     protected $dates = ['due'];
@@ -107,6 +111,7 @@ class Item extends AbstractBaseModel implements SluggableInterface
     /**
      * Regresa el stock (cantidad total) en
      * el inventario de este item.
+     *
      * @return int
      */
     public function getStockAttribute()
@@ -117,18 +122,20 @@ class Item extends AbstractBaseModel implements SluggableInterface
     /**
      * Busca en la base de datos y regresa la sumatoria
      * de los movimientos del item en los almacenes.
+     *
      * @return int la suma de las cantidades en los almacenes.
      */
     public function stock()
     {
         return $this->attributes['stock'] = $this->depots()
-                                                 ->withPivot('quantity')
-                                                 ->sum('quantity');
+            ->withPivot('quantity')
+            ->sum('quantity');
     }
 
     /**
      * Regresa una coleccion de almacenes en donde este item puede estar.
-     * @see v0.3.2 #35
+     *
+     * @see  v0.3.2 #35
      * @link https://github.com/slayerfat/sistemaPCI/issues/35
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
@@ -139,6 +146,7 @@ class Item extends AbstractBaseModel implements SluggableInterface
 
     /**
      * Regresa el rubro asociado al item.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
     public function subCategory()
@@ -148,6 +156,7 @@ class Item extends AbstractBaseModel implements SluggableInterface
 
     /**
      * regresa el fabricante asociado.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
     public function maker()
@@ -157,6 +166,7 @@ class Item extends AbstractBaseModel implements SluggableInterface
 
     /**
      * Regresa el tipo de item.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
     public function type()
@@ -168,6 +178,7 @@ class Item extends AbstractBaseModel implements SluggableInterface
 
     /**
      * Regresa el tipo de item.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
     public function stockType()
@@ -178,6 +189,7 @@ class Item extends AbstractBaseModel implements SluggableInterface
     /**
      * Relacion unaria.
      * Regresa los items que dependen de otros items.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
      */
     public function dependsOn()
@@ -192,6 +204,7 @@ class Item extends AbstractBaseModel implements SluggableInterface
 
     /**
      * Regresa una coleccion de peticiones relacionadas con el item.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
      */
     public function petitions()
@@ -201,16 +214,18 @@ class Item extends AbstractBaseModel implements SluggableInterface
 
     /**
      * Regresa una coleccion de movimientos relacionadas con el item.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
      */
     public function movements()
     {
         return $this->belongsToMany('PCI\Models\Movement')
-                    ->withPivot('quantity', 'due');
+            ->withPivot('quantity', 'due');
     }
 
     /**
      * Regresa una coleccion de notas asociadas al item.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
      */
     public function notes()
@@ -220,6 +235,7 @@ class Item extends AbstractBaseModel implements SluggableInterface
 
     /**
      * Regresa el porcentaje entre el stock y el stock minimo.
+     *
      * @return float
      */
     public function percentageStock()
@@ -230,6 +246,7 @@ class Item extends AbstractBaseModel implements SluggableInterface
     /**
      * Regresa la cantidad o stock existente del
      * item en formato legible para el usuario.
+     *
      * @return string si el item tiene 1, entonces 1 Unidad.
      */
     public function formattedStock()
@@ -242,6 +259,7 @@ class Item extends AbstractBaseModel implements SluggableInterface
     /**
      * Genera un string con el tipo de cantidad en plural o singular.
      * Solucion mamarracha.
+     *
      * @param int $number
      * @return string si el item tiene 1, entonces 1 Unidad.
      */
@@ -254,6 +272,6 @@ class Item extends AbstractBaseModel implements SluggableInterface
         }
 
         return $number . ' ' . Inflector::get('es')
-                                        ->pluralize($this->stockType->desc);
+            ->pluralize($this->stockType->desc);
     }
 }
