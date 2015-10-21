@@ -29,7 +29,7 @@ class ItemIntegrationTest extends AbstractTestCase
         );
     }
 
-    private function createStockTypes()
+    public static function createStockTypes()
     {
         $data = ['Unidad', 'Gramo', 'Kilo', 'Tonelada', 'Lata'];
 
