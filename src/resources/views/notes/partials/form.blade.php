@@ -91,6 +91,7 @@ ControlGroup::generate(
         var items = {
             data: {
                 desc: '',
+                quantity: null,
                 stock_type_id: null
             },
 
@@ -172,8 +173,8 @@ ControlGroup::generate(
                     + items.data.desc
                     + '</label>'
                     + '<div class="col-sm-2">' +
-                    '<input class="form-control" name="item-id-' + items.data.id + '" type="number" min="1" value="' + items.stock.plain + '" max="' + items.stock.plain + '">' +
-                    '<span class="help-block">' + items.stock.formatted + ' en total.' + '</span>' +
+                    '<input class="form-control" name="item-id-' + items.data.id + '" type="number" min="1" value="' + items.data.quantity + '" max="' + items.stock.plain + '">' +
+                    '<span class="help-block">' + items.stock.formatted + ' en stock.' + '</span>' +
                     '</div>';
 
                 var options = '';
