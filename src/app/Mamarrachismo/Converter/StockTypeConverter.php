@@ -2,6 +2,7 @@
 
 use PCI\Mamarrachismo\Converter\interfaces\StockTypeConverterInterface;
 use PCI\Models\Item;
+use PCI\Models\StockType;
 
 /**
  * Class StockTypeConverter
@@ -12,6 +13,21 @@ use PCI\Models\Item;
  */
 class StockTypeConverter implements StockTypeConverterInterface
 {
+
+    /**
+     * Id de gramos
+     */
+    const G = StockType::GRAM_ID;
+
+    /**
+     * Id de kilos
+     */
+    const K = StockType::KILO_ID;
+
+    /**
+     * Id de toneladas
+     */
+    const T = StockType::TON_ID;
 
     /**
      * El modelo de item a manipular.
@@ -26,9 +42,18 @@ class StockTypeConverter implements StockTypeConverterInterface
      * @var array
      */
     private $convertibleTypes = [
-        2 => [3 => ['mul', 1000], 4 => ['mul', 1000000]],   // gramos
-        3 => [2 => ['div', 1000], 4 => ['mul', 1000]],      // kilos
-        4 => [2 => ['div', 1000000], 3 => ['div', 1000]],   // toneladas
+        self::G => [
+            self::K => ['mul', 1000],
+            self::T => ['mul', 1000000],
+        ],
+        self::K => [
+            self::G => ['div', 1000],
+            self::T => ['mul', 1000],
+        ],
+        self::T => [
+            self::G => ['div', 1000000],
+            self::K => ['div', 1000],
+        ],
     ];
 
     /**
@@ -52,11 +77,13 @@ class StockTypeConverter implements StockTypeConverterInterface
      */
     public function validate($type)
     {
-        if ($type == $this->item->stock_type_id) {
+        $itemType = $this->item->stock_type_id;
+
+        if ($type == $itemType) {
             return true;
         }
 
-        return $this->isConvertible();
+        return $this->isConvertible() && $this->isKeyValid($type, $this->convertibleTypes);
     }
 
     /**
@@ -66,7 +93,9 @@ class StockTypeConverter implements StockTypeConverterInterface
      */
     public function isConvertible()
     {
-        return $this->isKeyValid($this->item->stock_type_id, $this->convertibleTypes);
+        $type = $this->item->stock_type_id;
+
+        return $this->isKeyValid($type, $this->convertibleTypes);
     }
 
     /**

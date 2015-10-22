@@ -33,13 +33,30 @@ class StockType extends AbstractBaseModel implements SluggableInterface
     use SluggableTrait;
 
     /**
+     * El id en la base de datos de gramos
+     */
+    const GRAM_ID = 2;
+
+    /**
+     * El id en la base de datos de kilos
+     */
+    const KILO_ID = 3;
+
+    /**
+     * El id en la base de datos de toneladas
+     */
+    const TON_ID = 4;
+
+    /**
      * The attributes that are mass assignable.
+     *
      * @var array
      */
     protected $fillable = ['desc'];
 
     /**
      * Los datos necesarios para generarar un slug en el modelo.
+     *
      * @var array
      */
     protected $sluggable = [
@@ -49,6 +66,7 @@ class StockType extends AbstractBaseModel implements SluggableInterface
 
     /**
      * Los items que estan asociados a esta entidad.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function items()
