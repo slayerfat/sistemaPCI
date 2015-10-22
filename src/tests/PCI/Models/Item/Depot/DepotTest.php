@@ -14,14 +14,13 @@ class DepotTest extends AbstractTestCase
         $model = Mockery::mock(Depot::class)->makePartial();
 
         $model->shouldReceive('belongsTo')
-              ->once()
-              ->with(User::class, 'user_id')
-              ->andReturn('mocked');
+            ->once()
+            ->with(User::class, 'user_id')
+            ->andReturn('mocked');
 
         /** @var Depot $model */
         $this->assertEquals('mocked', $model->owner());
     }
-
 
     public function testItems()
     {
@@ -29,14 +28,14 @@ class DepotTest extends AbstractTestCase
         $mock = Mockery::mock(Depot::class)->makePartial();
 
         $mock->shouldReceive('belongsToMany')
-             ->once()
-             ->with(Item::class)
-             ->andReturnSelf();
+            ->once()
+            ->with(Item::class)
+            ->andReturnSelf();
 
         $mock->shouldReceive('withPivot')
-             ->once()
-             ->with('quantity')
-             ->andReturn('mocked');
+            ->once()
+            ->with('quantity', 'stock_type_id')
+            ->andReturn('mocked');
 
         $this->assertEquals('mocked', $mock->items());
     }
