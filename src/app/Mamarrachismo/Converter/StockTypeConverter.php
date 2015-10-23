@@ -123,7 +123,7 @@ class StockTypeConverter implements StockTypeConverterInterface
             return $amount;
         }
 
-        if (!$this->isValidSubType($type)) {
+        if (!($this->isConvertible() && $this->isValidSubType($type))) {
             return 0;
         }
 
