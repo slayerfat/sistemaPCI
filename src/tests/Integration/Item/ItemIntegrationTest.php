@@ -75,6 +75,36 @@ class ItemIntegrationTest extends AbstractUserIntegration
             ->see($item->desc);
     }
 
+    public function testShowDepotDisplaysCorrectStockTypesAndAmounts()
+    {
+        $item  = factory(Item::class, 'full')->create([
+            'minimum'       => 60,
+            'stock_type_id' => 3,
+        ]);
+        $depot = factory(Depot::class)->create();
+
+        foreach (range(2, 4) as $id) {
+            $item->depots()->attach($depot->id, [
+                'quantity'      => 1,
+                'stock_type_id' => $id,
+            ]);
+        }
+
+        $this->actingAs($this->user)
+            ->visit(route('depots.show', $depot->id))
+            ->seePageIs(route('depots.show', $depot->id))
+            ->see('1 Gramo')
+            ->see('1 Kilo')
+            ->see('1 Tonelada')
+            ->see($item->desc);
+
+        $this->actingAs($this->user)
+            ->visit(route('items.index', $depot->id))
+            ->seePageIs(route('items.index', $depot->id))
+            ->see('1001.001 Kilos')
+            ->see($item->desc);
+    }
+
     public function testCanSeeAndVisitItemsIndex()
     {
         $this->actingAs($this->user)
