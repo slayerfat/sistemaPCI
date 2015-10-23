@@ -106,8 +106,7 @@ class PetitionIntegrationTest extends AbstractUserIntegration
             ->see('Los Pedidos solo pueden ser editados si est&aacute;n por aprobar.');
     }
 
-    public function testPetitionShowViewDoesShowEditDeleteButtonsIfStatusIsNull(
-    )
+    public function testPetitionShowViewShowEditDeleteButtonsIfStatusIsNull()
     {
         $petition = factory(Petition::class)->create(['status' => null]);
 
