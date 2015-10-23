@@ -140,16 +140,7 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
         // asociamos la peticion al usuario en linea.
         $this->getCurrentUser()->petitions()->save($petition);
 
-        // Añade los items solicitados y sus cantidades a la
-        // tabla correspondiente en la base de datos.
-        foreach ($items as $id => $data) {
-            $petition->items()->attach($id, [
-                'quantity'      => $data['amount'],
-                'stock_type_id' => $data['type'],
-            ]);
-        }
-
-        return $petition;
+        return $this->attachItems($items, $petition);
     }
 
     /**
@@ -193,6 +184,34 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
         }
 
         return $items;
+    }
+
+    /**
+     * @param array                $items
+     * @param \PCI\Models\Petition $petition
+     * @return \PCI\Models\Petition
+     */
+    protected function attachItems(array $items, Petition $petition)
+    {
+        // si no hay items que incluir por alguna
+        // razon, entonces rechazamos el pedido.
+        if (count($items) < 1) {
+            $petition->status = false;
+            $petition->save();
+
+            return $petition;
+        }
+
+        // Añade los items solicitados y sus cantidades a la
+        // tabla correspondiente en la base de datos.
+        foreach ($items as $id => $data) {
+            $petition->items()->attach($id, [
+                'quantity'      => $data['amount'],
+                'stock_type_id' => $data['type'],
+            ]);
+        }
+
+        return $petition;
     }
 
     /**
