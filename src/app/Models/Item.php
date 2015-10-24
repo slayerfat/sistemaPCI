@@ -265,7 +265,8 @@ class Item extends AbstractBaseModel implements SluggableInterface
      */
     public function notes()
     {
-        return $this->belongsToMany('PCI\Models\Note')->withPivot('quantity');
+        return $this->belongsToMany('PCI\Models\Note')
+            ->withPivot('quantity', 'stock_type_id');
     }
 
     /**
@@ -288,7 +289,27 @@ class Item extends AbstractBaseModel implements SluggableInterface
     {
         $stock = $this->stock();
 
+        $stock = $this->checkFloat($stock);
+
         return $this->formattedQuantity($stock);
+    }
+
+    /**
+     * Chequea que numero sea apropiado.
+     * de 1.00 -> 1.
+     *
+     * @param $number
+     * @return int
+     */
+    private function checkFloat($number)
+    {
+        if ($number == floor($number)) {
+            $number = (int)$number;
+
+            return $number;
+        }
+
+        return $number;
     }
 
     /**
@@ -302,6 +323,8 @@ class Item extends AbstractBaseModel implements SluggableInterface
     public function formattedQuantity($number, $type = null)
     {
         $type = $type ? $type : $this->stockType->desc;
+
+        $number = $this->checkFloat($number);
 
         // como usualmente se dice cero unidades,
         // entonces tambien se pluraliza.
