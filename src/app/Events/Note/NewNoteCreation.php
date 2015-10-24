@@ -24,12 +24,18 @@ class NewNoteCreation extends Event
     public $note;
 
     /**
+     * @var \Illuminate\Database\Eloquent\Collection|\PCI\Models\Item[]
+     */
+    public $items;
+
+    /**
      * Create a new event instance.
      *
      * @param \PCI\Models\Note $note
      */
     public function __construct(Note $note)
     {
-        $this->note = $note;
+        $this->note  = $note;
+        $this->items = $note->items;
     }
 }
