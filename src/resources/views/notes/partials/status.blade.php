@@ -47,7 +47,7 @@ if (is_null($note->status)) {
                     '</span>',
 
                     red: '<span id="red">' +
-                    '<span class="red">No entregado ' +
+                    '<span class="red">Rechazado ' +
                     '<i class="fa fa-times-circle"></i>' +
                     '</span>' +
                     '</span>',
