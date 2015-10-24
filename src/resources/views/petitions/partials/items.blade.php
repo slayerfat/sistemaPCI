@@ -1,13 +1,15 @@
 @unless($petition->items->isEmpty())
     <?php
 
+    // TODO: sacar de la vista para ViewComposer
+
     $array = [];
 
     foreach ($petition->items as $item) {
         // super mamarracho.
         $number = $item->pivot->quantity;
-
-        $quantity = $item->formattedQuantity($number);
+        $desc = \PCI\Models\StockType::findOrFail($item->pivot->stock_type_id)->desc;
+        $quantity = $item->formattedQuantity($number, $desc);
 
         $array[] = [
             'uid'         => $item->id,
