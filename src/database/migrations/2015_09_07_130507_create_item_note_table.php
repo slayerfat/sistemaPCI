@@ -17,7 +17,7 @@ class CreateItemNoteTable extends Migration
             $table->foreign('item_id')->references('id')->on('items');
             $table->unsignedInteger('note_id');
             $table->foreign('note_id')->references('id')->on('notes');
-            $table->unsignedInteger('quantity');
+            $table->float('quantity', 16, 7)->nullable();
             // tipo de cantidad
             $table->unsignedInteger('stock_type_id');
             $table->foreign('stock_type_id')
