@@ -91,7 +91,7 @@ class Item extends AbstractBaseModel implements SluggableInterface
     ];
 
     /**
-     * Los datos necesarios para generarar un slug en el modelo.
+     * Los datos necesarios para generar un slug en el modelo.
      *
      * @var array
      */
@@ -109,75 +109,6 @@ class Item extends AbstractBaseModel implements SluggableInterface
      * @var array
      */
     protected $dates = ['due'];
-
-    /**
-     * Regresa el stock (cantidad total) en
-     * el inventario de este item.
-     *
-     * @return int
-     */
-    public function getStockAttribute()
-    {
-        return $this->stock();
-    }
-
-    /**
-     * Busca en la base de datos y regresa la sumatoria
-     * de los movimientos del item en los almacenes.
-     *
-     * @return int la suma de las cantidades en los almacenes.
-     */
-    public function stock()
-    {
-        $converter = new StockTypeConverter($this);
-
-        if ($converter->isConvertible()) {
-            return $this->attributes['stock'] = $this->convertStock($converter);
-        }
-
-        // si el stock no es convertible, entonces se devuelve
-        // la suma del stock en todos los almacenes.
-        return $this->attributes['stock'] = $this->depots()
-            ->withPivot('quantity')
-            ->sum('quantity');
-    }
-
-    /**
-     * convierte el stock de diferentes tipos compatibles
-     * existente dentro de los almacenes.
-     *
-     * @param StockTypeConverterInterface $converter
-     * @return float
-     */
-    protected function convertStock(StockTypeConverterInterface $converter)
-    {
-        $stock  = 0;
-        $depots = $this->depots()
-            ->withPivot('quantity', 'stock_type_id')
-            ->get();
-
-        foreach ($depots as $depot) {
-            $stock += $converter->convert(
-                $depot->pivot->stock_type_id,
-                $depot->pivot->quantity
-            );
-        }
-
-        return $stock;
-    }
-
-    /**
-     * Regresa una coleccion de almacenes en donde este item puede estar.
-     *
-     * @see  v0.3.2 #35
-     * @link https://github.com/slayerfat/sistemaPCI/issues/35
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function depots()
-    {
-        return $this->belongsToMany('PCI\Models\Depot')
-            ->withPivot('quantity', 'stock_type_id');
-    }
 
     /**
      * Regresa el rubro asociado al item.
@@ -276,7 +207,78 @@ class Item extends AbstractBaseModel implements SluggableInterface
      */
     public function percentageStock()
     {
-        return ceil(($this->stock * 100) / $this->minimum);
+        return ceil(($this->stock() * 100) / $this->minimum);
+    }
+
+    /**
+     * Regresa el stock existente tomando en cuenta
+     * la cantidad ya reservada por los usuarios.
+     *
+     * @return float
+     */
+    public function stock()
+    {
+        $reserved = $this->reserved < 0 ? 0 : $this->reserved;
+
+        return $this->generateStock() - $reserved;
+    }
+
+    /**
+     * Busca en la base de datos y regresa la sumatoria
+     * de los movimientos del item en los almacenes.
+     *
+     * @return float la suma de las cantidades en los almacenes.
+     */
+    public function generateStock()
+    {
+        $converter = new StockTypeConverter($this);
+
+        if ($converter->isConvertible()) {
+            return $this->convertStock($converter);
+        }
+
+        // si el stock no es convertible, entonces se devuelve
+        // la suma del stock en todos los almacenes.
+        return $this->depots()
+            ->withPivot('quantity')
+            ->sum('quantity');
+    }
+
+    /**
+     * convierte el stock de diferentes tipos compatibles
+     * existente dentro de los almacenes.
+     *
+     * @param StockTypeConverterInterface $converter
+     * @return float
+     */
+    protected function convertStock(StockTypeConverterInterface $converter)
+    {
+        $stock  = 0;
+        $depots = $this->depots()
+            ->withPivot('quantity', 'stock_type_id')
+            ->get();
+
+        foreach ($depots as $depot) {
+            $stock += $converter->convert(
+                $depot->pivot->stock_type_id,
+                $depot->pivot->quantity
+            );
+        }
+
+        return $stock;
+    }
+
+    /**
+     * Regresa una coleccion de almacenes en donde este item puede estar.
+     *
+     * @see  v0.3.2 #35
+     * @link https://github.com/slayerfat/sistemaPCI/issues/35
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function depots()
+    {
+        return $this->belongsToMany('PCI\Models\Depot')
+            ->withPivot('quantity', 'stock_type_id');
     }
 
     /**
@@ -289,6 +291,15 @@ class Item extends AbstractBaseModel implements SluggableInterface
     {
         $stock = $this->stock();
 
+        return $this->generateFormattedStock($stock);
+    }
+
+    /**
+     * @param $stock
+     * @return string
+     */
+    private function generateFormattedStock($stock)
+    {
         $stock = $this->checkFloat($stock);
 
         return $this->formattedQuantity($stock);
@@ -334,5 +345,29 @@ class Item extends AbstractBaseModel implements SluggableInterface
 
         return $number . ' ' . Inflector::get('es')
             ->pluralize($type);
+    }
+
+    /**
+     * Regresa la cantidad o stock existente del
+     * item en formato legible para el usuario.
+     *
+     * @return string si el item tiene 1, entonces 1 Unidad.
+     */
+    public function formattedRealStock()
+    {
+        $stock = $this->realStock();
+
+        return $this->generateFormattedStock($stock);
+    }
+
+    /**
+     * Regresa el stock existente sin tomar en cuenta
+     * la cantidad ya reservada por los usuarios.
+     *
+     * @return float
+     */
+    public function realStock()
+    {
+        return $this->generateStock();
     }
 }
