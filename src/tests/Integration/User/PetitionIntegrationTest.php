@@ -87,7 +87,7 @@ class PetitionIntegrationTest extends AbstractUserIntegration
         $petition = factory(Petition::class)->create(['status' => null]);
         $item     = factory(Item::class, 'full')->create();
         $petition->items()->attach($item->id, [
-            'quantity'      => $item->stock,
+            'quantity'      => $item->stock(),
             'stock_type_id' => $item->stock_type_id,
         ]);
 
@@ -148,7 +148,7 @@ class PetitionIntegrationTest extends AbstractUserIntegration
         $petition = Petition::first();
         $item     = factory(Item::class, 'full')->create();
         $petition->items()->attach($item->id, [
-            'quantity'      => $item->stock,
+            'quantity'      => $item->stock(),
             'stock_type_id' => $item->stock_type_id,
         ]);
     }

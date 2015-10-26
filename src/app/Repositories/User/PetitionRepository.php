@@ -174,7 +174,7 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
                 $petition->comments .= "El usuario {$this->getCurrentUser()->name} "
                     . "solicito {$data['amount']} ({$data['amount']}:{$data['type']}) "
                     . "y existe un stock de {$item->formattedStock()} "
-                    . "({$item->stock}:{$item->stock_type_id}) "
+                    . "({$item->stock()}:{$item->stock_type_id}) "
                     . "disponibles del Item {$item->desc}\r\n";
 
                 unset($items[$id]);

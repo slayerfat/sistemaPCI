@@ -162,7 +162,7 @@ class ItemRepository extends AbstractRepository implements ItemRepositoryInterfa
         $item = $this->getBySlugOrId($id);
 
         $data = [
-            'plain'     => $item->stock,
+            'plain' => $item->stock(),
             'formatted' => $item->formattedStock(),
         ];
 

@@ -40,7 +40,7 @@ class ItemIntegrationTest extends AbstractTestCase
 
     public function testStockShouldReturnACeroWhenNoQuantityFound()
     {
-        $this->assertEquals(0, $this->item->stock);
+        $this->assertEquals(0, $this->item->stock());
         $this->assertEquals(0, $this->item->percentageStock());
     }
 
@@ -55,7 +55,7 @@ class ItemIntegrationTest extends AbstractTestCase
             ]);
         }
 
-        $this->assertEquals(30, $this->item->stock);
+        $this->assertEquals(30, $this->item->stock());
         $this->assertEquals(50, $this->item->percentageStock());
     }
 
@@ -92,8 +92,8 @@ class ItemIntegrationTest extends AbstractTestCase
     public function testFormattedStockShouldReturnCorrectType()
     {
         $depots = factory(Depot::class, 2)->create();
-        $stock = StockType::whereDesc('Tonelada')->first();
-        $item = factory(Item::class)->create(['stock_type_id' => $stock->id]);
+        $stock  = StockType::whereDesc('Tonelada')->first();
+        $item   = factory(Item::class)->create(['stock_type_id' => $stock->id]);
 
         foreach ($depots as $depot) {
             $item->depots()->attach($depot->id, [
@@ -136,6 +136,54 @@ class ItemIntegrationTest extends AbstractTestCase
             'set_3' => [3, '1001.001 Kilos'],
             'set_4' => [4, '1.001001 Toneladas'],
             'set_5' => [5, '3 Latas'],
+        ];
+    }
+
+    /**
+     * @param $id
+     * @param $reserved
+     * @param $message
+     * @dataProvider stockTypeConversionWithReserveDataProvider
+     */
+    public function testItemShouldAllowReservedStock($id, $reserved, $message)
+    {
+        $depots               = factory(Depot::class, 3)->create();
+        $i                    = 2;
+        $item                 = $this->item = factory(Item::class, 'full')->create(
+            ['minimum' => 50, 'stock_type_id' => $id]
+        );
+        $this->item->reserved = $reserved;
+
+        foreach ($depots as $depot) {
+            $this->item->depots()->attach($depot->id, [
+                'quantity'      => 1,
+                'stock_type_id' => $i++,
+            ]);
+        }
+
+        $this->assertEquals($message, $item->formattedStock());
+    }
+
+    public function stockTypeConversionWithReserveDataProvider()
+    {
+        return [
+            'set_1'      => [1, 1, '2 Unidades'],
+            'set_1_0'    => [1, 0, '3 Unidades'],
+            'set_1_-1'   => [1, -4, '3 Unidades'],
+            'set_1_a'    => [1, 'a', '3 Unidades'],
+            'set_1_null' => [1, null, '3 Unidades'],
+            'set_2'      => [2, 1, '1001000 Gramos'],
+            'set_3'      => [3, 1, '1000.001 Kilos'],
+            'set_3_0'    => [3, 0, '1001.001 Kilos'],
+            'set_3_null' => [3, null, '1001.001 Kilos'],
+            'set_3_-1'   => [3, -2000, '1001.001 Kilos'],
+            'set_3_a'    => [3, 'a', '1001.001 Kilos'],
+            'set_4'      => [4, 1, '0.001001 Toneladas'],
+            'set_5'      => [5, 1, '2 Latas'],
+            'set_5_0'    => [5, 0, '3 Latas'],
+            'set_5_null' => [5, null, '3 Latas'],
+            'set_5_-1'   => [5, -5, '3 Latas'],
+            'set_5_a'    => [5, 'a', '3 Latas'],
         ];
     }
 }

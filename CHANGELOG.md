@@ -7,6 +7,7 @@ Todos los cambios significativos en este proyecto estaran documentados en este a
 ### Añadido
 
 - Creacion de Nota/movimientos y correos relacionados a estos.
+- Item posee campo reserva (de stock).
 
 ### Arreglado
 

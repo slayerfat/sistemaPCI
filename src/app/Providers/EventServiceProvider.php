@@ -29,8 +29,11 @@ class EventServiceProvider extends ServiceProvider
         'PCI\Events\Petition\PetitionUpdatedByCreator' => [
             'PCI\Listeners\Email\EmailPetitionUpdatedToAttendants',
         ],
-        'PCI\Events\Note\NewNoteCreation' => [
+        'PCI\Events\Note\NewItemMovements' => [
             'PCI\Listeners\Note\GenerateItemMovements',
+        ],
+        'PCI\Events\Note\NewNoteCreation'  => [
+            'PCI\Listeners\Note\ReserveItemStock',
             'PCI\Listeners\Email\Note\EmailNewNoteToUser',
             'PCI\Listeners\Email\Note\EmailNewNoteToCreator',
         ],
