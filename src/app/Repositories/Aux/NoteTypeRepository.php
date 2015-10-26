@@ -1,18 +1,39 @@
 <?php namespace PCI\Repositories\Aux;
 
+use PCI\Models\AbstractBaseModel;
 use PCI\Repositories\Interfaces\Aux\NoteTypeRepositoryInterface;
+use PCI\Repositories\ViewVariable\NoteTypeViewModelVariable;
 
 /**
  * Class NoteTypeRepository
+ *
  * @package PCI\Repositories\Aux
- * @author Alejandro Granadillo <slayerfat@gmail.com>
- * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
+ * @author  Alejandro Granadillo <slayerfat@gmail.com>
+ * @link    https://github.com/slayerfat/sistemaPCI Repositorio en linea.
  */
 class NoteTypeRepository extends AbstractAuxRepository implements NoteTypeRepositoryInterface
 {
 
     /**
+     * Persiste informacion referente a una entidad.
+     * Se sobrescribe del padre porque es
+     * necesaria logica adicional.
+     *
+     * @param array $data El array con informacion del modelo.
+     * @return \PCI\Models\SubCategory
+     */
+    public function create(array $data)
+    {
+        $model                   = $this->model->newInstance($data);
+        $model->movement_type_id = $data['movement_type_id'];
+        $model->save();
+
+        return $model;
+    }
+
+    /**
      * Elimina a este modelo del sistema.
+     *
      * @param int $id El identificador unico.
      * @return boolean|\PCI\Models\AbstractBaseModel
      */
@@ -24,6 +45,7 @@ class NoteTypeRepository extends AbstractAuxRepository implements NoteTypeReposi
     /**
      * Regresa variable con una coleccion y datos
      * adicionales necesarios para generar la vista.
+     *
      * @return \PCI\Repositories\ViewVariable\ViewPaginatorVariable
      */
     public function getIndexViewVariables()
@@ -38,6 +60,7 @@ class NoteTypeRepository extends AbstractAuxRepository implements NoteTypeReposi
     /**
      * Regresa variable con un modelo y datos
      * adicionales necesarios para generar la vista.
+     *
      * @param string|int $id El identificador unico, slug o id.
      * @return \PCI\Repositories\ViewVariable\ViewModelVariable
      */
@@ -52,9 +75,26 @@ class NoteTypeRepository extends AbstractAuxRepository implements NoteTypeReposi
     }
 
     /**
+     * Genera una instancia de ViewModelVariable
+     * dandole una implementacion de AbstractBaseModel.
+     * Cambiada la implementacion de ViewModelVariable.
+     *
+     * @param \PCI\Models\AbstractBaseModel $model
+     * @param string                        $resource El identificador o alias.
+     * @return \PCI\Repositories\ViewVariable\SubCategoryViewModelVariable
+     */
+    protected function generateViewVariable(
+        AbstractBaseModel $model,
+        $resource = 'subCats'
+    ) {
+        return new NoteTypeViewModelVariable($model, $resource);
+    }
+
+    /**
      * regresa la informacion necesaria para generar la vista.
      * esta necesita el destino y el nombre de
      * la variable para el Model Binding.
+     *
      * @return \PCI\Repositories\ViewVariable\ViewModelVariable
      */
     public function getCreateViewVariables()
@@ -71,6 +111,7 @@ class NoteTypeRepository extends AbstractAuxRepository implements NoteTypeReposi
      * Regresa variable con un modelo y datos
      * adicionales necesarios para generar la
      * vista con el proposito de Model Binding.
+     *
      * @param string|int $id El identificador unico, slug o id.
      * @return \PCI\Repositories\ViewVariable\ViewModelVariable
      */

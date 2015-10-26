@@ -6,12 +6,13 @@ Todos los cambios significativos en este proyecto estaran documentados en este a
 
 ### Añadido
 
----
+- Creacion de Nota/movimientos y correos relacionados a estos.
 
 ### Arreglado
 
 - Notas necesitan usuario dirigido a, seeding actualizado para eso.
 - Envio de correos por defecto desactivado en el sistema.
+- Relacion entre Tipo de Nota y Tipo de Movimiento (para saber si es entrada o salida)
 
 ## [v0.4.1] - 2015-10-18
 

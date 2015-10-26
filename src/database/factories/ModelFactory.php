@@ -25,7 +25,7 @@ $factory->define(PCI\Models\Attendant::class, function () use ($faker) {
     return [
         'user_id' => factory(PCI\Models\User::class)->create()->id,
         'selection' => $faker->dateTime,
-        'status'    => true
+        'status' => true,
     ];
 });
 
@@ -127,6 +127,13 @@ $factory->define(PCI\Models\SubCategory::class, function () use ($faker) {
     return [
         'desc'        => $faker->text(40),
         'category_id' => factory(\PCI\Models\Category::class)->create()->id,
+    ];
+});
+
+$factory->define(PCI\Models\NoteType::class, function () use ($faker) {
+    return [
+        'desc'             => $faker->text(40),
+        'movement_type_id' => factory(\PCI\Models\MovementType::class)->create()->id,
     ];
 });
 

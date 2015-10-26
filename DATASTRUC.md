@@ -2,6 +2,10 @@
 
 En este documento se pretende mantener la bitacora de cambios significativos en la estructura de datos del sistema.
 
+## v0.4.2
+
+Añadida relacion entre tipo de nota y tipo de movimiento para determinar programaticamente los movimientos que deben hacerse en notas.
+
 ## v0.4.1
 
 campo encargado_id removido de la Nota, redundante.
