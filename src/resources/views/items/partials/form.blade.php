@@ -78,17 +78,6 @@ ControlGroup::generate(
 {!!
 
 ControlGroup::generate(
-    BSForm::label('stock', 'Stock inicial'),
-    BSForm::number('stock'),
-    BSForm::help('La cantidad actual en existencia.'),
-    2
-)
-
-!!}
-
-{!!
-
-ControlGroup::generate(
     BSForm::label('minimum', 'Stock Minimo'),
     BSForm::number('minimum'),
     BSForm::help("El Stock minimo que se debe mantener, util para calculos 'ABC'."),
