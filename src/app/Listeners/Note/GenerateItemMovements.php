@@ -1,8 +1,11 @@
 <?php namespace PCI\Listeners\Note;
 
+use Jenssegers\Date\Date;
 use PCI\Events\Note\NewNoteCreation;
 use PCI\Mamarrachismo\Converter\interfaces\StockTypeConverterInterface;
 use PCI\Models\Item;
+use PCI\Models\Movement;
+use PCI\Models\Note;
 
 /**
  * Class GenerateItemMovements
@@ -34,10 +37,9 @@ class GenerateItemMovements
      */
     public function handle(NewNoteCreation $event)
     {
-        // obtener los items del evento
-        $items = $event->items;
+        $movements = [];
 
-        foreach ($items as $item) {
+        foreach ($event->items as $item) {
             $this->converter->setItem($item);
 
             $type       = $item->pivot->stock_type_id;
@@ -45,7 +47,7 @@ class GenerateItemMovements
             $noteAmount = $this->converter->convert($type, $quantity);
 
             // chequear el stock de cada item
-            if ($item->stock < $noteAmount || $noteAmount == 0) {
+            if ($item->stock() < $noteAmount || $noteAmount == 0) {
                 // TODO: ignorar item en movimientos
                 continue;
             }
@@ -53,10 +55,28 @@ class GenerateItemMovements
             // TODO: items perecederos
 
             // si esta bien la cantidad, entonces ajustamos el stock
-            $this->setStock($noteAmount, $item);
+            if ($this->setStock($noteAmount, $item)) {
+                // aprovechamos y generamos los movimientos respectivos
+                $movements[$item->id] = [
+                    'quantity'      => $quantity,
+                    'stock_type_id' => $type,
+                    'due'           => null, // FIXME
+                ];
+
+                // actualizamos la cantidad reservada del item
+                $item->reserved -= $noteAmount;
+                $item->save();
+            }
         }
+
+        $this->setMovement($event->note, $movements);
     }
 
+    /**
+     * @param int|float        $maximum
+     * @param \PCI\Models\Item $item
+     * @return bool
+     */
     private function setStock($maximum, Item $item)
     {
         // numero de control del total a extraer de los almacenes
@@ -119,23 +139,52 @@ class GenerateItemMovements
                 // enviar correo a encargado de almacen
                 // junto al creador de nota
                 // TODO
+
+                return false;
             }
         }
 
         $this->reattachDepots($item, $depotsWithStock);
+
+        return true;
     }
 
     /**
      * @param \PCI\Models\Item $item
-     * @param                  $depotsWithStock
+     * @param  array           $depotsWithStock
      * @return void
      */
-    private function reattachDepots(Item $item, $depotsWithStock)
+    private function reattachDepots(Item $item, array $depotsWithStock)
     {
         $item->depots()->sync([]);
 
         foreach ($depotsWithStock as $id => $details) {
             $item->depots()->attach($id, $details);
         }
+    }
+
+    /**
+     * @param \PCI\Models\Note $note
+     * @param array            $data
+     * @return bool
+     */
+    private function setMovement(Note $note, array $data)
+    {
+        if (count($data) == 0) {
+            return false;
+        }
+
+        // TODO: repo
+        $movement     = new Movement;
+
+        $movement->movement_type_id = $note->type->movement_type_id;
+        $movement->creation         = Date::now();
+        $note->movements()->save($movement);
+
+        foreach ($data as $id => $array) {
+            $movement->items()->attach($id, $array);
+        }
+
+        return true;
     }
 }
