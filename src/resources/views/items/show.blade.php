@@ -46,10 +46,9 @@
         <hr/>
 
         @include('items.partials.stock-progressbar', ['title' => 'Stock'])
-
-        <hr/>
-
-        @include('items.partials.abc')
+        @include('items.partials.reserved-progressbar', [
+            'title' => 'Existencia vs Reservaciones'
+        ])
     </div>
 
     <div class="col-sm-4">
@@ -61,6 +60,8 @@
 <div class="container">
     <div class="col-xs-8">
         @include('items.partials.depots')
+
+        @include('items.partials.abc')
 
         @include('partials.admins.show-basic-audit', [
             'model'    => $item,

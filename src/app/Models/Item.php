@@ -282,6 +282,27 @@ class Item extends AbstractBaseModel implements SluggableInterface
     }
 
     /**
+     * Regresa el porcentaje entre el stock y el stock minimo.
+     *
+     * @return float
+     */
+    public function percentageReserved()
+    {
+        return ceil(($this->reserved * 100) / $this->realStock());
+    }
+
+    /**
+     * Regresa el stock existente sin tomar en cuenta
+     * la cantidad ya reservada por los usuarios.
+     *
+     * @return float
+     */
+    public function realStock()
+    {
+        return $this->generateStock();
+    }
+
+    /**
      * Regresa la cantidad o stock existente del
      * item en formato legible para el usuario.
      *
@@ -369,16 +390,5 @@ class Item extends AbstractBaseModel implements SluggableInterface
         $stock = $this->realStock();
 
         return $this->generateFormatted($stock);
-    }
-
-    /**
-     * Regresa el stock existente sin tomar en cuenta
-     * la cantidad ya reservada por los usuarios.
-     *
-     * @return float
-     */
-    public function realStock()
-    {
-        return $this->generateStock();
     }
 }
