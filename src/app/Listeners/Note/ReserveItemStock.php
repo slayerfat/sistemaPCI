@@ -14,11 +14,15 @@ class ReserveItemStock
 {
 
     /**
+     * La implementacion del convertidor para las cantidades.
+     *
      * @var \PCI\Mamarrachismo\Converter\StockTypeConverter
      */
     private $converter;
 
     /**
+     * Esta clase necesita el convertidor para generar las cantidades.
+     *
      * @param StockTypeConverterInterface $converter
      */
     public function __construct(StockTypeConverterInterface $converter)
@@ -46,8 +50,11 @@ class ReserveItemStock
                 continue;
             }
 
-            $item->reserved += $amount;
-            $item->save();
+            // si el item esta por salir, entonces reservamos ese stock
+            if ($event->note->isMovementTypeOut()) {
+                $item->reserved += $amount;
+                $item->save();
+            }
         }
     }
 }

@@ -157,9 +157,33 @@ class Note extends AbstractBaseModel
     public function getStatusMessage()
     {
         return [
-            'null' => 'Por entregar',
-            'true' => 'Entregado',
+            'null'  => 'Por entregar',
+            'true'  => 'Entregado',
             'false' => 'No entregado',
         ];
+    }
+
+    /**
+     * Determina si la nota es de entrada.
+     *
+     * @return bool
+     */
+    public function isMovementTypeOut()
+    {
+        return !$this->isMovementTypeIn();
+    }
+
+    /**
+     * Determina si la nota es de entrada.
+     *
+     * @return bool
+     */
+    public function isMovementTypeIn()
+    {
+        return $this->type->movement_type_id == $this->type->movementType()
+            ->in()
+            ->get()
+            ->first()
+            ->id;
     }
 }

@@ -118,6 +118,8 @@ class NotesController extends Controller
                 . ", "
                 . "Items: "
                 . $petition->itemCount . ", "
+                . "Tipo: "
+                . $petition->type->desc . ", "
                 . "Solicitado por: " . $petition->user->name
                 . ", " . $petition->user->email;
         });
