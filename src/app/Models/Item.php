@@ -291,14 +291,14 @@ class Item extends AbstractBaseModel implements SluggableInterface
     {
         $stock = $this->stock();
 
-        return $this->generateFormattedStock($stock);
+        return $this->generateFormatted($stock);
     }
 
     /**
      * @param $stock
      * @return string
      */
-    private function generateFormattedStock($stock)
+    private function generateFormatted($stock)
     {
         $stock = $this->checkFloat($stock);
 
@@ -353,11 +353,22 @@ class Item extends AbstractBaseModel implements SluggableInterface
      *
      * @return string si el item tiene 1, entonces 1 Unidad.
      */
+    public function formattedReserved()
+    {
+        return $this->generateFormatted($this->reserved);
+    }
+
+    /**
+     * Regresa la cantidad o stock existente del
+     * item en formato legible para el usuario.
+     *
+     * @return string si el item tiene 1, entonces 1 Unidad.
+     */
     public function formattedRealStock()
     {
         $stock = $this->realStock();
 
-        return $this->generateFormattedStock($stock);
+        return $this->generateFormatted($stock);
     }
 
     /**
