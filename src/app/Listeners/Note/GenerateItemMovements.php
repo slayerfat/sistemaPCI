@@ -18,11 +18,15 @@ class GenerateItemMovements
 {
 
     /**
+     * La implementacion del convertidor para las cantidades.
+     *
      * @var \PCI\Mamarrachismo\Converter\StockTypeConverter
      */
     private $converter;
 
     /**
+     * Esta clase necesita el convertidor para generar las cantidades.
+     *
      * @param StockTypeConverterInterface $converter
      */
     public function __construct(StockTypeConverterInterface $converter)
@@ -73,6 +77,9 @@ class GenerateItemMovements
     }
 
     /**
+     * Guarda el stock de cada item en la base de datos,
+     * determinando que sea correcto.
+     *
      * @param int|float        $maximum
      * @param \PCI\Models\Item $item
      * @return bool
@@ -150,6 +157,8 @@ class GenerateItemMovements
     }
 
     /**
+     * Ajusta en la base de datos el stock de los items en los almacenes.
+     *
      * @param \PCI\Models\Item $item
      * @param  array           $depotsWithStock
      * @return void
@@ -164,8 +173,10 @@ class GenerateItemMovements
     }
 
     /**
+     * Crea los movimientos relacionados con Los items en la nota.
+     *
      * @param \PCI\Models\Note $note
-     * @param array            $data
+     * @param array            $data [ID][cantidad,tipo]
      * @return bool
      */
     private function setMovement(Note $note, array $data)
@@ -175,7 +186,7 @@ class GenerateItemMovements
         }
 
         // TODO: repo
-        $movement     = new Movement;
+        $movement = new Movement;
 
         $movement->movement_type_id = $note->type->movement_type_id;
         $movement->creation         = Date::now();
