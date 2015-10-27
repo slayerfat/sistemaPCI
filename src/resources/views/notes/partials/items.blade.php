@@ -13,6 +13,9 @@
             'uid'         => $item->id,
             'Descripción' => $item->desc,
             'Cantidad'    => $quantity,
+            'Existencia'  => $item->formattedRealStock(),
+            'Reservado'   => $item->formattedReserved(),
+            'Ajustado'    => $item->formattedStock(),
         ];
     }
 
