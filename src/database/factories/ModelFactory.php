@@ -23,9 +23,9 @@ $factory->define(PCI\Models\Address::class, function () use ($faker) {
 
 $factory->define(PCI\Models\Attendant::class, function () use ($faker) {
     return [
-        'user_id' => factory(PCI\Models\User::class)->create()->id,
+        'user_id'   => factory(PCI\Models\User::class)->create()->id,
         'selection' => $faker->dateTime,
-        'status' => true,
+        'status'    => true,
     ];
 });
 
@@ -39,7 +39,7 @@ $factory->define(PCI\Models\Department::class, function () use ($faker) {
 $factory->define(PCI\Models\Depot::class, function () use ($faker) {
     return [
         'user_id' => 1,
-        'number' => rand(1, 2),
+        'number'  => rand(1, 2),
         'rack'    => rand(1, 5),
         'shelf'   => rand(1, 10),
     ];
@@ -52,10 +52,10 @@ $factory->define(PCI\Models\Employee::class, function () use ($faker) {
         'gender_id'      => factory(PCI\Models\Gender::class)->create()->id,
         'address_id'     => factory(PCI\Models\Address::class)->create()->id,
         'ci'             => rand(999999, 99999999),
-        'first_name'    => $faker->firstName,
-        'last_name'     => $faker->firstName,
-        'first_surname' => $faker->lastName,
-        'last_surname'  => $faker->lastName,
+        'first_name'     => $faker->firstName,
+        'last_name'      => $faker->firstName,
+        'first_surname'  => $faker->lastName,
+        'last_surname'   => $faker->lastName,
         'phone'          => '0' . rand(400, 499) . rand(100, 999) . rand(1000, 9999),
         'cellphone'      => '0' . rand(400, 499) . rand(100, 999) . rand(1000, 9999),
     ];
@@ -66,7 +66,7 @@ $factory->define(PCI\Models\Item::class, function () use ($faker) {
         'sub_category_id' => rand(1, 2),
         'maker_id'        => rand(1, 2),
         'item_type_id'    => rand(1, 2),
-        'stock_type_id' => rand(1, 3),
+        'stock_type_id'   => rand(1, 3),
         'asoc'            => $faker->randomElement(['a', 'b', 'c']),
         'priority'        => rand(1, 100),
         'desc'            => $faker->sentence,
@@ -81,14 +81,14 @@ $factory->defineAs(PCI\Models\Item::class, 'full', function () use ($factory) {
         'sub_category_id' => factory(PCI\Models\SubCategory::class)->create()->id,
         'maker_id'        => factory(PCI\Models\Maker::class)->create()->id,
         'item_type_id'    => factory(PCI\Models\ItemType::class)->create()->id,
-        'stock_type_id' => factory(PCI\Models\StockType::class)->create()->id,
+        'stock_type_id'   => factory(PCI\Models\StockType::class)->create()->id,
     ]);
 });
 
 $factory->define(PCI\Models\Movement::class, function () use ($faker) {
     return [
         'movement_type_id' => 1,
-        'note_id' => factory(PCI\Models\Note::class)->create()->id,
+        'note_id'          => factory(PCI\Models\Note::class)->create()->id,
         'creation'         => $faker->dateTime,
     ];
 });
@@ -96,8 +96,8 @@ $factory->define(PCI\Models\Movement::class, function () use ($faker) {
 $factory->define(PCI\Models\Note::class, function () use ($faker) {
     return [
         'user_id'      => 1,
-        'to_user_id' => factory(PCI\Models\User::class)->create()->id,
-        'note_type_id' => 1,
+        'to_user_id'   => factory(PCI\Models\User::class)->create()->id,
+        'note_type_id' => factory(PCI\Models\NoteType::class)->create()->id,
         'attendant_id' => factory(PCI\Models\Attendant::class)->create()->id,
         'petition_id'  => factory(PCI\Models\Petition::class)->create()->id,
         'creation'     => $faker->dateTime,
@@ -166,9 +166,9 @@ $factory->defineAs(PCI\Models\User::class, 'admin', function () use ($factory) {
 
 $factory->define(PCI\Models\WorkDetail::class, function () use ($faker) {
     return [
-        'department_id' => factory(\PCI\Models\Department::class)->create()->id,
-        'position_id'   => factory(\PCI\Models\Position::class)->create()->id,
-        'employee_id'   => factory(\PCI\Models\Employee::class)->create()->id,
+        'department_id'  => factory(\PCI\Models\Department::class)->create()->id,
+        'position_id'    => factory(\PCI\Models\Position::class)->create()->id,
+        'employee_id'    => factory(\PCI\Models\Employee::class)->create()->id,
         'join_date'      => $faker->date,
         'departure_date' => $faker->date,
     ];
