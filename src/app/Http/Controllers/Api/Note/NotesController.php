@@ -81,10 +81,25 @@ class NotesController extends Controller
         }
 
         $response = self::changePrototype($id, $request);
+        $data = $this->makeDataArray($request->input('data'));
 
-        $this->fireEvent($note);
+        $this->fireEvent($note, $data);
 
         return $response;
+    }
+
+    /**
+     * @param array $data
+     * @return array
+     */
+    private function makeDataArray(array $data)
+    {
+        $results = [];
+        foreach ($data as $array) {
+            $results[$array['item']] = ['depot_id' => $array['depot']];
+        }
+
+        return $results;
     }
 
     /**
@@ -92,12 +107,13 @@ class NotesController extends Controller
      * la nota segun su tipo (entrada/salida).
      *
      * @param \PCI\Models\Note $note
+     * @param array            $data
      * @return array|null
      */
-    private function fireEvent(Note $note)
+    private function fireEvent(Note $note, array $data)
     {
         if ($note->isMovementTypeIn()) {
-            return Event::fire(new NewItemIngress($note));
+            return Event::fire(new NewItemIngress($note, $data));
         }
 
         return Event::fire(new NewItemEgress($note));

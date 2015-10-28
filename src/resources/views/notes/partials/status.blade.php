@@ -22,6 +22,52 @@ if (is_null($note->status)) {
     <p></p>
 </div>
 
+<div class="modal fade" id="item-depot-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Asignación de Item para Almacén</h4>
+            </div>
+            <div class="modal-body">
+                <form action="" method="post" role="form"
+                      id="item-depot-selection-form">
+                    @foreach($note->items as $item)
+                        <div class="form-group">
+                            <label
+                                for="item-depot-selection">{{ $item->desc }}</label>
+                            <select name="depot" data-item="{{ $item->id }}"
+                                    id="item-depot-selection"
+                                    class="form-control">
+                                @foreach($depots as $depot)
+                                    <option value="{{ $depot->id }}">
+                                        Almacén #{{ $depot->number }},
+                                        Anaquel #{{ $depot->rack }},
+                                        Alacena #{{ $depot->shelf }},
+                                        Contiene {{ $depot->items->count() }}
+                                        Items.
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    @endforeach
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger"
+                        data-dismiss="modal">
+                    Cancelar
+                </button>
+                <button type="button" class="btn btn-primary"
+                        id="item-depot-selection-submit">
+                    Completar Nota
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section('js-buttons')
     <script type="text/javascript">
         $(function () {
@@ -107,7 +153,7 @@ if (is_null($note->status)) {
                  * @param string url
                  * @param bool status
                  */
-                change: function (url, status) {
+                change: function (url, status, additionalData) {
                     var self = this;
                     this.previousStatus = this.status;
                     this.status = status;
@@ -119,7 +165,10 @@ if (is_null($note->status)) {
                         url: url,
                         type: 'POST',
                         dataType: 'json',
-                        data: {status: data}
+                        data: {
+                            status: data,
+                            data: additionalData
+                        }
                     }).done(function (data) {
                         var element;
                         var next;
@@ -128,7 +177,10 @@ if (is_null($note->status)) {
                         // debemos determinar cual es el elemento que
                         // estaba activo cuando se hizo la peticion.
                         if (self.status == self.previousStatus) {
-                            return console.log('status iguales');
+                            self.createMessage(
+                                'Error, no se pudo cambiar estatus, intente nuevamente.',
+                                'alert alert-warning'
+                            );
                         } else if (self.previousStatus == null) {
                             previous = 'yellow';
                         } else {
@@ -220,13 +272,28 @@ if (is_null($note->status)) {
             $('#note-true').click(function (evt) {
                 evt.preventDefault();
 
-                status.change($(this).prop('href'), true);
+                $('#item-depot-modal').modal('show');
             });
 
             $('#note-false').click(function (evt) {
                 evt.preventDefault();
 
                 status.change($(this).prop('href'), false);
+            });
+
+            $('#item-depot-selection-submit').click(function (evt) {
+                evt.preventDefault();
+                var values = [];
+
+                $('#item-depot-selection-form').find(':input').each(function () {
+                    values.push({
+                        item: $(this).data('item'),
+                        depot: $(this).val()
+                    });
+                });
+
+                $('#item-depot-modal').modal('hide');
+                status.change(url, true, values);
             });
         })
     </script>

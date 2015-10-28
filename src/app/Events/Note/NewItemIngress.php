@@ -43,12 +43,12 @@ class NewItemIngress extends NewNoteCreation
     private function checkDataArray(array $data)
     {
         if (count($data) == 0) {
-            throw new LogicException('El array de datos, esta construido incorrectamente.');
+            throw new LogicException('El arreglo de datos, esta construido incorrectamente.');
         }
 
-        foreach ($data as $id => $array) {
-            if (!isset($array[$id]['depot'])) {
-                throw new LogicException('El array de datos, esta construido incorrectamente.');
+        foreach ($data as $array) {
+            if (!isset($array['depot_id'])) {
+                throw new LogicException('El arreglo de datos, esta construido incorrectamente.');
             }
         }
     }

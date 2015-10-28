@@ -7,6 +7,7 @@ use Illuminate\Support\Collection;
 use PCI\Events\Note\NewNoteCreation;
 use PCI\Http\Controllers\Controller;
 use PCI\Http\Requests\Note\NoteRequest;
+use PCI\Models\Depot;
 use PCI\Models\NoteType;
 use PCI\Repositories\Interfaces\Note\NoteRepositoryInterface;
 use PCI\Repositories\Interfaces\User\PetitionRepositoryInterface;
@@ -173,8 +174,9 @@ class NotesController extends Controller
     public function show($id)
     {
         $note = $this->repo->find($id);
+        $depots = Depot::all();
 
-        return View::make('notes.show', compact('note'));
+        return View::make('notes.show', compact('note', 'depots'));
     }
 
     /**
