@@ -1,6 +1,4 @@
-<?php
-
-namespace PCI\Events\Note;
+<?php namespace PCI\Events\Note;
 
 use Illuminate\Queue\SerializesModels;
 use PCI\Events\Event;
@@ -19,11 +17,15 @@ class NewNoteCreation extends Event
     use SerializesModels;
 
     /**
+     * La nota relacionada a este evento.
+     *
      * @var \PCI\Models\Note
      */
     public $note;
 
     /**
+     * La coleccion de items relacionados a la nota.
+     *
      * @var \Illuminate\Database\Eloquent\Collection|\PCI\Models\Item[]
      */
     public $items;

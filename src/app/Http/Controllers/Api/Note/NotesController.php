@@ -1,10 +1,13 @@
-<?php
+<?php namespace PCI\Http\Controllers\Api\Note;
 
-namespace PCI\Http\Controllers\Api\Note;
-
+use Event;
+use Illuminate\Http\Request;
+use PCI\Events\Note\NewItemEgress;
+use PCI\Events\Note\NewItemIngress;
 use PCI\Http\Controllers\Controller;
 use PCI\Http\Controllers\Traits\RespondsToChangeStatus;
 use PCI\Http\Requests;
+use PCI\Models\Note;
 use PCI\Repositories\Interfaces\Note\NoteRepositoryInterface;
 use Response;
 
@@ -18,7 +21,15 @@ use Response;
 class NotesController extends Controller
 {
 
-    use RespondsToChangeStatus;
+    /**
+     * Esto es para la re-implementacion del trait.
+     *
+     * @see      cara 'e papeo.
+     * @link     https://pbs.twimg.com/media/AtT11CoCIAArVcY.jpg
+     */
+    use RespondsToChangeStatus {
+        changeStatus as changePrototype;
+    }
 
     /**
      * La implementacion de este repositorio.
@@ -47,5 +58,48 @@ class NotesController extends Controller
     public function makeNewPdf($id)
     {
         return Response::json(['status' => $id]);
+    }
+
+    /**
+     * cambia el status de la nota y genera un movimiento.
+     *
+     * @param string|int               $id
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function changeStatus($id, Request $request)
+    {
+        /** @var Note $note */
+        $note = $this->repo->find($id);
+
+        if (!is_null($note->status)) {
+            return Response::json([
+                'status'  => false,
+                'message' => 'El estatus de la Nota no puede ser alterado,'
+                    . 'porque esta ha generado un movimiento.',
+            ]);
+        }
+
+        $response = self::changePrototype($id, $request);
+
+        $this->fireEvent($note);
+
+        return $response;
+    }
+
+    /**
+     * Dispara el evento correspondiente para los movimientos de
+     * la nota segun su tipo (entrada/salida).
+     *
+     * @param \PCI\Models\Note $note
+     * @return array|null
+     */
+    private function fireEvent(Note $note)
+    {
+        if ($note->isMovementTypeIn()) {
+            return Event::fire(new NewItemIngress($note));
+        }
+
+        return Event::fire(new NewItemEgress($note));
     }
 }
