@@ -288,7 +288,9 @@ class Item extends AbstractBaseModel implements SluggableInterface
      */
     public function percentageReserved()
     {
-        return ceil(($this->reserved * 100) / $this->realStock());
+        $stock = $this->realStock() <= 0 ? 1 : $this->realStock();
+
+        return ceil(($this->reserved * 100) / $stock);
     }
 
     /**

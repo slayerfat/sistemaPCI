@@ -3,6 +3,17 @@
 
     <?php $reserved = $item->percentageReserved(); ?>
     <?php $stock = abs($reserved - 100); ?>
+    <?php $stock = $stock >= 100 ? 0 : $stock ?>
+
+    @if($stock == 0)
+
+    {!!
+
+    ProgressBar::danger(100)->visible("Advertencia reservado $reserved%% de la existencia.")
+
+    !!}
+
+    @else
 
     {!!
 
@@ -12,6 +23,8 @@
     ])
 
     !!}
+
+    @endif
 
     <h3>
         <small>
