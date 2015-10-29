@@ -353,12 +353,11 @@ ControlGroup::generate(
     <script>
         var $formData = $('meta[name="form-data"]');
         var toggle = new Petition.MovementTypeToggle;
-        var url = $formData.data('url');
+        var url = $formData.data('petition-movement-type-url');
 
         $('#petition_type_id').change(function () {
             toggle.id = $(this).val();
-            toggle.url = 'ayy';
-            toggle.test();
+            toggle.url = url;
             toggle.getModel();
         });
     </script>

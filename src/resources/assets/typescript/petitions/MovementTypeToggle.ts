@@ -45,46 +45,31 @@ module Petition {
         }
 
         public getModel(): void {
+            this._checkToken();
+
             var request = $.ajax({
                 method: this._method,
                 url: this.url,
-                data: {},
+                data: {
+                    id: this.id
+                },
                 dataType: "json"
             });
 
             request.done(function (data) {
-                alert(data);
+                if (data.status == true) {
+                    this._model.data = data.model;
+                    this._model.ingress = data.ingress;
+                } else if (data.status == false) {
+                    console.log(data);
+                } else {
+                    console.log(data);
+                }
             });
 
             request.fail(function (data) {
                 console.log(data);
             });
-
-            //$.ajax(this.url, {
-            //    method: this._method,
-            //    dataType: 'json',
-            //    success: function (data) {
-            //        alert(data);
-            //    },
-            //    fail: function (data) {
-            //        console.log(data);
-            //    }
-            //});
-            //$.ajax({
-            //    url: this.url,
-            //    method: this._method,
-            //    dataType: 'json',
-            //    success: function (data) {
-            //        alert(data);
-            //    },
-            //    fail: function (data) {
-            //        console.log(data);
-            //    }
-            //});
-        }
-
-        public test() {
-            console.log(this.id + ' ' + this.url);
         }
 
         public isModelIngress() {
