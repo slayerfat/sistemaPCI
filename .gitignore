@@ -11,3 +11,5 @@
 /src/_ide_helper_models.php
 /src/_ide_helper.php
 /src/composer.lock
+# no nos interesa por ahora versionar la compilacion de typescript
+/src/resources/assets/js/appBundle.js

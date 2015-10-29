@@ -1,19 +1,21 @@
 var gulp = require('gulp');
 var notify = require('gulp-notify');
 var elixir = require('laravel-elixir');
+var ts = require('gulp-typescript');
 
 // public path sistemaPCI/public
 elixir.config.publicPath = '../public';
 
 // para copiar u otros.
 var paths = {
+    'typescript': elixir.config.assetsPath + '/typescript/**/*.ts',
     'public': elixir.config.publicPath,
     'jquery': './vendor/bower_components/jquery/',
     'bootstrap': './node_modules/bootstrap-sass/assets/',
     'fontAwesome': './vendor/bower_components/font-awesome/',
     'datepicker': './vendor/bower_components/bootstrap-datepicker/',
     'select2': './node_modules/Select2/dist/'
-}
+};
 
 // git bump (v0.1.2) <-- gulp release|feature|patch|pre
 var git = require('gulp-git');
@@ -60,8 +62,22 @@ gulp.task('patch',   function() { return inc('patch'); });
 gulp.task('feature', function() { return inc('minor'); });
 gulp.task('release', function() { return inc('major'); });
 
+gulp.task('compile-ts', function () {
+    return gulp.src(paths.typescript)
+        .pipe(ts({
+            noImplicitAny: false,
+            noEmitOnError: true,
+            removeComments: true,
+            sourceMap: false,
+            out: "appBundle.js",
+            target: "es5"
+        }))
+        .pipe(gulp.dest(elixir.config.assetsPath + '/js'));
+});
+
 elixir(function (mix) {
     mix
+        .task('compile-ts')
         .sass('app.sass')
         // copiamos los fonts de bootstrap para que no se queje.
         // otra opcion seria un symlink o algo asi.
@@ -78,6 +94,7 @@ elixir(function (mix) {
             paths.bootstrap + "javascripts/bootstrap.js",
             paths.select2 + "js/select2.js",
             paths.select2 + "js/i18n/es.js",
+            'appBundle.js'
         ])
         .scripts([
             '../ajax/address/getAddress.js'
