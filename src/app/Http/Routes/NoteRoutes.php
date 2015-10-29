@@ -51,6 +51,14 @@ class NoteRoutes extends AbstractPciRoutes
                 'as'   => 'api.notes.status',
             ],
         ],
+        [
+            'method' => 'any',
+            'url' => 'api/movimientos/pdf/{movements}',
+            'data'   => [
+                'uses' => 'Api\Note\MovementsController@makeNewPdf',
+                'as'   => 'api.movements.pdf',
+            ],
+        ],
     ];
 
     /**
