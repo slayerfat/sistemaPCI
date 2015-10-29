@@ -1,5 +1,6 @@
 <meta name="form-data"
       data-petition-items-url="{{ route('api.petitions.items') }}"
+      data-petition-movement-type-url="{{ route('api.petitions.movementTypes') }}"
       data-petition-items-id="{{ $petition->id }}"
       data-editing="{{ $petition->id ? "true" : "false" }}">
 {!!
@@ -346,5 +347,19 @@ ControlGroup::generate(
                 startAjax();
             });
         })
+    </script>
+
+    {{--determina tipo de movimiento--}}
+    <script>
+        var $formData = $('meta[name="form-data"]');
+        var toggle = new Petition.MovementTypeToggle;
+        var url = $formData.data('url');
+
+        $('#petition_type_id').change(function () {
+            toggle.id = $(this).val();
+            toggle.url = 'ayy';
+            toggle.test();
+            toggle.getModel();
+        });
     </script>
 @stop

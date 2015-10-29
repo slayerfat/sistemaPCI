@@ -97,6 +97,19 @@ class MovementType extends AbstractBaseModel implements SluggableInterface
         return $this->hasMany(NoteType::class);
     }
 
+    /**
+     * Determina si el tipo de movimiento es de salida
+     * @return bool
+     */
+    public function isOut()
+    {
+        return !$this->isIn();
+    }
+
+    /**
+     * Determina si el tipo de movimiento es de entrada
+     * @return bool
+     */
     public function isIn()
     {
         return self::in()->first()->id == $this->id;
