@@ -75,8 +75,8 @@ class NotesController extends Controller
         if (!is_null($note->status)) {
             return Response::json([
                 'status'  => false,
-                'message' => 'El estatus de la Nota no puede ser alterado,'
-                    . 'porque esta ha generado un movimiento.',
+                'message' => 'El estatus de la Nota no puede ser alterado, '
+                    . 'porque la misma ha generado un movimiento.',
             ]);
         }
 
