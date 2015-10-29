@@ -2,19 +2,22 @@
 
 use PCI\Models\MovementType;
 use PCI\Models\NoteType;
+use PCI\Models\PetitionType;
 
 /**
- * Class NoteTypeIntegrationTest
+ * Class NoteAndPetitionTypeIntegrationTest
+ * Nota: se extiende AuxIntegrationTest para que
+ * se ejecuten las pruebas heredadas.
  *
  * @package Tests\Integration\Aux
- *          Nota: se extiende AuxIntegrationTest para que
- *          se ejecuten las pruebas heredadas.
+ * @author  Alejandro Granadillo <slayerfat@gmail.com>
+ * @link    https://github.com/slayerfat/sistemaPCI Repositorio en linea.
  */
-class NoteTypeIntegrationTest extends AuxIntegrationTest
+class NoteAndPetitionTypeIntegrationTest extends AuxIntegrationTest
 {
 
     /**
-     * @var \PCI\Models\Category
+     * @var \PCI\Models\MovementType
      */
     private $movementType;
 
@@ -30,22 +33,25 @@ class NoteTypeIntegrationTest extends AuxIntegrationTest
      * saber el nombre en la ruta , el alias y la clase para
      * crear nuevos registros y objetos en las vistas
      *
-     * @return array<string, string, \PCI\Models\AbstractBaseModel>
+     * @return array
      */
     public function dataProvider()
     {
         return [
-            'test_0_subCats' => [
+            'test_notes'     => [
                 'tipos-nota',
                 'noteTypes',
                 NoteType::class,
+            ],
+            'test_petitions' => [
+                'tipos-pedido',
+                'petitionTypes',
+                PetitionType::class,
             ],
         ];
     }
 
     /**
-     * Los rubros tienen cat_id
-     *
      * @param $route
      * @param $alias
      * @param $class

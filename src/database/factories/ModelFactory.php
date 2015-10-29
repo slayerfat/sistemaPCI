@@ -137,6 +137,13 @@ $factory->define(PCI\Models\NoteType::class, function () use ($faker) {
     ];
 });
 
+$factory->define(PCI\Models\PetitionType::class, function () use ($faker) {
+    return [
+        'desc'             => $faker->text(40),
+        'movement_type_id' => factory(\PCI\Models\MovementType::class)->create()->id,
+    ];
+});
+
 $factory->define(PCI\Models\Town::class, function () use ($faker) {
     return [
         'desc'     => $faker->text(40),

@@ -98,6 +98,16 @@ class MovementType extends AbstractBaseModel implements SluggableInterface
     }
 
     /**
+     * Regresa una coleccion de notas asociadas.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     */
+    public function petitionTypes()
+    {
+        return $this->hasMany(PetitionType::class);
+    }
+
+    /**
      * Determina si el tipo de movimiento es de salida
      * @return bool
      */

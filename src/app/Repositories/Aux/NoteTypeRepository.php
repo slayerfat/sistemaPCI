@@ -20,7 +20,7 @@ class NoteTypeRepository extends AbstractAuxRepository implements NoteTypeReposi
      * necesaria logica adicional.
      *
      * @param array $data El array con informacion del modelo.
-     * @return \PCI\Models\SubCategory
+     * @return \PCI\Models\Petition
      */
     public function create(array $data)
     {

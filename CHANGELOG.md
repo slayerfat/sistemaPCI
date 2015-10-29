@@ -13,6 +13,7 @@ Todos los cambios significativos en este proyecto estaran documentados en este a
 
 - Notas necesitan usuario dirigido a, seeding actualizado para eso.
 - Envio de correos por defecto desactivado en el sistema.
+- Relacion entre Tipo de Pedido y Tipo de Movimiento (para saber si es entrada o salida)
 - Relacion entre Tipo de Nota y Tipo de Movimiento (para saber si es entrada o salida)
 - Pedido debe permitir nuevo si es entrada y stock es 0
 

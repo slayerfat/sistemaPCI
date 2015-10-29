@@ -3,6 +3,7 @@
 use PCI\Models\Movement;
 use PCI\Models\MovementType;
 use PCI\Models\NoteType;
+use PCI\Models\PetitionType;
 use Tests\AbstractTestCase;
 
 class MovementTypeTest extends AbstractTestCase
@@ -25,6 +26,16 @@ class MovementTypeTest extends AbstractTestCase
             'noteTypes',
             'hasMany',
             NoteType::class
+        );
+    }
+
+    public function testPetitionTypes()
+    {
+        $this->mockBasicModelRelation(
+            MovementType::class,
+            'petitionTypes',
+            'hasMany',
+            PetitionType::class
         );
     }
 }

@@ -34,12 +34,14 @@ class PetitionType extends AbstractBaseModel implements SluggableInterface
 
     /**
      * The attributes that are mass assignable.
+     *
      * @var array
      */
     protected $fillable = ['desc'];
 
     /**
      * Los datos necesarios para generarar un slug en el modelo.
+     *
      * @var array
      */
     protected $sluggable = [
@@ -49,10 +51,21 @@ class PetitionType extends AbstractBaseModel implements SluggableInterface
 
     /**
      * Regresa una el tipo de pedido.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\hasMany
      */
     public function petitions()
     {
         return $this->hasMany(Petition::class);
+    }
+
+    /**
+     * Regresa el tipo de movimiento asociado asociadas.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
+     */
+    public function movementType()
+    {
+        return $this->belongsTo(MovementType::class);
     }
 }

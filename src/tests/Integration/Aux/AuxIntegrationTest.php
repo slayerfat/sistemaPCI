@@ -7,7 +7,6 @@ use PCI\Models\ItemType;
 use PCI\Models\Maker;
 use PCI\Models\MovementType;
 use PCI\Models\Nationality;
-use PCI\Models\PetitionType;
 use PCI\Models\Position;
 use PCI\Models\StockType;
 
@@ -24,52 +23,47 @@ class AuxIntegrationTest extends AbstractAuxIntegration
     public function dataProvider()
     {
         return [
-            'test_0_cats'          => [
+            'test_cats'          => [
                 'categorias',
                 'cats',
                 Category::class,
             ],
-            'test_1_depts'         => [
+            'test_depts'         => [
                 'departamentos',
                 'depts',
                 Department::class,
             ],
-            'test_2_genders'       => [
+            'test_genders'       => [
                 'generos',
                 'genders',
                 Gender::class,
             ],
-            'test_3_itemTypes'     => [
+            'test_itemTypes'     => [
                 'tipos-item',
                 'itemTypes',
                 ItemType::class,
             ],
-            'test_4_makers'        => [
+            'test_makers'        => [
                 'fabricantes',
                 'makers',
                 Maker::class,
             ],
-            'test_5_movementTypes' => [
+            'test_movementTypes' => [
                 'tipos-movimiento',
                 'movementTypes',
                 MovementType::class,
             ],
-            'test_6_nats'          => [
+            'test_nats'          => [
                 'nacionalidades',
                 'nats',
                 Nationality::class,
             ],
-            'test_7_petitionTypes' => [
-                'tipos-pedido',
-                'petitionTypes',
-                PetitionType::class,
-            ],
-            'test_8_positions'     => [
+            'test_positions'     => [
                 'cargos',
                 'positions',
                 Position::class,
             ],
-            'test_9_positions'     => [
+            'test_stockType'     => [
                 'tipos-cantidad',
                 'stockTypes',
                 StockType::class,

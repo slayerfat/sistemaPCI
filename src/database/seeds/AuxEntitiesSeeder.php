@@ -78,8 +78,8 @@ class AuxEntitiesSeeder extends AbstractSeeder
                 ['desc' => 'Entrega (salida)', 'movement_type_id' => 2],
             ],
             'PCI\Models\PetitionType' => [
-                ['desc' => 'Entrada (entrada)'],
-                ['desc' => 'Entrega (salida)'],
+                ['desc' => 'Entrada (entrada)', 'movement_type_id' => 1],
+                ['desc' => 'Entrega (salida)', 'movement_type_id' => 2],
             ],
             'PCI\Models\Position'     => [
                 ['desc' => 'Facilitador'],
@@ -151,7 +151,6 @@ class AuxEntitiesSeeder extends AbstractSeeder
             'PCI\Models\Maker',
             'PCI\Models\MovementType',
             'PCI\Models\Nationality',
-            'PCI\Models\PetitionType',
             'PCI\Models\Position',
             'PCI\Models\Profile',
             'PCI\Models\State',
