@@ -10,12 +10,5 @@
             ])->withIcon(Icon::create('file-pdf-o'))
 
         !!}
-
-        @if (!is_null($note->status))
-            @include(
-                'partials.buttons.edit-delete',
-                ['resource' => 'petitions', 'id' => $note->id]
-            )
-        @endif
     </span>
 @endif

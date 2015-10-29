@@ -20,7 +20,7 @@ Misión Alma Mater, Programa Nacional de Formación: Informatica, Trayecto 3, IU
 
 [Ver Bitacora](https://github.com/slayerfat/sistemaPCI/blob/master/CHANGELOG.md)
 
-[Ver KanBan](http://app.sweepboard.com/#/board/slayerfat/sistemapci)
+[Ver KanBan](https://huboard.com/slayerfat/sistemaPCI)
 
 ## Indice
 
