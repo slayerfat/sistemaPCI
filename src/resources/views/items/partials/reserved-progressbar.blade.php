@@ -5,7 +5,15 @@
     <?php $stock = abs($reserved - 100); ?>
     <?php $stock = $stock >= 100 ? 0 : $stock ?>
 
-    @if($stock == 0)
+    @if($reserved == 0)
+
+    {!!
+
+    ProgressBar::success(100)->visible("Reservado $reserved%% de la existencia.")
+
+    !!}
+
+    @elseif($stock == 0)
 
     {!!
 
@@ -30,7 +38,7 @@
         <small>
             {{ $item->formattedRealStock() }} En almacenes.
             {{ $item->formattedReserved() }}
-            {{ $item->reserved > 1 ? 'Reservados' : 'Reservado' }}.
+            {{ $item->reserved !== 1 ? 'Reservados' : 'Reservado' }}.
         </small>
     </h3>
 </section>

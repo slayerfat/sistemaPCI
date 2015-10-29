@@ -1,4 +1,4 @@
-<table style="border: 1px solid #333; border-collapse: collapse;">
+<table style="border: 1px solid #333; border-collapse: collapse; width: 100%;">
     <thead>
     <tr>
         <th style=" border-width: 1px; padding: 8px; border-style: solid; border-color: #666666; background-color: #dedede;">
@@ -8,10 +8,10 @@
             Item
         </th>
         <th style=" border-width: 1px; padding: 8px; border-style: solid; border-color: #666666; background-color: #dedede;">
-            Stock existente
+            Stock
         </th>
         <th style=" border-width: 1px; padding: 8px; border-style: solid; border-color: #666666; background-color: #dedede;">
-            Cantidad solicitada
+            Cantidad
         </th>
     </tr>
     </thead>

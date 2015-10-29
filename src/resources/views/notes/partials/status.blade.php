@@ -174,6 +174,14 @@ if (is_null($note->status)) {
                         var next;
                         var previous;
 
+                        if (data.status === false) {
+                            var msg = 'Error Desconocido en el servidor.';
+                            if (data.message) {
+                                msg = data.message;
+                            }
+                            return self.createMessage(msg, 'alert alert-danger');
+                        }
+
                         // debemos determinar cual es el elemento que
                         // estaba activo cuando se hizo la peticion.
                         if (self.status == self.previousStatus) {
@@ -214,8 +222,7 @@ if (is_null($note->status)) {
 
                         // creamos un mensaje segun este metodo.
                         self.createMessage(
-                            'Cambios realizados correctamente. ' +
-                            '<a href="#" id="message-undo">deshacer</a>',
+                            'Cambios realizados correctamente. ',
                             'alert alert-success'
                         );
                     }).fail(function () {
