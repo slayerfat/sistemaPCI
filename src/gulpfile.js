@@ -2,6 +2,7 @@ var gulp = require('gulp');
 var notify = require('gulp-notify');
 var elixir = require('laravel-elixir');
 var ts = require('gulp-typescript');
+var sourcemaps = require('gulp-sourcemaps');
 
 // public path sistemaPCI/public
 elixir.config.publicPath = '../public';
@@ -64,14 +65,16 @@ gulp.task('release', function() { return inc('major'); });
 
 gulp.task('compile-ts', function () {
     return gulp.src(paths.typescript)
+        .pipe(sourcemaps.init())
         .pipe(ts({
             noImplicitAny: false,
             noEmitOnError: true,
             removeComments: true,
-            sourceMap: false,
+            sourceMap: true,
             out: "appBundle.js",
             target: "es5"
         }))
+        .pipe(sourcemaps.write())
         .pipe(gulp.dest(elixir.config.assetsPath + '/js'));
 });
 
