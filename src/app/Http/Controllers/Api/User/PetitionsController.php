@@ -61,7 +61,7 @@ class PetitionsController extends Controller
     public function items(Request $request)
     {
         if (!$request->has('id')) {
-            return Response::json(['status' => 'Id necesario para continuar.']);
+            return $this->jsonMsg();
         }
 
         $petition = $this->repo->find($request->input('id'));
@@ -69,5 +69,25 @@ class PetitionsController extends Controller
         $items = $this->repo->getItemsCollection($petition->items);
 
         return Response::json($items->toArray());
+    }
+
+    /**
+     * @param string $str
+     * @return \Illuminate\Http\JsonResponse
+     */
+    private function jsonMsg($str = 'Id necesario para continuar.')
+    {
+        return Response::json(['status' => $str]);
+    }
+
+    public function movementType(request $request)
+    {
+        if (!$request->has('id')) {
+            return $this->jsonMsg();
+        }
+
+        $petition = $this->repo->find($request->input('id'));
+
+        return Response::json($petition);
     }
 }
