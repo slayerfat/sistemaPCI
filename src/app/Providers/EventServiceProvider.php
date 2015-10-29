@@ -33,6 +33,7 @@ class EventServiceProvider extends ServiceProvider
         ],
         'PCI\Events\Note\NewItemIngress'               => [
             'PCI\Listeners\Note\GenerateItemIngress',
+            'PCI\Listeners\Email\Note\EmailNewItemMovements',
         ],
         'PCI\Events\Note\NewNoteCreation'              => [
             'PCI\Listeners\Note\ReserveItemStock',
