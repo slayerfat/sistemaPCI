@@ -96,4 +96,9 @@ class MovementType extends AbstractBaseModel implements SluggableInterface
     {
         return $this->hasMany(NoteType::class);
     }
+
+    public function isIn()
+    {
+        return self::in()->first()->id == $this->id;
+    }
 }
