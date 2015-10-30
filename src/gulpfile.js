@@ -71,7 +71,6 @@ gulp.task('compile-ts', function () {
             noImplicitAny: false,
             noEmitOnError: true,
             removeComments: true,
-            sourceMap: true,
             out: "appBundle.js",
             target: "es5"
         }))

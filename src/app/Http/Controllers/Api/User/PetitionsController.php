@@ -86,8 +86,13 @@ class PetitionsController extends Controller
             return $this->jsonMsg();
         }
 
+        /** @var \PCI\Models\Petition $petition */
         $petition = $this->repo->find($request->input('id'));
 
-        return Response::json($petition);
+        return Response::json([
+            'status'  => true,
+            'model'   => $petition,
+            'ingress' => $petition->type->movementType()->first()->isIn(),
+        ]);
     }
 }

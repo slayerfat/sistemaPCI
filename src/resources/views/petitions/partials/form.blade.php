@@ -352,12 +352,12 @@ ControlGroup::generate(
     {{--determina tipo de movimiento--}}
     <script>
         var $formData = $('meta[name="form-data"]');
-        var toggle = new Petition.MovementTypeToggle;
         var url = $formData.data('petition-movement-type-url');
+        var $petitionTypeSelect = $('#petition_type_id');
+        var toggle = new Petition.MovementTypeToggle($petitionTypeSelect.val(), url);
 
-        $('#petition_type_id').change(function () {
+        $petitionTypeSelect.change(function () {
             toggle.id = $(this).val();
-            toggle.url = url;
             toggle.getModel();
         });
     </script>

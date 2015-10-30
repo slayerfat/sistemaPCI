@@ -22,14 +22,18 @@ module Petition {
         /**
          * El modelo que representa lo que llega del servidor
          */
-        private _model:{
-            data: {};
-            ingress: boolean;
+        private _model = {
+            data: {},
+            ingress: null,
         };
 
         constructor(id:number = null, url:string = null) {
             this.id = id;
             this.url = url;
+
+            if (this.id && this.url) {
+                this.getModel();
+            }
         }
 
         private _checkToken() {
@@ -46,6 +50,7 @@ module Petition {
 
         public getModel(): void {
             this._checkToken();
+            var self = this;
 
             var request = $.ajax({
                 method: this._method,
@@ -58,8 +63,8 @@ module Petition {
 
             request.done(function (data) {
                 if (data.status == true) {
-                    this._model.data = data.model;
-                    this._model.ingress = data.ingress;
+                    self._model.data = data.model;
+                    self._model.ingress = data.ingress;
                 } else if (data.status == false) {
                     console.log(data);
                 } else {
