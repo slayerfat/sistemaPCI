@@ -7,9 +7,17 @@ use PCI\Events\Petition\PetitionApprovalRequest;
 use PCI\Http\Controllers\Controller;
 use PCI\Http\Controllers\Traits\RespondsToChangeStatus;
 use PCI\Http\Requests;
+use PCI\Repositories\Interfaces\Aux\PetitionTypeRepositoryInterface;
 use PCI\Repositories\Interfaces\User\PetitionRepositoryInterface;
 use Response;
 
+/**
+ * Class PetitionsController
+ *
+ * @package PCI\Http\Controllers\Api\User
+ * @author  Alejandro Granadillo <slayerfat@gmail.com>
+ * @link    https://github.com/slayerfat/sistemaPCI Repositorio en linea.
+ */
 class PetitionsController extends Controller
 {
 
@@ -23,13 +31,22 @@ class PetitionsController extends Controller
     private $repo;
 
     /**
+     * @var \PCI\Repositories\Aux\PetitionTypeRepository
+     */
+    private $petitionTypeRepo;
+
+    /**
      * Genera una nueva instancia de este controlador.
      *
-     * @param \PCI\Repositories\Interfaces\User\PetitionRepositoryInterface $repo
+     * @param \PCI\Repositories\Interfaces\User\PetitionRepositoryInterface    $repo
+     * @param \PCI\Repositories\Interfaces\Aux\PetitionTypeRepositoryInterface $petitionTypeRepo
      */
-    public function __construct(PetitionRepositoryInterface $repo)
-    {
-        $this->repo = $repo;
+    public function __construct(
+        PetitionRepositoryInterface $repo,
+        PetitionTypeRepositoryInterface $petitionTypeRepo
+    ) {
+        $this->repo             = $repo;
+        $this->petitionTypeRepo = $petitionTypeRepo;
     }
 
     /**
@@ -86,13 +103,13 @@ class PetitionsController extends Controller
             return $this->jsonMsg();
         }
 
-        /** @var \PCI\Models\Petition $petition */
-        $petition = $this->repo->find($request->input('id'));
+        /** @var \PCI\Models\PetitionType $type */
+        $type = $this->petitionTypeRepo->find($request->input('id'));
 
         return Response::json([
             'status'  => true,
-            'model'   => $petition,
-            'ingress' => $petition->type->movementType()->first()->isIn(),
+            'model'   => $type,
+            'ingress' => $type->movementType->isIn(),
         ]);
     }
 }

@@ -164,6 +164,8 @@ ControlGroup::generate(
             selected: [],
 
             stock: {
+                lastSelected: null,
+                didNotChange: null,
                 plain: '',
                 formatted: ''
             },
@@ -208,18 +210,28 @@ ControlGroup::generate(
                 return selected;
             },
 
+            checkSelectedStock: function () {
+                if (items.stock.lastSelected === toggle.isModelIngress()) {
+                    items.stock.didNotChange = true;
+                }
+
+                items.stock.didNotChange = false;
+            },
+
             appendItem: function (e) {
                 // iniciamos el objeto
                 items.setItem(e.params.data);
 
-                if (items.alreadySelected()) {
+                items.checkSelectedStock();
+
+                if (items.alreadySelected() && items.stock.didNotChange) {
                     return;
                 }
 
                 var itemBag = $('#itemBag');
 
                 // chequeamos que el stock no sea 0
-                if (items.stock.plain < 1) {
+                if (items.stock.plain < 1 && toggle.isModelEgress()) {
                     var $error = $('<label for="itemBag" class="control-label col-sm-8">' +
                         items.data.desc + ' no se encuentra en existencia.' +
                         '</label>');
@@ -243,7 +255,7 @@ ControlGroup::generate(
                     + items.data.desc
                     + '</label>'
                     + '<div class="col-sm-2">' +
-                    '<input class="form-control" name="item-id-' + items.data.id + '" type="number" min="1" value="' + items.stock.plain + '" max="' + items.stock.plain + '">' +
+                    '<input class="form-control model-number-input" name="item-id-' + items.data.id + '" type="number" value="' + items.stock.plain + '">' +
                     '<span class="help-block">' + items.stock.formatted + ' en total.' + '</span>' +
                     '</div>';
 
@@ -269,6 +281,7 @@ ControlGroup::generate(
                 itemBag.append(itemInput + select);
 
                 items.addSelected(items.data.id);
+                toggle.changeInputs();
             }
         };
 

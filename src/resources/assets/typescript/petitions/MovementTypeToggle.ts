@@ -33,6 +33,7 @@ module Petition {
 
             if (this.id && this.url) {
                 this.getModel();
+                this.changeInputs();
             }
         }
 
@@ -48,7 +49,7 @@ module Petition {
             }
         }
 
-        public getModel(): void {
+        public getModel():void {
             this._checkToken();
             var self = this;
 
@@ -77,12 +78,29 @@ module Petition {
             });
         }
 
+        public changeInputs():boolean {
+            var selector = '.model-number-input';
+            var $element = $(selector);
+
+            if ($element.length < 1) {
+                return false;
+            }
+
+            if (this.isModelIngress()) {
+                $element.attr('min', 1).attr('max', null);
+                return true;
+            }
+
+            $element.attr('min', 1).attr('max', $element.val());
+            return true;
+        }
+
         public isModelIngress() {
-            return this._model.ingress;
+            return this._model.ingress === true;
         }
 
         public isModelEgress() {
-            return !this._model.ingress;
+            return !this.isModelIngress();
         }
     }
 }
