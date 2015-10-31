@@ -121,6 +121,11 @@ ControlGroup::generate(
                     // en la que esta para la paginacion.
                     params.page = params.page || 1;
 
+                    // esto basicamente permite volver a seleccionar el mismo elemento
+                    // otra vez de la lista (necesario por el cambio alterno
+                    // de tipo de movimiento/pedido/nota)
+                    $itemList.val(null);
+
                     return {
                         results: data.data,
                         pagination: {
@@ -163,9 +168,13 @@ ControlGroup::generate(
 
             selected: [],
 
-            stock: {
+            checkSelected: {
                 lastSelected: null,
-                didNotChange: null,
+                selected: null,
+                didNotChange: null
+            },
+
+            stock: {
                 plain: '',
                 formatted: ''
             },
@@ -210,28 +219,42 @@ ControlGroup::generate(
                 return selected;
             },
 
+            /**
+             * chequea que el elemento seleccionado no haya cambiado.
+             * @returns {boolean}
+             */
             checkSelectedStock: function () {
-                if (items.stock.lastSelected === toggle.isModelIngress()) {
-                    items.stock.didNotChange = true;
+                this.checkSelected.selected = toggle.isModelIngress();
+                if (this.checkSelected.lastSelected === this.checkSelected.selected) {
+                    return this.checkSelected.didNotChange = true;
                 }
 
-                items.stock.didNotChange = false;
+                this.checkSelected.lastSelected = this.checkSelected.selected;
+                return this.checkSelected.didNotChange = false;
             },
 
+            /**
+             * Añade algun item al HTML existente en el formulario y
+             * genera mensaje de error si este no tiene stock.
+             * @param e
+             */
             appendItem: function (e) {
                 // iniciamos el objeto
-                items.setItem(e.params.data);
+                this.setItem(e.params.data);
 
-                items.checkSelectedStock();
+                this.checkSelectedStock();
 
-                if (items.alreadySelected() && items.stock.didNotChange) {
+                // si el item ya esta seleccionado o si el item fue rechazado
+                // previamente y no cambio la condicion de rechazo,
+                // entonces regresamos temprano.
+                if (this.alreadySelected() && this.checkSelectedStock()) {
                     return;
                 }
 
                 var itemBag = $('#itemBag');
 
                 // chequeamos que el stock no sea 0
-                if (items.stock.plain < 1 && toggle.isModelEgress()) {
+                if (items.stock.plain <= 0 && toggle.isModelEgress()) {
                     var $error = $('<label for="itemBag" class="control-label col-sm-8">' +
                         items.data.desc + ' no se encuentra en existencia.' +
                         '</label>');

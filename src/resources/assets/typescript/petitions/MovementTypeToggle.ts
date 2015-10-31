@@ -27,6 +27,12 @@ module Petition {
             ingress: null,
         };
 
+        /**
+         * Si esta instancia posee el id y el url de destino,
+         * procede a ejecutar el ajax necesario.
+         * @param id
+         * @param url
+         */
         constructor(id:number = null, url:string = null) {
             this.id = id;
             this.url = url;
@@ -37,7 +43,12 @@ module Petition {
             }
         }
 
-        private _checkToken() {
+        /**
+         * Basicamente debemos asegurarnos que tengamos el
+         * token al momento de hacer la peticion ajax.
+         * @private
+         */
+        private _checkToken():void {
             var $input = $('input[name="_token"]');
 
             if ($input.attr('value')) {
@@ -49,7 +60,12 @@ module Petition {
             }
         }
 
-        public getModel():void {
+        /**
+         * Busca en el API el tipo de stock relacionado a
+         * la selecccion y chequea que el input sea valido.
+         * @returns {Petition.MovementTypeToggle}
+         */
+        public getModel():MovementTypeToggle {
             this._checkToken();
             var self = this;
 
@@ -66,6 +82,7 @@ module Petition {
                 if (data.status == true) {
                     self._model.data = data.model;
                     self._model.ingress = data.ingress;
+                    self.changeInputs();
                 } else if (data.status == false) {
                     console.log(data);
                 } else {
@@ -76,30 +93,78 @@ module Petition {
             request.fail(function (data) {
                 console.log(data);
             });
+
+            return this;
         }
 
-        public changeInputs():boolean {
-            var selector = '.model-number-input';
-            var $element = $(selector);
+        /**
+         * Cambia el input de algun item sabiendo el stock y el tipo de movimiento.
+         * @returns {Petition.MovementTypeToggle}
+         */
+        public changeInputs():MovementTypeToggle {
+            var $element = $('.model-number-input');
 
             if ($element.length < 1) {
-                return false;
+                return this;
             }
 
             if (this.isModelIngress()) {
                 $element.attr('min', 1).attr('max', null);
-                return true;
+
+                return this;
             }
 
+            // debemos chequear los inputs porque es salida
+            this.checkInputValue($element);
             $element.attr('min', 1).attr('max', $element.val());
-            return true;
+
+            return this;
         }
 
-        public isModelIngress() {
+        /**
+         * Nos interesa saber si los elementos son validos en cuanto su
+         * stock debido a que el usuario puede cambiar el tipo de
+         * entrada del pedido o nota, debemos chequear que el
+         * stock sea apropiado para entrada o salida.
+         * @param $element
+         */
+        private checkInputValue($element:JQuery):void {
+            $element.each(function (key, HTMLElement) {
+                var $input = $(HTMLElement);
+
+                // chequeamos que el stock no sea 0
+                if ($input.val() <= 0) {
+                    var html = '<label for="itemBag" class="control-label col-sm-8">' +
+                        'El Item no se encuentra en existencia.' +
+                        '</label>';
+
+                    $input.closest('.itemBag-item').fadeOut(250, function () {
+                        $(this).html(html);
+                        $(this).fadeIn();
+                        // espera 10 segundo y activa la animacion
+                        $(this).animate({opacity: 1}, 10000, 'linear', function () {
+                            $(this).animate({opacity: 0}, 2000, 'linear', function () {
+                                $(this).remove();
+                            });
+                        });
+                    });
+                }
+            });
+        }
+
+        /**
+         * Nos interesa saber si el modelo es de tipo entrada o salida
+         * @returns {boolean}
+         */
+        public isModelIngress():boolean {
             return this._model.ingress === true;
         }
 
-        public isModelEgress() {
+        /**
+         * Nos interesa saber si el modelo es de tipo entrada o salida.
+         * @returns {boolean}
+         */
+        public isModelEgress():boolean {
             return !this.isModelIngress();
         }
     }
