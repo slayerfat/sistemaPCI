@@ -62,6 +62,18 @@ ControlGroup::generate(
         });
     </script>
     <script>
+        var $formData = $('meta[name="form-data"]');
+        var url = $formData.data('petition-movement-type-url');
+        var $petitionTypeSelect = $('#petition_type_id');
+        var toggle = new Petition.MovementTypeToggle($petitionTypeSelect.val(), url);
+        var stockTypes = new Petition.stockTypes();
+        var items = new Petition.RelatedItems();
+
+        $petitionTypeSelect.change(function () {
+            toggle.id = $(this).val();
+            toggle.getModel();
+        });
+
         /**
          * la informacion html que es usada para generar
          * los elementos internos del select.
@@ -145,176 +157,9 @@ ControlGroup::generate(
             templateResult: formatRepo
         });
 
-        // necesitamos los tipos de stock para generar el select
-        $(function () {
-            $.ajax({
-                url: '/api/tipos-cantidad',
-                dataType: 'json',
-                success: function (data) {
-                    stockTypes.types = data;
-                }
-            });
-        });
-
-        var stockTypes = {
-            types: {}
-        };
-
-        var items = {
-            data: {
-                desc: '',
-                stock_type_id: null
-            },
-
-            selected: [],
-
-            checkSelected: {
-                lastSelected: null,
-                selected: null,
-                didNotChange: null
-            },
-
-            stock: {
-                plain: '',
-                formatted: ''
-            },
-
-            setItem: function (data) {
-                this.data = data;
-                this.grabItemStock(this.data);
-            },
-
-            grabItemStock: function (item) {
-                var self = this;
-
-                $.ajax({
-                    url: '/api/items/stock/' + item.id,
-                    dataType: 'json',
-                    async: false,
-                    success: function (data) {
-                        self.setStock(data);
-                    }
-                });
-            },
-
-            addSelected: function (id) {
-                this.selected.push(parseInt(id));
-            },
-
-            removeSelected: function (id) {
-                this.selected.splice(this.selected.indexOf(parseInt(id)), 1);
-            },
-
-            setStock: function (stock) {
-                this.stock = stock;
-            },
-
-            alreadySelected: function () {
-                var selected = false;
-
-                this.selected.forEach(function (key) {
-                    if (key == this.data.id) selected = true;
-                }.bind(this));
-
-                return selected;
-            },
-
-            /**
-             * chequea que el elemento seleccionado no haya cambiado.
-             * @returns {boolean}
-             */
-            checkSelectedStock: function () {
-                this.checkSelected.selected = toggle.isModelIngress();
-                if (this.checkSelected.lastSelected === this.checkSelected.selected) {
-                    return this.checkSelected.didNotChange = true;
-                }
-
-                this.checkSelected.lastSelected = this.checkSelected.selected;
-                return this.checkSelected.didNotChange = false;
-            },
-
-            /**
-             * Añade algun item al HTML existente en el formulario y
-             * genera mensaje de error si este no tiene stock.
-             * @param e
-             */
-            appendItem: function (e) {
-                // iniciamos el objeto
-                this.setItem(e.params.data);
-
-                this.checkSelectedStock();
-
-                // si el item ya esta seleccionado o si el item fue rechazado
-                // previamente y no cambio la condicion de rechazo,
-                // entonces regresamos temprano.
-                if (this.alreadySelected() && this.checkSelectedStock()) {
-                    return;
-                }
-
-                var itemBag = $('#itemBag');
-
-                // chequeamos que el stock no sea 0
-                if (items.stock.plain <= 0 && toggle.isModelEgress()) {
-                    var $error = $('<label for="itemBag" class="control-label col-sm-8">' +
-                        items.data.desc + ' no se encuentra en existencia.' +
-                        '</label>');
-
-                    itemBag.append($error);
-
-                    // espera 10 segundo y activa la animacion
-                    $error.animate({opacity: 1}, 10000, 'linear', function () {
-                        $error.animate({opacity: 0}, 2000, 'linear', function () {
-                            $error.remove();
-                        });
-                    });
-
-                    return;
-                }
-
-                // como esta mamarrachada es muy grande, la
-                // segmentamos para que pueda ser mas facil de digerir
-                var itemInput = '<div class="itemBag-item" data-id="' + items.data.id + '">'
-                    + '<label for="itemBag" class="control-label col-sm-7">'
-                    + items.data.desc
-                    + '</label>'
-                    + '<div class="col-sm-2">' +
-                    '<input class="form-control model-number-input" ' +
-                    'name="item-id-' + items.data.id + '" ' +
-                    'type="number" ' +
-                    'data-stock-plain="' + items.stock.plain + '"' +
-                    'value="' + items.stock.plain + '">' +
-                    '<span class="help-block">' + items.stock.formatted + ' en total.' + '</span>' +
-                    '</div>';
-
-                var options = '';
-
-                // generamos las opciones que van dentro del select
-                Object.keys(stockTypes.types).forEach(function (key) {
-                    stockTypes.types[key].id == items.data.stock_type_id
-                        ? options += '<option value="' + stockTypes.types[key].id + '" selected="selected">' + stockTypes.types[key].desc + '</option>'
-                        : options += '<option value="' + stockTypes.types[key].id + '">' + stockTypes.types[key].desc + '</option>';
-                });
-
-                // este select contiene los tipos de cantidad
-                var select = '<div class="col-sm-3">  <div class="input-group">' +
-                    '<select class="form-control" name="stock-type-id-' +
-                    items.data.id + '">' + options + '</select>' +
-                    '<span class="input-group-addon itemBag-remove-item" ' +
-                    'data-id="' + items.data.id + '">' +
-                    '<i class="fa fa-times"></i></span>' +
-                    '</div>' +
-                    '</div>';
-
-                itemBag.append(itemInput + select);
-
-                items.addSelected(items.data.id);
-                toggle.changeInputs();
-            }
-        };
-
         // mamarrachada de segundo orden
         $itemList.on("select2:select", function (e) {
-            items.appendItem(e);
+            items.appendItem(e, stockTypes, toggle);
 
             $('.itemBag-remove-item').click(function () {
                 var $item = $(this).closest('.itemBag-item');
@@ -387,18 +232,5 @@ ControlGroup::generate(
                 startAjax();
             });
         })
-    </script>
-
-    {{--determina tipo de movimiento--}}
-    <script>
-        var $formData = $('meta[name="form-data"]');
-        var url = $formData.data('petition-movement-type-url');
-        var $petitionTypeSelect = $('#petition_type_id');
-        var toggle = new Petition.MovementTypeToggle($petitionTypeSelect.val(), url);
-
-        $petitionTypeSelect.change(function () {
-            toggle.id = $(this).val();
-            toggle.getModel();
-        });
     </script>
 @stop
