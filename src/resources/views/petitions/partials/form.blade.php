@@ -278,7 +278,11 @@ ControlGroup::generate(
                     + items.data.desc
                     + '</label>'
                     + '<div class="col-sm-2">' +
-                    '<input class="form-control model-number-input" name="item-id-' + items.data.id + '" type="number" value="' + items.stock.plain + '">' +
+                    '<input class="form-control model-number-input" ' +
+                    'name="item-id-' + items.data.id + '" ' +
+                    'type="number" ' +
+                    'data-stock-plain="' + items.stock.plain + '"' +
+                    'value="' + items.stock.plain + '">' +
                     '<span class="help-block">' + items.stock.formatted + ' en total.' + '</span>' +
                     '</div>';
 

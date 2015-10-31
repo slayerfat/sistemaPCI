@@ -132,8 +132,12 @@ module Petition {
             $element.each(function (key, HTMLElement) {
                 var $input = $(HTMLElement);
 
+                if ($input.data('stock-plain') === undefined) {
+                    return console.error('No se conoce el stock del articulo para continuar.')
+                }
+
                 // chequeamos que el stock no sea 0
-                if ($input.val() <= 0) {
+                if ($input.data('stock-plain') <= 0) {
                     var html = '<label for="itemBag" class="control-label col-sm-8">' +
                         'El Item no se encuentra en existencia.' +
                         '</label>';
