@@ -46,6 +46,10 @@ ControlGroup::generate(
 
 @section('js')
     <script>
+        // necesitamos configurar ajax primero.
+        var ajaxSetup = new Forms.AjaxSetup($('input[name="_token"]'));
+        ajaxSetup.setLaravelToken();
+
         // elementos varios de HTML
         var $formData = $('meta[name="form-data"]');
         var url = $formData.data('model-movement-type-url');
@@ -56,11 +60,9 @@ ControlGroup::generate(
         var toggle = new Petition.MovementTypeToggle($petitionTypeSelect.val(), url);
         var stockTypes = new Petition.stockTypes();
         var items = new Petition.RelatedItems();
-        var ajaxSetup = new Forms.AjaxSetup($('input[name="_token"]'));
 
         // operaciones iniciales
         toggle.selectWatcher($petitionTypeSelect);
-        ajaxSetup.setLaravelToken();
 
         /**
          * la informacion html que es usada para generar
@@ -166,10 +168,8 @@ ControlGroup::generate(
 
             // si no se esta editando, entonces no ocurre nada aca.
             if (!$formData.data('editing')) return;
-
-            var html = '<div class="col-xs-push-4 col-xs-4 text-center">' +
-                '<i class="fa fa-spinner fa-spin fa-5x"></i>' +
-                '</div>';
+            var ajaxSpinner = new Forms.AjaxSpinner($('#itemBag'));
+            ajaxSpinner.appendSpinner();
 
             function startAjax() {
                 $.ajax({
@@ -181,7 +181,7 @@ ControlGroup::generate(
                     },
                     success: function (data) {
                         var self = this;
-                        $('#itemBag').empty();
+                        ajaxSpinner.cleanSpinner();
                         Object.keys(data).forEach(function (key) {
                             var item = {
                                 params: {
@@ -190,7 +190,7 @@ ControlGroup::generate(
                             };
 
                             item.params.data = data[key];
-                            items.appendItem(item);
+                            items.appendItem(item, stockTypes, toggle);
                         });
 
                         $('.itemBag-remove-item').click(function () {
@@ -209,10 +209,7 @@ ControlGroup::generate(
                 })
             }
 
-            $('#itemBag').fadeOut(250, function () {
-                $('#itemBag').append(html).fadeIn(250);
-                startAjax();
-            });
+            startAjax();
         })
     </script>
 @stop

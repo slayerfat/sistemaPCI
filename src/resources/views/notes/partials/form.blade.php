@@ -58,6 +58,10 @@ ControlGroup::generate(
 
 @section('js')
     <script>
+        // necesitamos configurar ajax primero.
+        var ajaxSetup = new Forms.AjaxSetup($('input[name="_token"]'));
+        ajaxSetup.setLaravelToken();
+
         // elementos varios de HTML
         var $formData = $('meta[name="form-data"]');
         var url = $formData.data('petition-movement-type-url');
@@ -69,12 +73,10 @@ ControlGroup::generate(
         var stockTypes = new Petition.stockTypes();
         var items = new Petition.RelatedItems();
         var ajaxSpinner = new Forms.AjaxSpinner($('#itemBag'));
-        var ajaxSetup = new Forms.AjaxSetup($('input[name="_token"]'));
 
         // operaciones iniciales
         toggle.selectWatcher($select);
         ajaxSpinner.appendSpinner();
-        ajaxSetup.setLaravelToken();
 
         $(function () {
             // si no se esta editando, entonces no ocurre nada aca.

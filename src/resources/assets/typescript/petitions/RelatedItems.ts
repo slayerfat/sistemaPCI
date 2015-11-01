@@ -73,6 +73,8 @@ module Petition {
          * @returns {boolean}
          */
         public checkSelectedStock(status:boolean):boolean {
+            this.checkElement(status);
+
             this.checkSelected.selected = status;
             if (this.checkSelected.lastSelected === this.checkSelected.selected && this.checkSelected.lastSelected !== null) {
                 return this.checkSelected.didNotChange = true;
@@ -89,7 +91,14 @@ module Petition {
          * @param stockTypes
          * @param toggle
          */
-        public appendItem(e, stockTypes:stockTypes, toggle:MovementTypeToggle):void {
+        public appendItem(e, stockTypes:stockTypes, toggle:MovementTypeToggle):Petition.RelatedItems {
+            try {
+                this.checkElement(e).checkElement(stockTypes).checkElement(toggle);
+            } catch (e) {
+                console.error('Parametros incompletos!');
+                return this;
+            }
+
             // iniciamos el objeto
             this.setItem(e.params.data);
 
@@ -97,11 +106,13 @@ module Petition {
             // y no cambio la condicion de rechazo, entonces regresamos
             // temprano. (el orden de la condicion IMPORTA)
             if (this.checkSelectedStock(toggle.isModelIngress()) && this.alreadySelected()) {
-                return;
+                return this;
             }
 
             this.continueAppending(stockTypes, toggle);
             this.addSelected(this.data.id);
+
+            return this;
         }
 
         /**
@@ -111,30 +122,42 @@ module Petition {
          * @param stockTypes
          * @param toggle
          */
-        public appendNoteItem(e, stockTypes:stockTypes, toggle:MovementTypeToggle):void {
+        public appendNoteItem(e, stockTypes:stockTypes, toggle:MovementTypeToggle):Petition.RelatedItems {
             // iniciamos el objeto
             this.setItem(e.params.data);
 
             // basicamente es igual que this.appendItem
             // pero con una condicion mas sencilla
             if (this.alreadySelected()) {
-                return;
+                return this;
             }
 
             this.continueAppending(stockTypes, toggle);
+
+            return this;
         }
 
-        private continueAppending(stockTypes:stockTypes, toggle:MovementTypeToggle) {
+        private continueAppending(stockTypes:stockTypes, toggle:MovementTypeToggle):void {
             var $itemBag = $('#itemBag');
 
             // chequeamos que el stock no sea 0
-            if (parseFloat(this.stock.plain) <= 0 && this.checkSelected.selected) {
-                this.appendErrorMsg($itemBag);
+            if (parseFloat(this.stock.plain) <= 0 && toggle.isModelEgress()) {
+                return this.appendErrorMsg($itemBag);
+            }
+
+            if (stockTypes.isEmpty()) {
+                stockTypes.checkApi();
             }
 
             this.appendCorrectItem(stockTypes, $itemBag, toggle);
         }
 
+        /**
+         * Añade un elemento con un item, este tiene select, desc y entrada de numeros.
+         * @param stockTypes
+         * @param $itemBag
+         * @param toggle
+         */
         private appendCorrectItem(stockTypes:stockTypes, $itemBag:JQuery, toggle:MovementTypeToggle):void {
             var self = this;
             // como esta mamarrachada es muy grande, la
@@ -175,7 +198,11 @@ module Petition {
             toggle.changeInputs();
         }
 
-        private appendErrorMsg($itemBag) {
+        /**
+         * Genera un elemento con un mensaje de error que se oculta automaticamente.
+         * @param $itemBag
+         */
+        private appendErrorMsg($itemBag):void {
             var $error = $('<label for="itemBag" class="control-label col-sm-8">' +
                 this.data.desc + ' no se encuentra en existencia.' +
                 '</label>');
@@ -188,6 +215,19 @@ module Petition {
                     $error.remove();
                 });
             });
+        }
+
+        /**
+         * chequea que los parametros no sean undefined
+         * @param element
+         * @returns {Petition.RelatedItems}
+         */
+        private checkElement(element:any):Petition.RelatedItems {
+            if (element === undefined) {
+                throw new Error;
+            }
+
+            return this;
         }
     }
 }
