@@ -64,7 +64,7 @@ ControlGroup::generate(
 
         // elementos varios de HTML
         var $formData = $('meta[name="form-data"]');
-        var url = $formData.data('petition-movement-type-url');
+        var url = $formData.data('model-movement-type-url');
         var $select = $('#note_type_id');
 
         // las clases varias a iniciar
