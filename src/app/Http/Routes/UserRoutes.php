@@ -209,6 +209,14 @@ class UserRoutes extends AbstractPciRoutes
                 'as'   => 'api.petitions.movementTypes',
             ],
         ],
+        [
+            'method' => 'POST',
+            'url' => 'api/notas/tipos-movimiento',
+            'data'   => [
+                'uses' => 'Api\Note\NotesController@movementType',
+                'as'   => 'api.notes.movementTypes',
+            ],
+        ],
     ];
 
     /**

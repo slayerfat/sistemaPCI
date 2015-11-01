@@ -5,9 +5,11 @@ use Illuminate\Http\Request;
 use PCI\Events\Note\NewItemEgress;
 use PCI\Events\Note\NewItemIngress;
 use PCI\Http\Controllers\Controller;
+use PCI\Http\Controllers\Traits\Api\HasDefaultJsonMsg;
 use PCI\Http\Controllers\Traits\RespondsToChangeStatus;
 use PCI\Http\Requests;
 use PCI\Models\Note;
+use PCI\Repositories\Interfaces\Aux\NoteTypeRepositoryInterface;
 use PCI\Repositories\Interfaces\Note\NoteRepositoryInterface;
 use Response;
 
@@ -20,6 +22,8 @@ use Response;
  */
 class NotesController extends Controller
 {
+
+    use HasDefaultJsonMsg;
 
     /**
      * Esto es para la re-implementacion del trait.
@@ -39,13 +43,22 @@ class NotesController extends Controller
     private $repo;
 
     /**
+     * @var \PCI\Repositories\Interfaces\Aux\NoteTypeRepositoryInterface
+     */
+    private $noteTypeRepo;
+
+    /**
      * Genera una nueva instancia de este api.
      *
-     * @param NoteRepositoryInterface $repo
+     * @param NoteRepositoryInterface     $repo
+     * @param NoteTypeRepositoryInterface $noteTypeRepo
      */
-    public function __construct(NoteRepositoryInterface $repo)
-    {
-        $this->repo = $repo;
+    public function __construct(
+        NoteRepositoryInterface $repo,
+        NoteTypeRepositoryInterface $noteTypeRepo
+    ) {
+        $this->repo         = $repo;
+        $this->noteTypeRepo = $noteTypeRepo;
     }
 
     /**
@@ -81,7 +94,7 @@ class NotesController extends Controller
         }
 
         $response = self::changePrototype($id, $request);
-        $data = $this->makeDataArray($request->input('data'));
+        $data     = $this->makeDataArray($request->input('data'));
 
         $this->fireEvent($note, $data);
 
@@ -117,5 +130,28 @@ class NotesController extends Controller
         }
 
         return Event::fire(new NewItemEgress($note));
+    }
+
+    /**
+     * Busca y devuelve la informacion necesaria para saber si el tipo de
+     * movimiento relacionado con alguna nota es entrada o salida.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function movementType(Request $request)
+    {
+        if (!$request->has('id')) {
+            return $this->jsonMsg();
+        }
+
+        /** @var \PCI\Models\NoteType $type */
+        $type = $this->noteTypeRepo->find($request->input('id'));
+
+        return Response::json([
+            'status'  => true,
+            'model'   => $type,
+            'ingress' => $type->movementType->isIn(),
+        ]);
     }
 }
