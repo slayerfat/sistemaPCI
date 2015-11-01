@@ -11,15 +11,30 @@ module Petition {
             this.checkApi();
         }
 
-        public isEmpty() {
+        /**
+         * Chequea que los tipos esten o no vacios
+         * @returns {boolean}
+         */
+        public isEmpty():boolean {
+            if (this.types === undefined) {
+                return true;
+            }
+
             return this.types.length === 0;
         }
 
-        public isNotEmpty() {
+        /**
+         * Chequea que los tipos esten o no vacios
+         * @returns {boolean}
+         */
+        public isNotEmpty():boolean {
             return !this.isEmpty();
         }
 
-        public checkApi() {
+        /**
+         * Chequea los tipos en el servidor
+         */
+        public checkApi():void {
             var self = this;
             // necesitamos los tipos de stock para generar el select
             $(function () {

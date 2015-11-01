@@ -132,7 +132,11 @@ module Petition {
                 return this;
             }
 
-            this.continueAppending(stockTypes, toggle);
+            try {
+                this.continueAppending(stockTypes, toggle);
+            } catch (e) {
+                this.appendStockTypeError($('#itemBag'), stockTypes, toggle);
+            }
 
             return this;
         }
@@ -147,6 +151,7 @@ module Petition {
 
             if (stockTypes.isEmpty()) {
                 stockTypes.checkApi();
+                throw new Error('tipos de stock vacios, no se puede continuar');
             }
 
             this.appendCorrectItem(stockTypes, $itemBag, toggle);
@@ -215,6 +220,38 @@ module Petition {
                     $error.remove();
                 });
             });
+        }
+
+        /**
+         * Genera un elemento con un mensaje de error que se oculta automaticamente.
+         * @param $itemBag
+         * @param stockTypes
+         * @param toggle
+         */
+        private appendStockTypeError($itemBag:JQuery, stockTypes:stockTypes, toggle:MovementTypeToggle):void {
+            var $error = $('<label for="itemBag" class="control-label col-sm-8">' +
+                'Error inesperado del servidor! ' +
+                '<button class ="btn btn-warning" id="stock-type-error">' +
+                'Intente nuevamente ' + '<i class="fa fa-undo"></i>' +
+                '</button>' +
+                '</label>');
+
+            $itemBag.append($error);
+
+            $('#stock-type-error').on("click", (evt) => this.removeStockTypeError(evt, stockTypes, toggle));
+        }
+
+        /**
+         * elimina el mensaje ya puesto e intenta añadir items nuevamente.
+         * @param event
+         * @param types
+         * @param toggle
+         */
+        private removeStockTypeError(event:JQueryEventObject, types:stockTypes, toggle:MovementTypeToggle):void {
+            event.preventDefault();
+            $(event.target).parent().empty();
+
+            this.continueAppending(types, toggle);
         }
 
         /**
