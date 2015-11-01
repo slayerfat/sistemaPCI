@@ -23,3 +23,11 @@
 
     {!! BSForm::close() !!}
 </div>
+
+@section('js')
+    <script>
+        var largeSpinner = new Forms.LargeAjaxSpinner($('body'));
+        largeSpinner.appendLargeSpinner().onSubmit();
+    </script>
+    @yield('form-js')
+@stop

@@ -11,25 +11,25 @@ module Forms {
         constructor(public $element:JQuery) {
         }
 
-        public appendSpinner():AjaxSpinner {
+        public appendSpinner():Forms.AjaxSpinner {
             this.appendPrototype(this.html);
 
             return this;
         }
 
-        public cleanSpinner():AjaxSpinner {
+        public cleanSpinner():Forms.AjaxSpinner {
             this.$element.empty();
 
             return this;
         }
 
-        public toggleSpinner():AjaxSpinner {
+        public toggleSpinner():Forms.AjaxSpinner {
             this.$element.toggle();
 
             return this;
         }
 
-        public changeSpinner(HTML:any|string):AjaxSpinner {
+        public changeSpinner(HTML:any|string):Forms.AjaxSpinner {
             this.previousHTML = HTML;
             this.appendPrototype(this.previousHTML);
 

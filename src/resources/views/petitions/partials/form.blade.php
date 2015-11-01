@@ -44,7 +44,7 @@ ControlGroup::generate(
     <link rel="stylesheet" href="{{elixir('css/vendor.css')}}"/>
 @stop
 
-@section('js')
+@section('form-js')
     <script>
         // necesitamos configurar ajax primero.
         var ajaxSetup = new Forms.AjaxSetup($('input[name="_token"]'));
