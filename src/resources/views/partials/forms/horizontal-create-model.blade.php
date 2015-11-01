@@ -1,11 +1,18 @@
 <div class="container">
+    <?php
+    $defaults = ['route' => isset($route) ? $route : "{$resource}.store"];
+
+    if (isset($attributes)) {
+        $attributes = array_merge($defaults, $attributes);
+    } else {
+        $attributes = $defaults;
+    }
+    ?>
     {!!
 
     BSForm::horizontalModel(
         $model,
-        [
-            'route' => isset($route) ? $route : "{$resource}.store"
-        ]
+        $attributes
     )
 
     !!}
