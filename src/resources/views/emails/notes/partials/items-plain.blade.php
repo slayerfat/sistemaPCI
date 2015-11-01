@@ -2,7 +2,7 @@
     ------------------------------------
     #{{ $item->id }}
     Item: {{ $item->desc }}
-    Stock disponible: {{ $item->formattedStock() }}
-    Cantidad solicitada: {{ $item->pivot->quantity }}
+    Stock: {{ $item->formattedStock() }}
+    Cantidad: {{ $item->pivot->quantity }}
     ------------------------------------
 @endforeach

@@ -11,7 +11,7 @@
             Stock
         </th>
         <th style=" border-width: 1px; padding: 8px; border-style: solid; border-color: #666666; background-color: #dedede;">
-            Cantidad solicitada
+            Cantidad
         </th>
     </tr>
     </thead>
