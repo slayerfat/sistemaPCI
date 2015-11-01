@@ -42,7 +42,7 @@ module Petition {
             }
         }
 
-        public selectWatcher($element:JQuery):MovementTypeToggle {
+        public selectWatcher($element:JQuery):Petition.MovementTypeToggle {
             var self = this;
             $element.change(function () {
                 self.id = $(this).val();
@@ -57,7 +57,7 @@ module Petition {
          * la selecccion y chequea que el input sea valido.
          * @returns {Petition.MovementTypeToggle}
          */
-        public getModel():MovementTypeToggle {
+        public getModel():Petition.MovementTypeToggle {
             var self = this;
 
             var request = $.ajax({
@@ -92,7 +92,7 @@ module Petition {
          * Cambia el input de algun item sabiendo el stock y el tipo de movimiento.
          * @returns {Petition.MovementTypeToggle}
          */
-        public changeInputs():MovementTypeToggle {
+        public changeInputs():Petition.MovementTypeToggle {
             var $element = $('.model-number-input');
 
             if ($element.length < 1) {
