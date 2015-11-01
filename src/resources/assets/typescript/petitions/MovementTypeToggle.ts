@@ -38,26 +38,18 @@ module Petition {
             this.url = url;
 
             if (this.id && this.url) {
-                this.getModel();
-                this.changeInputs();
+                this.getModel().changeInputs();
             }
         }
 
-        /**
-         * Basicamente debemos asegurarnos que tengamos el
-         * token al momento de hacer la peticion ajax.
-         * @private
-         */
-        private _checkToken():void {
-            var $input = $('input[name="_token"]');
+        public selectWatcher($element:JQuery):MovementTypeToggle {
+            var self = this;
+            $element.change(function () {
+                self.id = $(this).val();
+                self.getModel();
+            });
 
-            if ($input.attr('value')) {
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $input.attr('value')
-                    }
-                });
-            }
+            return this;
         }
 
         /**
@@ -66,7 +58,6 @@ module Petition {
          * @returns {Petition.MovementTypeToggle}
          */
         public getModel():MovementTypeToggle {
-            this._checkToken();
             var self = this;
 
             var request = $.ajax({

@@ -1,6 +1,6 @@
 <meta name="form-data"
       data-petition-items-url="{{ route('api.petitions.items') }}"
-      data-petition-movement-type-url="{{ route('api.petitions.movementTypes') }}"
+      data-model-movement-type-url="{{ route('api.petitions.movementTypes') }}"
       data-petition-items-id="{{ $petition->id }}"
       data-editing="{{ $petition->id ? "true" : "false" }}">
 {!!
@@ -46,18 +46,21 @@ ControlGroup::generate(
 
 @section('js')
     <script>
+        // elementos varios de HTML
         var $formData = $('meta[name="form-data"]');
-        var url = $formData.data('petition-movement-type-url');
+        var url = $formData.data('model-movement-type-url');
         var $petitionTypeSelect = $('#petition_type_id');
+
+        // las clases varias a iniciar
         var commentToggle = new Forms.ToggleComments($('#comments'));
         var toggle = new Petition.MovementTypeToggle($petitionTypeSelect.val(), url);
         var stockTypes = new Petition.stockTypes();
         var items = new Petition.RelatedItems();
+        var ajaxSetup = new Forms.AjaxSetup($('input[name="_token"]'));
 
-        $petitionTypeSelect.change(function () {
-            toggle.id = $(this).val();
-            toggle.getModel();
-        });
+        // operaciones iniciales
+        toggle.selectWatcher($petitionTypeSelect);
+        ajaxSetup.setLaravelToken();
 
         /**
          * la informacion html que es usada para generar
@@ -159,12 +162,6 @@ ControlGroup::generate(
 
     <script>
         $(function () {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('input[name="_token"]').attr('value')
-                }
-            });
-
             var $formData = $('meta[name="form-data"]');
 
             // si no se esta editando, entonces no ocurre nada aca.

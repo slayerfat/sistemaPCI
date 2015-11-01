@@ -54,7 +54,11 @@ module Petition {
             this.stock = stock;
         }
 
-        public alreadySelected() {
+        /**
+         * chequea que el item seleccionado exista o no en el grupo de items.
+         * @returns {boolean}
+         */
+        public alreadySelected():boolean {
             var selected = false;
 
             this.selected.forEach(function (key) {
@@ -68,7 +72,7 @@ module Petition {
          * chequea que el elemento seleccionado no haya cambiado.
          * @returns {boolean}
          */
-        public checkSelectedStock(status:boolean) {
+        public checkSelectedStock(status:boolean):boolean {
             this.checkSelected.selected = status;
             if (this.checkSelected.lastSelected === this.checkSelected.selected && this.checkSelected.lastSelected !== null) {
                 return this.checkSelected.didNotChange = true;
@@ -96,6 +100,31 @@ module Petition {
                 return;
             }
 
+            this.continueAppending(stockTypes, toggle);
+            this.addSelected(this.data.id);
+        }
+
+        /**
+         * Añade algun item al HTML existente en el formulario y
+         * genera mensaje de error si este no tiene stock.
+         * @param e
+         * @param stockTypes
+         * @param toggle
+         */
+        public appendNoteItem(e, stockTypes:stockTypes, toggle:MovementTypeToggle):void {
+            // iniciamos el objeto
+            this.setItem(e.params.data);
+
+            // basicamente es igual que this.appendItem
+            // pero con una condicion mas sencilla
+            if (this.alreadySelected()) {
+                return;
+            }
+
+            this.continueAppending(stockTypes, toggle);
+        }
+
+        private continueAppending(stockTypes:stockTypes, toggle:MovementTypeToggle) {
             var $itemBag = $('#itemBag');
 
             // chequeamos que el stock no sea 0
@@ -143,8 +172,6 @@ module Petition {
                 '</div>';
 
             $itemBag.append(itemInput + select);
-
-            this.addSelected(this.data.id);
             toggle.changeInputs();
         }
 
