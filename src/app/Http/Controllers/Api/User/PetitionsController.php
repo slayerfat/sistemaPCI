@@ -5,6 +5,7 @@ use Event;
 use Illuminate\Http\Request;
 use PCI\Events\Petition\PetitionApprovalRequest;
 use PCI\Http\Controllers\Controller;
+use PCI\Http\Controllers\Traits\Api\HasDefaultJsonMsg;
 use PCI\Http\Controllers\Traits\RespondsToChangeStatus;
 use PCI\Http\Requests;
 use PCI\Repositories\Interfaces\Aux\PetitionTypeRepositoryInterface;
@@ -21,7 +22,7 @@ use Response;
 class PetitionsController extends Controller
 {
 
-    use RespondsToChangeStatus;
+    use RespondsToChangeStatus, HasDefaultJsonMsg;
 
     /**
      * La implementacion de este repositorio.
@@ -89,15 +90,13 @@ class PetitionsController extends Controller
     }
 
     /**
-     * @param string $str
+     * Busca y devuelve la informacion necesaria para saber si el tipo de
+     * movimiento relacionado con algun pedido es entrada o salida.
+     *
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    private function jsonMsg($str = 'Id necesario para continuar.')
-    {
-        return Response::json(['status' => $str]);
-    }
-
-    public function movementType(request $request)
+    public function movementType(Request $request)
     {
         if (!$request->has('id')) {
             return $this->jsonMsg();
