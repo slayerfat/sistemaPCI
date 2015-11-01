@@ -46,25 +46,10 @@ ControlGroup::generate(
 
 @section('js')
     <script>
-        /**
-         * Como los comentarios llegan sucios, debemos limpiarlos
-         * cuando estamos creando una nueva peticion.
-         */
-        $(function () {
-            var $comments = $('#comments');
-            var val = $comments.val();
-
-            if ($('meta[name="form-data"]').data('editing')) return;
-
-            if (val.length > 1) {
-                $comments.val('').prop('placeholder', 'Introduzca un comentario.');
-            }
-        });
-    </script>
-    <script>
         var $formData = $('meta[name="form-data"]');
         var url = $formData.data('petition-movement-type-url');
         var $petitionTypeSelect = $('#petition_type_id');
+        var commentToggle = new Forms.ToggleComments($('#comments'));
         var toggle = new Petition.MovementTypeToggle($petitionTypeSelect.val(), url);
         var stockTypes = new Petition.stockTypes();
         var items = new Petition.RelatedItems();
