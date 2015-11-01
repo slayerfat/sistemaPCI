@@ -70,7 +70,7 @@ module Petition {
          */
         public checkSelectedStock(status:boolean) {
             this.checkSelected.selected = status;
-            if (this.checkSelected.lastSelected === this.checkSelected.selected) {
+            if (this.checkSelected.lastSelected === this.checkSelected.selected && this.checkSelected.lastSelected !== null) {
                 return this.checkSelected.didNotChange = true;
             }
 
@@ -89,10 +89,10 @@ module Petition {
             // iniciamos el objeto
             this.setItem(e.params.data);
 
-            // si el item ya esta seleccionado o si el item fue rechazado
-            // previamente y no cambio la condicion de rechazo,
-            // entonces regresamos temprano.
-            if (this.alreadySelected() && this.checkSelectedStock(toggle.isModelIngress())) {
+            // si el item ya esta seleccionado o si el item fue rechazado previamente
+            // y no cambio la condicion de rechazo, entonces regresamos
+            // temprano. (el orden de la condicion IMPORTA)
+            if (this.checkSelectedStock(toggle.isModelIngress()) && this.alreadySelected()) {
                 return;
             }
 
