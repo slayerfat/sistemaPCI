@@ -4,6 +4,7 @@ use Event;
 use Illuminate\Http\Request;
 use PCI\Events\Note\NewItemEgress;
 use PCI\Events\Note\NewItemIngress;
+use PCI\Events\Note\RejectedEgressNote;
 use PCI\Http\Controllers\Controller;
 use PCI\Http\Controllers\Traits\Api\HasDefaultJsonMsg;
 use PCI\Http\Controllers\Traits\RespondsToChangeStatus;
@@ -86,16 +87,28 @@ class NotesController extends Controller
         $note = $this->repo->find($id);
 
         if (!is_null($note->status)) {
-            return Response::json([
-                'status'  => false,
-                'message' => 'El estatus de la Nota no puede ser alterado, '
-                    . 'porque la misma ha generado un movimiento.',
-            ]);
+            return $this->jsonMsg(false, 'El estatus de la Nota no puede ser alterado, '
+                . 'porque la misma ha generado un movimiento.');
         }
 
-        $response = self::changePrototype($id, $request);
-        $data     = $this->makeDataArray($request->input('data'));
+        // si se pretende aprobar la nota, debemos chequear que
+        // haya la data para asociar los items con los almacenes.
+        $newStatus = $this->parseStatus($request->input('status'));
+        if ($newStatus && !$request->has('data')) {
+            return $this->jsonMsg(false, 'El estatus de la Nota no puede ser alterado, '
+                . 'No hay {data:data}.');
+        }
 
+        // el cambio de status genera de una vez la respuesta JSON
+        $response = self::changePrototype($id, $request);
+
+        // debe ser FALSO porque nulo es por aprobar
+        if ($newStatus === false) {
+            return Event::fire(new RejectedEgressNote($note));
+        }
+
+        // se dispara el evento apropiado
+        $data = $this->makeDataArray($request->input('data'));
         $this->fireEvent($note, $data);
 
         return $response;
@@ -142,7 +155,7 @@ class NotesController extends Controller
     public function movementType(Request $request)
     {
         if (!$request->has('id')) {
-            return $this->jsonMsg();
+            return $this->jsonMsg(false);
         }
 
         /** @var \PCI\Models\NoteType $type */
