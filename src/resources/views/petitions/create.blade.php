@@ -6,6 +6,7 @@
     @include('partials.forms.horizontal-create-model', [
         'model'    => $petition,
         'resource' => 'petitions',
-        'attributes' => ['id' => 'large-ajax-form']
+        'attributes' => ['id' => 'large-ajax-form'],
+        'spinner' => true
     ])
 @stop

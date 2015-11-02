@@ -2,7 +2,7 @@
 
 module Forms {
     export class AjaxSetup {
-        constructor(public $element:JQuery) {
+        constructor(public value:string) {
         }
 
         /**
@@ -11,10 +11,10 @@ module Forms {
          * @private
          */
         public setLaravelToken():void {
-            if (this.$element.attr('value')) {
+            if (this.value) {
                 return $.ajaxSetup({
                     headers: {
-                        'X-CSRF-TOKEN': this.$element.attr('value')
+                        'X-CSRF-TOKEN': this.value
                     }
                 });
             }

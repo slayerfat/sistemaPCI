@@ -5,6 +5,8 @@
 
     @include('partials.forms.horizontal-edit-model', [
         'model'    => $petition,
-        'resource' => 'petitions'
+        'resource' => 'petitions',
+        'attributes' => ['id' => 'large-ajax-form'],
+        'spinner' => true
     ])
 @stop

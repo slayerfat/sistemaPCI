@@ -4,54 +4,114 @@
 
 module Petition {
     export class RelatedItems {
-        public data = {
-            id: null,
-            desc: '',
-            quantity: null,
-            stock_type_id: null
+        /**
+         * La informacion relacionada con UN item en
+         * particular (el que se esta manipulando)
+         */
+        public data:{
+            id: boolean,
+            desc: string,
+            quantity: number,
+            stock_type_id: number
         };
 
-        public selected = [];
+        /**
+         * el arreglo de Ids de los items seleccionados.
+         */
+        public selected:number[];
 
-        public checkSelected = {
-            lastSelected: null,
-            selected: null,
-            didNotChange: null
+        /**
+         * Usado para determinar si algun tipo de movimiento fue cambiado o no
+         */
+        public checkSelected:{
+            lastSelected: boolean,
+            selected: boolean,
+            didNotChange: boolean
         };
 
-        public stock = {
-            plain: '',
-            formatted: ''
+        /**
+         * La informacion del stock del item siendo manipulado
+         */
+        public stock:{
+            plain: number,
+            formatted: string
+            real: number
+            formattedReal: string
         };
 
-        public setItem(data) {
-            this.data = data;
-            this.grabItemStock(this.data);
+        constructor() {
+            this.data = {
+                id: null,
+                desc: '',
+                quantity: null,
+                stock_type_id: null
+            };
+
+            this.checkSelected = {
+                lastSelected: null,
+                selected: null,
+                didNotChange: null
+            };
+
+            this.selected = [];
         }
 
-        public grabItemStock(item) {
-            var self = this;
+        /**
+         * Añade algun item a la data y busca su stock.
+         * @param data
+         */
+        public setItem(data):Petition.RelatedItems {
+            this.data = data;
+            this.grabItemStock(this.data);
 
+            return this;
+        }
+
+        /**
+         * Llama al api para determinar el stock de un Item cualquiera
+         * @param item
+         */
+        public grabItemStock(item):Petition.RelatedItems {
             $.ajax({
                 url: '/api/items/stock/' + item.id,
                 dataType: 'json',
                 async: false,
-                success: function (data) {
-                    self.setStock(data);
+                success: (data) => {
+                    this.setStock(data);
                 }
             });
+
+            return this;
         }
 
-        public addSelected(id) {
+        /**
+         * Añade el id de algun item para saber si esta seleccionado o no
+         * @param id
+         */
+        public addSelected(id):Petition.RelatedItems {
             this.selected.push(parseInt(id));
+
+            return this;
         }
 
-        public removeSelected(id) {
+        /**
+         * Remueve el id de algun item de los que estan seleccionados
+         * @param id
+         */
+        public removeSelected(id):Petition.RelatedItems {
             this.selected.splice(this.selected.indexOf(parseInt(id)), 1);
+
+            return this;
         }
 
-        public setStock(stock) {
+        /**
+         * Actualiza el stock de un item cualquiera
+         * @param stock
+         */
+        public setStock(stock):Petition.RelatedItems {
             this.stock = stock;
+
+            return this;
         }
 
         /**
@@ -72,11 +132,13 @@ module Petition {
          * chequea que el elemento seleccionado no haya cambiado.
          * @returns {boolean}
          */
-        public checkSelectedStock(status:boolean):boolean {
+        public selectedStockChange(status:boolean):boolean {
             this.checkElement(status);
 
             this.checkSelected.selected = status;
-            if (this.checkSelected.lastSelected === this.checkSelected.selected && this.checkSelected.lastSelected !== null) {
+            if (this.checkSelected.lastSelected === this.checkSelected.selected
+                && this.checkSelected.lastSelected !== null
+            ) {
                 return this.checkSelected.didNotChange = true;
             }
 
@@ -102,32 +164,6 @@ module Petition {
             // iniciamos el objeto
             this.setItem(e.params.data);
 
-            // si el item ya esta seleccionado o si el item fue rechazado previamente
-            // y no cambio la condicion de rechazo, entonces regresamos
-            // temprano. (el orden de la condicion IMPORTA)
-            if (this.checkSelectedStock(toggle.isModelIngress()) && this.alreadySelected()) {
-                return this;
-            }
-
-            this.continueAppending(stockTypes, toggle);
-            this.addSelected(this.data.id);
-
-            return this;
-        }
-
-        /**
-         * Añade algun item al HTML existente en el formulario y
-         * genera mensaje de error si este no tiene stock.
-         * @param e
-         * @param stockTypes
-         * @param toggle
-         */
-        public appendNoteItem(e, stockTypes:stockTypes, toggle:MovementTypeToggle):Petition.RelatedItems {
-            // iniciamos el objeto
-            this.setItem(e.params.data);
-
-            // basicamente es igual que this.appendItem
-            // pero con una condicion mas sencilla
             if (this.alreadySelected()) {
                 return this;
             }
@@ -136,6 +172,7 @@ module Petition {
                 this.continueAppending(stockTypes, toggle);
             } catch (e) {
                 this.appendStockTypeError($('#itemBag'), stockTypes, toggle);
+                console.error(e.message);
             }
 
             return this;
@@ -145,7 +182,7 @@ module Petition {
             var $itemBag = $('#itemBag');
 
             // chequeamos que el stock no sea 0
-            if (parseFloat(this.stock.plain) <= 0 && toggle.isModelEgress()) {
+            if (this.stock.plain <= 0 && toggle.isModelEgress()) {
                 return this.appendErrorMsg($itemBag);
             }
 
@@ -155,6 +192,8 @@ module Petition {
             }
 
             this.appendCorrectItem(stockTypes, $itemBag, toggle);
+
+            this.addSelected(this.data.id);
         }
 
         /**
@@ -227,8 +266,12 @@ module Petition {
          * @param $itemBag
          * @param stockTypes
          * @param toggle
+         * @param func version mamarracha de una funcion anonima
          */
-        private appendStockTypeError($itemBag:JQuery, stockTypes:stockTypes, toggle:MovementTypeToggle):void {
+        public appendStockTypeError($itemBag:JQuery,
+                                    stockTypes:stockTypes,
+                                    toggle:MovementTypeToggle,
+                                    func?:(any:any) => any|void):Petition.RelatedItems {
             var $error = $('<label for="itemBag" class="control-label col-sm-8">' +
                 'Error inesperado del servidor! ' +
                 '<button class ="btn btn-warning" id="stock-type-error">' +
@@ -236,9 +279,16 @@ module Petition {
                 '</button>' +
                 '</label>');
 
-            $itemBag.append($error);
+            $itemBag.empty().append($error);
+            var $target = $('#stock-type-error');
 
-            $('#stock-type-error').on("click", (evt) => this.removeStockTypeError(evt, stockTypes, toggle));
+            if (func) {
+                $target.on("click", (evt) => func(evt));
+                return this;
+            }
+
+            $target.on("click", (evt) => this.removeStockTypeError(evt, stockTypes, toggle));
+            return this;
         }
 
         /**

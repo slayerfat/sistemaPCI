@@ -47,7 +47,7 @@ ControlGroup::generate(
 @section('form-js')
     <script>
         // necesitamos configurar ajax primero.
-        var ajaxSetup = new Forms.AjaxSetup($('input[name="_token"]'));
+        var ajaxSetup = new Forms.AjaxSetup('{{ csrf_token() }}');
         ajaxSetup.setLaravelToken();
 
         // elementos varios de HTML

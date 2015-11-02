@@ -59,7 +59,7 @@ ControlGroup::generate(
 @section('form-js')
     <script>
         // necesitamos configurar ajax primero.
-        var ajaxSetup = new Forms.AjaxSetup($('input[name="_token"]'));
+        var ajaxSetup = new Forms.AjaxSetup('{{ csrf_token() }}');
         ajaxSetup.setLaravelToken();
 
         // elementos varios de HTML
@@ -108,7 +108,7 @@ ControlGroup::generate(
                             };
 
                             item.params.data = data[key];
-                            items.appendNoteItem(item, stockTypes, toggle);
+                            items.appendItem(item, stockTypes, toggle);
                         });
 
                         $('.itemBag-remove-item').click(function () {
@@ -127,7 +127,47 @@ ControlGroup::generate(
                 })
             }
 
-            startAjax();
+            // variable de control
+            var i = 0;
+
+            /**
+             * iniciamos, si no se inicia correctamente
+             * en 30 segundos, emite mensaje de error
+             * @returns {*}
+             */
+            function start() {
+                i++; // control
+                var status = stockTypes.isNotEmpty();
+
+                // si el estatus es verdadero, entonces empezamos el ajax
+                if (status) {
+                    return startAjax();
+                } else if (i == 30) {
+                    i = 0;
+
+                    // pasado 30 segundos, emitimos mensaje de error, y
+                    // generamos un evento onclick en el boton.
+                    return items.appendStockTypeError(
+                        $('#itemBag'),
+                        stockTypes,
+                        toggle,
+                        function (event) {
+                            event.preventDefault();
+                            ajaxSpinner.appendSpinner();
+                            $('#itemBag').empty();
+                            start();
+                        }
+                    );
+                }
+
+                // cada segundo intentamos ver si se puede arrancar.
+                var t = setTimeout(function () {
+                    start()
+                }, 1000);
+            }
+
+            // arranca por primera vez.
+            start();
         })
     </script>
 @stop
