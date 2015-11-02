@@ -77,7 +77,7 @@ class PetitionsController extends Controller
         if (!is_null($petition->status)) {
             return Response::json([
                 'status'  => false,
-                'message' => 'El estatus del Pedido no puede ser alterado, ',
+                'message' => 'El estatus del Pedido no puede ser alterado.',
             ]);
         }
 
@@ -105,6 +105,13 @@ class PetitionsController extends Controller
     {
         /** @var \PCI\Models\Petition $petition */
         $petition = $this->repo->find($id);
+
+        if (!is_null($petition->status)) {
+            return Response::json([
+                'status'  => false,
+                'message' => 'Una nueva solicitud no puede ser generada, este Pedido ya fue procesado.',
+            ]);
+        }
 
         /** @var \PCI\Models\User $user */
         $user = Auth::user();
