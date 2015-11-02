@@ -41,6 +41,7 @@ use PCI\Mamarrachismo\Caimaneitor\Interfaces\CaimanizerInterface;
  * @author  Alejandro Granadillo <slayerfat@gmail.com>
  * @link    https://uahtechcomm.files.wordpress.com/2014/10/funny-picture-every-group-project.jpg
  * @link    http://i3.kym-cdn.com/photos/images/newsfeed/000/215/821/1323635452001.png
+ * @link    http://i.imgur.com/Y7Gr3HS.png
  * @link    https://github.com/slayerfat/sistemaPCI Repositorio en linea.
  */
 class Caimaneitor implements CaimanizerInterface
@@ -109,8 +110,9 @@ class Caimaneitor implements CaimanizerInterface
     ];
 
     /**
-     * Inspired by PCI\Mamarrachismo\Caimaneitor\Caimaneitor
+     * Inspired by \PCI\Mamarrachismo\Caimaneitor\Caimaneitor
      * A very Inspiring class.
+     * @link https://s-media-cache-ak0.pinimg.com/736x/70/75/cd/7075cd46939f23c042dcab3c599ce888.jpg
      * Alejandro Granadillo made this commit from Caracas, Again.
      *
      * @return string
@@ -122,7 +124,7 @@ class Caimaneitor implements CaimanizerInterface
 
     /**
      * Regresa un mensaje inspirado.
-     *
+     * @link http://img04.deviantart.net/9bf0/i/2014/182/7/5/wubba_lubba_dub_dub_by_twillis-d7ouvu5.png
      * @return string
      */
     public function __toString()
@@ -131,9 +133,10 @@ class Caimaneitor implements CaimanizerInterface
     }
 
     /**
-     * Inspired by Illuminate\Foundation\Inspiring
+     * Inspired by \Illuminate\Foundation\Inspiring
      * A very Inspiring class.
-     * Alejandro Granadillo made this commit from Caracas. (45° Celcius)
+     * @link https://s-media-cache-ak0.pinimg.com/736x/70/75/cd/7075cd46939f23c042dcab3c599ce888.jpg
+     * Alejandro Granadillo made this commit from Caracas. (@35° Celcius).
      *
      * @return string
      */
