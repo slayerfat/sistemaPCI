@@ -73,7 +73,7 @@ if (is_null($note->status)) {
         $(function () {
             var $statusElement = $('#note-status');
             var url = $statusElement.data('route');
-
+            var spinner = new Forms.LargeAjaxSpinner($('body'));
             var status = {
                 previousStatus: '',
 
@@ -168,8 +168,15 @@ if (is_null($note->status)) {
                         data: {
                             status: data,
                             data: additionalData
+                        },
+                        beforeSend: function () {
+                            spinner.showLargeSpinner();
+
+                        },
+                        complete: function () {
+                            spinner.removeLargeSpinner();
                         }
-                    }).done(function (data) {
+                    }).success(function (data) {
                         var element;
                         var next;
                         var previous;
