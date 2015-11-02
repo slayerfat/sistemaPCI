@@ -12,6 +12,11 @@ module Forms {
         public $form:JQuery;
 
         constructor(public $element:JQuery) {
+            if ($element.length < 1) {
+                throw new Error('Elemento no valido');
+            }
+
+            this.appendLargeSpinner();
         }
 
         public appendLargeSpinner():Forms.LargeAjaxSpinner {
