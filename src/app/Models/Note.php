@@ -180,10 +180,6 @@ class Note extends AbstractBaseModel
      */
     public function isMovementTypeIn()
     {
-        return $this->type->movement_type_id == $this->type->movementType()
-            ->in()
-            ->get()
-            ->first()
-            ->id;
+        return $this->type->movementType->isIn();
     }
 }
