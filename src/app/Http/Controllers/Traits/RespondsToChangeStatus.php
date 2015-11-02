@@ -30,4 +30,14 @@ trait RespondsToChangeStatus
 
         return Response::json(['status' => $results]);
     }
+
+    /**
+     * Chequea que el valor sea booleano o equivalente y regresa su valor
+     * @param $status
+     * @return bool
+     */
+    public function parseStatus($status)
+    {
+        return filter_var($status, FILTER_VALIDATE_BOOLEAN);
+    }
 }

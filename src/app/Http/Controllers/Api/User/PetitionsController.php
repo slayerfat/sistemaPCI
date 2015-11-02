@@ -124,7 +124,7 @@ class PetitionsController extends Controller
     public function items(Request $request)
     {
         if (!$request->has('id')) {
-            return $this->jsonMsg();
+            return $this->jsonMsg(false);
         }
 
         $petition = $this->repo->find($request->input('id'));
@@ -144,7 +144,7 @@ class PetitionsController extends Controller
     public function movementType(Request $request)
     {
         if (!$request->has('id')) {
-            return $this->jsonMsg();
+            return $this->jsonMsg(false);
         }
 
         /** @var \PCI\Models\PetitionType $type */

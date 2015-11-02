@@ -14,10 +14,14 @@ trait HasDefaultJsonMsg
 
     /**
      * @param string $str
+     * @param bool   $status
      * @return \Illuminate\Http\JsonResponse
      */
-    protected function jsonMsg($str = 'Id necesario para continuar.')
+    protected function jsonMsg($status, $str = 'Id necesario para continuar.')
     {
-        return Response::json(['status' => $str]);
+        return Response::json([
+            'status' => $status,
+            'message' => $str
+        ]);
     }
 }
