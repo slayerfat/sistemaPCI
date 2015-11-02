@@ -1,6 +1,6 @@
-<?php namespace PCI\Listeners\Note;
+<?php namespace PCI\Listeners\Item;
 
-use PCI\Events\Note\NewNoteCreation;
+use PCI\Events\Item\AbstractItemMovement;
 use PCI\Mamarrachismo\Converter\interfaces\StockTypeConverterInterface;
 
 /**
@@ -33,9 +33,9 @@ class ReserveItemStock
     /**
      * Handle the event.
      *
-     * @param \PCI\Events\Note\NewNoteCreation $event
+     * @param \PCI\Events\Item\AbstractItemMovement $event
      */
-    public function handle(NewNoteCreation $event)
+    public function handle(AbstractItemMovement $event)
     {
         foreach ($event->items as $item) {
             $this->converter->setItem($item);
@@ -50,8 +50,11 @@ class ReserveItemStock
                 continue;
             }
 
+            // Eloquent
+            $parent = $event->parent;
+
             // si el item esta por salir, entonces reservamos ese stock
-            if ($event->note->isMovementTypeOut()) {
+            if ($event->$parent->isMovementTypeOut()) {
                 $item->reserved += $amount;
                 $item->save();
             }
