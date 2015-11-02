@@ -4,10 +4,12 @@ use Auth;
 use Event;
 use Illuminate\Http\Request;
 use PCI\Events\Petition\PetitionApprovalRequest;
+use PCI\Events\Petition\UpdateItemReserved;
 use PCI\Http\Controllers\Controller;
 use PCI\Http\Controllers\Traits\Api\HasDefaultJsonMsg;
 use PCI\Http\Controllers\Traits\RespondsToChangeStatus;
 use PCI\Http\Requests;
+use PCI\Models\Petition;
 use PCI\Repositories\Interfaces\Aux\PetitionTypeRepositoryInterface;
 use PCI\Repositories\Interfaces\User\PetitionRepositoryInterface;
 use Response;
@@ -22,7 +24,17 @@ use Response;
 class PetitionsController extends Controller
 {
 
-    use RespondsToChangeStatus, HasDefaultJsonMsg;
+    use HasDefaultJsonMsg;
+
+    /**
+     * Esto es para la re-implementacion del trait.
+     *
+     * @see      cara 'e papeo.
+     * @link     https://pbs.twimg.com/media/AtT11CoCIAArVcY.jpg
+     */
+    use RespondsToChangeStatus {
+        changeStatus as changePrototype;
+    }
 
     /**
      * La implementacion de este repositorio.
@@ -48,6 +60,39 @@ class PetitionsController extends Controller
     ) {
         $this->repo             = $repo;
         $this->petitionTypeRepo = $petitionTypeRepo;
+    }
+
+    /**
+     * cambia el status de la nota y genera un movimiento.
+     *
+     * @param string|int               $id
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function changeStatus($id, Request $request)
+    {
+        /** @var Petition $petition */
+        $petition = $this->repo->find($id);
+
+        if (!is_null($petition->status)) {
+            return Response::json([
+                'status'  => false,
+                'message' => 'El estatus del Pedido no puede ser alterado, ',
+            ]);
+        }
+
+        $response = self::changePrototype($id, $request);
+
+        $this->fireEvent($petition);
+
+        return $response;
+    }
+
+    private function fireEvent(Petition $petition)
+    {
+        if ($petition->isMovementTypeOut()) {
+            Event::fire(new UpdateItemReserved($petition));
+        }
     }
 
     /**
