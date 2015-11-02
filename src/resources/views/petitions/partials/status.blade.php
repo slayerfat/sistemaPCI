@@ -27,6 +27,7 @@ if (is_null($petition->status)) {
         $(function () {
             var $statusElement = $('#petition-status');
             var url = $statusElement.data('route');
+            var spinner = new Forms.LargeAjaxSpinner($('body'));
 
             var status = {
                 previousStatus: '',
@@ -119,8 +120,15 @@ if (is_null($petition->status)) {
                         url: url,
                         type: 'POST',
                         dataType: 'json',
-                        data: {status: data}
-                    }).done(function (data) {
+                        data: {status: data},
+                        beforeSend: function () {
+                            spinner.showLargeSpinner();
+
+                        },
+                        complete: function () {
+                            spinner.removeLargeSpinner();
+                        }
+                    }).success(function (data) {
                         var element;
                         var next;
                         var previous;
