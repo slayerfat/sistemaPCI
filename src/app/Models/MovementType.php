@@ -113,7 +113,13 @@ class MovementType extends AbstractBaseModel implements SluggableInterface
      */
     public function isOut()
     {
-        return !$this->isIn();
+        $result = self::out()->first();
+
+        if (is_null($result)) {
+            throw new \LogicException('No existe movimiento de tipo salida');
+        }
+
+        return $result->id == $this->id;
     }
 
     /**
@@ -122,6 +128,12 @@ class MovementType extends AbstractBaseModel implements SluggableInterface
      */
     public function isIn()
     {
-        return self::in()->first()->id == $this->id;
+        $result = self::in()->first();
+
+        if (is_null($result)) {
+            throw new \LogicException('No existe movimiento de tipo entrada');
+        }
+
+        return $result->id == $this->id;
     }
 }

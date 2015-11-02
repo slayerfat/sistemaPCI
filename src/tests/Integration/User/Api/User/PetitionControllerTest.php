@@ -3,7 +3,9 @@
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use PCI\Events\Petition\PetitionApprovalRequest;
 use PCI\Models\Item;
+use PCI\Models\MovementType;
 use PCI\Models\Petition;
+use PCI\Models\PetitionType;
 use PCI\Models\User;
 use Tests\Integration\User\AbstractUserIntegration;
 
@@ -32,8 +34,14 @@ class PetitionControllerTest extends AbstractUserIntegration
      */
     public function testStatusShouldReturnCorrectResponse($value, $expected)
     {
+        /** @var Petition $petition */
+        $petition         = Petition::first();
+        $petition->status = null;
+        $petition->save();
+        $this->withoutEvents();
+
         $this->actingAs($this->user)
-            ->post(route('api.petitions.status', 1), ['status' => $value])
+            ->post(route('api.petitions.status', $petition->id), ['status' => $value])
             ->seeJson([
                 'status' => $expected,
             ]);
@@ -75,6 +83,7 @@ class PetitionControllerTest extends AbstractUserIntegration
 
     public function testItemsShouldReturnValidJson()
     {
+        /** @var Item $item */
         $item = Item::first();
 
         $this->post(route('api.petitions.items'), ['id' => 1])
@@ -107,7 +116,10 @@ class PetitionControllerTest extends AbstractUserIntegration
      */
     protected function persistData()
     {
-        $petition = factory(Petition::class)->create();
+        // necesitamos tipo de movimiento para verificar pedido
+        $movementType = factory(MovementType::class)->create(['desc' => 'Entrada']);
+        $petitionType = factory(PetitionType::class)->create(['movement_type_id' => $movementType->id]);
+        $petition     = factory(Petition::class)->create(['petition_type_id' => $petitionType->id]);
         $item     = factory(Item::class, 'full')->create();
         $petition->items()->attach($item->id, [
             'quantity' => $item->stock(),
