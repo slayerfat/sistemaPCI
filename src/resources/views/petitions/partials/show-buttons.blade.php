@@ -23,6 +23,7 @@
     <script type="text/javascript">
         var $element = $('#petition-approval-request');
         var button = new Forms.ButtonSpinner($element);
+        var message = new Forms.Message;
         button.sent = false;
 
         $element.click(function (evt) {
@@ -40,15 +41,34 @@
                 },
                 complete: function () {
                     button.complete();
+                    button.sent = true;
                 }
             }).success(function (data) {
                 if (data.status == true) {
                     button.success();
-                    button.sent = true;
+
+                    return message.createMessage(
+                        'Solicitud realizada correctamente.',
+                        'alert alert-success'
+                    );
                 }
+
+                button.fail();
+                var msg = 'Error inesperado en el servidor.';
+
+                if (data.message) {
+                    msg = data.message;
+                }
+
+                return message.createMessage(msg, 'alert alert-warning');
             }).fail(function () {
                 button.fail();
-            })
+
+                return message.createMessage(
+                    'Error!',
+                    'alert alert-danger'
+                );
+            });
         })
     </script>
 @stop

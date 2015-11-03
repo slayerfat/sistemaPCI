@@ -129,6 +129,14 @@ if (is_null($petition->status)) {
                             spinner.removeLargeSpinner();
                         }
                     }).success(function (data) {
+                        // si status viene falso, entonces existe un error
+                        if (data.status === false) {
+                            return self.createMessage(
+                                data.message,
+                                'alert alert-warning'
+                            );
+                        }
+
                         var element;
                         var next;
                         var previous;
@@ -177,7 +185,7 @@ if (is_null($petition->status)) {
                     }).fail(function () {
                         self.createMessage(
                                 'Error Desconocido en el servidor.',
-                                'alert alert-warning'
+                                'alert alert-danger'
                         );
                     });
                 },
