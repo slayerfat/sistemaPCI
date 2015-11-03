@@ -105,6 +105,15 @@ module Petition {
         }
 
         /**
+         * Remueve TODOS los items seleccionados
+         */
+        public resetSelected():Petition.RelatedItems {
+            this.selected = [];
+
+            return this;
+        }
+
+        /**
          * Actualiza el stock de un item cualquiera
          * @param stock
          */

@@ -84,6 +84,7 @@ ControlGroup::generate(
 
             $('#petition_id').change(function () {
                 $formData.data('petition-items-id', $(this).val());
+                items.resetSelected();
                 startAjax();
             });
 
