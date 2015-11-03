@@ -48,6 +48,7 @@ class GenerateItemEgress extends AbstractItemMovement
 
                 // actualizamos la cantidad reservada del item
                 $item->reserved -= $noteAmount;
+                $item->reserved > 0 ?: $item->reserved = 0;
                 $item->save();
             }
         }
