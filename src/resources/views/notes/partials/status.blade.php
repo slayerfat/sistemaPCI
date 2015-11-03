@@ -14,6 +14,7 @@ if (is_null($note->status)) {
 
 <h3 id="note-status"
     data-route="{{ route('api.notes.status', $note->id) }}"
+    data-note-type-id="{{ $note->type->id }}"
     data-admin="{{ auth()->user()->isAdmin() }}"
     data-status="{{ $status }}">
 </h3>
@@ -70,6 +71,15 @@ if (is_null($note->status)) {
 
 @section('js-buttons')
     <script type="text/javascript">
+        // necesitamos configurar ajax primero.
+        var ajaxSetup = new Forms.AjaxSetup('{{ csrf_token() }}');
+        ajaxSetup.setLaravelToken();
+
+        var toggle = new Petition.MovementTypeToggle(
+            $('#note-status').data('note-type-id'),
+            '{{ route('api.petitions.movementTypes') }}'
+        );
+
         $(function () {
             var $statusElement = $('#note-status');
             var url = $statusElement.data('route');
@@ -276,17 +286,19 @@ if (is_null($note->status)) {
             // aqui empieza.
             status.start();
 
-            // http://laravel.com/docs/master/routing#csrf-x-csrf-token
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-
             $('#note-true').click(function (evt) {
                 evt.preventDefault();
 
-                $('#item-depot-modal').modal('show');
+                // si es ingreso se muestra el formulario para poner el item en algun almacen
+                if (toggle.isModelIngress()) {
+                    return $('#item-depot-modal').modal('show');
+                }
+
+                // el api necesita un array con la data del objeto creado aqui
+                status.change(url, true, [{
+                    item: null,
+                    depot: null
+                }]);
             });
 
             $('#note-false').click(function (evt) {
