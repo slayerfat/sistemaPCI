@@ -74,7 +74,8 @@ class PetitionsController extends Controller
         /** @var Petition $petition */
         $petition = $this->repo->find($id);
 
-        if (!is_null($petition->status)) {
+        // si el estatus es nulo, entonces se esta deshaciendo el cambio de estatus.
+        if (!is_null($petition->status) && $request->input('status') !== 'null') {
             return Response::json([
                 'status'  => false,
                 'message' => 'El estatus del Pedido no puede ser alterado.',
