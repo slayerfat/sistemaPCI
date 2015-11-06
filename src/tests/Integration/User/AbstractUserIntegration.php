@@ -1,5 +1,6 @@
 <?php namespace Tests\Integration\User;
 
+use PCI\Models\User;
 use Tests\Integration\AbstractIntegration;
 
 abstract class AbstractUserIntegration extends AbstractIntegration
@@ -28,4 +29,12 @@ abstract class AbstractUserIntegration extends AbstractIntegration
      * @return void
      */
     abstract protected function persistData();
+
+    public function getGenericAdmin()
+    {
+        return factory(User::class)->create([
+            'profile_id'        => User::ADMIN_ID,
+            'confirmation_code' => null,
+        ]);
+    }
 }

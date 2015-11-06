@@ -13,7 +13,6 @@ use PCI\Models\ItemType;
 use PCI\Models\Maker;
 use PCI\Models\StockType;
 use PCI\Models\SubCategory;
-use PCI\Models\User;
 use Tests\Integration\User\AbstractUserIntegration;
 use Tests\PCI\Models\Item\ItemIntegrationTest as ItemModelTest;
 
@@ -188,10 +187,7 @@ class ItemIntegrationTest extends AbstractUserIntegration
      */
     protected function getUser()
     {
-        return factory(User::class)->create([
-            'profile_id'        => User::ADMIN_ID,
-            'confirmation_code' => null,
-        ]);
+        return $this->getGenericAdmin();
     }
 
     /**
