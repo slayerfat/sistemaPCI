@@ -97,9 +97,14 @@ class PetitionControllerTest extends AbstractUserIntegration
 
     public function testApprovalRequestShouldReturnOk()
     {
+        /** @var Petition $petition */
+        $petition         = Petition::first();
+        $petition->status = null;
+        $petition->save();
+
         $this->actingAs($this->user)
             ->expectsEvents(PetitionApprovalRequest::class)
-            ->post(route('api.petitions.approvalRequest', 1))
+            ->post(route('api.petitions.approvalRequest', $petition->id))
             ->assertResponseOk();
     }
 
