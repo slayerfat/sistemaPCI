@@ -14,7 +14,7 @@ class GenerateItemEgress extends AbstractItemMovement
 {
 
     /**
-     * Handle the event.
+     * Manipula al evento.
      *
      * @param \PCI\Events\Note\NewItemEgress $event
      */
@@ -32,7 +32,12 @@ class GenerateItemEgress extends AbstractItemMovement
 
             // chequear el stock de cada item
             if ($stock < $noteAmount || $noteAmount == 0) {
-                // TODO: ignorar item en movimientos
+                $event->note->comments .= sizeof($event->note->comments) <= 1 ? "" : "\r\n";
+                $event->note->comments .= "Item {$item->id}, posee cantidad de "
+                    . "{$quantity} pero la conversion es {$noteAmount}, "
+                    . "el stock es {$stock}.";
+                $event->note->save();
+                // ignora item en movimientos
                 continue;
             }
 
@@ -68,7 +73,7 @@ class GenerateItemEgress extends AbstractItemMovement
     private function setStock($requested, Item $item)
     {
         // numero de control del total a extraer de los almacenes
-        $remainder = $remainingStock = 0;
+        $remainder = 0;
 
         // controla si el pedido fue completado
         $incomplete = true;
@@ -93,8 +98,7 @@ class GenerateItemEgress extends AbstractItemMovement
                 $stock    = $this->converter->convert($type, $quantity);
 
                 if ($incomplete) {
-                    // si lo que se pide es igual a lo que hay
-                    // en almacen, entonces no persistimos.
+                    // si el stock es mayor al solicitado, entonces terminamos.
                     if ($stock > $requested) {
                         $remainingStock = $stock - $requested;
                         $remainder      = $requested;
@@ -105,32 +109,37 @@ class GenerateItemEgress extends AbstractItemMovement
                         continue;
                     }
 
-                    $x = $remainder > 0 ? $remainder : $requested;
+                    $remainingStock = $this->calculateRemainders($requested, $remainder, $stock);
 
-                    $remainingStock = $stock - $x < 0 ? 0 : $stock - $x;
-                    $remainder += abs($stock - $x) == 0 ? $x : abs($stock - $x);
-
+                    // si hay stock debemos asegurarnos que persistimos correctamente
                     if ($remainingStock > 0) {
+                        // si el remanente es mayor o igual a
+                        // lo solicitado, entonces terminamos.
                         if ($remainder >= $requested) {
                             $incomplete = false;
                             $this->addWithStock($remainingStock, $type, $depotsWithStock, $depot);
-                            continue;
                         }
-                    } elseif ($stock == $requested) {
-                        $remainder  = $requested;
-                        $incomplete = false;
+
                         continue;
-                    } elseif ($remainder >= $requested) {
+                    } elseif ($stock == $requested || $remainder >= $requested) {
+                        // si el stock es igual a la solicitud, entonces
+                        // queda cero stock, por lo tanto no persistimos
                         $remainder  = $requested;
                         $incomplete = false;
                         continue;
                     }
                 } else {
+                    // si se completo la solicitud, solo queda
+                    // persistir los datos sobrantes del resto de los almacenes.
                     $this->addWithStock($quantity, $type, $depotsWithStock, $depot);
                 }
             }
         }
 
+        // NOTA: se hace de esta forma porque no se pudo conseguir
+        // la forma de alterar el stock del item sin
+        // modificar los ya existentes, es por
+        // eso que debemos iterar todos.
         $this->reattachDepots($item, $depotsWithStock);
 
         return true;
@@ -139,18 +148,50 @@ class GenerateItemEgress extends AbstractItemMovement
     /**
      * se persiste el estado actual del stock
      *
-     * @param $quantity
-     * @param $type
-     * @param $depotsWithStock
-     * @param $depot
+     * @param int|float         $quantity
+     * @param int|string        $type
+     * @param array             $depotsWithStock
+     * @param \PCI\Models\Depot $depot
      */
-    private function addWithStock($quantity, $type, &$depotsWithStock, $depot)
-    {
+    private function addWithStock(
+        $quantity,
+        $type,
+        array &$depotsWithStock,
+        $depot
+    ) {
         if ($quantity > 0) {
             $depotsWithStock[$depot->id] = [
                 'quantity'      => $quantity,
                 'stock_type_id' => $type,
             ];
         }
+    }
+
+    /**
+     * Chequea y genera el remanente adecuado y el stock final.
+     *
+     * @param int|float $requested
+     * @param int|float $remainder
+     * @param int|float $stock
+     * @return int|float el stock final
+     */
+    private function calculateRemainders(
+        $requested,
+        &$remainder,
+        $stock
+    ) {
+        // debemos asegurarnos de cual sera el operando
+        // correcto, porque remanente empieza en cero.
+        $operand = $remainder > 0 ? $remainder : $requested;
+
+        // el stock puede ser menor a cero, por lo tanto
+        // debemos asegurar que sea al menos cero o mas.
+        $remainingStock = $stock - $operand < 0 ? 0 : $stock - $operand;
+
+        // asi mismo, si la operacion es cero, entonces
+        // son iguales, por lo tanto se suma el operando unicamente
+        $remainder += abs($stock - $operand) == 0 ? $operand : abs($stock - $operand);
+
+        return $remainingStock;
     }
 }
