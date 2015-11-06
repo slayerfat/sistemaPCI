@@ -26,11 +26,12 @@ class GenerateItemEgress extends AbstractItemMovement
             $this->converter->setItem($item);
 
             $type       = $item->pivot->stock_type_id;
-            $quantity   = $item->pivot->quantity;
+            $quantity   = floatval($item->pivot->quantity);
             $noteAmount = $this->converter->convert($type, $quantity);
+            $stock      = $item->stock();
 
             // chequear el stock de cada item
-            if ($item->stock() < $noteAmount || $noteAmount == 0) {
+            if ($stock < $noteAmount || $noteAmount == 0) {
                 // TODO: ignorar item en movimientos
                 continue;
             }
@@ -60,17 +61,17 @@ class GenerateItemEgress extends AbstractItemMovement
      * Guarda el stock de cada item en la base de datos,
      * determinando que sea correcto.
      *
-     * @param int|float        $maximum
+     * @param int|float        $requested
      * @param \PCI\Models\Item $item
      * @return bool
      */
-    private function setStock($maximum, Item $item)
+    private function setStock($requested, Item $item)
     {
         // numero de control del total a extraer de los almacenes
-        $remainder = 0;
+        $remainder = $remainingStock = 0;
 
         // controla si el pedido fue completado
-        $complete = false;
+        $incomplete = true;
 
         // contiene el inventario que necesita debe persistir
         $depotsWithStock = [];
@@ -85,54 +86,71 @@ class GenerateItemEgress extends AbstractItemMovement
             ->get();
 
         // mientras el remanente sea menor al solicitado
-        while ($remainder < $maximum) {
+        while ($remainder < $requested) {
             foreach ($depots as $depot) {
-                $type        = $depot->pivot->stock_type_id;
-                $quantity    = $depot->pivot->quantity;
-                $depotAmount = $this->converter->convert($type, $quantity);
+                $type     = $depot->pivot->stock_type_id;
+                $quantity = floatval($depot->pivot->quantity);
+                $stock    = $this->converter->convert($type, $quantity);
 
-                if (!$complete) {
-                    $remainder += abs($depotAmount - $maximum);
+                if ($incomplete) {
+                    // si lo que se pide es igual a lo que hay
+                    // en almacen, entonces no persistimos.
+                    if ($stock > $requested) {
+                        $remainingStock = $stock - $requested;
+                        $remainder      = $requested;
+                        $incomplete     = false;
 
-                    // si el remanente es mayor al maximo
-                    // entonces completamos el pedido.
-                    if ($remainder > $maximum || $remainder == 0) {
-                        if ($remainder == 0) {
-                            $remainder = $maximum;
-                        }
+                        $this->addWithStock($remainingStock, $type, $depotsWithStock, $depot);
 
-                        $quantity = $remainder;
-                        $complete = !$complete;
+                        continue;
                     }
+
+                    $x = $remainder > 0 ? $remainder : $requested;
+
+                    $remainingStock = $stock - $x < 0 ? 0 : $stock - $x;
+                    $remainder += abs($stock - $x) == 0 ? $x : abs($stock - $x);
+
+                    if ($remainingStock > 0) {
+                        if ($remainder >= $requested) {
+                            $incomplete = false;
+                            $this->addWithStock($remainingStock, $type, $depotsWithStock, $depot);
+                            continue;
+                        }
+                    } elseif ($stock == $requested) {
+                        $remainder  = $requested;
+                        $incomplete = false;
+                        continue;
+                    } elseif ($remainder >= $requested) {
+                        $remainder  = $requested;
+                        $incomplete = false;
+                        continue;
+                    }
+                } else {
+                    $this->addWithStock($quantity, $type, $depotsWithStock, $depot);
                 }
-
-                // si el remanente es igual al maximo, entonces el
-                // stock se acabo, por lo tanto no nos interesa
-                // persistir en la base de datos.
-                if ($remainder == $maximum) {
-                    continue;
-                }
-
-                // se persiste el estado actual del stock
-                $depotsWithStock[$depot->id] = [
-                    'quantity'      => $quantity,
-                    'stock_type_id' => $type,
-                ];
-            }
-
-            if ($maximum > $remainder) {
-                // si el stock no es el adecuado, rechazar nota,
-                // actualizar comentarios de nota y
-                // enviar correo a encargado de almacen
-                // junto al creador de nota
-                // TODO
-
-                return false;
             }
         }
 
         $this->reattachDepots($item, $depotsWithStock);
 
         return true;
+    }
+
+    /**
+     * se persiste el estado actual del stock
+     *
+     * @param $quantity
+     * @param $type
+     * @param $depotsWithStock
+     * @param $depot
+     */
+    private function addWithStock($quantity, $type, &$depotsWithStock, $depot)
+    {
+        if ($quantity > 0) {
+            $depotsWithStock[$depot->id] = [
+                'quantity'      => $quantity,
+                'stock_type_id' => $type,
+            ];
+        }
     }
 }
