@@ -46,20 +46,28 @@ class GenerateItemEgressTest extends AbstractUserIntegration
      * @param $request
      * @param $stock
      */
-    public function testSetStock($depots, $request, $stock)
+    public function testSetStock(
+        $depots,
+        $itemType,
+        $noteType,
+        $request,
+        $stock
+    )
     {
+        $this->item->stock_type_id = $itemType;
+        $this->item->save();
         /** @var Note $note */
         $note = factory(Note::class)->create(['note_type_id' => 1]);
         $note->petition->items()->attach($this->item->id, [
             'quantity'      => $request,
-            'stock_type_id' => 3,
+            'stock_type_id' => $noteType,
         ]);
 
-        $this->makeDepots($depots);
+        $this->makeDepots($depots, $itemType);
 
         $note->items()->attach($this->item->id, [
             'quantity'      => $request,
-            'stock_type_id' => 3,
+            'stock_type_id' => $noteType,
         ]);
 
         $note->fresh();
@@ -72,8 +80,7 @@ class GenerateItemEgressTest extends AbstractUserIntegration
             if (is_null($amount)) {
                 $this->notSeeInDatabase('depot_item', [
                     'depot_id' => $id,
-                    'item_id'  => $this->item->id,
-                    'quantity' => $amount,
+                    'item_id' => $this->item->id,
                 ]);
             } elseif (!is_null($amount)) {
                 $this->seeInDatabase('depot_item', [
@@ -85,20 +92,78 @@ class GenerateItemEgressTest extends AbstractUserIntegration
         }
     }
 
+    /**
+     * @param $depots
+     */
+    private function makeDepots($depots, $itemType)
+    {
+        // garantizamos que no existan almacenes
+        Depot::truncate();
+
+        // se crean los depots
+        foreach ($depots as $amount) {
+            $depot = factory(Depot::class)->create();
+            $this->item->depots()->attach($depot->id, [
+                'quantity'      => $amount,
+                'stock_type_id' => $itemType,
+            ]);
+        }
+    }
+
     public function setStockDataProvider()
     {
         return [
-            'prueba_01_camino_x' => [[3], 1, [1 => 2]],
-            'prueba_02_camino_x' => [[1], 1, [1 => null]],
-            'prueba_03_camino_x' => [[4], 2, [1 => 2]],
-            'prueba_04_camino_x' => [[3], 2, [1 => 1]],
-            'prueba_05_camino_x' => [[2, 1, 1], 1, [1 => 1, 2 => 1, 3 => 1]],
-            'prueba_06_camino_x' => [[1, 1, 1], 1, [1 => null, 2 => 1, 3 => 1]],
-            'prueba_07_camino_x' => [[1, 2, 1], 2, [1 => null, 2 => 1, 3 => 1]],
-            'prueba_08_camino_x' => [[1, 1, 1], 2, [1 => null, 2 => null, 3 => 1]],
-            'prueba_09_camino_x' => [[1, 2, 1], 3, [1 => null, 2 => null, 3 => 1]],
-            'prueba_10_camino_x' => [[1, 2, 1], 4, [1 => null, 2 => null, 3 => null]],
-            'prueba_11_camino_x' => [[], 1, [1 => null]],
+            'prueba_01_camino_x' => [[3], 3, 3, 1, [1 => 2]],
+            'prueba_02_camino_x' => [[1], 3, 3, 1, [1 => null]],
+            'prueba_03_camino_x' => [[4], 3, 3, 2, [1 => 2]],
+            'prueba_04_camino_x' => [[3], 3, 3, 2, [1 => 1]],
+            'prueba_05_camino_x' => [
+                [2, 1, 1],
+                3,
+                3,
+                1,
+                [1 => 1, 2 => 1, 3 => 1],
+            ],
+            'prueba_06_camino_x' => [
+                [1, 1, 1],
+                3,
+                3,
+                1,
+                [1 => null, 2 => 1, 3 => 1],
+            ],
+            'prueba_07_camino_x' => [
+                [1, 2, 1],
+                3,
+                3,
+                2,
+                [1 => null, 2 => 1, 3 => 1],
+            ],
+            'prueba_08_camino_x' => [
+                [1, 1, 1],
+                3,
+                3,
+                2,
+                [1 => null, 2 => null, 3 => 1],
+            ],
+            'prueba_09_camino_x' => [
+                [5, 3, 1],
+                3,
+                3,
+                8,
+                [1 => null, 2 => null, 3 => 1],
+            ],
+            'prueba_10_camino_x' => [
+                [5, 10, 5],
+                3,
+                3,
+                20,
+                [1 => null, 2 => null, 3 => null],
+            ],
+            'prueba_11_camino_x' => [[], 3, 3, 1, [1 => null]],
+            'prueba_12_camino_x' => [[5], 3, 1, 1, [1 => 5]],
+            'prueba_13_camino_x' => [[5], 3, 2, 1, [1 => 4.999]],
+            'prueba_14_camino_x' => [[5], 2, 3, 1, [1 => 5]],
+            'prueba_15_camino_x' => [[5], 1, 3, 1, [1 => 5]],
         ];
     }
 
@@ -121,23 +186,5 @@ class GenerateItemEgressTest extends AbstractUserIntegration
             ['minimum' => 60, 'stock_type_id' => $stock->id]
         );
         factory(NoteType::class)->create();
-    }
-
-    /**
-     * @param $depots
-     */
-    private function makeDepots($depots)
-    {
-        // garantizamos que no existan almacenes
-        Depot::truncate();
-
-        // se crean los depots
-        foreach ($depots as $amount) {
-            $depot = factory(Depot::class)->create();
-            $this->item->depots()->attach($depot->id, [
-                'quantity'      => $amount,
-                'stock_type_id' => 3,
-            ]);
-        }
     }
 }

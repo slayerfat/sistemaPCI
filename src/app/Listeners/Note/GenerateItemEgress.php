@@ -35,7 +35,7 @@ class GenerateItemEgress extends AbstractItemMovement
                 $event->note->comments .= sizeof($event->note->comments) <= 1 ? "" : "\r\n";
                 $event->note->comments .= "Item {$item->id}, posee cantidad de "
                     . "{$quantity} pero la conversion es {$noteAmount}, "
-                    . "el stock es {$stock}.";
+                    . "el stock es {$stock}. tipos incompatibles.";
                 $event->note->save();
                 // ignora item en movimientos
                 continue;
@@ -73,7 +73,7 @@ class GenerateItemEgress extends AbstractItemMovement
     private function setStock($requested, Item $item)
     {
         // numero de control del total a extraer de los almacenes
-        $remainder = 0;
+        $remaining                 = 0;
 
         // controla si el pedido fue completado
         $incomplete = true;
@@ -91,7 +91,7 @@ class GenerateItemEgress extends AbstractItemMovement
             ->get();
 
         // mientras el remanente sea menor al solicitado
-        while ($remainder < $requested) {
+        while ($remaining < $requested) {
             foreach ($depots as $depot) {
                 $type     = $depot->pivot->stock_type_id;
                 $quantity = floatval($depot->pivot->quantity);
@@ -101,7 +101,7 @@ class GenerateItemEgress extends AbstractItemMovement
                     // si el stock es mayor al solicitado, entonces terminamos.
                     if ($stock > $requested) {
                         $remainingStock = $stock - $requested;
-                        $remainder      = $requested;
+                        $remaining = $requested;
                         $incomplete     = false;
 
                         $this->addWithStock($remainingStock, $type, $depotsWithStock, $depot);
@@ -109,22 +109,24 @@ class GenerateItemEgress extends AbstractItemMovement
                         continue;
                     }
 
-                    $remainingStock = $this->calculateRemainders($requested, $remainder, $stock);
+                    // debemos saber cual es el stock final y el remanente
+                    $remainingStock = $this->calculateStock($requested, $remaining, $stock);
+                    $remaining += $this->calculateRemaining($remainingStock, $stock, $requested, $remaining);
 
                     // si hay stock debemos asegurarnos que persistimos correctamente
                     if ($remainingStock > 0) {
                         // si el remanente es mayor o igual a
                         // lo solicitado, entonces terminamos.
-                        if ($remainder >= $requested) {
+                        if ($remaining >= $requested) {
                             $incomplete = false;
                             $this->addWithStock($remainingStock, $type, $depotsWithStock, $depot);
                         }
 
                         continue;
-                    } elseif ($stock == $requested || $remainder >= $requested) {
+                    } elseif ($stock == $requested || $remaining >= $requested) {
                         // si el stock es igual a la solicitud, entonces
                         // queda cero stock, por lo tanto no persistimos
-                        $remainder  = $requested;
+                        $remaining = $requested;
                         $incomplete = false;
                         continue;
                     }
@@ -146,7 +148,7 @@ class GenerateItemEgress extends AbstractItemMovement
     }
 
     /**
-     * se persiste el estado actual del stock
+     * se persiste el estado actual del stock.
      *
      * @param int|float         $quantity
      * @param int|string        $type
@@ -171,27 +173,67 @@ class GenerateItemEgress extends AbstractItemMovement
      * Chequea y genera el remanente adecuado y el stock final.
      *
      * @param int|float $requested
-     * @param int|float $remainder
+     * @param int|float $remaining
      * @param int|float $stock
      * @return int|float el stock final
      */
-    private function calculateRemainders(
+    private function calculateStock(
         $requested,
-        &$remainder,
+        $remaining,
         $stock
     ) {
-        // debemos asegurarnos de cual sera el operando
-        // correcto, porque remanente empieza en cero.
-        $operand = $remainder > 0 ? $remainder : $requested;
+        $operand = $this->findOperand($requested, $remaining);
 
         // el stock puede ser menor a cero, por lo tanto
         // debemos asegurar que sea al menos cero o mas.
-        $remainingStock = $stock - $operand < 0 ? 0 : $stock - $operand;
+        return $stock - $operand < 0 ? 0 : $stock - $operand;
+    }
 
-        // asi mismo, si la operacion es cero, entonces
-        // son iguales, por lo tanto se suma el operando unicamente
-        $remainder += abs($stock - $operand) == 0 ? $operand : abs($stock - $operand);
+    /**
+     * Busca el operando correcto para determinar el remanente y el stock.
+     *
+     * @param int|float $requested
+     * @param int|float $remaining
+     * @return int|float
+     */
+    private function findOperand($requested, $remaining)
+    {
+        // debemos asegurarnos de cual sera el operando
+        // correcto, porque remanente empieza en cero.
+        return $remaining > 0 ? $requested - $remaining : $requested;
+    }
 
-        return $remainingStock;
+    /**
+     * Busca cual es el remanente de la iteracion actual en setStock.
+     *
+     * @param int|float $remainingStock
+     * @param int|float $stock
+     * @param int|float $requested
+     * @param int|float $remaining
+     * @return float|int|number
+     */
+    private function calculateRemaining(
+        $remainingStock,
+        $stock,
+        $requested,
+        $remaining
+    ) {
+        // si el stock es cero, entonces se extrajo lo que
+        // habia, por lo tanto se devuelve el stock inicial.
+        if ($remainingStock === 0) {
+            return $stock;
+        }
+
+        $operand = $this->findOperand($requested, $remaining);
+
+        // si el stock menos el operando es igual a cero,
+        // entonces son iguales, asi que devolvemos
+        // al operando. (o stock, es lo mismo)
+        if (abs($stock - $operand) == 0) {
+            return $operand;
+        }
+
+        // de lo contrario devolvemos lo que hay menos lo que se pide.
+        return abs($stock - $operand);
     }
 }
