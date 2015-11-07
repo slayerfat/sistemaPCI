@@ -19,7 +19,7 @@ before_script:
   - (cd src/ && npm install && bower install && gulp)
   - pyrus install pear/PHP_CodeSniffer
   - phpenv rehash
-  - wget https://gist.githubusercontent.com/slayerfat/2b3cc4faf94d2863b505/raw/b958e68fa8886baac8880cdf381d1dfbc403270f/phpmd-ruleset.xml
+  - wget https://gist.githubusercontent.com/slayerfat/2b3cc4faf94d2863b505/raw/5229a520c69010c6c13fd9a66d14309c214c241a/phpmd-ruleset.xml
   - wget -c http://static.phpmd.org/php/latest/phpmd.phar
 
 script:
