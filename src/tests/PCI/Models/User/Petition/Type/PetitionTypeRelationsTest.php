@@ -1,5 +1,6 @@
 <?php namespace Tests\PCI\Models\User\Petition\Type;
 
+use PCI\Models\MovementType;
 use PCI\Models\Petition;
 use PCI\Models\PetitionType;
 use Tests\AbstractTestCase;
@@ -14,6 +15,16 @@ class PetitionTypeRelationsTest extends AbstractTestCase
             'petitions',
             'hasMany',
             Petition::class
+        );
+    }
+
+    public function testMovementTypes()
+    {
+        $this->mockBasicModelRelation(
+            PetitionType::class,
+            'movementType',
+            'belongsTo',
+            MovementType::class
         );
     }
 }

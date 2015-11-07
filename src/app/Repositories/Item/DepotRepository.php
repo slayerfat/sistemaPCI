@@ -159,9 +159,9 @@ class DepotRepository extends AbstractRepository implements DepotRepositoryInter
         // por ahora no necesitamos datos de forma condicional.
         return [
             'uid'               => $model->id,
-            'Numero'            => "Nro. $model->number",
-            'Anaquel'           => "Nro. $model->rack",
-            'Alacena'           => "Nro. $model->shelf",
+            'Numero'            => "#$model->number",
+            'Anaquel'           => "#$model->rack",
+            'Alacena'           => "#$model->shelf",
             'Items Registrados' => "{$model->items->count()} Items"
         ];
     }

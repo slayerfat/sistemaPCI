@@ -63,10 +63,6 @@ class PetitionPolicy
         $amount,
         $type
     ) {
-        if (!$petition) {
-            throw new \LogicException;
-        }
-
         $item = $converter->getItem();
 
         if (!$converter->isConvertible()) {
@@ -76,7 +72,11 @@ class PetitionPolicy
         $converted = $converter->convert($type, $amount);
 
         if ($user->isUser() || $user->isAdmin()) {
-            return $item->stock >= $converted && $converted > 0;
+            if ($petition->type->movementType->isOut()) {
+                return $item->stock() >= $converted && $converted > 0;
+            }
+
+            return $converted > 0;
         }
 
         return false;

@@ -1,6 +1,8 @@
 <?php namespace PCI\Repositories\Aux;
 
+use PCI\Models\AbstractBaseModel;
 use PCI\Repositories\Interfaces\Aux\PetitionTypeRepositoryInterface;
+use PCI\Repositories\ViewVariable\PetitionTypeViewModelVariable;
 
 /**
  * Class PetitionTypeRepository
@@ -10,6 +12,23 @@ use PCI\Repositories\Interfaces\Aux\PetitionTypeRepositoryInterface;
  */
 class PetitionTypeRepository extends AbstractAuxRepository implements PetitionTypeRepositoryInterface
 {
+
+    /**
+     * Persiste informacion referente a una entidad.
+     * Se sobrescribe del padre porque es
+     * necesaria logica adicional.
+     *
+     * @param array $data El array con informacion del modelo.
+     * @return \PCI\Models\Petition
+     */
+    public function create(array $data)
+    {
+        $model                   = $this->model->newInstance($data);
+        $model->movement_type_id = $data['movement_type_id'];
+        $model->save();
+
+        return $model;
+    }
 
     /**
      * Elimina a este modelo del sistema.
@@ -49,6 +68,22 @@ class PetitionTypeRepository extends AbstractAuxRepository implements PetitionTy
         $variable->setDestView('petitionTypes.show');
 
         return $variable;
+    }
+
+    /**
+     * Genera una instancia de ViewModelVariable
+     * dandole una implementacion de AbstractBaseModel.
+     * Cambiada la implementacion de ViewModelVariable.
+     *
+     * @param \PCI\Models\AbstractBaseModel $model
+     * @param string                        $resource El identificador o alias.
+     * @return \PCI\Repositories\ViewVariable\SubCategoryViewModelVariable
+     */
+    protected function generateViewVariable(
+        AbstractBaseModel $model,
+        $resource = 'petitionTypes'
+    ) {
+        return new PetitionTypeViewModelVariable($model, $resource);
     }
 
     /**

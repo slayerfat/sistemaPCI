@@ -161,12 +161,12 @@ class ItemRepository extends AbstractRepository implements ItemRepositoryInterfa
         /** @var \PCI\Models\Item $item */
         $item = $this->getBySlugOrId($id);
 
-        $data = [
-            'plain'     => $item->stock,
+        return [
+            'plain' => $item->stock(),
             'formatted' => $item->formattedStock(),
+            'real' => $item->realStock(),
+            'formattedReal' => $item->formattedRealStock(),
         ];
-
-        return $data;
     }
 
     /**

@@ -13,15 +13,16 @@ use PCI\Models\ItemType;
 use PCI\Models\Maker;
 use PCI\Models\StockType;
 use PCI\Models\SubCategory;
-use PCI\Models\User;
 use Tests\Integration\User\AbstractUserIntegration;
+use Tests\PCI\Models\Item\ItemIntegrationTest as ItemModelTest;
 
 /**
  * Class ItemIntegrationTest
+ *
  * @package Tests\Integration\Item
- * Nice copypasta. - bill machine learning gates.
- * @author Alejandro Granadillo <slayerfat@gmail.com>
- * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
+ *          Nice copypasta. - bill machine learning gates.
+ * @author  Alejandro Granadillo <slayerfat@gmail.com>
+ * @link    https://github.com/slayerfat/sistemaPCI Repositorio en linea.
  */
 class ItemIntegrationTest extends AbstractUserIntegration
 {
@@ -33,62 +34,120 @@ class ItemIntegrationTest extends AbstractUserIntegration
         $depots = factory(Depot::class, 3)->create();
 
         foreach ($depots as $depot) {
-            $item->depots()->attach($depot->id, ['quantity'      => 234,
-                                                 'stock_type_id' => 1
+            $item->depots()->attach($depot->id, [
+                'quantity'      => 234,
+                'stock_type_id' => 1,
             ]);
         }
 
         $this->actingAs($this->user)
-             ->visit(route('items.show', $item->id))
-             ->seePageIs(route('items.show', $item->id))
-             ->see('702')// 234 * 3 eh
-             ->see($item->desc);
+            ->visit(route('items.show', $item->id))
+            ->seePageIs(route('items.show', $item->id))
+            ->see('702')// 234 * 3 eh
+            ->see($item->desc);
+    }
+
+    public function testShowItemDisplaysCorrectStockTypesAndAmounts()
+    {
+        $item = factory(Item::class, 'full')->create([
+            'minimum'       => 60,
+            'stock_type_id' => 3,
+        ]);
+
+        $depots = factory(Depot::class, 3)->create();
+        $id     = 2;
+
+        foreach ($depots as $depot) {
+            $item->depots()->attach($depot->id, [
+                'quantity'      => 1,
+                'stock_type_id' => $id++,
+            ]);
+        }
+
+        $this->actingAs($this->user)
+            ->visit(route('items.show', $item->id))
+            ->seePageIs(route('items.show', $item->id))
+            ->see('1 Gramo')
+            ->see('1 Kilo')
+            ->see('1 Tonelada')
+            ->see('1001.001 Kilos')
+            ->see($item->desc);
+    }
+
+    public function testShowDepotDisplaysCorrectStockTypesAndAmounts()
+    {
+        $item  = factory(Item::class, 'full')->create([
+            'minimum'       => 60,
+            'stock_type_id' => 3,
+        ]);
+        $depot = factory(Depot::class)->create();
+
+        foreach (range(2, 4) as $id) {
+            $item->depots()->attach($depot->id, [
+                'quantity'      => 1,
+                'stock_type_id' => $id,
+            ]);
+        }
+
+        $this->actingAs($this->user)
+            ->visit(route('depots.show', $depot->id))
+            ->seePageIs(route('depots.show', $depot->id))
+            ->see('1 Gramo')
+            ->see('1 Kilo')
+            ->see('1 Tonelada')
+            ->see($item->desc);
+
+        $this->actingAs($this->user)
+            ->visit(route('items.index', $depot->id))
+            ->seePageIs(route('items.index', $depot->id))
+            ->see('1001.001 Kilos')
+            ->see($item->desc);
     }
 
     public function testCanSeeAndVisitItemsIndex()
     {
         $this->actingAs($this->user)
-             ->visit(route('index'))
-             ->see(trans('models.items.plural'))
-             ->visit(route('items.index'))
-             ->seePageIs(route('items.index'))
+            ->visit(route('index'))
             ->see(trans('models.items.plural'))
-             ->see(trans('models.items.create'))
-             ->click(trans('models.items.create'))
-             ->seePageIs(route('items.create'));
+            ->visit(route('items.index'))
+            ->seePageIs(route('items.index'))
+            ->see(trans('models.items.plural'))
+            ->see(trans('models.items.create'))
+            ->click(trans('models.items.create'))
+            ->seePageIs(route('items.create'));
     }
 
     public function testCreateItemsShouldPersistAndRedirect()
     {
         $this->actingAs($this->user)
-             ->visit(route('items.create'))
-             ->seePageIs(route('items.create'))
-             ->select('1', 'item_type_id')
-             ->select('1', 'maker_id')
-             ->select('1', 'sub_category_id')
+            ->visit(route('items.create'))
+            ->seePageIs(route('items.create'))
+            ->select('1', 'item_type_id')
+            ->select('1', 'maker_id')
+            ->select('1', 'sub_category_id')
             ->select('1', 'stock_type_id')
-             ->type('random item', 'desc')
-             ->type('1', 'minimum')
-             ->see(trans('models.items.create'))
-             ->press(trans('models.items.create'))
-             ->dontSee('Oops!')
-             ->seePageIs(route('items.show', 2))
-             ->seeInDatabase('items', [
-                 'item_type_id'    => 1,
-                 'maker_id'        => 1,
-                 'sub_category_id' => 1
-             ]);
+            ->type('random item', 'desc')
+            ->type('1', 'minimum')
+            ->see(trans('models.items.create'))
+            ->press(trans('models.items.create'))
+            ->dontSee('Oops!')
+            ->seePageIs(route('items.show', 2))
+            ->seeInDatabase('items', [
+                'item_type_id'    => 1,
+                'maker_id'        => 1,
+                'sub_category_id' => 1,
+            ]);
     }
 
     public function testShowItemHasLinkToEditIt()
     {
         $this->actingAs($this->user)
-             ->visit(route('items.show', 1))
-             ->seePageIs(route('items.show', 1))
-             ->see('Editar')
-             ->see('Eliminar')
-             ->click('Editar')
-             ->seePageIs(route('items.edit', 1));
+            ->visit(route('items.show', 1))
+            ->seePageIs(route('items.show', 1))
+            ->see('Editar')
+            ->see('Eliminar')
+            ->click('Editar')
+            ->seePageIs(route('items.edit', 1));
     }
 
     public function testEditItemsShouldPersistAndRedirect()
@@ -96,29 +155,29 @@ class ItemIntegrationTest extends AbstractUserIntegration
         $item = factory(Item::class)->create();
 
         $this->actingAs($this->user)
-             ->visit(route('items.edit', $item->id))
-             ->seePageIs(route('items.edit', $item->id))
-             ->select('1', 'item_type_id')
-             ->select('1', 'maker_id')
-             ->select('1', 'sub_category_id')
+            ->visit(route('items.edit', $item->id))
+            ->seePageIs(route('items.edit', $item->id))
+            ->select('1', 'item_type_id')
+            ->select('1', 'maker_id')
+            ->select('1', 'sub_category_id')
             ->select('1', 'stock_type_id')
-             ->type('random item', 'desc')
-             ->type('1', 'minimum')
-             ->see(trans('models.items.edit'))
-             ->press(trans('models.items.edit'))
-             ->seePageIs(route('items.show', $item->id))
-             ->seeInDatabase('items', [
-                 'item_type_id'    => 1,
-                 'maker_id'        => 1,
-                 'sub_category_id' => 1
-             ]);
+            ->type('random item', 'desc')
+            ->type('1', 'minimum')
+            ->see(trans('models.items.edit'))
+            ->press(trans('models.items.edit'))
+            ->seePageIs(route('items.show', $item->id))
+            ->seeInDatabase('items', [
+                'item_type_id'    => 1,
+                'maker_id'        => 1,
+                'sub_category_id' => 1,
+            ]);
     }
 
     public function testDeleteDepotShouldRedirectToItemsIndex()
     {
         $this->withoutMiddleware()
-             ->delete(route('items.destroy', 1))
-             ->assertResponseStatus(302); //302 redirect
+            ->delete(route('items.destroy', 1))
+            ->assertResponseStatus(302); //302 redirect
 
         $this->notSeeInDatabase('items', ['id' => 1]);
     }
@@ -128,10 +187,7 @@ class ItemIntegrationTest extends AbstractUserIntegration
      */
     protected function getUser()
     {
-        return factory(User::class)->create([
-            'profile_id'        => User::ADMIN_ID,
-            'confirmation_code' => null,
-        ]);
+        return $this->getGenericAdmin();
     }
 
     /**
@@ -139,6 +195,7 @@ class ItemIntegrationTest extends AbstractUserIntegration
      */
     protected function persistData()
     {
+        ItemModelTest::createStockTypes();
         factory(Item::class)->create();
         factory(ItemType::class, 2)->create();
         factory(Maker::class, 2)->create();

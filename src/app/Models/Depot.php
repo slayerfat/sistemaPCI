@@ -34,16 +34,18 @@ class Depot extends AbstractBaseModel
 
     /**
      * The attributes that are mass assignable.
+     *
      * @var array
      */
     protected $fillable = [
         'number',
         'rack',
-        'shelf'
+        'shelf',
     ];
 
     /**
      * Regresa al Empleado relacionado, El jefe de almacen.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function owner()
@@ -55,12 +57,14 @@ class Depot extends AbstractBaseModel
 
     /**
      * Regresa una coleccion de items existentes en el almacen.
-     * @see v0.3.2 #35
+     *
+     * @see  v0.3.2 #35
      * @link https://github.com/slayerfat/sistemaPCI/issues/35
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function items()
     {
-        return $this->belongsToMany(Item::class)->withPivot('quantity');
+        return $this->belongsToMany(Item::class)
+            ->withPivot('quantity', 'stock_type_id');
     }
 }

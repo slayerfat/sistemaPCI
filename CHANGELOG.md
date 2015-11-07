@@ -6,7 +6,22 @@ Todos los cambios significativos en este proyecto estaran documentados en este a
 
 ### Añadido
 
-- Notas...
+- Creacion de Nota/movimientos y correos relacionados a estos.
+- Item posee campo reserva (de stock).
+
+### Arreglado
+
+- Notas necesitan usuario dirigido a, seeding actualizado para eso.
+- Envio de correos por defecto desactivado en el sistema.
+- Relacion entre Tipo de Pedido y Tipo de Movimiento (para saber si es entrada o salida)
+- Relacion entre Tipo de Nota y Tipo de Movimiento (para saber si es entrada o salida)
+- Pedido debe permitir nuevo si es entrada y stock es 0
+
+## [v0.4.1] - 2015-10-18
+
+### Añadido
+
+- Index y Creacion de Notas con eventos de Email.
 
 ## [v0.4.0] - 2015-10-16
 
@@ -269,7 +284,9 @@ Se crearon documentacion segun aspectos clave del sistema, para ser referenciado
   - `replace.php` deberia funcionar correctamente.
   - cypher deberia funcionar por cambio de strings de tamaño 32.
 
-[unrele]: https://github.com/slayerfat/sistemaPCI/compare/v0.4.0...develop
+[unrele]: https://github.com/slayerfat/sistemaPCI/compare/v0.4.1...develop
+[v0.4.2]: https://github.com/slayerfat/sistemaPCI/compare/v0.4.1...v0.4.2
+[v0.4.1]: https://github.com/slayerfat/sistemaPCI/compare/v0.4.0...v0.4.1
 [v0.4.0]: https://github.com/slayerfat/sistemaPCI/compare/v0.3.6...v0.4.0
 [v0.3.6]: https://github.com/slayerfat/sistemaPCI/compare/v0.3.5...v0.3.6
 [v0.3.5]: https://github.com/slayerfat/sistemaPCI/compare/v0.3.4...v0.3.5

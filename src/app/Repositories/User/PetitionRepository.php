@@ -9,6 +9,7 @@ use PCI\Models\Petition;
 use PCI\Repositories\AbstractRepository;
 use PCI\Repositories\Interfaces\Item\ItemRepositoryInterface;
 use PCI\Repositories\Interfaces\User\PetitionRepositoryInterface;
+use PCI\Repositories\Traits\CanChangeStatus;
 use PCI\Repositories\ViewVariable\ViewPaginatorVariable;
 
 /**
@@ -20,6 +21,8 @@ use PCI\Repositories\ViewVariable\ViewPaginatorVariable;
  */
 class PetitionRepository extends AbstractRepository implements PetitionRepositoryInterface
 {
+
+    use CanChangeStatus;
 
     /**
      * En esta caso es una peticion
@@ -137,16 +140,7 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
         // asociamos la peticion al usuario en linea.
         $this->getCurrentUser()->petitions()->save($petition);
 
-        // Añade los items solicitados y sus cantidades a la
-        // tabla correspondiente en la base de datos.
-        foreach ($items as $id => $data) {
-            $petition->items()->attach($id, [
-                'quantity'      => $data['amount'],
-                'stock_type_id' => $data['type'],
-            ]);
-        }
-
-        return $petition;
+        return $this->attachItems($items, $petition);
     }
 
     /**
@@ -180,7 +174,7 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
                 $petition->comments .= "El usuario {$this->getCurrentUser()->name} "
                     . "solicito {$data['amount']} ({$data['amount']}:{$data['type']}) "
                     . "y existe un stock de {$item->formattedStock()} "
-                    . "({$item->stock}:{$item->stock_type_id}) "
+                    . "({$item->stock()}:{$item->stock_type_id}) "
                     . "disponibles del Item {$item->desc}\r\n";
 
                 unset($items[$id]);
@@ -190,6 +184,34 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
         }
 
         return $items;
+    }
+
+    /**
+     * @param array                $items
+     * @param \PCI\Models\Petition $petition
+     * @return \PCI\Models\Petition
+     */
+    protected function attachItems(array $items, Petition $petition)
+    {
+        // si no hay items que incluir por alguna
+        // razon, entonces rechazamos el pedido.
+        if (count($items) < 1) {
+            $petition->status = false;
+            $petition->save();
+
+            return $petition;
+        }
+
+        // Añade los items solicitados y sus cantidades a la
+        // tabla correspondiente en la base de datos.
+        foreach ($items as $id => $data) {
+            $petition->items()->attach($id, [
+                'quantity'      => $data['amount'],
+                'stock_type_id' => $data['type'],
+            ]);
+        }
+
+        return $petition;
     }
 
     /**
@@ -250,27 +272,6 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
     public function delete($id)
     {
         return $this->executeDelete($id, trans('models.petitions.plural'), trans('models.items.plural'));
-    }
-
-    /**
-     * Cambia el estado del pedido.
-     *
-     * @param int  $id
-     * @param bool $status
-     * @return bool
-     */
-    public function changeStatus($id, $status)
-    {
-        if (!is_bool($status) && !is_null($status)) {
-            if ($status != 'true' && $status != 'false' && $status != 'null') {
-                return false;
-            }
-        }
-
-        $petition         = $this->getById($id);
-        $petition->status = $status;
-
-        return $petition->save();
     }
 
     /**

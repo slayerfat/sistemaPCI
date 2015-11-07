@@ -6,7 +6,7 @@
     $visible = ' %s%%';
     if ($item->minimum <= 1) {
         $type    = 'normal';
-        $visible = 'Configure stock minimo.';
+        $visible = 'Configure stock mínimo.';
         $value   = 0;
     } elseif ($value <= 20) {
         $type = 'danger';
@@ -28,7 +28,7 @@
 
             @if(auth()->user()->isAdmin())
                 {{$item->minimum <= 1 ?
-                    'Stock minimo no asignado.' : "La existencia minima es $item->minimum."}}
+                    'Stock mínimo no asignado.' : "La existencia mínima es $item->minimum."}}
             @endif
         </small>
     </h3>

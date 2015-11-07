@@ -55,9 +55,9 @@ trait HasTernaryStatusAttribute
      */
     public function setStatusAttribute($value)
     {
-        if ($value == "true") {
+        if ($value === "true" || $value === true) {
             return $this->attributes['status'] = 1;
-        } elseif ($value == "null" || $value == null) {
+        } elseif ($value === "null" || $value === null) {
             return $this->attributes['status'] = null;
         }
 

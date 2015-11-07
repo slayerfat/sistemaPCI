@@ -35,12 +35,14 @@ class MovementType extends AbstractBaseModel implements SluggableInterface
 
     /**
      * The attributes that are mass assignable.
+     *
      * @var array
      */
     protected $fillable = ['desc'];
 
     /**
      * Los datos necesarios para generarar un slug en el modelo.
+     *
      * @var array
      */
     protected $sluggable = [
@@ -49,11 +51,89 @@ class MovementType extends AbstractBaseModel implements SluggableInterface
     ];
 
     /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeIn($query)
+    {
+        return $query->where('desc', 'Entrada');
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeOut($query)
+    {
+        return $query->where('desc', 'Salida');
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeUnknown($query)
+    {
+        return $query->where('desc', 'Otro');
+    }
+
+    /**
      * Regresa una coleccion de movimientos asociados.
+     *
      * @return Collection
      */
     public function movements()
     {
         return $this->hasMany(Movement::class);
+    }
+
+    /**
+     * Regresa una coleccion de notas asociadas.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     */
+    public function noteTypes()
+    {
+        return $this->hasMany(NoteType::class);
+    }
+
+    /**
+     * Regresa una coleccion de notas asociadas.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     */
+    public function petitionTypes()
+    {
+        return $this->hasMany(PetitionType::class);
+    }
+
+    /**
+     * Determina si el tipo de movimiento es de salida
+     * @return bool
+     */
+    public function isOut()
+    {
+        $result = self::out()->first();
+
+        if (is_null($result)) {
+            throw new \LogicException('No existe movimiento de tipo salida');
+        }
+
+        return $result->id == $this->id;
+    }
+
+    /**
+     * Determina si el tipo de movimiento es de entrada
+     * @return bool
+     */
+    public function isIn()
+    {
+        $result = self::in()->first();
+
+        if (is_null($result)) {
+            throw new \LogicException('No existe movimiento de tipo entrada');
+        }
+
+        return $result->id == $this->id;
     }
 }

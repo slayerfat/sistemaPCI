@@ -4,6 +4,7 @@ use Date;
 use PCI\Models\AbstractBaseModel;
 use PCI\Repositories\AbstractRepository;
 use PCI\Repositories\Interfaces\Note\NoteRepositoryInterface;
+use PCI\Repositories\Traits\CanChangeStatus;
 use PCI\Repositories\ViewVariable\ViewPaginatorVariable;
 
 /**
@@ -16,7 +17,11 @@ use PCI\Repositories\ViewVariable\ViewPaginatorVariable;
 class NoteRepository extends AbstractRepository implements NoteRepositoryInterface
 {
 
+    use CanChangeStatus;
+
     /**
+     * La nota asociada a manipular.
+     *
      * @var \PCI\Models\Note
      */
     protected $model;

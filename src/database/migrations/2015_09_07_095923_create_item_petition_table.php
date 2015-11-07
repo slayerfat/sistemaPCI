@@ -17,7 +17,7 @@ class CreateItemPetitionTable extends Migration
             $table->foreign('item_id')->references('id')->on('items');
             $table->unsignedInteger('petition_id');
             $table->foreign('petition_id')->references('id')->on('petitions');
-            $table->unsignedInteger('quantity');
+            $table->float('quantity', 16, 7)->nullable();
             // tipo de cantidad
             $table->unsignedInteger('stock_type_id');
             $table->foreign('stock_type_id')

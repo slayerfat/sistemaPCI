@@ -4,11 +4,13 @@ use Faker\Factory;
 
 /**
  * Class AuxEntitiesSeeder
+ *
  * @package PCI\Database
- * FIXME a espera de {@Phantom66} para la especificacion real de algunas entidades.
- * @author Alejandro Granadillo <slayerfat@gmail.com>
- * @link https://github.com/slayerfat/sistemaPCI/issues/2
- * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
+ *          FIXME a espera de {@Phantom66} para la especificacion real de
+ *          algunas entidades.
+ * @author  Alejandro Granadillo <slayerfat@gmail.com>
+ * @link    https://github.com/slayerfat/sistemaPCI/issues/2
+ * @link    https://github.com/slayerfat/sistemaPCI Repositorio en linea.
  */
 class AuxEntitiesSeeder extends AbstractSeeder
 {
@@ -16,6 +18,7 @@ class AuxEntitiesSeeder extends AbstractSeeder
     /**
      * Este atributo es usado para iterar las entidades
      * auxiliares que necesitan ser creadas.
+     *
      * @var array
      */
     private $data;
@@ -43,18 +46,18 @@ class AuxEntitiesSeeder extends AbstractSeeder
         $this->data = [
             'PCI\Models\Gender'       => [
                 ['desc' => 'Masculino'],
-                ['desc' => 'Femenino']
+                ['desc' => 'Femenino'],
             ],
             'PCI\Models\Department'   => [
                 [
                     'desc'  => 'Servicios Generales',
-                    'phone' => $faker->phoneNumber
+                    'phone' => $faker->phoneNumber,
                 ],
-                ['desc' => 'Gerencia General', 'phone' => $faker->phoneNumber]
+                ['desc' => 'Gerencia General', 'phone' => $faker->phoneNumber],
             ],
             'PCI\Models\ItemType'     => [
                 ['desc' => 'Perecedero'],
-                ['desc' => 'No Perecedero']
+                ['desc' => 'No Perecedero'],
             ],
             'PCI\Models\Maker'        => [
                 ['desc' => 'Empresa X'],
@@ -71,12 +74,12 @@ class AuxEntitiesSeeder extends AbstractSeeder
                 ['desc' => 'Extrangero'],
             ],
             'PCI\Models\NoteType'     => [
-                ['desc' => 'Entrada (entrada)'],
-                ['desc' => 'Entrega (salida)'],
+                ['desc' => 'Entrada (entrada)', 'movement_type_id' => 1],
+                ['desc' => 'Entrega (salida)', 'movement_type_id' => 2],
             ],
             'PCI\Models\PetitionType' => [
-                ['desc' => 'Entrada (entrada)'],
-                ['desc' => 'Entrega (salida)'],
+                ['desc' => 'Entrada (entrada)', 'movement_type_id' => 1],
+                ['desc' => 'Entrega (salida)', 'movement_type_id' => 2],
             ],
             'PCI\Models\Position'     => [
                 ['desc' => 'Facilitador'],
@@ -136,6 +139,7 @@ class AuxEntitiesSeeder extends AbstractSeeder
     /**
      * Arreglo de Entidades secundarias o auxiliares en el sistema.
      * Esto es independiente de los seeds.
+     *
      * @return string[]
      */
     public static function getModels()
@@ -147,8 +151,6 @@ class AuxEntitiesSeeder extends AbstractSeeder
             'PCI\Models\Maker',
             'PCI\Models\MovementType',
             'PCI\Models\Nationality',
-            'PCI\Models\NoteType',
-            'PCI\Models\PetitionType',
             'PCI\Models\Position',
             'PCI\Models\Profile',
             'PCI\Models\State',

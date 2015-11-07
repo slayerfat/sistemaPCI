@@ -52,7 +52,7 @@ class Movement extends AbstractBaseModel
      */
     public function type()
     {
-        return $this->belongsTo(MovementType::class);
+        return $this->belongsTo(MovementType::class, 'movement_type_id');
     }
 
     /**

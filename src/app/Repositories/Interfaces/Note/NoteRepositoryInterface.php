@@ -10,4 +10,12 @@ interface NoteRepositoryInterface extends
     GetIndexViewableInterface
 {
 
+    /**
+     * Cambia el estado de la nota.
+     *
+     * @param int  $id
+     * @param bool $status
+     * @return bool
+     */
+    public function changeStatus($id, $status);
 }

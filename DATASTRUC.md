@@ -2,6 +2,12 @@
 
 En este documento se pretende mantener la bitacora de cambios significativos en la estructura de datos del sistema.
 
+## v0.4.2
+
+Añadida relacion entre tipo de pedido/nota y tipo de movimiento para determinar programaticamente los movimientos que deben hacerse en notas.
+
+Los Items son reservados al momento de crear una nota (para evitar sobrecarga), se añade campo reserva al item.
+
 ## v0.4.1
 
 campo encargado_id removido de la Nota, redundante.

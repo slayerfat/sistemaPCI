@@ -1,5 +1,6 @@
 <meta name="form-data"
       data-petition-items-url="{{ route('api.petitions.items') }}"
+      data-model-movement-type-url="{{ route('api.petitions.movementTypes') }}"
       data-petition-items-id="{{ $petition->id }}"
       data-editing="{{ $petition->id ? "true" : "false" }}">
 {!!
@@ -43,24 +44,26 @@ ControlGroup::generate(
     <link rel="stylesheet" href="{{elixir('css/vendor.css')}}"/>
 @stop
 
-@section('js')
+@section('form-js')
     <script>
-        /**
-         * Como los comentarios llegan sucios, debemos limpiarlos
-         * cuando estamos creando una nueva peticion.
-         */
-        $(function () {
-            var $comments = $('#comments');
-            var val = $comments.val();
+        // necesitamos configurar ajax primero.
+        var ajaxSetup = new Forms.AjaxSetup('{{ csrf_token() }}');
+        ajaxSetup.setLaravelToken();
 
-            if ($('meta[name="form-data"]').data('editing')) return;
+        // elementos varios de HTML
+        var $formData = $('meta[name="form-data"]');
+        var url = $formData.data('model-movement-type-url');
+        var $petitionTypeSelect = $('#petition_type_id');
 
-            if (val.length > 1) {
-                $comments.val('').prop('placeholder', 'Introduzca un comentario.');
-            }
-        });
-    </script>
-    <script>
+        // las clases varias a iniciar
+        var commentToggle = new Forms.ToggleComments($('#comments'));
+        var toggle = new Petition.MovementTypeToggle($petitionTypeSelect.val(), url);
+        var stockTypes = new Petition.stockTypes();
+        var items = new Petition.RelatedItems();
+
+        // operaciones iniciales
+        toggle.selectWatcher($petitionTypeSelect);
+
         /**
          * la informacion html que es usada para generar
          * los elementos internos del select.
@@ -120,6 +123,11 @@ ControlGroup::generate(
                     // en la que esta para la paginacion.
                     params.page = params.page || 1;
 
+                    // esto basicamente permite volver a seleccionar el mismo elemento
+                    // otra vez de la lista (necesario por el cambio alterno
+                    // de tipo de movimiento/pedido/nota)
+                    $itemList.val(null);
+
                     return {
                         results: data.data,
                         pagination: {
@@ -139,141 +147,9 @@ ControlGroup::generate(
             templateResult: formatRepo
         });
 
-        // necesitamos los tipos de stock para generar el select
-        $(function () {
-            $.ajax({
-                url: '/api/tipos-cantidad',
-                dataType: 'json',
-                success: function (data) {
-                    stockTypes.types = data;
-                }
-            });
-        });
-
-        var stockTypes = {
-            types: {}
-        };
-
-        var items = {
-            data: {
-                desc: '',
-                stock_type_id: null
-            },
-
-            selected: [],
-
-            stock: {
-                plain: '',
-                formatted: ''
-            },
-
-            setItem: function (data) {
-                this.data = data;
-                this.grabItemStock(this.data);
-            },
-
-            grabItemStock: function (item) {
-                var self = this;
-
-                $.ajax({
-                    url: '/api/items/stock/' + item.id,
-                    dataType: 'json',
-                    async: false,
-                    success: function (data) {
-                        self.setStock(data);
-                    }
-                });
-            },
-
-            addSelected: function (id) {
-                this.selected.push(parseInt(id));
-            },
-
-            removeSelected: function (id) {
-                this.selected.splice(this.selected.indexOf(parseInt(id)), 1);
-            },
-
-            setStock: function (stock) {
-                this.stock = stock;
-            },
-
-            alreadySelected: function () {
-                var selected = false;
-
-                this.selected.forEach(function (key) {
-                    if (key == this.data.id) selected = true;
-                }.bind(this));
-
-                return selected;
-            },
-
-            appendItem: function (e) {
-                // iniciamos el objeto
-                items.setItem(e.params.data);
-
-                if (items.alreadySelected()) {
-                    return;
-                }
-
-                var itemBag = $('#itemBag');
-
-                // chequeamos que el stock no sea 0
-                if (items.stock.plain < 1) {
-                    var $error = $('<label for="itemBag" class="control-label col-sm-8">' +
-                        items.data.desc + ' no se encuentra en existencia.' +
-                        '</label>');
-
-                    itemBag.append($error);
-
-                    // espera 10 segundo y activa la animacion
-                    $error.animate({opacity: 1}, 10000, 'linear', function () {
-                        $error.animate({opacity: 0}, 2000, 'linear', function () {
-                            $error.remove();
-                        });
-                    });
-
-                    return;
-                }
-
-                // como esta mamarrachada es muy grande, la
-                // segmentamos para que pueda ser mas facil de digerir
-                var itemInput = '<div class="itemBag-item" data-id="' + items.data.id + '">'
-                    + '<label for="itemBag" class="control-label col-sm-7">'
-                    + items.data.desc
-                    + '</label>'
-                    + '<div class="col-sm-2">' +
-                    '<input class="form-control" name="item-id-' + items.data.id + '" type="number" min="1" value="' + items.stock.plain + '" max="' + items.stock.plain + '">' +
-                    '<span class="help-block">' + items.stock.formatted + ' en total.' + '</span>' +
-                    '</div>';
-
-                var options = '';
-
-                // generamos las opciones que van dentro del select
-                Object.keys(stockTypes.types).forEach(function (key) {
-                    stockTypes.types[key].id == items.data.stock_type_id
-                        ? options += '<option value="' + stockTypes.types[key].id + '" selected="selected">' + stockTypes.types[key].desc + '</option>'
-                        : options += '<option value="' + stockTypes.types[key].id + '">' + stockTypes.types[key].desc + '</option>';
-                });
-
-                // este select contiene los tipos de cantidad
-                var select = '<div class="col-sm-3">  <div class="input-group">' +
-                    '<select class="form-control" name="stock-type-id-' +
-                    items.data.id + '">' + options + '</select>' +
-                    '<span class="input-group-addon itemBag-remove-item" ' +
-                    'data-id="' + items.data.id + '">' +
-                    '<i class="fa fa-times"></i></span>' +
-                    '</div>' +
-                    '</div>';
-
-                itemBag.append(itemInput + select);
-
-                items.addSelected(items.data.id);
-            }
-        };
-
         // mamarrachada de segundo orden
         $itemList.on("select2:select", function (e) {
-            items.appendItem(e);
+            items.appendItem(e, stockTypes, toggle);
 
             $('.itemBag-remove-item').click(function () {
                 var $item = $(this).closest('.itemBag-item');
@@ -288,20 +164,12 @@ ControlGroup::generate(
 
     <script>
         $(function () {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('input[name="_token"]').attr('value')
-                }
-            });
-
             var $formData = $('meta[name="form-data"]');
 
             // si no se esta editando, entonces no ocurre nada aca.
             if (!$formData.data('editing')) return;
-
-            var html = '<div class="col-xs-push-4 col-xs-4 text-center">' +
-                '<i class="fa fa-spinner fa-spin fa-5x"></i>' +
-                '</div>';
+            var ajaxSpinner = new Forms.AjaxSpinner($('#itemBag'));
+            ajaxSpinner.appendSpinner();
 
             function startAjax() {
                 $.ajax({
@@ -313,7 +181,7 @@ ControlGroup::generate(
                     },
                     success: function (data) {
                         var self = this;
-                        $('#itemBag').empty();
+                        ajaxSpinner.cleanSpinner();
                         Object.keys(data).forEach(function (key) {
                             var item = {
                                 params: {
@@ -322,7 +190,7 @@ ControlGroup::generate(
                             };
 
                             item.params.data = data[key];
-                            items.appendItem(item);
+                            items.appendItem(item, stockTypes, toggle);
                         });
 
                         $('.itemBag-remove-item').click(function () {
@@ -341,10 +209,7 @@ ControlGroup::generate(
                 })
             }
 
-            $('#itemBag').fadeOut(250, function () {
-                $('#itemBag').append(html).fadeIn(250);
-                startAjax();
-            });
+            startAjax();
         })
     </script>
 @stop

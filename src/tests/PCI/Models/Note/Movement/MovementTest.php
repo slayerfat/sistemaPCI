@@ -12,12 +12,14 @@ class MovementTest extends AbstractTestCase
 
     public function testType()
     {
-        $this->mockBasicModelRelation(
-            Movement::class,
-            'type',
-            'belongsTo',
-            MovementType::class
-        );
+        $mock = Mockery::mock(Movement::class)->makePartial();
+
+        $mock->shouldReceive('belongsTo')
+            ->once()
+            ->with(MovementType::class, 'movement_type_id')
+            ->andReturn('mocked');
+
+        $this->assertEquals('mocked', $mock->type());
     }
 
     public function testNote()

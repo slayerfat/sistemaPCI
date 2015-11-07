@@ -7,6 +7,7 @@ use Illuminate\Support\Collection;
 use PCI\Events\Note\NewNoteCreation;
 use PCI\Http\Controllers\Controller;
 use PCI\Http\Requests\Note\NoteRequest;
+use PCI\Models\Depot;
 use PCI\Models\NoteType;
 use PCI\Repositories\Interfaces\Note\NoteRepositoryInterface;
 use PCI\Repositories\Interfaces\User\PetitionRepositoryInterface;
@@ -118,6 +119,8 @@ class NotesController extends Controller
                 . ", "
                 . "Items: "
                 . $petition->itemCount . ", "
+                . "Tipo: "
+                . $petition->type->desc . ", "
                 . "Solicitado por: " . $petition->user->name
                 . ", " . $petition->user->email;
         });
@@ -170,40 +173,9 @@ class NotesController extends Controller
      */
     public function show($id)
     {
-        //
-    }
+        $note = $this->repo->find($id);
+        $depots = Depot::all();
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \PCI\Http\Requests\Note\NoteRequest $request
-     * @param  int                                $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(NoteRequest $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return View::make('notes.show', compact('note', 'depots'));
     }
 }

@@ -48,6 +48,15 @@ class NoteType extends AbstractBaseModel implements SluggableInterface
     ];
 
     /**
+     * Regresa el tipo de movimiento asociado asociadas.
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
+     */
+    public function movementType()
+    {
+        return $this->belongsTo(MovementType::class);
+    }
+
+    /**
      * Regresa una coleccion de notas asociadas.
      * @return \Illuminate\Database\Eloquent\Relations\hasMany
      */

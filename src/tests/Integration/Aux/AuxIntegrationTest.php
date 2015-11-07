@@ -7,8 +7,6 @@ use PCI\Models\ItemType;
 use PCI\Models\Maker;
 use PCI\Models\MovementType;
 use PCI\Models\Nationality;
-use PCI\Models\NoteType;
-use PCI\Models\PetitionType;
 use PCI\Models\Position;
 use PCI\Models\StockType;
 
@@ -19,65 +17,56 @@ class AuxIntegrationTest extends AbstractAuxIntegration
      * como estas entidades son tan genericas, solo se necesita
      * saber el nombre en la ruta , el alias y la clase para
      * crear nuevos registros y objetos en las vistas
+     *
      * @return array<string, string, \PCI\Models\AbstractBaseModel>
      */
     public function dataProvider()
     {
         return [
-            'test_0_cats'          => [
+            'test_cats'          => [
                 'categorias',
                 'cats',
-                Category::class
+                Category::class,
             ],
-            'test_1_depts'         => [
+            'test_depts'         => [
                 'departamentos',
                 'depts',
-                Department::class
+                Department::class,
             ],
-            'test_2_genders'       => [
+            'test_genders'       => [
                 'generos',
                 'genders',
-                Gender::class
+                Gender::class,
             ],
-            'test_3_itemTypes'     => [
+            'test_itemTypes'     => [
                 'tipos-item',
                 'itemTypes',
-                ItemType::class
+                ItemType::class,
             ],
-            'test_4_makers'        => [
+            'test_makers'        => [
                 'fabricantes',
                 'makers',
-                Maker::class
+                Maker::class,
             ],
-            'test_5_movementTypes' => [
+            'test_movementTypes' => [
                 'tipos-movimiento',
                 'movementTypes',
-                MovementType::class
+                MovementType::class,
             ],
-            'test_6_nats'          => [
+            'test_nats'          => [
                 'nacionalidades',
                 'nats',
-                Nationality::class
+                Nationality::class,
             ],
-            'test_7_noteTypes'     => [
-                'tipos-nota',
-                'noteTypes',
-                NoteType::class
-            ],
-            'test_8_petitionTypes' => [
-                'tipos-pedido',
-                'petitionTypes',
-                PetitionType::class
-            ],
-            'test_9_positions'     => [
+            'test_positions'     => [
                 'cargos',
                 'positions',
-                Position::class
+                Position::class,
             ],
-            'test_10_positions'    => [
+            'test_stockType'     => [
                 'tipos-cantidad',
                 'stockTypes',
-                StockType::class
+                StockType::class,
             ],
         ];
     }
@@ -88,8 +77,11 @@ class AuxIntegrationTest extends AbstractAuxIntegration
      * @param $class
      * @dataProvider dataProvider
      */
-    public function testAuxIndexShouldHaveTableWithValidInfo($route, $alias, $class)
-    {
+    public function testAuxIndexShouldHaveTableWithValidInfo(
+        $route,
+        $alias,
+        $class
+    ) {
         $this->actingAs($this->user)
             ->visit(route("$alias.index"))
             ->seePageIs("/$route")

@@ -3,6 +3,8 @@
 use Cviebrock\EloquentSluggable\SluggableInterface;
 use Cviebrock\EloquentSluggable\SluggableTrait;
 use ICanBoogie\Inflector;
+use PCI\Mamarrachismo\Converter\interfaces\StockTypeConverterInterface;
+use PCI\Mamarrachismo\Converter\StockTypeConverter;
 
 /** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
 
@@ -59,6 +61,7 @@ class Item extends AbstractBaseModel implements SluggableInterface
     /**
      * The attributes that are mass assignable.
      * fabricante, y demas es ok.
+     *
      * @var array
      */
     protected $fillable = [
@@ -74,6 +77,7 @@ class Item extends AbstractBaseModel implements SluggableInterface
 
     /**
      * Atributos que deben ser ocultos en array/json
+     *
      * @var array
      */
     protected $hidden = [
@@ -87,7 +91,8 @@ class Item extends AbstractBaseModel implements SluggableInterface
     ];
 
     /**
-     * Los datos necesarios para generarar un slug en el modelo.
+     * Los datos necesarios para generar un slug en el modelo.
+     *
      * @var array
      */
     protected $sluggable = [
@@ -100,45 +105,14 @@ class Item extends AbstractBaseModel implements SluggableInterface
      * dates se refiere a Carbon\Carbon dates.
      * En otras palabras, genera una instancia
      * de Carbon\Carbon para cada campo.
+     *
      * @var array
      */
     protected $dates = ['due'];
 
     /**
-     * Regresa el stock (cantidad total) en
-     * el inventario de este item.
-     * @return int
-     */
-    public function getStockAttribute()
-    {
-        return $this->stock();
-    }
-
-    /**
-     * Busca en la base de datos y regresa la sumatoria
-     * de los movimientos del item en los almacenes.
-     * @return int la suma de las cantidades en los almacenes.
-     */
-    public function stock()
-    {
-        return $this->attributes['stock'] = $this->depots()
-                                                 ->withPivot('quantity')
-                                                 ->sum('quantity');
-    }
-
-    /**
-     * Regresa una coleccion de almacenes en donde este item puede estar.
-     * @see v0.3.2 #35
-     * @link https://github.com/slayerfat/sistemaPCI/issues/35
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function depots()
-    {
-        return $this->belongsToMany('PCI\Models\Depot')->withPivot('quantity');
-    }
-
-    /**
      * Regresa el rubro asociado al item.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
     public function subCategory()
@@ -148,6 +122,7 @@ class Item extends AbstractBaseModel implements SluggableInterface
 
     /**
      * regresa el fabricante asociado.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
     public function maker()
@@ -157,6 +132,7 @@ class Item extends AbstractBaseModel implements SluggableInterface
 
     /**
      * Regresa el tipo de item.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
     public function type()
@@ -168,6 +144,7 @@ class Item extends AbstractBaseModel implements SluggableInterface
 
     /**
      * Regresa el tipo de item.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
     public function stockType()
@@ -178,6 +155,7 @@ class Item extends AbstractBaseModel implements SluggableInterface
     /**
      * Relacion unaria.
      * Regresa los items que dependen de otros items.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
      */
     public function dependsOn()
@@ -192,6 +170,7 @@ class Item extends AbstractBaseModel implements SluggableInterface
 
     /**
      * Regresa una coleccion de peticiones relacionadas con el item.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
      */
     public function petitions()
@@ -201,59 +180,217 @@ class Item extends AbstractBaseModel implements SluggableInterface
 
     /**
      * Regresa una coleccion de movimientos relacionadas con el item.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
      */
     public function movements()
     {
         return $this->belongsToMany('PCI\Models\Movement')
-                    ->withPivot('quantity', 'due');
+            ->withPivot('quantity', 'due');
     }
 
     /**
      * Regresa una coleccion de notas asociadas al item.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
      */
     public function notes()
     {
-        return $this->belongsToMany('PCI\Models\Note')->withPivot('quantity');
+        return $this->belongsToMany('PCI\Models\Note')
+            ->withPivot('quantity', 'stock_type_id');
     }
 
     /**
      * Regresa el porcentaje entre el stock y el stock minimo.
+     *
      * @return float
      */
     public function percentageStock()
     {
-        return ceil(($this->stock * 100) / $this->minimum);
+        return ceil(($this->stock() * 100) / $this->minimum);
+    }
+
+    /**
+     * Regresa el stock existente tomando en cuenta
+     * la cantidad ya reservada por los usuarios.
+     *
+     * @return float
+     */
+    public function stock()
+    {
+        $reserved = $this->reserved < 0 ? 0 : $this->reserved;
+
+        return $this->generateStock() - $reserved;
+    }
+
+    /**
+     * Busca en la base de datos y regresa la sumatoria
+     * de los movimientos del item en los almacenes.
+     *
+     * @return float la suma de las cantidades en los almacenes.
+     */
+    public function generateStock()
+    {
+        $converter = new StockTypeConverter($this);
+
+        if ($converter->isConvertible()) {
+            return $this->convertStock($converter);
+        }
+
+        // si el stock no es convertible, entonces se devuelve
+        // la suma del stock en todos los almacenes.
+        return $this->depots()
+            ->withPivot('quantity')
+            ->sum('quantity');
+    }
+
+    /**
+     * convierte el stock de diferentes tipos compatibles
+     * existente dentro de los almacenes.
+     *
+     * @param StockTypeConverterInterface $converter
+     * @return float
+     */
+    protected function convertStock(StockTypeConverterInterface $converter)
+    {
+        $stock  = 0;
+        $depots = $this->depots()
+            ->withPivot('quantity', 'stock_type_id')
+            ->get();
+
+        foreach ($depots as $depot) {
+            $stock += $converter->convert(
+                $depot->pivot->stock_type_id,
+                $depot->pivot->quantity
+            );
+        }
+
+        return $stock;
+    }
+
+    /**
+     * Regresa una coleccion de almacenes en donde este item puede estar.
+     *
+     * @see  v0.3.2 #35
+     * @link https://github.com/slayerfat/sistemaPCI/issues/35
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function depots()
+    {
+        return $this->belongsToMany('PCI\Models\Depot')
+            ->withPivot('quantity', 'stock_type_id');
+    }
+
+    /**
+     * Regresa el porcentaje entre el stock y el stock minimo.
+     *
+     * @return float
+     */
+    public function percentageReserved()
+    {
+        $stock = $this->realStock() <= 0 ? 1 : $this->realStock();
+
+        return ceil(($this->reserved * 100) / $stock);
+    }
+
+    /**
+     * Regresa el stock existente sin tomar en cuenta
+     * la cantidad ya reservada por los usuarios.
+     *
+     * @return float
+     */
+    public function realStock()
+    {
+        return $this->generateStock();
     }
 
     /**
      * Regresa la cantidad o stock existente del
      * item en formato legible para el usuario.
+     *
      * @return string si el item tiene 1, entonces 1 Unidad.
      */
     public function formattedStock()
     {
         $stock = $this->stock();
 
+        return $this->generateFormatted($stock);
+    }
+
+    /**
+     * @param $stock
+     * @return string
+     */
+    private function generateFormatted($stock)
+    {
+        $stock = $this->checkFloat($stock);
+
         return $this->formattedQuantity($stock);
+    }
+
+    /**
+     * Chequea que numero sea apropiado.
+     * de 1.00 -> 1.
+     *
+     * @param $number
+     * @return int
+     */
+    private function checkFloat($number)
+    {
+        if ($number == floor($number)) {
+            $number = (int)$number;
+
+            return $number;
+        }
+
+        return $number;
     }
 
     /**
      * Genera un string con el tipo de cantidad en plural o singular.
      * Solucion mamarracha.
-     * @param int $number
+     *
+     * @param int         $number el stock del item
+     * @param string|null $type   el tipo de stock
      * @return string si el item tiene 1, entonces 1 Unidad.
      */
-    public function formattedQuantity($number)
+    public function formattedQuantity($number, $type = null)
     {
+        $type = $type ? $type : $this->stockType->desc;
+
+        $number = $this->checkFloat($number);
+
         // como usualmente se dice cero unidades,
         // entonces tambien se pluraliza.
         if ($number == 1) {
-            return $number . ' ' . $this->stockType->desc;
+            return $number . ' ' . $type;
         }
 
         return $number . ' ' . Inflector::get('es')
-                                        ->pluralize($this->stockType->desc);
+            ->pluralize($type);
+    }
+
+    /**
+     * Regresa la cantidad o stock existente del
+     * item en formato legible para el usuario.
+     *
+     * @return string si el item tiene 1, entonces 1 Unidad.
+     */
+    public function formattedReserved()
+    {
+        return $this->generateFormatted($this->reserved);
+    }
+
+    /**
+     * Regresa la cantidad o stock existente del
+     * item en formato legible para el usuario.
+     *
+     * @return string si el item tiene 1, entonces 1 Unidad.
+     */
+    public function formattedRealStock()
+    {
+        $stock = $this->realStock();
+
+        return $this->generateFormatted($stock);
     }
 }

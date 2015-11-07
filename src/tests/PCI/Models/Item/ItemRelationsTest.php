@@ -39,9 +39,9 @@ class ItemRelationsTest extends AbstractTestCase
         $model = Mockery::mock(Item::class)->makePartial();
 
         $model->shouldReceive('belongsTo')
-              ->once()
-              ->with(ItemType::class, 'item_type_id')
-              ->andReturn('mocked');
+            ->once()
+            ->with(ItemType::class, 'item_type_id')
+            ->andReturn('mocked');
 
         $this->assertEquals('mocked', $model->type());
     }
@@ -52,14 +52,14 @@ class ItemRelationsTest extends AbstractTestCase
         $mock = Mockery::mock(Item::class)->makePartial();
 
         $mock->shouldReceive('belongsToMany')
-             ->once()
-             ->with(Depot::class)
-             ->andReturnSelf();
+            ->once()
+            ->with(Depot::class)
+            ->andReturnSelf();
 
         $mock->shouldReceive('withPivot')
-             ->once()
-             ->with('quantity')
-             ->andReturn('mocked');
+            ->once()
+            ->with('quantity', 'stock_type_id')
+            ->andReturn('mocked');
 
         $this->assertEquals('mocked', $mock->depots());
     }
@@ -125,7 +125,7 @@ class ItemRelationsTest extends AbstractTestCase
 
         $mock->shouldReceive('withPivot')
             ->once()
-            ->with('quantity')
+            ->with('quantity', 'stock_type_id')
             ->andReturn('mocked');
 
         $this->assertEquals('mocked', $mock->notes());

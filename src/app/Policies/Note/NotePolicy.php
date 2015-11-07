@@ -17,13 +17,17 @@ class NotePolicy
     /**
      * Por ahora actualizar no necesita condiciones especiales.
      *
-     * @param \PCI\Models\User $user
-     * @param \PCI\Models\Note $note
+     * @param \PCI\Models\User            $user
+     * @param \PCI\Models\Note            $note
+     * @param PetitionRepositoryInterface $repo
      * @return bool
      */
-    public function update(User $user, Note $note)
-    {
-        return $this->create($user, $note);
+    public function update(
+        User $user,
+        Note $note,
+        PetitionRepositoryInterface $repo
+    ) {
+        return $this->create($user, $note, $repo);
     }
 
     /**

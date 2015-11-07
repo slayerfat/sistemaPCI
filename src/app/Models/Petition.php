@@ -143,4 +143,24 @@ class Petition extends AbstractBaseModel
             'false' => 'No aprobado',
         ];
     }
+
+    /**
+     * Determina si la nota es de entrada.
+     *
+     * @return bool
+     */
+    public function isMovementTypeOut()
+    {
+        return !$this->isMovementTypeIn();
+    }
+
+    /**
+     * Determina si la nota es de entrada.
+     *
+     * @return bool
+     */
+    public function isMovementTypeIn()
+    {
+        return $this->type->movementType->isIn();
+    }
 }

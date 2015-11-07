@@ -3,6 +3,7 @@
 use PCI\Mamarrachismo\Converter\StockTypeConverter;
 use PCI\Models\Category;
 use PCI\Models\Item;
+use PCI\Models\MovementType;
 use PCI\Models\Petition;
 use PCI\Models\StockType;
 use PCI\Models\User;
@@ -156,6 +157,10 @@ class PetitionRepositoryTest extends AbstractRepositoryTestCase
     protected function makeModel()
     {
         $this->user = factory(User::class)->create();
+
+        // necesitamos tipo de movimiento para verificar pedido
+        factory(MovementType::class)->create(['desc' => 'Entrada']);
+        factory(MovementType::class)->create(['desc' => 'Salida']);
 
         // lastimosamente el pedido necesita muchos modelos.
         factory(Petition::class)->create(['user_id' => $this->user->id]);

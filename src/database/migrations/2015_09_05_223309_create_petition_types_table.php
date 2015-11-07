@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
 class CreatePetitionTypesTable extends Migration
 {
@@ -14,6 +14,10 @@ class CreatePetitionTypesTable extends Migration
     {
         Schema::create('petition_types', function (Blueprint $table) {
             $table->increments('id');
+            $table->unsignedInteger('movement_type_id'); // v0.4.2
+            $table->foreign('movement_type_id')
+                ->references('id')
+                ->on('movement_types');
             $table->string('desc', 30)->unique();
             $table->string('slug', 30)->unique();
             $table->timestamps();
