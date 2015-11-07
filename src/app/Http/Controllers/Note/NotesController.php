@@ -178,38 +178,4 @@ class NotesController extends Controller
 
         return View::make('notes.show', compact('note', 'depots'));
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \PCI\Http\Requests\Note\NoteRequest $request
-     * @param  int                                $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(NoteRequest $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }
