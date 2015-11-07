@@ -103,7 +103,12 @@ while true; do
     esac
 done
 echo "sistemaPCI es vida."
+sleep 1
 echo "sistemaPCI es amor."
+sleep 1
 echo "sistemaPCI es bien."
+sleep 1
 echo "sistemaPCI es todo."
+sleep 1
+echo "El sistemaPCI cambio mi vida. - Albert Einstein"
 echo "-------------------------------------------------------"
