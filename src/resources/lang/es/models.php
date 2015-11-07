@@ -246,6 +246,7 @@ return [
     'users.plural'                 => 'Cuentas',
     'users.singular'               => 'Cuenta',
     'users.fa-icon'                => 'users',
+    'users.store.create' => 'Cuenta creada exitosamente.',
     'users.store.success'          => 'Cuenta creada exitosamente.',
     'users.update.success'         => 'Cuenta actualizada exitosamente.',
     /**
