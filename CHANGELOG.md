@@ -4,6 +4,10 @@ Todos los cambios significativos en este proyecto estaran documentados en este a
 
 ## [En Desarrollo][unrele]
 
+---
+
+## [v0.4.2] - 2015-11-07
+
 ### Añadido
 
 - Creacion de Nota/movimientos y correos relacionados a estos.
@@ -284,7 +288,10 @@ Se crearon documentacion segun aspectos clave del sistema, para ser referenciado
   - `replace.php` deberia funcionar correctamente.
   - cypher deberia funcionar por cambio de strings de tamaño 32.
 
-[unrele]: https://github.com/slayerfat/sistemaPCI/compare/v0.4.1...develop
+[unrele]: https://github.com/slayerfat/sistemaPCI/compare/v0.4.5...develop
+[v0.4.5]: https://github.com/slayerfat/sistemaPCI/compare/v0.4.4...v0.4.5
+[v0.4.4]: https://github.com/slayerfat/sistemaPCI/compare/v0.4.3...v0.4.4
+[v0.4.3]: https://github.com/slayerfat/sistemaPCI/compare/v0.4.2...v0.4.3
 [v0.4.2]: https://github.com/slayerfat/sistemaPCI/compare/v0.4.1...v0.4.2
 [v0.4.1]: https://github.com/slayerfat/sistemaPCI/compare/v0.4.0...v0.4.1
 [v0.4.0]: https://github.com/slayerfat/sistemaPCI/compare/v0.3.6...v0.4.0

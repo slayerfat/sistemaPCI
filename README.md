@@ -5,18 +5,21 @@
 [![Code Climate](https://codeclimate.com/github/slayerfat/sistemaPCI/badges/gpa.svg)](https://codeclimate.com/github/slayerfat/sistemaPCI)
 [![Codacy Badge](https://api.codacy.com/project/badge/a1d556b5463d4a58890659bab739e53e)](https://www.codacy.com/app/slayerfat/sistemaPCI)
 
-Sistema de Gestion de Inventario Para la Division de Rehabilitacion Ocupacional.
+Sistema de Gestión de Inventario Para la Division de Rehabilitación Ocupacional.
 
-Misión Alma Mater, Programa Nacional de Formación: Informatica, Trayecto 3, IUTOMS.
+Misión Alma Mater, Programa Nacional de Formación: Informática, Trayecto 3, IUTOMS.
 
 - [x] v0.1 Usuario
 - [x] v0.2 Empleado
-- [x] v0.3 Almacen
+- [x] v0.3 Almacén
 - [x] v0.3.x Item
 - [x] v0.3.x Otros
 - [x] v0.4 Pedidos
 - [ ] v0.4.x Notas
-- [ ] v0.5 Carpinteria
+- [ ] v0.5 PDF
+- [ ] v0.6 Carpintería
+- [ ] v0.7 Eventos de negocio
+- [ ] v1.0 Alfa
 
 [Ver Bitacora](https://github.com/slayerfat/sistemaPCI/blob/master/CHANGELOG.md)
 
@@ -67,7 +70,7 @@ chmod u+x sistemaPCI/caimanismo.sh
 
 ## Dependencias del Sistema
 
-Para poder usar el software adecuadamente, es necesario instalar los siguientes paquetes de sofware y sus dependencias expresadas a continuacion.
+Para poder usar el software adecuadamente, es necesario instalar los siguientes paquetes de software y sus dependencias expresadas a continuación.
 
 **NOTA:** una vez completado los pasos necesarios para instalar las dependencias, es necesario ejecutar `gulp` en el directorio del sistema, ej: `~/sistemaPCI/src/$ gulp` 
 
@@ -82,7 +85,7 @@ Para chequear que node esta instalado en tu sistema debes hacer un `node -v` en 
 Una vez instalado Node: `npm install --global bower` y luego ejecutar `bower install` para instalar dependencias adicionales.
 
 ### Composer
-Tambien es necesario instalar [composer](https://getcomposer.org/).
+También es necesario instalar [composer](https://getcomposer.org/).
 
 ```
 curl -sS https://getcomposer.org/installer │ php
@@ -97,11 +100,11 @@ php -r "readfile('https://getcomposer.org/installer');" │ php
 mv composer.phar /usr/local/bin/composer
 ```
 
-Chequear que este instalado `composer -V` el sistema dira
+Chequear que este instalado `composer -V` el sistema dirá
 
 `Composer version 1.0.-* (...) fecha`
 
-si algo falla, chequear la documentacion de
+si algo falla, chequear la documentación de
 [composer](https://getcomposer.org/)
 
 ### Obtener las dependecias del sistema
@@ -116,7 +119,7 @@ _sistemaPCI/src/:_
 
 Si composer se queja sobre mcrypt o mysql es probable que no tengan los modulos correspondentes activados/instalados.
 
-Para ello deberan:
+Para ello deberán:
 
 `sudo apt-get install php5-mcrypt`
 
@@ -126,7 +129,7 @@ Para ello deberan:
 
 **Es de suma importancia chequear capacidad de rewrite si se pretende usar apache:** 
 
-para usar links amigables [es necesario configurar apache u otro servidor:](http://laraveles.com/docs/5.1/ "Documentacion")
+para usar links amigables [es necesario configurar apache u otro servidor:](http://laraveles.com/docs/5.1/ "Documentación")
 
 > El framework viene con un archivo public/.htaccess que se utiliza para permitir URLs sin index.php. 
 
@@ -141,21 +144,21 @@ para usar links amigables [es necesario configurar apache u otro servidor:](http
 > RewriteRule ^ index.php [L]
 > ```
 
-solucion sencilla: `sudo a2enmod rewrite`
+solución sencilla: `sudo a2enmod rewrite`
 
-solucion complicada: [este enlace es de ayuda](http://www.google.com "lo lamento")
+solución complicada: [este enlace es de ayuda](http://www.google.com "lo lamento")
 
-Si usan xampp, wampp, lampp, deberan referirse a la documentacion de php para esos paquetes, puesto que, si falla composer, es muy probable que sea debido a los binarios de PHP utilizados por su computadora.
+Si usan xampp, wampp, lampp, deberán referirse a la documentación de php para esos paquetes, puesto que, si falla composer, es muy probable que sea debido a los binarios de PHP utilizados por su computadora.
 
-Otra opcion es copiar el archivo de composer.phar a donde estan los archivos de php de xampp.
+Otra opción es copiar el archivo de composer.phar a donde están los archivos de php de xampp.
 
 *google es tu aliado*
 
-Si todo sale bien, debera generar las carpetas `vendor/` y `node_modules/` en donde estaran las dependecias.
+Si todo sale bien, debera generar las carpetas `vendor/` y `node_modules/` en donde estarán las dependencias.
 
 ### Sobre las dependencias
 
-Es importante destacar que cada branch puede tener diferentes dependencias, lo que implica hacer installs adicionales segun el branch.
+Es importante destacar que cada branch puede tener diferentes dependencias, lo que implica hacer installs adicionales según el branch.
 
 ### Gulp
 
@@ -178,7 +181,7 @@ se vera:
 [21:43:11] Finished 'copy' after 159 ms
 ```
 
-Tambien pueden hacer un `gulp watch` para autocompilar `scss` (sass).
+También pueden hacer un `gulp watch` para autocompilar `scss` (sass).
 
 ### Permisos
 
@@ -191,15 +194,15 @@ Se debe otorgar la escritura a laravel en estos directorios:
 ~/sistemaPCI/src/bootstrap
 ```
 
-la forma mas facil es: `chmod go+w -R src/storage && chmod go+w -R src/bootstrap`
+la forma mas fácil es: `chmod go+w -R src/storage && chmod go+w -R src/bootstrap`
 
-Si se quieren poner exoticos con los permisos, o cambiar el dueño de las carpetas en el sistema operativo, lo pueden hacer.
+Si se quieren poner exóticos con los permisos, o cambiar el dueño de las carpetas en el sistema operativo, lo pueden hacer.
 
 ## Base de datos
 
-Para instalar la base de datos en el sistema necesitan el archivo **.env** con la informacion de la base de datos.
+Para instalar la base de datos en el sistema necesitan el archivo **.env** con la información de la base de datos.
 
-En este archivo estan las variables usadas por mysql.
+En este archivo están las variables usadas por mysql.
 
 ```
 APP_ENV=local
@@ -236,7 +239,7 @@ cuando tengan el archivo pueden hacer un simple:
 
 y luego: `php src/artisan db:seed --class="PCI\Database\DatabaseSeeder"`
 
-si por alguna razon eso falla, pueden hacer un
+si por alguna razón eso falla, pueden hacer un
 
 ```
 php src/artisan migrate:reset && php src/artisan migrate && php src/artisan db:seed --class="PCI\Database\DatabaseSeeder"
@@ -244,7 +247,7 @@ php src/artisan migrate:reset && php src/artisan migrate && php src/artisan db:s
 
 y listo, la base de datos esta localmente en el sistema.
 
-Si falla pueden hacer un `composer dump-autoload` y reintentarlo, si vuelve a falla puden crear un [problema (issue) en github](https://github.com/slayerfat/sistemaPCI/issues) con el error y la descripcion del mismo.
+Si falla pueden hacer un `composer dump-autoload` y reintentarlo, si vuelve a falla pueden crear un [problema (issue) en github](https://github.com/slayerfat/sistemaPCI/issues) con el error y la descripción del mismo.
 
 ### Migraciones
 
@@ -311,7 +314,7 @@ sistemaPCI
 
 ## PHP3D Technology Required
 
-*PARA PODER MANIPULAR EL CODIGO FUENTE ES NECESARIO INSTALAR LA LIBRERIA PHP3D Y TENER AL MOMENTO DE MANIPULACION LOS LENTES ESPECIALES ADAPTADOS EN 3D PARA ESTA GLORIOSA LABOR.*
+*PARA PODER MANIPULAR EL CÓDIGO FUENTE ES NECESARIO INSTALAR LA LIBRERÍA PHP3D Y TENER AL MOMENTO DE MANIPULACIÓN LOS LENTES ESPECIALES ADAPTADOS EN 3D PARA ESTA GLORIOSA LABOR.*
 
 **ESTE CODIGO ESTA IMPLEMENTADO EN LOS TRES EJES ESPACIALES PRODUCIDOS EN PHP3D.**
 
@@ -323,7 +326,7 @@ _ADVERTENCIA: ESTE COGIDO FUENTE GENERA MIGRAÑA_
 
 Se creo un mega comando por medio de `Caimaneitor` se puede usar directamente en artisan con: `php src/artisan inspirar`.
 
-Tambien puede ser incluido en el sistema por medio de:
+También puede ser incluido en el sistema por medio de:
 
 ```php
 <?php
@@ -333,7 +336,7 @@ use PCI\Mamarrachismo\Caimaneitor\Caimaneitor;
 echo Caimaneitor::caimanais();
 ```
 
-tambien posee su Facade:
+también posee su Facade:
 
 ```php
 <?php
@@ -343,7 +346,7 @@ echo Caimaneitor::caimanais();
 
 o por medio de blade: `{{ Caimaneitor::caimanais() }}`
 
-Esta compleja implementacion fue inspirada por la inspiradora `Inspire: Inspired by Illuminate\Foundation\Inspiring`
+Esta compleja implementación fue inspirada por la inspiradora `Inspire: Inspired by Illuminate\Foundation\Inspiring`
 
 ## Situacion Bio-Psico-Social
 
@@ -363,7 +366,7 @@ Esta compleja implementacion fue inspirada por la inspiradora `Inspire: Inspired
 
 Este sistema usa el framework Laravel de PHP [documentacion](http://laravel.com/docs/5.1)
 
-El framework Laravel es software codigo-abierto bajo [MIT](http://opensource.org/licenses/MIT)
+El framework Laravel es software código-abierto bajo [MIT](http://opensource.org/licenses/MIT)
 
 ## Contribuciones al Repositorio
 
