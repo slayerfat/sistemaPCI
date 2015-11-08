@@ -7,6 +7,10 @@
     } else {
         $attributes = $defaults;
     }
+
+    if (!isset($spinner)) {
+        $spinner = false;
+    }
     ?>
     {!!
 
@@ -25,9 +29,11 @@
 </div>
 
 @section('js')
-    <script>
-        var largeSpinner = new Forms.LargeAjaxSpinner($('body'));
-        largeSpinner.onSubmit();
-    </script>
+    @if($spinner)
+        <script>
+            var largeSpinner = new Forms.LargeAjaxSpinner($('body'));
+            largeSpinner.onSubmit();
+        </script>
+    @endif
     @yield('form-js')
 @stop
