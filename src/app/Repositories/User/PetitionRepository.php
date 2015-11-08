@@ -288,11 +288,15 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
         $items->each(function ($item) use (&$results) {
             /** @var \PCI\Models\Item $item */
             $results->push([
-                'id'            => $item->id,
-                'desc'          => $item->desc,
-                'stock'         => $item->formattedStock(),
-                'quantity'      => $item->pivot->quantity,
-                'stock_type_id' => $item->pivot->stock_type_id,
+                'id'                 => $item->id,
+                'desc'               => $item->desc,
+                'stock'              => $item->formattedStock(),
+                'percentageStock'    => $item->percentageStock(),
+                'formattedReserved'  => $item->formattedReserved(),
+                'percentageReserved' => $item->percentageReserved(),
+                'due'                => $item->type->perishable,
+                'quantity'           => $item->pivot->quantity,
+                'stock_type_id'      => $item->pivot->stock_type_id,
             ]);
         });
 

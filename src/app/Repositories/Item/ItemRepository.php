@@ -9,9 +9,10 @@ use PCI\Repositories\ViewVariable\ViewPaginatorVariable;
 
 /**
  * Class ItemRepository
+ *
  * @package PCI\Repositories\Item
- * @author Alejandro Granadillo <slayerfat@gmail.com>
- * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
+ * @author  Alejandro Granadillo <slayerfat@gmail.com>
+ * @link    https://github.com/slayerfat/sistemaPCI Repositorio en linea.
  */
 class ItemRepository extends AbstractRepository implements ItemRepositoryInterface
 {
@@ -20,12 +21,14 @@ class ItemRepository extends AbstractRepository implements ItemRepositoryInterfa
 
     /**
      * El modelo en este caso es item.
+     *
      * @var \PCI\Models\Item
      */
     protected $model;
 
     /**
      * La implementacion del repositorio de categorias.
+     *
      * @var \PCI\Repositories\Interfaces\Aux\CategoryRepositoryInterface
      */
     private $catRepo;
@@ -33,11 +36,14 @@ class ItemRepository extends AbstractRepository implements ItemRepositoryInterfa
     /**
      * La instancia de este repositorio.
      * Necesita el repo de categorias para el listado de crear/editar item.
-     * @param \PCI\Models\AbstractBaseModel $model
+     *
+     * @param \PCI\Models\AbstractBaseModel                                $model
      * @param \PCI\Repositories\Interfaces\Aux\CategoryRepositoryInterface $catRepo
      */
-    public function __construct(AbstractBaseModel $model, CategoryRepositoryInterface $catRepo)
-    {
+    public function __construct(
+        AbstractBaseModel $model,
+        CategoryRepositoryInterface $catRepo
+    ) {
         parent::__construct($model);
         $this->catRepo = $catRepo;
     }
@@ -45,6 +51,7 @@ class ItemRepository extends AbstractRepository implements ItemRepositoryInterfa
     /**
      * Regresa variable con una coleccion y datos
      * adicionales necesarios para generar la vista.
+     *
      * @return \PCI\Repositories\ViewVariable\ViewPaginatorVariable
      */
     public function getIndexViewVariables()
@@ -55,6 +62,7 @@ class ItemRepository extends AbstractRepository implements ItemRepositoryInterfa
     /**
      * Genera un objeto LengthAwarePaginator con todos los
      * modelos en el sistema y con eager loading (si aplica).
+     *
      * @param int $quantity la cantidad a mostrar por pagina.
      * @return \Illuminate\Pagination\LengthAwarePaginator
      */
@@ -65,6 +73,7 @@ class ItemRepository extends AbstractRepository implements ItemRepositoryInterfa
 
     /**
      * Consigue todos los elementos y devuelve una coleccion.
+     *
      * @return \Illuminate\Database\Eloquent\Collection|null
      */
     public function getAll()
@@ -74,6 +83,7 @@ class ItemRepository extends AbstractRepository implements ItemRepositoryInterfa
 
     /**
      * Busca algun Elemento segun Id u otra regla.
+     *
      * @param  string|int $id El identificador unico (slug|name|etc|id).
      * @return \PCI\Models\AbstractBaseModel
      */
@@ -84,6 +94,7 @@ class ItemRepository extends AbstractRepository implements ItemRepositoryInterfa
 
     /**
      * Persiste informacion referente a una entidad.
+     *
      * @param array $data El array con informacion del modelo.
      * @return \PCI\Models\AbstractBaseModel
      */
@@ -100,7 +111,8 @@ class ItemRepository extends AbstractRepository implements ItemRepositoryInterfa
     /**
      * Actualiza algun modelo y lo persiste
      * en la base de datos del sistema.
-     * @param int $id El identificador unico.
+     *
+     * @param int   $id   El identificador unico.
      * @param array $data El arreglo con informacion relacionada al modelo.
      * @return \PCI\Models\AbstractBaseModel
      */
@@ -116,6 +128,7 @@ class ItemRepository extends AbstractRepository implements ItemRepositoryInterfa
 
     /**
      * Elimina del sistema un modelo.
+     *
      * @param int $id El identificador unico.
      * @return boolean|\PCI\Models\AbstractBaseModel
      */
@@ -127,6 +140,7 @@ class ItemRepository extends AbstractRepository implements ItemRepositoryInterfa
     /**
      * Devuelve un array asociativo con
      * las categorias y subcategorias.
+     *
      * @return array[]
      */
     public function getSubCatsLists()
@@ -139,8 +153,9 @@ class ItemRepository extends AbstractRepository implements ItemRepositoryInterfa
     /**
      * Busca items en la base de datos segun la
      * data proveniente y regresa un paginador.
+     *
      * @param array $data
-     * @param int $amount la cantidad a mostrar por pagina.
+     * @param int   $amount la cantidad a mostrar por pagina.
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
     public function getIndexJsonWithSearch(array $data, $amount = 10)
@@ -153,6 +168,7 @@ class ItemRepository extends AbstractRepository implements ItemRepositoryInterfa
 
     /**
      * Regresa el stock o cantidad en formato legible
+     *
      * @param string|int $id el slug o id
      * @return array el resultado con el stock
      */
@@ -162,9 +178,9 @@ class ItemRepository extends AbstractRepository implements ItemRepositoryInterfa
         $item = $this->getBySlugOrId($id);
 
         return [
-            'plain' => $item->stock(),
-            'formatted' => $item->formattedStock(),
-            'real' => $item->realStock(),
+            'plain'         => $item->stock(),
+            'formatted'     => $item->formattedStock(),
+            'real'          => $item->realStock(),
             'formattedReal' => $item->formattedRealStock(),
         ];
     }
@@ -176,8 +192,10 @@ class ItemRepository extends AbstractRepository implements ItemRepositoryInterfa
      * Como cada repositorio contiene modelos con
      * estructuras diferentes, necesitamos
      * manener este metodo abstracto.
+     *
      * @param \PCI\Models\AbstractBaseModel|\PCI\Models\Item $model
-     * @return array<string, string> En donde el key es el titulo legible del campo.
+     * @return array<string, string> En donde el key es el titulo legible del
+     *                       campo.
      */
     protected function makePaginatorData(AbstractBaseModel $model)
     {
@@ -185,7 +203,7 @@ class ItemRepository extends AbstractRepository implements ItemRepositoryInterfa
         return [
             'uid'         => $model->id,
             'Descripción' => $model->desc,
-            'Stock' => $model->formattedStock(),
+            'Stock'       => $model->formattedStock(),
             'Rubro'       => $model->subCategory->desc,
             'Fabricante'  => $model->maker->desc,
         ];
