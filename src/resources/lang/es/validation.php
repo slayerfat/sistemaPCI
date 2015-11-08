@@ -105,5 +105,6 @@ return [
         'priority'         => 'Prioridad',
         'minimum'          => 'Mínimo',
         'comments'         => 'Comentarios',
+        'perishable'       => 'Perecible',
     ],
 ];

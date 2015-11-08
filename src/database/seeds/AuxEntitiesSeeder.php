@@ -56,8 +56,8 @@ class AuxEntitiesSeeder extends AbstractSeeder
                 ['desc' => 'Gerencia General', 'phone' => $faker->phoneNumber],
             ],
             'PCI\Models\ItemType'     => [
-                ['desc' => 'Perecedero'],
-                ['desc' => 'No Perecedero'],
+                ['desc' => 'Perecedero', 'perishable' => true],
+                ['desc' => 'No Perecedero', 'perishable' => false],
             ],
             'PCI\Models\Maker'        => [
                 ['desc' => 'Empresa X'],
@@ -147,7 +147,6 @@ class AuxEntitiesSeeder extends AbstractSeeder
         return [
             'PCI\Models\Category',
             'PCI\Models\Gender',
-            'PCI\Models\ItemType',
             'PCI\Models\Maker',
             'PCI\Models\MovementType',
             'PCI\Models\Nationality',

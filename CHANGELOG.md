@@ -4,7 +4,10 @@ Todos los cambios significativos en este proyecto estaran documentados en este a
 
 ## [En Desarrollo][unrele]
 
----
+### Añadido
+
+- Tipo de items poseen atributo por defecto no perecedero (es necesario para determinar si un item es o no perecedero si el usuario crea tipo de items adicionales).
+- Fecha de vencimiento relacionada con items en notas (y en movimientos).
 
 ## [v0.4.2] - 2015-11-07
 
@@ -49,7 +52,6 @@ Todos los cambios significativos en este proyecto estaran documentados en este a
 
 - Pivote de Pedido no tenia tipo de stock.
 - Añadido trans en algunas vistas.
-
 
 ## [v0.3.5] - 2015-10-03
 

@@ -3,7 +3,6 @@
 use PCI\Models\Category;
 use PCI\Models\Department;
 use PCI\Models\Gender;
-use PCI\Models\ItemType;
 use PCI\Models\Maker;
 use PCI\Models\MovementType;
 use PCI\Models\Nationality;
@@ -37,11 +36,6 @@ class AuxIntegrationTest extends AbstractAuxIntegration
                 'generos',
                 'genders',
                 Gender::class,
-            ],
-            'test_itemTypes'     => [
-                'tipos-item',
-                'itemTypes',
-                ItemType::class,
             ],
             'test_makers'        => [
                 'fabricantes',

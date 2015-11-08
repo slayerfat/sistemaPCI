@@ -85,6 +85,13 @@ $factory->defineAs(PCI\Models\Item::class, 'full', function () use ($factory) {
     ]);
 });
 
+$factory->define(PCI\Models\ItemType::class, function () use ($faker) {
+    return [
+        'desc'       => $faker->text(40),
+        'perishable' => false,
+    ];
+});
+
 $factory->define(PCI\Models\Movement::class, function () use ($faker) {
     return [
         'movement_type_id' => 1,

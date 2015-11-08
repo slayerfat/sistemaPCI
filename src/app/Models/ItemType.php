@@ -34,12 +34,14 @@ class ItemType extends AbstractBaseModel implements SluggableInterface
 
     /**
      * The attributes that are mass assignable.
+     *
      * @var array
      */
-    protected $fillable = ['desc'];
+    protected $fillable = ['desc', 'perishable'];
 
     /**
      * Los datos necesarios para generarar un slug en el modelo.
+     *
      * @var array
      */
     protected $sluggable = [
@@ -48,7 +50,26 @@ class ItemType extends AbstractBaseModel implements SluggableInterface
     ];
 
     /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopePerishable($query)
+    {
+        return $query->where('perishable', true);
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeNotPerishable($query)
+    {
+        return $query->where('perishable', false);
+    }
+
+    /**
      * Regresa una coleccion de items asociados.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\hasMany
      */
     public function items()
