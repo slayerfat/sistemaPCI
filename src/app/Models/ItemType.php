@@ -49,6 +49,15 @@ class ItemType extends AbstractBaseModel implements SluggableInterface
         'save_to'    => 'slug',
     ];
 
+    public function getPerishableAttribute($value)
+    {
+        if (is_bool($value)) {
+            return $value;
+        }
+
+        return $value == "0" ? false : true;
+    }
+
     /**
      * @param \Illuminate\Database\Eloquent\Builder $query
      * @return \Illuminate\Database\Eloquent\Builder
