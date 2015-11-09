@@ -137,7 +137,7 @@ class PetitionsController extends Controller
 
         $petition = $this->repo->find($request->input('id'));
 
-        $items = $this->repo->getItemsCollection($petition->items);
+        $items = $this->repo->getItemsCollection($petition->items->load('type'));
 
         return Response::json($items->toArray());
     }
