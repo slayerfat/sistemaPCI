@@ -1,8 +1,7 @@
 <meta name="form-data"
       data-petition-items-url="{{ route('api.petitions.items') }}"
       data-model-movement-type-url="{{ route('api.notes.movementTypes') }}"
-      data-petition-items-id="{{ $petitions->first()->id }}"
-      data-editing="{{ $petitions->first()->id ? "true" : "false" }}">
+      data-petition-items-id="{{ $petitions->first()->id }}">
 
 {!!
 
@@ -82,9 +81,6 @@ ControlGroup::generate(
         ajaxSpinner.appendSpinner();
 
         $(function () {
-            // si no se esta editando, entonces no ocurre nada aca.
-            if (!$formData.data('editing')) return;
-
             $('#petition_id').change(function () {
                 $formData.data('petition-items-id', $(this).val());
                 items.resetSelected();

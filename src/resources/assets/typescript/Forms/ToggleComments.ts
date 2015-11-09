@@ -11,7 +11,7 @@ module Forms {
          * Como los comentarios llegan sucios, debemos limpiarlos
          * cuando estamos creando un nuevo formulario (pedido/notas, etc).
          */
-        public toggle() {
+        public toggle():void {
             var val = this.$element.val();
 
             if ($('meta[name="form-data"]').data('editing')) return;
