@@ -156,7 +156,7 @@ ControlGroup::generate(
             $('.itemBag-remove-item').click(function () {
                 var $item = $(this).closest('.itemBag-item');
                 var id = $item.data('id');
-                $item.toggle(function () {
+                $item.fadeToggle(function () {
                     items.removeSelected(id);
                     $item.remove()
                 });

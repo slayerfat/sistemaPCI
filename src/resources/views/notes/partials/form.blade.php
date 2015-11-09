@@ -77,7 +77,7 @@ ControlGroup::generate(
         var ajaxSpinner = new Forms.AjaxSpinner($('#itemBag'));
 
         // operaciones iniciales
-        toggle.selectWatcher($select);
+        toggle.selectWatcher($select, $('#petition_id'));
         ajaxSpinner.appendSpinner();
 
         $(function () {
@@ -119,7 +119,7 @@ ControlGroup::generate(
                         var $item = $element.closest('.itemBag-item');
                         var id = $item.data('id');
 
-                        $item.toggle(function () {
+                        $item.fadeToggle(function () {
                             items.removeSelected(id);
                             $item.remove()
                         });

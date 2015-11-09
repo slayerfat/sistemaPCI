@@ -42,11 +42,14 @@ module Petition {
             }
         }
 
-        public selectWatcher($element:JQuery):Petition.MovementTypeToggle {
+        public selectWatcher($element:JQuery, $related:JQuery = null):Petition.MovementTypeToggle {
             var self = this;
             $element.change(function () {
                 self.id = $(this).val();
                 self.getModel();
+                if ($related !== null) {
+                    $related.trigger('change');
+                }
             });
 
             return this;
