@@ -297,6 +297,7 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
                 'due'                => $item->type->perishable,
                 'quantity'           => $item->pivot->quantity,
                 'stock_type_id'      => $item->pivot->stock_type_id,
+                'type'               => $item->type,
             ]);
         });
 
