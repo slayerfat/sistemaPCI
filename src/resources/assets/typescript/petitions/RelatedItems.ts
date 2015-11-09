@@ -220,11 +220,20 @@ module Petition {
             // segmentamos para que pueda ser mas facil de digerir
             var itemInput = this.makeItemInput();
             var options = this.makeSelectOptions(stockTypes, self);
-            //
-            var select = this.makeSelect(options);
+
+            var id = 'item-due-date-' + this.data.id;
+            var select = this.makeSelect(options, id);
 
             $itemBag.append(itemInput + select);
             toggle.changeInputs();
+
+            if (this.data.type.perishable) {
+                $('#'+id).datepicker({
+                    language: 'es',
+                    format: 'yyyy-mm-dd',
+                    todayHighlight: true
+                });
+            }
         }
 
         /**
@@ -274,14 +283,15 @@ module Petition {
          * cantidad y fecha de vencimiento.
          *
          * @param options
+         * @param id
          * @returns {string}
          */
-        private makeSelect(options)
+        private makeSelect(options, id)
         {
             var dateInput = '<input class="form-control help-block" ' +
                 'name="item-due-date-' + this.data.id + '"' +
                 'placeholder="Fecha de Vto."' +
-                'id="item-due-date-' + this.data.id + '">';
+                'id="' + id + '">';
 
             var string = '<div class="col-sm-3">  <div class="input-group">' +
                 '<select class="form-control" name="stock-type-id-' +
@@ -291,6 +301,8 @@ module Petition {
                 '<i class="fa fa-times"></i></span>' +
                 '</div>';
 
+            // necesitamos saber si el item es perecedero
+            // para poner o no la seleccion de fecha de vencimiento.
             if (this.data.type.perishable) {
                 return string + dateInput + '</div>';
             }
