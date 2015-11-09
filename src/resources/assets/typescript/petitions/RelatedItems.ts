@@ -18,6 +18,12 @@ module Petition {
         public selected:number[];
 
         /**
+         * Necesario para saber que tipo de
+         * formulario esta asociado a esta clase.
+         */
+        public formType: string;
+
+        /**
          * Usado para determinar si algun tipo de movimiento fue cambiado o no
          */
         public checkSelected:{
@@ -36,7 +42,7 @@ module Petition {
             formattedReal: string
         };
 
-        constructor() {
+        constructor(formType:string) {
             this.data = {
                 id: null,
                 desc: '',
@@ -57,6 +63,8 @@ module Petition {
             };
 
             this.selected = [];
+
+            this.formType = formType;
         }
 
         /**
@@ -227,13 +235,23 @@ module Petition {
             $itemBag.append(itemInput + select);
             toggle.changeInputs();
 
-            if (this.data.type.perishable) {
+            if (this.canAddDueDate()) {
                 $('#'+id).datepicker({
                     language: 'es',
                     format: 'yyyy-mm-dd',
                     todayHighlight: true
                 });
             }
+        }
+
+        private canAddDueDate()
+        {
+            if (this.formType === null || this.formType === undefined) {
+                return false;
+            }
+
+            return this.data.type.perishable
+                && this.formType.toLowerCase() == 'note';
         }
 
         /**
@@ -289,7 +307,7 @@ module Petition {
         private makeSelect(options, id)
         {
             var dateInput = '<input class="form-control help-block" ' +
-                'name="item-due-date-' + this.data.id + '"' +
+                'name="due-date-value-' + this.data.id + '"' +
                 'placeholder="Fecha de Vto."' +
                 'id="' + id + '">';
 
@@ -303,7 +321,7 @@ module Petition {
 
             // necesitamos saber si el item es perecedero
             // para poner o no la seleccion de fecha de vencimiento.
-            if (this.data.type.perishable) {
+            if (this.canAddDueDate()) {
                 return string + dateInput + '</div>';
             }
 
