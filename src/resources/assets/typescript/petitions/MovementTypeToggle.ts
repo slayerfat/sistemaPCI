@@ -1,17 +1,19 @@
 /// <reference path="../../../../../typings/tsd.d.ts" />
 
-module Petition {
-    export class MovementTypeToggle {
+module Petition
+{
+    export class MovementTypeToggle
+    {
 
         /**
          * El id del modelo
          */
-        public id:number;
+        public id: number;
 
         /**
          * El url a donde apunta el ajax
          */
-        public url:string;
+        public url: string;
 
         /**
          * El metodo que ajax necesita
@@ -33,8 +35,8 @@ module Petition {
          * @param id
          * @param url
          */
-        constructor(id:number = null, url:string = null) {
-            this.id = id;
+        constructor(id: number = null, url: string = null) {
+            this.id  = id;
             this.url = url;
 
             if (this.id && this.url) {
@@ -42,7 +44,10 @@ module Petition {
             }
         }
 
-        public selectWatcher($element:JQuery, $related:JQuery = null):Petition.MovementTypeToggle {
+        public selectWatcher(
+            $element: JQuery,
+            $related: JQuery = null
+        ): Petition.MovementTypeToggle {
             var self = this;
             $element.change(function () {
                 self.id = $(this).val();
@@ -60,7 +65,7 @@ module Petition {
          * la selecccion y chequea que el input sea valido.
          * @returns {Petition.MovementTypeToggle}
          */
-        public getModel():Petition.MovementTypeToggle {
+        public getModel(): Petition.MovementTypeToggle {
             var self = this;
 
             var request = $.ajax({
@@ -74,7 +79,7 @@ module Petition {
 
             request.done(function (data) {
                 if (data.status == true) {
-                    self._model.data = data.model;
+                    self._model.data    = data.model;
                     self._model.ingress = data.ingress;
                     self.changeInputs();
                 } else if (data.status == false) {
@@ -95,7 +100,7 @@ module Petition {
          * Cambia el input de algun item sabiendo el stock y el tipo de movimiento.
          * @returns {Petition.MovementTypeToggle}
          */
-        public changeInputs():Petition.MovementTypeToggle {
+        public changeInputs(): Petition.MovementTypeToggle {
             var $element = $('.model-number-input');
 
             if ($element.length < 1) {
@@ -124,7 +129,7 @@ module Petition {
          * stock sea apropiado para entrada o salida.
          * @param $element
          */
-        private checkInputValue($element:JQuery):void {
+        private checkInputValue($element: JQuery): void {
             // controla los items que han sido sacados de los ya seleccionados.
             var i = 0;
 
@@ -132,7 +137,7 @@ module Petition {
             var removedItems = false;
 
             $element.each((key, HTMLElement) => {
-                var $input = $(HTMLElement);
+                var $input        = $(HTMLElement);
                 var originalStock = $input.data('stock-plain');
 
                 if (originalStock === undefined) {
@@ -170,7 +175,7 @@ module Petition {
                 var string = i == 1
                     ? 'Removido 1 Item sin existencia.'
                     : 'Removidos ' + i + ' Items sin existencia.';
-                var html = '<div class="remove-item-msg">' +
+                var html   = '<div class="remove-item-msg">' +
                     '<label for="itemBag" class="control-label col-sm-8">' +
                     string + '</label></div>';
 
@@ -189,7 +194,7 @@ module Petition {
          * Nos interesa saber si el modelo es de tipo entrada o salida
          * @returns {boolean}
          */
-        public isModelIngress():boolean {
+        public isModelIngress(): boolean {
             return this._model.ingress === true;
         }
 
@@ -197,7 +202,7 @@ module Petition {
          * Nos interesa saber si el modelo es de tipo entrada o salida.
          * @returns {boolean}
          */
-        public isModelEgress():boolean {
+        public isModelEgress(): boolean {
             return !this.isModelIngress();
         }
 
@@ -206,7 +211,7 @@ module Petition {
          * @param value
          * @returns {number}
          */
-        private findInputMinimum(value:number):number {
+        private findInputMinimum(value: number): number {
             if (value < .001) {
                 return .00001
             }
@@ -219,7 +224,7 @@ module Petition {
          * @param value
          * @returns {number}
          */
-        private findOptimalStep(value:number):number {
+        private findOptimalStep(value: number): number {
             var x = 10, i = -5;
 
             for (i; i <= 12; i++) {

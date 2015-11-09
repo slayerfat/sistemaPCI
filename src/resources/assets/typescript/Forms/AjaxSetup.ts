@@ -1,8 +1,10 @@
 /// <reference path="../../../../../typings/tsd.d.ts" />
 
-module Forms {
-    export class AjaxSetup {
-        constructor(public value:string) {
+module Forms
+{
+    export class AjaxSetup
+    {
+        constructor(public value: string) {
         }
 
         /**
@@ -10,7 +12,7 @@ module Forms {
          * token al momento de hacer la peticion ajax.
          * @private
          */
-        public setLaravelToken():void {
+        public setLaravelToken(): void {
             if (this.value) {
                 return $.ajaxSetup({
                     headers: {

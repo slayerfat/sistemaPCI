@@ -1,24 +1,26 @@
 /// <reference path="../../../../../typings/tsd.d.ts" />
 
-module Forms {
-    export class Message {
+module Forms
+{
+    export class Message
+    {
 
         /**
          * la representacion del elemento por defecto
          * @type {string}
          */
-        private HTML:string;
+        private HTML: string;
 
-        private id:string;
+        private id: string;
 
         /**
          * algun elemento ya existente
          */
-        public $element:JQuery;
+        public $element: JQuery;
 
-        constructor($element?:JQuery) {
-            var id = Math.random().toString(8).slice(2);
-            this.id = '#' + id;
+        constructor($element?: JQuery) {
+            var id    = Math.random().toString(8).slice(2);
+            this.id   = '#' + id;
             this.HTML = '<div ' + 'id="' + id + '"' +
                 'class="message-generic alert" ' +
                 'style="display:none;">' +
@@ -41,7 +43,12 @@ module Forms {
          * @param timer
          * @param func
          */
-        createMessage(msg:string, classes:string, timer = 10000, func?:(any:any) => any):void {
+        createMessage(
+            msg: string,
+            classes: string,
+            timer = 10000,
+            func?: (any: any) => any
+        ): void {
             this.$element
                 .removeClass('alert alert-danger alert-success')
                 .addClass(classes)
@@ -60,7 +67,7 @@ module Forms {
         /**
          * cambia el estado del mensaje ya creado.
          */
-        toggleMessage():void {
+        toggleMessage(): void {
             this.$element.fadeToggle(1000, function () {
                 $(this).children().empty();
             });

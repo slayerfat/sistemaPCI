@@ -3,9 +3,11 @@
 /// <reference path="RelatedStockType.ts"/>
 /// <reference path="../Models/Interfaces/Item/Item.ts"/>
 
-module Petition {
+module Petition
+{
     import Item = Models.Interfaces.Item;
-    export class RelatedItems {
+    export class RelatedItems
+    {
         /**
          * La informacion relacionada con UN item en
          * particular (el que se esta manipulando)
@@ -15,7 +17,7 @@ module Petition {
         /**
          * el arreglo de Ids de los items seleccionados.
          */
-        public selected:number[];
+        public selected: number[];
 
         /**
          * Necesario para saber que tipo de
@@ -26,7 +28,7 @@ module Petition {
         /**
          * Usado para determinar si algun tipo de movimiento fue cambiado o no
          */
-        public checkSelected:{
+        public checkSelected: {
             lastSelected: boolean,
             selected: boolean,
             didNotChange: boolean
@@ -35,15 +37,14 @@ module Petition {
         /**
          * La informacion del stock del item siendo manipulado
          */
-        public stock:{
+        public stock: {
             plain: number,
             formatted: string
             real: number
             formattedReal: string
         };
 
-        constructor(formType: string = null)
-        {
+        constructor(formType: string = null) {
             this.data = {
                 id: null,
                 desc: '',
@@ -72,7 +73,7 @@ module Petition {
          * Añade algun item a la data y busca su stock.
          * @param data
          */
-        public setItem(data):Petition.RelatedItems {
+        public setItem(data): Petition.RelatedItems {
             this.data = data;
             this.grabItemStock(this.data);
 
@@ -83,7 +84,7 @@ module Petition {
          * Llama al api para determinar el stock de un Item cualquiera
          * @param item
          */
-        public grabItemStock(item):Petition.RelatedItems {
+        public grabItemStock(item): Petition.RelatedItems {
             $.ajax({
                 url: '/api/items/stock/' + item.id,
                 dataType: 'json',
@@ -100,7 +101,7 @@ module Petition {
          * Añade el id de algun item para saber si esta seleccionado o no
          * @param id
          */
-        public addSelected(id):Petition.RelatedItems {
+        public addSelected(id): Petition.RelatedItems {
             this.selected.push(parseInt(id));
 
             return this;
@@ -110,7 +111,7 @@ module Petition {
          * Remueve el id de algun item de los que estan seleccionados
          * @param id
          */
-        public removeSelected(id):Petition.RelatedItems {
+        public removeSelected(id): Petition.RelatedItems {
             this.selected.splice(this.selected.indexOf(parseInt(id)), 1);
 
             return this;
@@ -119,7 +120,7 @@ module Petition {
         /**
          * Remueve TODOS los items seleccionados
          */
-        public resetSelected():Petition.RelatedItems {
+        public resetSelected(): Petition.RelatedItems {
             this.selected = [];
 
             return this;
@@ -129,7 +130,7 @@ module Petition {
          * Actualiza el stock de un item cualquiera
          * @param stock
          */
-        public setStock(stock):Petition.RelatedItems {
+        public setStock(stock): Petition.RelatedItems {
             this.stock = stock;
 
             return this;
@@ -139,7 +140,7 @@ module Petition {
          * chequea que el item seleccionado exista o no en el grupo de items.
          * @returns {boolean}
          */
-        public alreadySelected():boolean {
+        public alreadySelected(): boolean {
             var selected = false;
 
             this.selected.forEach(function (key) {
@@ -153,13 +154,14 @@ module Petition {
          * chequea que el elemento seleccionado no haya cambiado.
          * @returns {boolean}
          */
-        public selectedStockChange(status:boolean):boolean {
+        public selectedStockChange(status: boolean): boolean {
             this.checkElement(status);
 
             this.checkSelected.selected = status;
             if (this.checkSelected.lastSelected === this.checkSelected.selected
                 && this.checkSelected.lastSelected !== null
-            ) {
+            )
+            {
                 return this.checkSelected.didNotChange = true;
             }
 
@@ -174,7 +176,11 @@ module Petition {
          * @param stockTypes
          * @param toggle
          */
-        public appendItem(e, stockTypes:stockTypes, toggle:MovementTypeToggle):Petition.RelatedItems {
+        public appendItem(
+            e,
+            stockTypes: stockTypes,
+            toggle: MovementTypeToggle
+        ): Petition.RelatedItems {
             try {
                 this.checkElement(e).checkElement(stockTypes).checkElement(toggle);
             } catch (e) {
@@ -199,7 +205,10 @@ module Petition {
             return this;
         }
 
-        private continueAppending(stockTypes:stockTypes, toggle:MovementTypeToggle):void {
+        private continueAppending(
+            stockTypes: stockTypes,
+            toggle: MovementTypeToggle
+        ): void {
             var $itemBag = $('#itemBag');
 
             // chequeamos que el stock no sea 0
@@ -223,21 +232,25 @@ module Petition {
          * @param $itemBag
          * @param toggle
          */
-        private appendCorrectItem(stockTypes:stockTypes, $itemBag:JQuery, toggle:MovementTypeToggle):void {
+        private appendCorrectItem(
+            stockTypes: stockTypes,
+            $itemBag: JQuery,
+            toggle: MovementTypeToggle
+        ): void {
             var self = this;
             // como esta mamarrachada es muy grande, la
             // segmentamos para que pueda ser mas facil de digerir
             var itemInput = this.makeItemInput();
-            var options = this.makeSelectOptions(stockTypes, self);
+            var options   = this.makeSelectOptions(stockTypes, self);
 
-            var id = 'item-due-date-' + this.data.id;
+            var id     = 'item-due-date-' + this.data.id;
             var select = this.makeSelect(options, id);
 
             $itemBag.append(itemInput + select);
             toggle.changeInputs();
 
             if (this.canAddDueDate()) {
-                $('#'+id).datepicker({
+                $('#' + id).datepicker({
                     language: 'es',
                     format: 'yyyy-mm-dd',
                     todayHighlight: true
@@ -250,8 +263,7 @@ module Petition {
          *
          * @returns {boolean}
          */
-        private canAddDueDate(): boolean
-        {
+        private canAddDueDate(): boolean {
             if (this.formType === null || this.formType === undefined) {
                 return false;
             }
@@ -265,8 +277,7 @@ module Petition {
          *
          * @returns {string}
          */
-        private makeItemInput(): string
-        {
+        private makeItemInput(): string {
             return '<div class="itemBag-item" data-id="' + this.data.id + '">'
                 + '<label for="itemBag" class="control-label col-sm-7">'
                 + this.data.desc
@@ -288,8 +299,7 @@ module Petition {
          * @param self
          * @returns {string}
          */
-        private makeSelectOptions(stockTypes, self): string
-        {
+        private makeSelectOptions(stockTypes, self): string {
             var options = '';
 
             // generamos las opciones que van dentro del select
@@ -310,8 +320,7 @@ module Petition {
          * @param id
          * @returns {string}
          */
-        private makeSelect(options, id): string
-        {
+        private makeSelect(options, id): string {
             var dateInput = '<input class="form-control help-block" ' +
                 'name="due-date-value-' + this.data.id + '"' +
                 'placeholder="Fecha de Vto."' +
@@ -338,7 +347,7 @@ module Petition {
          * Genera un elemento con un mensaje de error que se oculta automaticamente.
          * @param $itemBag
          */
-        private appendErrorMsg($itemBag):void {
+        private appendErrorMsg($itemBag): void {
             var $error = $('<label for="itemBag" class="control-label col-sm-8">' +
                 this.data.desc + ' no se encuentra en existencia.' +
                 '</label>');
@@ -360,11 +369,13 @@ module Petition {
          * @param toggle
          * @param func version mamarracha de una funcion anonima
          */
-        public appendStockTypeError($itemBag:JQuery,
-                                    stockTypes:stockTypes,
-                                    toggle:MovementTypeToggle,
-                                    func?:(any:any) => any|void):Petition.RelatedItems {
-            var $error = $('<label for="itemBag" class="control-label col-sm-8">' +
+        public appendStockTypeError(
+            $itemBag: JQuery,
+            stockTypes: stockTypes,
+            toggle: MovementTypeToggle,
+            func?: (any: any) => any|void
+        ): Petition.RelatedItems {
+            var $error  = $('<label for="itemBag" class="control-label col-sm-8">' +
                 'Error inesperado del servidor! ' +
                 '<button class ="btn btn-warning" id="stock-type-error">' +
                 'Intente nuevamente ' + '<i class="fa fa-undo"></i>' +
@@ -389,7 +400,11 @@ module Petition {
          * @param types
          * @param toggle
          */
-        private removeStockTypeError(event:JQueryEventObject, types:stockTypes, toggle:MovementTypeToggle):void {
+        private removeStockTypeError(
+            event: JQueryEventObject,
+            types: stockTypes,
+            toggle: MovementTypeToggle
+        ): void {
             event.preventDefault();
             $(event.target).parent().empty();
 
@@ -401,7 +416,7 @@ module Petition {
          * @param element
          * @returns {Petition.RelatedItems}
          */
-        private checkElement(element:any):Petition.RelatedItems {
+        private checkElement(element: any): Petition.RelatedItems {
             if (element === undefined) {
                 throw new Error;
             }

@@ -1,13 +1,15 @@
 /// <reference path="../../../../../typings/tsd.d.ts" />
 
-module Forms {
-    export class ButtonSpinner {
-        public sent:boolean;
+module Forms
+{
+    export class ButtonSpinner
+    {
+        public sent: boolean;
 
-        constructor(public $element:JQuery) {
+        constructor(public $element: JQuery) {
         }
 
-        public before(previousClass:string) {
+        public before(previousClass: string) {
             if (previousClass === undefined) {
                 throw new Error('Se necesita la clase previa para continuar.');
             }
