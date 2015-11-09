@@ -136,7 +136,7 @@ class Note extends AbstractBaseModel
     public function items()
     {
         return $this->belongsToMany(Item::class)
-            ->withPivot('quantity', 'stock_type_id');
+            ->withPivot('quantity', 'stock_type_id', 'due');
     }
 
     /**

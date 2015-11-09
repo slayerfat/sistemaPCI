@@ -2,6 +2,10 @@
 
 En este documento se pretende mantener la bitacora de cambios significativos en la estructura de datos del sistema.
 
+## v0.4.4
+
+- Las notas e items poseen fecha de vencimiento.
+
 ## v0.4.3
 
 Añadido campo perecible para determinar programaticamente si el tipo de item es perecedero o no.
