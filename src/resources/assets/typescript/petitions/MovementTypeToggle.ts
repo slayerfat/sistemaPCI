@@ -122,8 +122,13 @@ module Petition {
          * @param $element
          */
         private checkInputValue($element:JQuery):void {
-            var self = this;
-            $element.each(function (key, HTMLElement) {
+            // controla los items que han sido sacados de los ya seleccionados.
+            var i = 0;
+
+            // si algun item fue eliminado esto sera verdadero.
+            var removedItems = false;
+
+            $element.each((key, HTMLElement) => {
                 var $input = $(HTMLElement);
                 var originalStock = $input.data('stock-plain');
 
@@ -133,29 +138,14 @@ module Petition {
 
                 // chequeamos que el stock no sea 0
                 if (originalStock <= 0) {
-                    var html = '<label for="itemBag" class="control-label col-sm-8">' +
-                        'El Item no se encuentra en existencia.' +
-                        '</label>';
+                    i++;
+                    removedItems = true;
 
-                    var $parent = $input.parents('#itemBag');
-                    var $original = $input.closest('.itemBag-item');
-
+                    // esta funcion esta fuera de esta clase.
                     $input.parent()
                         .siblings('div')
                         .find('.itemBag-remove-item')
                         .trigger('click');
-
-                    $parent.append($original);
-
-                    $input.closest('.itemBag-item').fadeOut(250, function () {
-                        $input.html(html).fadeIn();
-                        // espera 10 segundo y activa la animacion
-                        $(this).animate({opacity: 1}, 10000, 'linear', function () {
-                            $(this).animate({opacity: 0}, 2000, 'linear', function () {
-                                $(this).remove();
-                            });
-                        });
-                    });
                 }
 
                 // si el item es valido y su stock es mayor que cero, entonces
@@ -166,12 +156,30 @@ module Petition {
 
                 var min = originalStock > 1
                     ? 1
-                    : self.findInputMinimum(originalStock);
+                    : this.findInputMinimum(originalStock);
 
                 $input.attr('min', min)
                     .attr('max', $input.val())
-                    .attr('step', self.findOptimalStep(originalStock));
+                    .attr('step', this.findOptimalStep(originalStock));
             });
+
+            if (removedItems) {
+                var string = i == 1
+                    ? 'Removido 1 Item sin existencia.'
+                    : 'Removidos ' + i + ' Items sin existencia.';
+                var html = '<div class="remove-item-msg">' +
+                    '<label for="itemBag" class="control-label col-sm-8">' +
+                    string + '</label></div>';
+
+                // en el div donde estan los items seleccionados,
+                // añadimos este mensaje que se borrara en 10 segundos de la vista.
+                $('#itemBag').append(html);
+                $('.remove-item-msg').animate({opacity: 1}, 10000, 'linear', function () {
+                    $(this).animate({opacity: 0}, 2000, 'linear', function () {
+                        $(this).remove();
+                    });
+                });
+            }
         }
 
         /**
