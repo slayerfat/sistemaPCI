@@ -74,7 +74,7 @@ ControlGroup::generate(
         var commentToggle = new Forms.ToggleComments($('#comments'));
         var toggle = new Petition.MovementTypeToggle($select.val(), url);
         var stockTypes = new Petition.stockTypes();
-        var items = new Petition.RelatedItems();
+        var items = new Petition.RelatedItems('note');
         var ajaxSpinner = new Forms.AjaxSpinner($('#itemBag'));
 
         // operaciones iniciales

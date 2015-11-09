@@ -42,7 +42,8 @@ module Petition {
             formattedReal: string
         };
 
-        constructor(formType:string) {
+        constructor(formType: string = null)
+        {
             this.data = {
                 id: null,
                 desc: '',
@@ -244,7 +245,12 @@ module Petition {
             }
         }
 
-        private canAddDueDate()
+        /**
+         * determina si los elementos relacionados con la fecha deben ser iniciados.
+         *
+         * @returns {boolean}
+         */
+        private canAddDueDate(): boolean
         {
             if (this.formType === null || this.formType === undefined) {
                 return false;
@@ -259,7 +265,7 @@ module Petition {
          *
          * @returns {string}
          */
-        private makeItemInput()
+        private makeItemInput(): string
         {
             return '<div class="itemBag-item" data-id="' + this.data.id + '">'
                 + '<label for="itemBag" class="control-label col-sm-7">'
@@ -282,7 +288,7 @@ module Petition {
          * @param self
          * @returns {string}
          */
-        private makeSelectOptions(stockTypes, self)
+        private makeSelectOptions(stockTypes, self): string
         {
             var options = '';
 
@@ -304,7 +310,7 @@ module Petition {
          * @param id
          * @returns {string}
          */
-        private makeSelect(options, id)
+        private makeSelect(options, id): string
         {
             var dateInput = '<input class="form-control help-block" ' +
                 'name="due-date-value-' + this.data.id + '"' +
