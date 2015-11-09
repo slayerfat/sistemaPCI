@@ -57,6 +57,9 @@ ControlGroup::generate(
 @stop
 
 @section('form-js')
+    <script type="text/javascript" src="{!! elixir('js/datepicker.js') !!}">
+    </script>
+
     <script>
         // necesitamos configurar ajax primero.
         var ajaxSetup = new Forms.AjaxSetup('{{ csrf_token() }}');

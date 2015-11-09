@@ -1,19 +1,16 @@
 /// <reference path="../../../../../typings/tsd.d.ts" />
 /// <reference path="MovementTypeToggle.ts"/>
 /// <reference path="RelatedStockType.ts"/>
+/// <reference path="../Models/Interfaces/Item/Item.ts"/>
 
 module Petition {
+    import Item = Models.Interfaces.Item;
     export class RelatedItems {
         /**
          * La informacion relacionada con UN item en
          * particular (el que se esta manipulando)
          */
-        public data:{
-            id: boolean,
-            desc: string,
-            quantity: number,
-            stock_type_id: number
-        };
+        public data: Item;
 
         /**
          * el arreglo de Ids de los items seleccionados.
@@ -44,7 +41,13 @@ module Petition {
                 id: null,
                 desc: '',
                 quantity: null,
-                stock_type_id: null
+                stock_type_id: null,
+                type: {
+                    id: null,
+                    desc: null,
+                    slug: null,
+                    perishable: null
+                }
             };
 
             this.checkSelected = {
@@ -215,7 +218,23 @@ module Petition {
             var self = this;
             // como esta mamarrachada es muy grande, la
             // segmentamos para que pueda ser mas facil de digerir
-            var itemInput = '<div class="itemBag-item" data-id="' + this.data.id + '">'
+            var itemInput = this.makeItemInput();
+            var options = this.makeSelectOptions(stockTypes, self);
+            //
+            var select = this.makeSelect(options);
+
+            $itemBag.append(itemInput + select);
+            toggle.changeInputs();
+        }
+
+        /**
+         * contiene el input de algun item junto a su mensaje de ayuda.
+         *
+         * @returns {string}
+         */
+        private makeItemInput()
+        {
+            return '<div class="itemBag-item" data-id="' + this.data.id + '">'
                 + '<label for="itemBag" class="control-label col-sm-7">'
                 + this.data.desc
                 + '</label>'
@@ -227,7 +246,17 @@ module Petition {
                 'value="' + this.stock.plain + '">' +
                 '<span class="help-block">' + this.stock.formatted + ' en total.' + '</span>' +
                 '</div>';
+        }
 
+        /**
+         * Determina cual es la opcion correcta que ira en el select.
+         *
+         * @param stockTypes
+         * @param self
+         * @returns {string}
+         */
+        private makeSelectOptions(stockTypes, self)
+        {
             var options = '';
 
             // generamos las opciones que van dentro del select
@@ -237,18 +266,36 @@ module Petition {
                     : options += '<option value="' + stockTypes.types[key].id + '">' + stockTypes.types[key].desc + '</option>';
             });
 
-            // este select contiene los tipos de cantidad
-            var select = '<div class="col-sm-3">  <div class="input-group">' +
+            return options;
+        }
+
+        /**
+         * Elemento que select contiene los tipos de
+         * cantidad y fecha de vencimiento.
+         *
+         * @param options
+         * @returns {string}
+         */
+        private makeSelect(options)
+        {
+            var dateInput = '<input class="form-control help-block" ' +
+                'name="item-due-date-' + this.data.id + '"' +
+                'placeholder="Fecha de Vto."' +
+                'id="item-due-date-' + this.data.id + '">';
+
+            var string = '<div class="col-sm-3">  <div class="input-group">' +
                 '<select class="form-control" name="stock-type-id-' +
                 this.data.id + '">' + options + '</select>' +
                 '<span class="input-group-addon itemBag-remove-item" ' +
                 'data-id="' + this.data.id + '">' +
                 '<i class="fa fa-times"></i></span>' +
-                '</div>' +
                 '</div>';
 
-            $itemBag.append(itemInput + select);
-            toggle.changeInputs();
+            if (this.data.type.perishable) {
+                return string + dateInput + '</div>';
+            }
+
+            return string + '</div>';
         }
 
         /**
