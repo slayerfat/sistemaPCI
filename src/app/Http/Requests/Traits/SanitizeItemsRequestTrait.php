@@ -15,7 +15,7 @@ trait SanitizeItemsRequestTrait
 
         // remplazamos el request por uno a nuestra conveniencia.
         $this->request->add([
-            'items'    => $items,
+            'items' => $items,
         ]);
     }
 
@@ -24,7 +24,7 @@ trait SanitizeItemsRequestTrait
      * se manipula y regresa un array asociativo con id => catidad.
      *
      * @param array $data
-     * @return array[] Array de [item_id => [cantidad, tipo]]
+     * @return array[] Array de [item_id => [cantidad, tipo, etc]]
      */
     private function sanitizeItemBag(array $data)
     {
@@ -64,8 +64,30 @@ trait SanitizeItemsRequestTrait
             // entonces se asigna el tipo, de lo
             // contrario se ignora.
             if (isset($results[$id[3]])) {
-                $results[$id[3]]['type'] = $value;
+                $results = $this->insertValue($value, $results, $id);
             }
+        }
+
+        return $results;
+    }
+
+    /**
+     * Verifica el tipo de key y asocia los datos pertinentes.
+     *
+     * @param int|string $value
+     * @param array $results
+     * @param array $id
+     * @return array
+     */
+    private function insertValue($value, array $results, array $id)
+    {
+        $array  = [$id[0], $id[1], $id[2]];
+        $string = implode('-', $array);
+
+        if ($string === 'stock-type-id') {
+            $results[$id[3]]['type'] = $value;
+        } elseif ($string === 'due-date-value') {
+            $results[$id[3]]['due'] = $value;
         }
 
         return $results;
