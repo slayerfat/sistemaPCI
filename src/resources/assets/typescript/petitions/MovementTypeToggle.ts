@@ -137,9 +137,18 @@ module Petition {
                         'El Item no se encuentra en existencia.' +
                         '</label>';
 
+                    var $parent = $input.parents('#itemBag');
+                    var $original = $input.closest('.itemBag-item');
+
+                    $input.parent()
+                        .siblings('div')
+                        .find('.itemBag-remove-item')
+                        .trigger('click');
+
+                    $parent.append($original);
+
                     $input.closest('.itemBag-item').fadeOut(250, function () {
-                        $(this).html(html);
-                        $(this).fadeIn();
+                        $input.html(html).fadeIn();
                         // espera 10 segundo y activa la animacion
                         $(this).animate({opacity: 1}, 10000, 'linear', function () {
                             $(this).animate({opacity: 0}, 2000, 'linear', function () {
