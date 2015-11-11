@@ -240,9 +240,7 @@ class Item extends AbstractBaseModel implements SluggableInterface
 
         // si el stock no es convertible, entonces se devuelve
         // la suma del stock en todos los almacenes.
-        return $this->depots()
-            ->withPivot('quantity')
-            ->sum('quantity');
+        return $this->stocks->sum('total');
     }
 
     /**
@@ -254,19 +252,17 @@ class Item extends AbstractBaseModel implements SluggableInterface
      */
     protected function convertStock(StockTypeConverterInterface $converter)
     {
-        $stock  = 0;
-        $depots = $this->depots()
-            ->withPivot('quantity', 'stock_type_id')
-            ->get();
+        $amount  = 0;
+        $collection = $this->stocks;
 
-        foreach ($depots as $depot) {
-            $stock += $converter->convert(
-                $depot->pivot->stock_type_id,
-                $depot->pivot->quantity
+        foreach ($collection as $stock) {
+            $amount += $converter->convert(
+                $stock->stock_type_id,
+                $stock->total
             );
         }
 
-        return $stock;
+        return $amount;
     }
 
     /**
