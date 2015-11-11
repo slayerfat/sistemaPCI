@@ -87,7 +87,6 @@ $factory->defineAs(PCI\Models\Item::class, 'full', function () use ($factory) {
 
 $factory->define(PCI\Models\ItemMovement::class, function () {
     return [
-        'depot_id'      => factory(PCI\Models\Depot::class)->create()->id,
         'item_id'       => factory(PCI\Models\Item::class)->create()->id,
         'movement_id'   => factory(PCI\Models\Movement::class)->create()->id,
         'stock_id'      => factory(PCI\Models\Stock::class)->create()->id,

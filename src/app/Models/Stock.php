@@ -24,6 +24,14 @@ class Stock extends AbstractBaseModel
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
+    public function type()
+    {
+        return $this->belongsTo(StockType::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function depot()
     {
         return $this->belongsTo(Depot::class);
