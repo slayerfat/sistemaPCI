@@ -4,12 +4,14 @@ use DB;
 
 /**
  * Class StateSeeder
+ *
  * @package PCI\Database
- * @author Alejandro Granadillo <slayerfat@gmail.com>
- * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
+ * @author  Alejandro Granadillo <slayerfat@gmail.com>
+ * @link    https://github.com/slayerfat/sistemaPCI Repositorio en linea.
  */
 class StateSeeder extends AbstractSeeder
 {
+
     /**
      * Run the database seeds.
      *

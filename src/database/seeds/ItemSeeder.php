@@ -9,9 +9,10 @@ use PCI\Models\Petition;
 
 /**
  * Class ItemSeeder
+ *
  * @package PCI\Database
- * @author Alejandro Granadillo <slayerfat@gmail.com>
- * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
+ * @author  Alejandro Granadillo <slayerfat@gmail.com>
+ * @link    https://github.com/slayerfat/sistemaPCI Repositorio en linea.
  */
 class ItemSeeder extends AbstractSeeder
 {
@@ -42,8 +43,9 @@ class ItemSeeder extends AbstractSeeder
             $this->command->info("Uniendo Item {$item->desc} con Depot (id) {$number}");
 
             /** @var Item $item */
-            $item->depots()->attach([$number], ['quantity'      => rand(1, 10000),
-                                                'stock_type_id' => $this->getRand(1, 3)
+            $item->depots()->attach([$number], [
+                'quantity'      => rand(1, 10000),
+                'stock_type_id' => $this->getRand(1, 3),
             ]);
         });
 
@@ -56,7 +58,7 @@ class ItemSeeder extends AbstractSeeder
      * Crea en la base de datos y genera objetos de alguna entidad.
      *
      * @param string $class
-     * @param int $quantity
+     * @param int    $quantity
      * @return mixed
      * @throws LogicException
      */
@@ -113,13 +115,15 @@ class ItemSeeder extends AbstractSeeder
         $petitions = $this->createModels(Petition::class, $quantity);
 
         $petitions->each(function ($petition) {
+            /** @var \PCI\Models\Petition $petition */
             foreach (range(0, 2) as $index) {
                 $number = $index + $this->getRand(1, 8);
 
                 $this->command->info("Uniendo Pedido (id) {$petition->id} con Item (id) {$number}");
 
-                $petition->items()->attach($number, ['quantity'      => $number,
-                                                     'stock_type_id' => $this->getRand(1, 3)
+                $petition->items()->attach($number, [
+                    'quantity'      => $number,
+                    'stock_type_id' => $this->getRand(1, 3),
                 ]);
             }
 
@@ -139,20 +143,23 @@ class ItemSeeder extends AbstractSeeder
         $movements = $this->createModels(Movement::class, $quantity);
 
         $movements->each(function ($movement) {
+            /** @var \PCI\Models\Movement $movement */
             $number = $this->getRand(5, 20);
 
             $this->command->info("Uniendo Movimiento (id) {$movement->id} con Item (id) 1: cantidad: {$number}");
 
-            $movement->items()->attach(1, ['quantity'      => $number,
-                                           'stock_type_id' => $this->getRand(1, 3)
+            $movement->items()->attach(1, [
+                'quantity'      => $number,
+                'stock_type_id' => $this->getRand(1, 3),
             ]);
 
             $item = $movement->items->first();
 
             $this->command->info("Uniendo Almacen (id) 1, con Item (id) 1: cantidad: {$number}");
 
-            $item->depots()->attach(1, ['quantity'      => $number,
-                                        'stock_type_id' => $this->getRand(1, 3)
+            $item->depots()->attach(1, [
+                'quantity'      => $number,
+                'stock_type_id' => $this->getRand(1, 3),
             ]);
         });
     }

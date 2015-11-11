@@ -4,9 +4,10 @@ use DB;
 
 /**
  * Class ParishSeeder
+ *
  * @package PCI\Database
- * @author Alejandro Granadillo <slayerfat@gmail.com>
- * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
+ * @author  Alejandro Granadillo <slayerfat@gmail.com>
+ * @link    https://github.com/slayerfat/sistemaPCI Repositorio en linea.
  */
 class ParishSeeder extends AbstractSeeder
 {
@@ -317,7 +318,7 @@ class ParishSeeder extends AbstractSeeder
         (84, 'Tomás Alfaro', current_timestamp, current_timestamp, 1, 1),
         (84, 'Calatrava', current_timestamp, current_timestamp, 1, 1),
         (100, 'Achaguas', current_timestamp, current_timestamp, 1, 1);",
-    "INSERT INTO parishes
+        "INSERT INTO parishes
         (town_id, `desc`, created_at, updated_at, created_by, updated_by)
         VALUES
         (100, 'Apurito', current_timestamp, current_timestamp, 1, 1),
@@ -940,7 +941,7 @@ class ParishSeeder extends AbstractSeeder
         (335, 'Rafael Urdaneta ', current_timestamp, current_timestamp, 1, 1),
         (334, 'La Victoria', current_timestamp, current_timestamp, 1, 1),
         (335, 'Raúl Cuenca', current_timestamp, current_timestamp, 1, 1),
-        (336, 'Jesús María Semprún', current_timestamp, current_timestamp, 1, 1);"
+        (336, 'Jesús María Semprún', current_timestamp, current_timestamp, 1, 1);",
     ];
 
     /**
