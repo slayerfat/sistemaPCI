@@ -9,7 +9,6 @@
  * @property integer $depot_id
  * @property integer $item_id
  * @property integer $stock_type_id
- * @property float $total
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property integer $created_by
@@ -37,9 +36,7 @@ class Stock extends AbstractBaseModel
      *
      * @var array
      */
-    protected $fillable = [
-        'total',
-    ];
+    protected $fillable = [];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\belongsTo|\Illuminate\Database\Eloquent\Builder

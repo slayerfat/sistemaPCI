@@ -146,7 +146,14 @@ $factory->define(PCI\Models\Stock::class, function () {
         'depot_id'      => factory(\PCI\Models\Depot::class)->create()->id,
         'item_id'       => factory(\PCI\Models\Item::class)->create()->id,
         'stock_type_id' => factory(\PCI\Models\StockType::class)->create()->id,
-        'total'         => rand(1, 10000),
+    ];
+});
+
+$factory->define(PCI\Models\StockDetail::class, function () {
+    return [
+        'stock_id' => factory(\PCI\Models\Stock::class)->create()->id,
+        'quantity' => rand(1, 10000),
+        'due'      => '1999-09-09',
     ];
 });
 

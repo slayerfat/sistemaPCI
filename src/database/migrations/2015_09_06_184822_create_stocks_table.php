@@ -27,7 +27,6 @@ class CreateStocksTable extends Migration
             $table->foreign('stock_type_id')
                 ->references('id')
                 ->on('stock_types');
-            $table->float('total', 16, 7)->nullable();
             $table->timestamps();
             $table->unsignedInteger('created_by');
             $table->foreign('created_by')->references('id')->on('users');
