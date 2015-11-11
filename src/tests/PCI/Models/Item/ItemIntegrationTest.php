@@ -4,6 +4,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use PCI\Models\Item;
 use PCI\Models\Stock;
+use PCI\Models\StockDetail;
 use PCI\Models\StockType;
 use Tests\AbstractTestCase;
 
@@ -46,11 +47,18 @@ class ItemIntegrationTest extends AbstractTestCase
 
     public function testStockShouldReturnAValidNumber()
     {
-        factory(Stock::class, 3)->create([
+        $stocks = factory(Stock::class, 3)->create([
             'item_id'       => $this->item->id,
-            'total'         => 10,
             'stock_type_id' => 1,
         ]);
+
+        $stocks->each(function ($stock) {
+            factory(StockDetail::class)->create([
+                'quantity' => 10,
+                'stock_id' => $stock->id,
+            ]);
+        });
+
 
         $this->assertEquals(30, $this->item->stock());
         $this->assertEquals(50, $this->item->percentageStock());
@@ -58,11 +66,17 @@ class ItemIntegrationTest extends AbstractTestCase
 
     public function testFormattedStockShouldReturnMoreThanOneNumber()
     {
-        factory(Stock::class, 3)->create([
+        $stocks = factory(Stock::class, 3)->create([
             'item_id'       => $this->item->id,
-            'total'         => 12,
             'stock_type_id' => 1,
         ]);
+
+        $stocks->each(function ($stock) {
+            factory(StockDetail::class)->create([
+                'quantity' => 12,
+                'stock_id' => $stock->id,
+            ]);
+        });
 
         $this->assertEquals('36 Unidades', $this->item->formattedStock());
     }
@@ -76,10 +90,14 @@ class ItemIntegrationTest extends AbstractTestCase
 
     public function testFormattedStockShouldReturnOneNumber()
     {
-        factory(Stock::class)->create([
+        $stock = factory(Stock::class)->create([
             'item_id'       => $this->item->id,
-            'total'         => 1,
             'stock_type_id' => 1,
+        ]);
+
+        factory(StockDetail::class)->create([
+            'quantity' => 1,
+            'stock_id' => $stock->id,
         ]);
 
         $this->assertEquals('1 Unidad', $this->item->formattedStock());
@@ -90,11 +108,17 @@ class ItemIntegrationTest extends AbstractTestCase
         $stock = StockType::whereDesc('Tonelada')->first();
         $item  = factory(Item::class)->create(['stock_type_id' => $stock->id]);
 
-        factory(Stock::class, 2)->create([
+        $stocks = factory(Stock::class, 2)->create([
             'item_id'       => $item->id,
-            'total'         => 12,
             'stock_type_id' => $stock->id,
         ]);
+
+        $stocks->each(function ($stock) {
+            factory(StockDetail::class)->create([
+                'quantity' => 12,
+                'stock_id' => $stock->id,
+            ]);
+        });
 
         $this->assertEquals('24 Toneladas', $item->formattedStock());
     }
@@ -111,10 +135,14 @@ class ItemIntegrationTest extends AbstractTestCase
         );
 
         for ($i = 2; $i <= 4; $i++) {
-            factory(Stock::class)->create([
+            $stock = factory(Stock::class)->create([
                 'item_id'       => $item->id,
-                'total'         => 1,
                 'stock_type_id' => $i,
+            ]);
+
+            factory(StockDetail::class)->create([
+                'quantity' => 1,
+                'stock_id' => $stock->id,
             ]);
         }
 
@@ -147,10 +175,14 @@ class ItemIntegrationTest extends AbstractTestCase
         $this->item->reserved = $reserved;
 
         for ($i = 2; $i <= 4; $i++) {
-            factory(Stock::class)->create([
+            $stock = factory(Stock::class)->create([
                 'item_id'       => $item->id,
-                'total'         => 1,
                 'stock_type_id' => $i,
+            ]);
+
+            factory(StockDetail::class)->create([
+                'quantity' => 1,
+                'stock_id' => $stock->id,
             ]);
         }
 

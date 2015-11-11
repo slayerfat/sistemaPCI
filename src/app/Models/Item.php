@@ -240,7 +240,12 @@ class Item extends AbstractBaseModel implements SluggableInterface
 
         // si el stock no es convertible, entonces se devuelve
         // la suma del stock en todos los almacenes.
-        return $this->stocks->sum('total');
+        $i = 0;
+        foreach ($this->stocks as $stock) {
+            $i += $stock->details->sum('quantity');
+        }
+
+        return $i;
     }
 
     /**
@@ -253,13 +258,14 @@ class Item extends AbstractBaseModel implements SluggableInterface
     protected function convertStock(StockTypeConverterInterface $converter)
     {
         $amount  = 0;
-        $collection = $this->stocks;
 
-        foreach ($collection as $stock) {
-            $amount += $converter->convert(
-                $stock->stock_type_id,
-                $stock->total
-            );
+        foreach ($this->stocks as $stock) {
+            foreach ($stock->details as $details) {
+                $amount += $converter->convert(
+                    $stock->stock_type_id,
+                    $details->quantity
+                );
+            }
         }
 
         return $amount;

@@ -7,6 +7,7 @@ use PCI\Models\Movement;
 use PCI\Models\Note;
 use PCI\Models\Petition;
 use PCI\Models\Stock;
+use PCI\Models\StockDetail;
 
 /**
  * Class ItemSeeder
@@ -22,9 +23,9 @@ class ItemSeeder extends AbstractSeeder
     {
         $this->seedItems(10);
 
-        $this->seedPetitions(5);
+        $this->seedPetitions(2);
 
-        $this->seedMovements(2);
+        $this->seedMovements();
     }
 
     /**
@@ -34,7 +35,7 @@ class ItemSeeder extends AbstractSeeder
     {
         $this->command->comment('Empezando ' . __METHOD__);
 
-        $stocks = $this->createModels(Stock::class, $quantity);
+        $this->createModels(StockDetail::class, $quantity);
 
         // para probar la dependencia de item con item
         /** @var Item $item */
@@ -73,7 +74,7 @@ class ItemSeeder extends AbstractSeeder
     }
 
     /**
-     * @param int $quantity
+     * @param int  $quantity
      * @param Item $item
      */
     private function seedItemDependency($quantity, $item)
@@ -122,20 +123,20 @@ class ItemSeeder extends AbstractSeeder
         });
     }
 
-    /**
-     * @param int $quantity
-     */
-    private function seedMovements($quantity)
+    private function seedMovements()
     {
         $this->command->comment('Empezando ' . __METHOD__);
 
         $movement = factory(Movement::class)->create();
 
         Stock::all()->each(function ($stock) use ($movement) {
-            $number = $this->getRand(5, 20);
+            /** @var \PCI\Models\Stock $stock */
+            $this->command->info("Uniendo Stock (id) {$stock->id} nuevo movimiento");
 
             $itemMovement = factory(ItemMovement::class)->create([
                 'stock_id' => $stock->id,
+                'quantity' => $stock->details->first()->quantity,
+                'due'      => $stock->details->first()->due,
             ]);
 
             $movement->itemMovements()->save($itemMovement);
