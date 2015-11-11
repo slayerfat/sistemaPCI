@@ -1,6 +1,6 @@
 <?php namespace PCI\Models;
 
-use Illuminate\Database\Eloquent\Model;
+/** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
 
 /**
  * PCI\Models\StockDetail
