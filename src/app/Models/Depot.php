@@ -58,13 +58,11 @@ class Depot extends AbstractBaseModel
     /**
      * Regresa una coleccion de items existentes en el almacen.
      *
-     * @see  v0.3.2 #35
-     * @link https://github.com/slayerfat/sistemaPCI/issues/35
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @see  v0.4.4
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
      */
-    public function items()
+    public function stocks()
     {
-        return $this->belongsToMany(Item::class)
-            ->withPivot('quantity', 'stock_type_id');
+        return $this->hasMany(Stock::class);
     }
 }

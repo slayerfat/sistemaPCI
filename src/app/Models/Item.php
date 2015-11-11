@@ -181,12 +181,11 @@ class Item extends AbstractBaseModel implements SluggableInterface
     /**
      * Regresa una coleccion de movimientos relacionadas con el item.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
      */
     public function movements()
     {
-        return $this->belongsToMany('PCI\Models\Movement')
-            ->withPivot('quantity', 'due');
+        return $this->hasMany('PCI\Models\ItemMovement');
     }
 
     /**
@@ -279,6 +278,16 @@ class Item extends AbstractBaseModel implements SluggableInterface
     {
         return $this->belongsToMany('PCI\Models\Depot')
             ->withPivot('quantity', 'stock_type_id');
+    }
+
+    /**
+     * La serie de stock existente en los almacenes.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function stocks()
+    {
+        return $this->hasMany('PCI\Models\Stock');
     }
 
     /**
