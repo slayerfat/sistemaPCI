@@ -18,7 +18,7 @@
  * @property integer $updated_by
  * @property-read MovementType $type
  * @property-read Note $note
- * @property-read \Illuminate\Database\Eloquent\Collection|Item[] $items
+ * @property-read \Illuminate\Database\Eloquent\Collection|ItemMovement[] $itemMovements
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Movement whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Movement whereMovementTypeId($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Movement whereNoteId($value)

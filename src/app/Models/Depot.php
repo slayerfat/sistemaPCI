@@ -18,7 +18,7 @@
  * @property integer $created_by
  * @property integer $updated_by
  * @property-read User $owner
- * @property-read \Illuminate\Database\Eloquent\Collection|Item[] $items
+ * @property-read \Illuminate\Database\Eloquent\Collection|Stock[] $stocks
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Depot whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Depot whereUserId($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Depot whereNumber($value)

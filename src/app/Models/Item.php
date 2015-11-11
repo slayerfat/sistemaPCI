@@ -24,20 +24,21 @@ use PCI\Mamarrachismo\Converter\StockTypeConverter;
  * @property string $desc
  * @property string $slug
  * @property integer $minimum
+ * @property float   $reserved
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property integer $created_by
  * @property integer $updated_by
- * @property-read int $stock
- * @property-read \Illuminate\Database\Eloquent\Collection|\PCI\Models\Depot[] $depots
  * @property-read \PCI\Models\SubCategory $subCategory
  * @property-read \PCI\Models\Maker $maker
  * @property-read \PCI\Models\ItemType $type
  * @property-read \PCI\Models\StockType $stockType
  * @property-read \Illuminate\Database\Eloquent\Collection|Item[] $dependsOn
  * @property-read \Illuminate\Database\Eloquent\Collection|\PCI\Models\Petition[] $petitions
- * @property-read \Illuminate\Database\Eloquent\Collection|\PCI\Models\Movement[] $movements
+ * @property-read \Illuminate\Database\Eloquent\Collection|\PCI\Models\ItemMovement[] $movements
  * @property-read \Illuminate\Database\Eloquent\Collection|\PCI\Models\Note[] $notes
+ * @property-read \Illuminate\Database\Eloquent\Collection|\PCI\Models\Depot[] $depots
+ * @property-read \Illuminate\Database\Eloquent\Collection|\PCI\Models\Stock[] $stocks
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Item whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Item whereItemTypeId($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Item whereMakerId($value)
@@ -48,6 +49,7 @@ use PCI\Mamarrachismo\Converter\StockTypeConverter;
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Item whereDesc($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Item whereSlug($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Item whereMinimum($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Item whereReserved($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Item whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Item whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Item whereCreatedBy($value)

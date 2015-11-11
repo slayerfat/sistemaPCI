@@ -30,6 +30,7 @@ class Town extends AbstractPlacesModel
 
     /**
      * Regresa al estado asociado al municipio.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
     public function state()
@@ -39,6 +40,7 @@ class Town extends AbstractPlacesModel
 
     /**
      * Regresa una coleccion de parroquias asociadas.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\hasMany
      */
     public function parishes()

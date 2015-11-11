@@ -34,30 +34,35 @@ class Profile extends AbstractBaseModel implements SluggableInterface
 
     /**
      * Administrador del sistema
+     *
      * @var int
      */
     const ADMIN_ID = 1;
 
     /**
      * Usuario del sistema
+     *
      * @var int
      */
     const USER_ID = 2;
 
     /**
      * Usuario desactivado
+     *
      * @var int
      */
     const DISABLED_ID = 3;
 
     /**
      * The attributes that are mass assignable.
+     *
      * @var array
      */
     protected $fillable = ['desc'];
 
     /**
      * Los datos necesarios para generarar un slug en el modelo.
+     *
      * @var array
      */
     protected $sluggable = [
@@ -67,6 +72,7 @@ class Profile extends AbstractBaseModel implements SluggableInterface
 
     /**
      * Regresa una coleccion de usuarios asociados.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\hasMany
      */
     public function users()

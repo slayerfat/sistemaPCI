@@ -25,12 +25,13 @@ use PCI\Models\Traits\HasTernaryStatusAttribute;
  * @property integer $created_by
  * @property integer $updated_by
  * @property-read Petition $petition
- * @property-read User $requestedBy
+ * @property-read User     $user
  * @property-read User $toUser
  * @property-read Attendant $attendant
  * @property-read NoteType $type
  * @property-read \Illuminate\Database\Eloquent\Collection|Item[] $items
  * @property-read \Illuminate\Database\Eloquent\Collection|Movement[] $movements
+ * @property-read mixed $formatted_status
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Note whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Note whereUserId($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Note whereToUserId($value)

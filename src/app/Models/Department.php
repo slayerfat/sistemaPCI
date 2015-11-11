@@ -36,12 +36,14 @@ class Department extends AbstractBaseModel implements SluggableInterface
 
     /**
      * The attributes that are mass assignable.
+     *
      * @var array
      */
     protected $fillable = ['desc', 'phone'];
 
     /**
      * Los datos necesarios para generarar un slug en el modelo.
+     *
      * @var array
      */
     protected $sluggable = [
@@ -58,6 +60,7 @@ class Department extends AbstractBaseModel implements SluggableInterface
 
     /**
      * Regresa una coleccion de datos laborales.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function workDetails()
