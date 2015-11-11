@@ -1,11 +1,12 @@
 <?php namespace PCI\Database;
 
 use LogicException;
-use PCI\Models\Depot;
 use PCI\Models\Item;
+use PCI\Models\ItemMovement;
 use PCI\Models\Movement;
 use PCI\Models\Note;
 use PCI\Models\Petition;
+use PCI\Models\Stock;
 
 /**
  * Class ItemSeeder
@@ -33,23 +34,11 @@ class ItemSeeder extends AbstractSeeder
     {
         $this->command->comment('Empezando ' . __METHOD__);
 
-        $this->createModels(Depot::class, $quantity);
+        $stocks = $this->createModels(Stock::class, $quantity);
 
-        $items = $this->createModels(Item::class, $quantity);
-
-        $items->each(function ($item) use ($quantity) {
-            $number = $this->getRand(1, $quantity);
-
-            $this->command->info("Uniendo Item {$item->desc} con Depot (id) {$number}");
-
-            /** @var Item $item */
-            $item->depots()->attach([$number], [
-                'quantity'      => rand(1, 10000),
-                'stock_type_id' => $this->getRand(1, 3),
-            ]);
-        });
-
-        $item = $items->random();
+        // para probar la dependencia de item con item
+        /** @var Item $item */
+        $item = Item::findOrFail($this->getRand(1, $quantity));
 
         $this->seedItemDependency($quantity, $item);
     }
@@ -140,27 +129,16 @@ class ItemSeeder extends AbstractSeeder
     {
         $this->command->comment('Empezando ' . __METHOD__);
 
-        $movements = $this->createModels(Movement::class, $quantity);
+        $movement = factory(Movement::class)->create();
 
-        $movements->each(function ($movement) {
-            /** @var \PCI\Models\Movement $movement */
+        Stock::all()->each(function ($stock) use ($movement) {
             $number = $this->getRand(5, 20);
 
-            $this->command->info("Uniendo Movimiento (id) {$movement->id} con Item (id) 1: cantidad: {$number}");
-
-            $movement->items()->attach(1, [
-                'quantity'      => $number,
-                'stock_type_id' => $this->getRand(1, 3),
+            $itemMovement = factory(ItemMovement::class)->create([
+                'stock_id' => $stock->id,
             ]);
 
-            $item = $movement->items->first();
-
-            $this->command->info("Uniendo Almacen (id) 1, con Item (id) 1: cantidad: {$number}");
-
-            $item->depots()->attach(1, [
-                'quantity'      => $number,
-                'stock_type_id' => $this->getRand(1, 3),
-            ]);
+            $movement->itemMovements()->save($itemMovement);
         });
     }
 }
