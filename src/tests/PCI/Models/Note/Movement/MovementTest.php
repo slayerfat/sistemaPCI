@@ -1,7 +1,7 @@
 <?php namespace Tests\PCI\Models\Note\Movement;
 
 use Mockery;
-use PCI\Models\Item;
+use PCI\Models\ItemMovement;
 use PCI\Models\Movement;
 use PCI\Models\MovementType;
 use PCI\Models\Note;
@@ -32,20 +32,13 @@ class MovementTest extends AbstractTestCase
         );
     }
 
-    public function testItems()
+    public function testItemMovements()
     {
-        $mock = Mockery::mock(Movement::class)->makePartial();
-
-        $mock->shouldReceive('belongsToMany')
-            ->once()
-            ->with(Item::class)
-            ->andReturnSelf();
-
-        $mock->shouldReceive('withPivot')
-            ->once()
-            ->with('quantity', 'due')
-            ->andReturn('mocked');
-
-        $this->assertEquals('mocked', $mock->items());
+        $this->mockBasicModelRelation(
+            Movement::class,
+            'itemMovements',
+            'hasMany',
+            ItemMovement::class
+        );
     }
 }
