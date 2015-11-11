@@ -5,22 +5,20 @@
 /**
  * PCI\Models\Stock
  *
- * @package PCI\Models
- * @author  Alejandro Granadillo <slayerfat@gmail.com>
- * @link    https://github.com/slayerfat/sistemaPCI Repositorio en linea.
- * @property integer                                                      $id
- * @property integer                                                      $depot_id
- * @property integer                                                      $item_id
- * @property integer                                                      $stock_type_id
- * @property float                                                        $total
- * @property \Carbon\Carbon                                               $created_at
- * @property \Carbon\Carbon                                               $updated_at
- * @property integer                                                      $created_by
- * @property integer                                                      $updated_by
- * @property-read StockType                                               $type
- * @property-read Depot                                                   $depot
- * @property-read Item                                                    $item
+ * @property integer $id
+ * @property integer $depot_id
+ * @property integer $item_id
+ * @property integer $stock_type_id
+ * @property float $total
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property integer $created_by
+ * @property integer $updated_by
+ * @property-read StockType $type
+ * @property-read Depot $depot
+ * @property-read Item $item
  * @property-read \Illuminate\Database\Eloquent\Collection|ItemMovement[] $itemMovements
+ * @property-read \Illuminate\Database\Eloquent\Collection|StockDetail[] $details
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Stock whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Stock whereDepotId($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Stock whereItemId($value)
@@ -44,7 +42,7 @@ class Stock extends AbstractBaseModel
     ];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo|\Illuminate\Database\Eloquent\Builder
      */
     public function type()
     {
@@ -52,7 +50,7 @@ class Stock extends AbstractBaseModel
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo|\Illuminate\Database\Eloquent\Builder
      */
     public function depot()
     {
@@ -60,7 +58,7 @@ class Stock extends AbstractBaseModel
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo|\Illuminate\Database\Eloquent\Builder
      */
     public function item()
     {
@@ -68,10 +66,18 @@ class Stock extends AbstractBaseModel
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany|\Illuminate\Database\Eloquent\Builder
      */
     public function itemMovements()
     {
         return $this->hasMany(ItemMovement::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany|\Illuminate\Database\Eloquent\Builder
+     */
+    public function details()
+    {
+        return $this->hasMany(StockDetail::class);
     }
 }
