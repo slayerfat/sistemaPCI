@@ -347,6 +347,153 @@ class GenerateItemEgressTest extends AbstractUserIntegration
     }
 
     /**
+     * @dataProvider setStockWithDatesDataProvider
+     * @param $depotData
+     * @param $itemType
+     * @param $noteType
+     * @param $request
+     * @param $finalStock
+     * @param $events
+     */
+    public function testSetStockCorrectDatesAreSelected(
+        $depotData,
+        $itemType,
+        $noteType,
+        $request,
+        $finalStock,
+        $events
+    ) {
+        $this->item->stock_type_id = $itemType;
+        $this->item->save();
+        /** @var Note $note */
+        $note = factory(Note::class)->create(['note_type_id' => 1]);
+        $note->petition->items()->attach($this->item->id, [
+            'quantity'      => $request,
+            'stock_type_id' => $noteType,
+        ]);
+
+        // se crean los depots
+        foreach ($depotData as $amount => $date) {
+            $stock = factory(Stock::class)->create([
+                'item_id'       => $this->item->id,
+                'stock_type_id' => $itemType,
+            ]);
+
+            $stockDetails           = new StockDetail;
+            $stockDetails->quantity = $amount;
+            $stockDetails->stock_id = $stock->id;
+            $stockDetails->due      = $date;
+            $stockDetails->save();
+        }
+
+        $note->items()->attach($this->item->id, [
+            'quantity'      => $request,
+            'stock_type_id' => $noteType,
+        ]);
+
+        $note->fresh();
+
+        $newEgress = new NewItemEgress($note);
+
+
+        if ($events) {
+            $this->expectsEvents($events)
+                ->event->handle($newEgress);
+        } elseif (is_null($events)) {
+            $this->event->handle($newEgress);
+        }
+
+        foreach ($finalStock as $id => $amount) {
+            if (is_null($amount)) {
+                $this->notSeeInDatabase('stocks', [
+                    'depot_id' => $id,
+                    'item_id'  => $this->item->id,
+                ]);
+            } elseif (!is_null($amount)) {
+                $this->seeInDatabase('stocks', [
+                    'depot_id' => $id,
+                    'item_id'  => $this->item->id,
+                ]);
+                $this->seeInDatabase('stock_details', [
+                    'quantity' => $amount,
+                ]);
+            }
+        }
+    }
+
+    /**
+     * El set contiene:
+     * existencias en almacenes,
+     * tipo de item,
+     * tipo de nota,
+     * solicitud,
+     * existencia final en almacenes
+     *
+     * @return array
+     */
+    public function setStockWithDatesDataProvider()
+    {
+        return [
+            'prueba_16_camino_x' => [
+                [5 => '1999-09-09', 3 => '1999-09-10', 1 => '1999-09-11'],
+                3,
+                3,
+                1,
+                [1 => 4, 2 => 3, 3 => 1],
+                null,
+            ],
+            'prueba_17_camino_x' => [
+                [5 => '1999-09-11', 3 => '1999-09-10', 1 => '1999-09-09'],
+                3,
+                3,
+                1,
+                [1 => 5, 2 => 3, 3 => null],
+                null,
+            ],
+            'prueba_18_camino_x' => [
+                [5 => '1999-09-11', 3 => '1999-09-10', 1 => '1999-09-12'],
+                3,
+                3,
+                1,
+                [1 => 5, 2 => 2, 3 => 1],
+                null,
+            ],
+            'prueba_19_camino_x' => [
+                [5 => null, 3 => '1999-09-10', 1 => '1999-09-09'],
+                3,
+                3,
+                1,
+                [1 => 5, 2 => 3, 3 => null],
+                null,
+            ],
+            'prueba_20_camino_x' => [
+                [5 => null, 3 => '1999-09-09', 1 => '1999-09-10'],
+                3,
+                3,
+                1,
+                [1 => 5, 2 => 2, 3 => 1],
+                null,
+            ],
+            'prueba_21_camino_x' => [
+                [5 => null, 3 => null, 1 => '1999-09-10'],
+                3,
+                3,
+                1,
+                [1 => 5, 2 => 3, 3 => null],
+                null,
+            ],
+            'prueba_22_camino_x' => [
+                [5 => '1999-09-11', 3 => null, 1 => '1999-09-10'],
+                3,
+                3,
+                2,
+                [1 => 4, 2 => 3, 3 => null],
+                null,
+            ],
+        ];
+    }
+
+    /**
      * @return \PCI\Models\User
      */
     protected function getUser()

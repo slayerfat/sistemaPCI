@@ -94,53 +94,105 @@ class GenerateItemEgress extends AbstractItemMovement
         // numero de control del total a extraer de los almacenes
         $remaining = 0;
 
+        // el stock del item ordenados por fecha
+        $collection = $this->sortStock($item);
+
         // si el stock es valido, generar movimiento y actualizar
         // existencias en almacen en orden descendente,
         // es decir lugares con poco stock primero.
-        foreach ($item->stocks as $stockModel) {
-            foreach ($stockModel->details as $detailModel) {
-                $type     = $stockModel->stock_type_id;
-                $quantity = floatval($detailModel->quantity);
-                $stock    = $this->converter->convert($type, $quantity);
+        foreach ($collection as $detailModel) {
+            /** @var \PCI\Models\StockDetail $detailModel */
+            $type     = $detailModel->stock->stock_type_id;
+            $quantity = floatval($detailModel->quantity);
+            $stock    = $this->converter->convert($type, $quantity);
 
-                // si el stock es mayor al solicitado, entonces terminamos.
-                if ($stock > $requested) {
+            // si el stock es mayor al solicitado, entonces terminamos.
+            if ($stock > $requested) {
+                if ($remaining == 0) {
                     $remainingStock = $stock - $requested;
                     $this->changeStock($remainingStock, $detailModel);
 
                     return;
                 }
 
-                // debemos saber cual es el stock final y el remanente
-                $remainingStock = $this->calculateStock($requested, $remaining, $stock);
-                $remaining += $this->calculateRemaining($remainingStock, $stock, $requested, $remaining);
+                $remainingStock = $stock - $remaining;
+                $this->changeStock($remainingStock, $detailModel);
 
-                // si hay stock debemos asegurarnos que persistimos correctamente
-                if ($remainingStock > 0) {
-                    // si el remanente es mayor o igual a
-                    // lo solicitado, entonces terminamos.
-                    if ($remaining >= $requested) {
-                        $this->changeStock($remainingStock, $detailModel);
+                return;
+            }
 
-                        return;
-                    }
-                } elseif ($stock == $requested || $remaining >= $requested) {
-                    // si el stock es igual a la solicitud, entonces
-                    // queda cero stock, eliminamos el modelo
-                    Event::fire(new ItemStockDetailDeletion($detailModel));
+            // debemos saber cual es el stock final y el remanente
+            $remainingStock = $this->calculateStock($requested, $remaining, $stock);
+            $remaining += $this->calculateRemaining($remainingStock, $stock, $requested, $remaining);
+
+            // si hay stock debemos asegurarnos que persistimos correctamente
+            if ($remainingStock > 0) {
+                // si el remanente es mayor o igual a
+                // lo solicitado, entonces terminamos.
+                if ($remaining >= $requested) {
+                    $this->changeStock($remainingStock, $detailModel);
 
                     return;
                 }
-
-                // aqui implica que el modelo hay que eliminarlo pero
-                // la solicitud no ha sido completada, por lo
-                // tanto debemos continuar iterando.
+            } elseif ($stock == $requested || $remaining >= $requested) {
+                // si el stock es igual a la solicitud, entonces
+                // queda cero stock, eliminamos el modelo
                 Event::fire(new ItemStockDetailDeletion($detailModel));
+
+                return;
             }
+
+            // aqui implica que el modelo hay que eliminarlo pero
+            // la solicitud no ha sido completada, por lo
+            // tanto debemos continuar iterando.
+            Event::fire(new ItemStockDetailDeletion($detailModel));
         }
 
         // para cubrirnos las espaldas.
         throw new LogicException('Egreso de item no pudo ser procesado, item no tiene stock');
+    }
+
+    /**
+     * Genera una coleccion ordenada por la fecha de vencimiento.
+     *
+     * @param \PCI\Models\Item $item
+     * @return \Illuminate\Support\Collection
+     */
+    private function sortStock(Item $item)
+    {
+        // eager-load de las entidades
+        $item->load('stocks', 'stocks.details');
+
+        $withoutDate = [];
+        $withDates   = collect();
+
+        // debemos buscar los modelos y hacer un collection para
+        // ordenar las existencias por fecha de vencimiento.
+        foreach ($item->stocks as $stock) {
+            foreach ($stock->details as $details) {
+                if (is_null($details->due)) {
+                    $withoutDate[] = $details;
+
+                    continue;
+                }
+
+                $withDates->push($details);
+            }
+        }
+
+        // generamos una nueva coleccion ordenada
+        $collection = $withDates->sortBy('due');
+
+        if (count($withoutDate)) {
+            foreach ($withoutDate as $details) {
+                $collection->push($details);
+            }
+        }
+
+        // reseteamos los keys de la coleccion
+        $collection->values()->all();
+
+        return $collection;
     }
 
     /**
