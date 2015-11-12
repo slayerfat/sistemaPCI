@@ -1,7 +1,13 @@
 <?php namespace PCI\Listeners\Note;
 
+use Event;
+use LogicException;
+use PCI\Events\Item\ItemStockDetailChange;
+use PCI\Events\Item\ItemStockDetailDeletion;
 use PCI\Events\Note\NewItemEgress;
 use PCI\Models\Item;
+use PCI\Models\ItemMovement;
+use PCI\Models\StockDetail;
 
 /**
  * Class GenerateItemEgress
@@ -20,7 +26,11 @@ class GenerateItemEgress extends AbstractItemMovement
      */
     public function handle(NewItemEgress $event)
     {
-        $movements = [];
+        // controla si se debe persistir o no el movimiento
+        $persist = false;
+
+        // ajustamos el tipo de movimiento del mismo, al tipo de la nota
+        $this->movement->movement_type_id = $event->note->type->movement_type_id;
 
         foreach ($event->items as $item) {
             $this->converter->setItem($item);
@@ -41,25 +51,34 @@ class GenerateItemEgress extends AbstractItemMovement
                 continue;
             }
 
-            // TODO: items perecederos
+            // ajustamos el stock
+            $this->setStock($noteAmount, $item);
 
-            // si esta bien la cantidad, entonces ajustamos el stock
-            if ($this->setStock($noteAmount, $item)) {
-                // aprovechamos y generamos los movimientos respectivos
-                $movements[$item->id] = [
-                    'quantity'      => $quantity,
-                    'stock_type_id' => $type,
-                    'due'           => null, // FIXME
-                ];
+            // actualizamos la cantidad reservada del item
+            $item->reserved -= $noteAmount;
+            $item->reserved > 0 ?: $item->reserved = 0;
+            $persist = $item->save();
 
-                // actualizamos la cantidad reservada del item
-                $item->reserved -= $noteAmount;
-                $item->reserved > 0 ?: $item->reserved = 0;
-                $item->save();
-            }
+            // creamos objeto que representa nuevo movimiento
+            $itemMvt                = new ItemMovement;
+            $itemMvt->item_id       = $item->id;
+            $itemMvt->quantity      = $quantity;
+            $itemMvt->stock_type_id = $type;
+            $itemMvt->due           = null;
+
+            $this->itemMovements->push($itemMvt);
         }
 
-        $this->setMovement($event->note, $movements);
+        if ($persist) {
+            $event->note->movements()->save($this->movement);
+            foreach ($this->itemMovements as $itemMovement) {
+                $this->movement->itemMovements()->save($itemMovement);
+            }
+
+            return;
+        }
+
+        throw new LogicException('No se persistieron datos en egreso de item');
     }
 
     /**
@@ -68,105 +87,73 @@ class GenerateItemEgress extends AbstractItemMovement
      *
      * @param int|float        $requested
      * @param \PCI\Models\Item $item
-     * @return bool
+     * @return void
      */
     private function setStock($requested, Item $item)
     {
         // numero de control del total a extraer de los almacenes
-        $remaining                 = 0;
-
-        // controla si el pedido fue completado
-        $incomplete = true;
-
-        // contiene el inventario que necesita debe persistir
-        $depotsWithStock = [];
+        $remaining = 0;
 
         // si el stock es valido, generar movimiento y actualizar
         // existencias en almacen en orden descendente,
         // es decir lugares con poco stock primero.
-        /** @var \PCI\Models\Depot $depots */
-        $depots = $item->depots()
-            ->withPivot('quantity', 'stock_type_id')
-            ->orderBy('stock_type_id', 'quantity')
-            ->get();
-
-        // mientras el remanente sea menor al solicitado
-        while ($remaining < $requested) {
-            foreach ($depots as $depot) {
-                $type     = $depot->pivot->stock_type_id;
-                $quantity = floatval($depot->pivot->quantity);
+        foreach ($item->stocks as $stockModel) {
+            foreach ($stockModel->details as $detailModel) {
+                $type     = $stockModel->stock_type_id;
+                $quantity = floatval($detailModel->quantity);
                 $stock    = $this->converter->convert($type, $quantity);
 
-                if ($incomplete) {
-                    // si el stock es mayor al solicitado, entonces terminamos.
-                    if ($stock > $requested) {
-                        $remainingStock = $stock - $requested;
-                        $remaining = $requested;
-                        $incomplete     = false;
+                // si el stock es mayor al solicitado, entonces terminamos.
+                if ($stock > $requested) {
+                    $remainingStock = $stock - $requested;
+                    $this->changeStock($remainingStock, $detailModel);
 
-                        $this->addWithStock($remainingStock, $type, $depotsWithStock, $depot);
+                    return;
+                }
 
-                        continue;
+                // debemos saber cual es el stock final y el remanente
+                $remainingStock = $this->calculateStock($requested, $remaining, $stock);
+                $remaining += $this->calculateRemaining($remainingStock, $stock, $requested, $remaining);
+
+                // si hay stock debemos asegurarnos que persistimos correctamente
+                if ($remainingStock > 0) {
+                    // si el remanente es mayor o igual a
+                    // lo solicitado, entonces terminamos.
+                    if ($remaining >= $requested) {
+                        $this->changeStock($remainingStock, $detailModel);
+
+                        return;
                     }
+                } elseif ($stock == $requested || $remaining >= $requested) {
+                    // si el stock es igual a la solicitud, entonces
+                    // queda cero stock, eliminamos el modelo
+                    Event::fire(new ItemStockDetailDeletion($detailModel));
 
-                    // debemos saber cual es el stock final y el remanente
-                    $remainingStock = $this->calculateStock($requested, $remaining, $stock);
-                    $remaining += $this->calculateRemaining($remainingStock, $stock, $requested, $remaining);
-
-                    // si hay stock debemos asegurarnos que persistimos correctamente
-                    if ($remainingStock > 0) {
-                        // si el remanente es mayor o igual a
-                        // lo solicitado, entonces terminamos.
-                        if ($remaining >= $requested) {
-                            $incomplete = false;
-                            $this->addWithStock($remainingStock, $type, $depotsWithStock, $depot);
-                        }
-
-                        continue;
-                    } elseif ($stock == $requested || $remaining >= $requested) {
-                        // si el stock es igual a la solicitud, entonces
-                        // queda cero stock, por lo tanto no persistimos
-                        $remaining = $requested;
-                        $incomplete = false;
-                        continue;
-                    }
-                } else {
-                    // si se completo la solicitud, solo queda
-                    // persistir los datos sobrantes del resto de los almacenes.
-                    $this->addWithStock($quantity, $type, $depotsWithStock, $depot);
+                    return;
                 }
             }
         }
 
-        // NOTA: se hace de esta forma porque no se pudo conseguir
-        // la forma de alterar el stock del item sin
-        // modificar los ya existentes, es por
-        // eso que debemos iterar todos.
-        $this->reattachDepots($item, $depotsWithStock);
-
-        return true;
+        throw new LogicException('Egreso de item no pudo ser procesado, item no tiene stock');
     }
 
     /**
-     * se persiste el estado actual del stock.
+     * Actualiza el modelo para ajustar la cantidad existente en almacen.
      *
-     * @param int|float         $quantity
-     * @param int|string        $type
-     * @param array             $depotsWithStock
-     * @param \PCI\Models\Depot $depot
+     * @param int|float   $remainingStock
+     * @param StockDetail $stockDetail
      */
-    private function addWithStock(
-        $quantity,
-        $type,
-        array &$depotsWithStock,
-        $depot
-    ) {
-        if ($quantity > 0) {
-            $depotsWithStock[$depot->id] = [
-                'quantity'      => $quantity,
-                'stock_type_id' => $type,
-            ];
+    private function changeStock($remainingStock, StockDetail $stockDetail)
+    {
+        if ($remainingStock <= 0) {
+            throw new LogicException('El stock remanente debe ser mayor a cero.');
         }
+
+        $stockDetail->quantity = $remainingStock;
+
+        $stockDetail->save();
+
+        Event::fire(new ItemStockDetailChange($stockDetail));
     }
 
     /**
