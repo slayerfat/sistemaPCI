@@ -42,7 +42,7 @@ class Stock extends AbstractBaseModel
      */
     public function type()
     {
-        return $this->belongsTo(StockType::class);
+        return $this->belongsTo(StockType::class, 'stock_type_id');
     }
 
     /**

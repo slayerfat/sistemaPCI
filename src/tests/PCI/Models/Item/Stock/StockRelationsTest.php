@@ -1,5 +1,6 @@
 <?php namespace Tests\PCI\Models\Item\Stock;
 
+use Mockery;
 use PCI\Models\Depot;
 use PCI\Models\Item;
 use PCI\Models\Stock;
@@ -19,12 +20,14 @@ class StockRelationsTest extends AbstractTestCase
 
     public function testType()
     {
-        $this->mockBasicModelRelation(
-            Stock::class,
-            'type',
-            'belongsTo',
-            StockType::class
-        );
+        $model = Mockery::mock(Stock::class)->makePartial();
+
+        $model->shouldReceive('belongsTo')
+            ->once()
+            ->with(StockType::class, 'stock_type_id')
+            ->andReturn('mocked');
+
+        $this->assertEquals('mocked', $model->type());
     }
 
     public function testDepot()
