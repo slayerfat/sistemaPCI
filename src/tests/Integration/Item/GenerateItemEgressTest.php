@@ -122,10 +122,75 @@ class GenerateItemEgressTest extends AbstractUserIntegration
                 'stock_type_id' => $stockType,
             ]);
 
-            factory(StockDetail::class)->create([
-                'quantity' => $amount,
-                'stock_id' => $stock->id,
-            ]);
+            $stockDetails           = new StockDetail;
+            $stockDetails->quantity = $amount;
+            $stockDetails->stock_id = $stock->id;
+            $stockDetails->save();
+        }
+    }
+
+    /**
+     * @dataProvider             setStockInvalidDataProvider
+     * @expectedException \LogicException
+     * @expectedExceptionMessage No se persistieron datos en egreso de item
+     * @param $initialStock
+     * @param $itemType
+     * @param $noteType
+     * @param $request
+     * @param $finalStock
+     * @param $events
+     */
+    public function testSetStockShouldNotPersist(
+        $initialStock,
+        $itemType,
+        $noteType,
+        $request,
+        $finalStock,
+        $events
+    ) {
+        $this->item->stock_type_id = $itemType;
+        $this->item->save();
+        /** @var Note $note */
+        $note = factory(Note::class)->create(['note_type_id' => 1]);
+        $note->petition->items()->attach($this->item->id, [
+            'quantity'      => $request,
+            'stock_type_id' => $noteType,
+        ]);
+
+        $this->makeDepots($initialStock, $itemType);
+
+        $note->items()->attach($this->item->id, [
+            'quantity'      => $request,
+            'stock_type_id' => $noteType,
+        ]);
+
+        $note->fresh();
+
+        $newEgress = new NewItemEgress($note);
+
+
+        if ($events) {
+            $this->expectsEvents($events)
+                ->event->handle($newEgress);
+        } elseif (is_null($events)) {
+            $this->event->handle($newEgress);
+        }
+
+        foreach ($finalStock as $id => $amount) {
+            if (is_null($amount)) {
+                $this->notSeeInDatabase('stocks', [
+                    'depot_id' => $id,
+                    'item_id'  => $this->item->id,
+                ]);
+            } elseif (!is_null($amount)) {
+                $this->seeInDatabase('stocks', [
+                    'depot_id' => $id,
+                    'item_id'  => $this->item->id,
+                ]);
+                $this->seeInDatabase('stock_details', [
+                    'quantity' => $amount,
+                ]);
+            }
         }
     }
 
@@ -222,6 +287,30 @@ class GenerateItemEgressTest extends AbstractUserIntegration
                 [1 => null, 2 => null, 3 => null],
                 null,
             ],
+            'prueba_13_camino_x' => [
+                [5],
+                3,
+                2,
+                1,
+                [1 => 4.999],
+                null,
+            ],
+        ];
+    }
+
+    /**
+     * El set contiene:
+     * existencias en almacenes,
+     * tipo de item,
+     * tipo de nota,
+     * solicitud,
+     * existencia final en almacenes
+     *
+     * @return array
+     */
+    public function setStockInvalidDataProvider()
+    {
+        return [
             'prueba_11_camino_x' => [
                 [],
                 3,
@@ -236,14 +325,6 @@ class GenerateItemEgressTest extends AbstractUserIntegration
                 1,
                 1,
                 [1 => 5],
-                null,
-            ],
-            'prueba_13_camino_x' => [
-                [5],
-                3,
-                2,
-                1,
-                [1 => 4.999],
                 null,
             ],
             'prueba_14_camino_x' => [

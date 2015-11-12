@@ -2,8 +2,8 @@
 
 use Event;
 use LogicException;
-use PCI\Events\Item\ItemStockDetailChange;
-use PCI\Events\Item\ItemStockDetailDeletion;
+use PCI\Events\Item\Stock\ItemStockDetailChange;
+use PCI\Events\Item\Stock\ItemStockDetailDeletion;
 use PCI\Events\Note\NewItemEgress;
 use PCI\Models\Item;
 use PCI\Models\ItemMovement;
@@ -34,7 +34,6 @@ class GenerateItemEgress extends AbstractItemMovement
 
         foreach ($event->items as $item) {
             $this->converter->setItem($item);
-
             $type       = $item->pivot->stock_type_id;
             $quantity   = floatval($item->pivot->quantity);
             $noteAmount = $this->converter->convert($type, $quantity);
@@ -69,6 +68,7 @@ class GenerateItemEgress extends AbstractItemMovement
             $this->itemMovements->push($itemMvt);
         }
 
+        // debemos chequear si debemos o no persistir
         if ($persist) {
             $event->note->movements()->save($this->movement);
             foreach ($this->itemMovements as $itemMovement) {
@@ -131,9 +131,15 @@ class GenerateItemEgress extends AbstractItemMovement
 
                     return;
                 }
+
+                // aqui implica que el modelo hay que eliminarlo pero
+                // la solicitud no ha sido completada, por lo
+                // tanto debemos continuar iterando.
+                Event::fire(new ItemStockDetailDeletion($detailModel));
             }
         }
 
+        // para cubrirnos las espaldas.
         throw new LogicException('Egreso de item no pudo ser procesado, item no tiene stock');
     }
 
@@ -149,11 +155,7 @@ class GenerateItemEgress extends AbstractItemMovement
             throw new LogicException('El stock remanente debe ser mayor a cero.');
         }
 
-        $stockDetail->quantity = $remainingStock;
-
-        $stockDetail->save();
-
-        Event::fire(new ItemStockDetailChange($stockDetail));
+        Event::fire(new ItemStockDetailChange($stockDetail, $remainingStock));
     }
 
     /**
