@@ -9,9 +9,9 @@
         /** @var PCI\Models\Stock $stock */
         $item = $stock->item;
         // super mamarracho.
-        $number   = $stock->total;
-        $desc     = $stock->type->desc;
-        $quantity = $item->formattedQuantity($number, $desc);
+        $number   = $stock->details->sum('quantity');
+        $type     = $stock->type->desc;
+        $quantity = $item->formattedQuantity($number, $type);
         $array[]  = [
             'uid'         => $item->id,
             'Descripción' => $item->desc,
