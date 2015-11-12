@@ -2,7 +2,6 @@
 
 use PCI\Models\Depot;
 use PCI\Models\Item;
-use PCI\Models\ItemMovement;
 use PCI\Models\Stock;
 use PCI\Models\StockDetail;
 use PCI\Models\StockType;
@@ -45,16 +44,6 @@ class StockRelationsTest extends AbstractTestCase
             'item',
             'belongsTo',
             Item::class
-        );
-    }
-
-    public function testItemMovements()
-    {
-        $this->mockBasicModelRelation(
-            Stock::class,
-            'itemMovements',
-            'hasMany',
-            ItemMovement::class
         );
     }
 

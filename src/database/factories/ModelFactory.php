@@ -89,7 +89,6 @@ $factory->define(PCI\Models\ItemMovement::class, function () {
     return [
         'item_id'       => factory(PCI\Models\Item::class)->create()->id,
         'movement_id'   => factory(PCI\Models\Movement::class)->create()->id,
-        'stock_id'      => factory(PCI\Models\Stock::class)->create()->id,
         'stock_type_id' => factory(PCI\Models\StockType::class)->create()->id,
         'quantity'      => 1,
         'due'           => '1999-09-09',
@@ -107,7 +106,6 @@ $factory->define(PCI\Models\Movement::class, function () use ($faker) {
     return [
         'movement_type_id' => 1,
         'note_id'          => factory(PCI\Models\Note::class)->create()->id,
-        'creation'         => $faker->dateTime,
     ];
 });
 

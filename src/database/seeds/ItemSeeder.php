@@ -131,10 +131,12 @@ class ItemSeeder extends AbstractSeeder
 
         Stock::all()->each(function ($stock) use ($movement) {
             /** @var \PCI\Models\Stock $stock */
-            $this->command->info("Uniendo Stock (id) {$stock->id} nuevo movimiento");
+            $this->command->info(
+                "Generando nuevo movimiento relacionado "
+                . "con Stock #{$stock->id}"
+            );
 
             $itemMovement = factory(ItemMovement::class)->create([
-                'stock_id' => $stock->id,
                 'quantity' => $stock->details->first()->quantity,
                 'due'      => $stock->details->first()->due,
             ]);

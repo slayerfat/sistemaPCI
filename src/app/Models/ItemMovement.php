@@ -21,9 +21,7 @@
  * @property integer        $updated_by
  * @property-read Movement  $movement
  * @property-read Item      $item
- * @property-read Stock     $stock
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\ItemMovement whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\PCI\Models\ItemMovement whereStockId($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\ItemMovement whereItemId($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\ItemMovement whereMovementId($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\ItemMovement whereQuantity($value)
@@ -69,13 +67,5 @@ class ItemMovement extends AbstractBaseModel
     public function item()
     {
         return $this->belongsTo(Item::class);
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function stock()
-    {
-        return $this->belongsTo(Stock::class);
     }
 }

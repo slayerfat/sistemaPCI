@@ -16,7 +16,6 @@
  * @property-read StockType $type
  * @property-read Depot $depot
  * @property-read Item $item
- * @property-read \Illuminate\Database\Eloquent\Collection|ItemMovement[] $itemMovements
  * @property-read \Illuminate\Database\Eloquent\Collection|StockDetail[] $details
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Stock whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Stock whereDepotId($value)
@@ -60,14 +59,6 @@ class Stock extends AbstractBaseModel
     public function item()
     {
         return $this->belongsTo(Item::class);
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\hasMany|\Illuminate\Database\Eloquent\Builder
-     */
-    public function itemMovements()
-    {
-        return $this->hasMany(ItemMovement::class);
     }
 
     /**

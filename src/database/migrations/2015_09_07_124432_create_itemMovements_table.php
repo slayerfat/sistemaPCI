@@ -14,8 +14,6 @@ class CreateItemMovementsTable extends Migration
     {
         Schema::create('item_movements', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('stock_id');
-            $table->foreign('stock_id')->references('id')->on('stocks');
             $table->unsignedInteger('item_id');
             $table->foreign('item_id')->references('id')->on('items');
             $table->unsignedInteger('movement_id');
