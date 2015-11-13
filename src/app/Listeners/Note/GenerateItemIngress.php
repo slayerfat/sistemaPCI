@@ -1,5 +1,6 @@
 <?php namespace PCI\Listeners\Note;
 
+use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use PCI\Events\Note\NewItemIngress;
 use PCI\Models\Stock;
@@ -109,10 +110,7 @@ class GenerateItemIngress extends AbstractItemMovement
                 $this->item->stocks()->save($stock);
             }
 
-            $details = new StockDetail([
-                'quantity' => $array['quantity'],
-                'due'      => $array['due'],
-            ]);
+            $details = $this->getStockDetails($stock, $array);
 
             $stock->details()->save($details);
         }
@@ -124,11 +122,56 @@ class GenerateItemIngress extends AbstractItemMovement
     private function sortCollection()
     {
         /** @var Collection $results */
-        $results = $this->data[$this->item->id];
-        $results = $results->filter(function ($set) {
+        $results  = $this->data[$this->item->id]->unique();
+        $filtered = $results->filter(function ($set) {
             return $set['due'] == $this->date;
         });
 
-        return $results;
+        $this->data[$this->item->id]->forget($filtered->keys()->all());
+
+        return $filtered;
+    }
+
+    /**
+     * @param Stock $stock
+     * @param array $array
+     * @return \PCI\Models\StockDetail
+     */
+    private function getStockDetails(Stock $stock, array $array)
+    {
+        if ($stock->details->isEmpty()) {
+            return new StockDetail([
+                'quantity' => $array['quantity'],
+                'due'      => $array['due'],
+            ]);
+        }
+
+        $details = $stock->details()
+            ->where('due', Carbon::parse($array['due']))
+            ->get();
+
+        if ($details->count() > 1) {
+            $total = $details->sum('quantity') + $array['quantity'];
+
+            $details->each(function (StockDetail $detail) {
+                $detail->delete();
+            });
+
+            return new StockDetail([
+                'quantity' => $total,
+                'due'      => $array['due'],
+            ]);
+        } elseif ($details->count() == 0) {
+            return new StockDetail([
+                'quantity' => $array['quantity'],
+                'due'      => $array['due'],
+            ]);
+        }
+
+        /** @var StockDetail $details */
+        $details = $details->first();
+        $details->quantity += $array['quantity'];
+
+        return $details;
     }
 }

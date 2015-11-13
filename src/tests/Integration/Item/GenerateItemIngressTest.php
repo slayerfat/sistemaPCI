@@ -148,6 +148,24 @@ class GenerateItemIngressTest extends AbstractUserIntegration
             ],
             'prueba_04_camino_x' => [
                 [
+                    [1 => ['amount' => 1, 'due' => '1999-09-09']],
+                    [1 => ['amount' => 1, 'due' => '1999-09-09']],
+                    [1 => ['amount' => 1, 'due' => '1999-09-09']],
+                ],
+                [[1 => 1]],
+                null,
+            ],
+            'prueba_05_camino_x' => [
+                [
+                    [1 => ['amount' => 1, 'due' => '1999-09-09']],
+                    [1 => ['amount' => 7, 'due' => '1999-09-09']],
+                    [1 => ['amount' => 13, 'due' => '1999-09-09']],
+                ],
+                [[1 => 21]],
+                null,
+            ],
+            'prueba_06_camino_x' => [
+                [
                     [1 => ['amount' => 31, 'due' => null]],
                     [1 => ['amount' => 33, 'due' => null]],
                     [1 => ['amount' => 37, 'due' => null]],
@@ -155,7 +173,7 @@ class GenerateItemIngressTest extends AbstractUserIntegration
                 [[1 => 101]],
                 null,
             ],
-            'prueba_05_camino_x' => [
+            'prueba_07_camino_x' => [
                 [
                     [1 => ['amount' => 31, 'due' => null]],
                     [1 => ['amount' => 33, 'due' => '1999-09-09']],

@@ -49,23 +49,30 @@ class NewItemIngress extends NewNoteCreation
      */
     public function setData(Collection $data)
     {
-        $this->checkDataArray($data);
+        $this->checkData($data);
+        $collection = collect();
+        $group      = $data->groupBy('item_id');
 
-        $this->data = $data->groupBy('item_id');
+        /** @var Collection $single */
+        foreach ($group as $id => $single) {
+            $collection->offsetSet($id, $single->unique());
+        }
+
+        $this->data = $collection;
     }
 
     /**
      * @param Collection $data [item_id, depot_id]
      * @return void
      */
-    private function checkDataArray(Collection $data)
+    private function checkData(Collection $data)
     {
         if ($data->isEmpty()) {
             throw new LogicException('El arreglo de datos, debe contener el id del item y elementos asociados.');
         }
 
         foreach ($data as $array) {
-            if (!isset($array['depot_id'])) {
+            if (!isset($array['depot_id']) || !isset($array['due'])) {
                 throw new LogicException('El arreglo de datos, esta construido incorrectamente.');
             }
         }
