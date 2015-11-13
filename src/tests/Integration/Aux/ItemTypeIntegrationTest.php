@@ -11,7 +11,7 @@ use PCI\Models\ItemType;
  * @author  Alejandro Granadillo <slayerfat@gmail.com>
  * @link    https://github.com/slayerfat/sistemaPCI Repositorio en linea.
  */
-class ItemTypeIntegrationTest extends AuxIntegrationTest
+class ItemTypeIntegrationTest extends AbstractAuxIntegration
 {
 
     /**
@@ -35,7 +35,6 @@ class ItemTypeIntegrationTest extends AuxIntegrationTest
     /**
      * @param $route
      * @param $alias
-     * @param $class
      * @dataProvider dataProvider
      */
     public function testAuxIndexShouldHaveTableWithValidInfo(
