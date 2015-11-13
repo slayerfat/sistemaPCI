@@ -1,5 +1,6 @@
 <?php namespace PCI\Events\Note;
 
+use Illuminate\Support\Collection;
 use LogicException;
 use PCI\Models\Note;
 
@@ -15,8 +16,9 @@ class NewItemIngress extends NewNoteCreation
 
     /**
      * La informacion necesaria para completar el nuevo ingreso al almacen.
+     * continene una coleccion con arrays asociativos.
      *
-     * @var array este array es asociativo [item, nota]
+     * @var Collection [item_id, depot_id, due]
      */
     public $data;
 
@@ -25,36 +27,17 @@ class NewItemIngress extends NewNoteCreation
      * este construido correctamente o generara un error.
      *
      * @param \PCI\Models\Note $note
-     * @param array            $data este array es asociativo [item, nota]
+     * @param Collection       $data [item_id, nota_id]
      */
-    public function __construct(Note $note, array $data)
+    public function __construct(Note $note, Collection $data)
     {
         parent::__construct($note);
 
-        $this->checkDataArray($data);
-
-        $this->data = $data;
+        $this->setData($data);
     }
 
     /**
-     * @param array $data
-     * @return void
-     */
-    private function checkDataArray(array $data)
-    {
-        if (count($data) == 0) {
-            throw new LogicException('El arreglo de datos, esta construido incorrectamente.');
-        }
-
-        foreach ($data as $array) {
-            if (!isset($array['depot_id'])) {
-                throw new LogicException('El arreglo de datos, esta construido incorrectamente.');
-            }
-        }
-    }
-
-    /**
-     * @return array
+     * @return Collection
      */
     public function getData()
     {
@@ -62,12 +45,29 @@ class NewItemIngress extends NewNoteCreation
     }
 
     /**
-     * @param array $data
+     * @param Collection $data
      */
-    public function setData(array $data)
+    public function setData(Collection $data)
     {
         $this->checkDataArray($data);
 
-        $this->data = $data;
+        $this->data = $data->groupBy('item_id');
+    }
+
+    /**
+     * @param Collection $data [item_id, depot_id]
+     * @return void
+     */
+    private function checkDataArray(Collection $data)
+    {
+        if ($data->isEmpty()) {
+            throw new LogicException('El arreglo de datos, debe contener el id del item y elementos asociados.');
+        }
+
+        foreach ($data as $array) {
+            if (!isset($array['depot_id'])) {
+                throw new LogicException('El arreglo de datos, esta construido incorrectamente.');
+            }
+        }
     }
 }

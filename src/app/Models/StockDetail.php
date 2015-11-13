@@ -31,7 +31,10 @@ class StockDetail extends AbstractBaseModel
      *
      * @var array
      */
-    protected $fillable = [];
+    protected $fillable = [
+        'due',
+        'quantity'
+    ];
 
     /**
      * Atributos que deben ser mutados a dates.

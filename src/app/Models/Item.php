@@ -287,7 +287,7 @@ class Item extends AbstractBaseModel implements SluggableInterface
     /**
      * La serie de stock existente en los almacenes.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany|\Illuminate\Database\Eloquent\Builder
      */
     public function stocks()
     {
