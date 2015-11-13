@@ -72,7 +72,7 @@ class NewItemIngress extends NewNoteCreation
         }
 
         foreach ($data as $array) {
-            if (!isset($array['depot_id']) || !isset($array['due'])) {
+            if (!array_key_exists('depot_id', $array) || !array_key_exists('due', $array)) {
                 throw new LogicException('El arreglo de datos, esta construido incorrectamente.');
             }
         }

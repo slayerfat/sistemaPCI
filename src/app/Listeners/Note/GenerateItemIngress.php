@@ -146,9 +146,7 @@ class GenerateItemIngress extends AbstractItemMovement
             ]);
         }
 
-        $details = $stock->details()
-            ->where('due', Carbon::parse($array['due']))
-            ->get();
+        $details = $this->getDetails($stock, $array);
 
         if ($details->count() > 1) {
             $total = $details->sum('quantity') + $array['quantity'];
@@ -171,6 +169,22 @@ class GenerateItemIngress extends AbstractItemMovement
         /** @var StockDetail $details */
         $details = $details->first();
         $details->quantity += $array['quantity'];
+
+        return $details;
+    }
+
+    /**
+     * @param \PCI\Models\Stock $stock
+     * @param array             $array
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    private function getDetails(Stock $stock, array $array)
+    {
+        $date = $array['due'] ? Carbon::parse($array['due']) : null;
+
+        $details = $stock->details()
+            ->where('due', $date)
+            ->get();
 
         return $details;
     }

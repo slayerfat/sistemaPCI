@@ -91,8 +91,6 @@ class GenerateItemIngressTest extends AbstractUserIntegration
             $this->event->handle($newEgress);
         }
 
-        //dd(Depot::all()->load('stocks.details')->toArray());
-
         foreach ($finalStock as $array) {
             foreach ($array as $id => $amount) {
                 if (is_null($amount)) {
