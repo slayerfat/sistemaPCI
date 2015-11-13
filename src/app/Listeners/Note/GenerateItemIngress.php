@@ -26,21 +26,25 @@ class GenerateItemIngress extends AbstractItemMovement
             $this->converter->setItem($item);
 
             $type       = $item->pivot->stock_type_id;
-            $quantity   = $item->pivot->quantity;
+            $quantity   = floatval($item->pivot->quantity);
+            $date       = $item->pivot->due;
             $noteAmount = $this->converter->convert($type, $quantity);
 
             // chequear el stock de cada item
             if ($noteAmount == 0) {
-                // TODO: ignorar item en movimientos
+                $event->note->comments .= sizeof($event->note->comments) <= 1 ? "" : "\r\n";
+                $event->note->comments .= "Se intenta hacer un ingreso del " .
+                    "item #{$item->id}, pero la nota asociada tiene una cantidad " .
+                    "de cero o nula, ingreso rechazado.";
+                $event->note->save();
+                // ignora item en movimientos
                 continue;
             }
-
-            // TODO: items perecederos
 
             $movements[$item->id] = [
                 'quantity'      => $quantity,
                 'stock_type_id' => $type,
-                'due'           => null, // FIXME
+                'due'           => $date,
             ];
 
             // se persiste el estado actual del stock

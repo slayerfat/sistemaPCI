@@ -52,6 +52,7 @@ class Employee extends AbstractBaseModel
     /**
      * The attributes that are mass assignable.
      * La nacionalidad y genero no son problema.
+     *
      * @var array
      */
     protected $fillable = [
@@ -63,7 +64,7 @@ class Employee extends AbstractBaseModel
         'first_surname',
         'last_surname',
         'phone',
-        'cellphone'
+        'cellphone',
     ];
 
     // -------------------------------------------------------------------------
@@ -74,6 +75,7 @@ class Employee extends AbstractBaseModel
      * Muta la cedula de identidad: si no hay cedula,
      * la convierte a nulo para que sea guardada
      * correctamente en la base de datos.
+     *
      * @param int $value
      * @return null|integer
      */
@@ -83,11 +85,12 @@ class Employee extends AbstractBaseModel
             return $this->attributes['ci'] = null;
         }
 
-        return $this->attributes['ci'] = (int) $value;
+        return $this->attributes['ci'] = (int)$value;
     }
 
     /**
      * Regresa los datos laborales del empleado.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function workDetails()
@@ -97,6 +100,7 @@ class Employee extends AbstractBaseModel
 
     /**
      * Regresa el usuario relacionado con el empleado.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function user()
@@ -106,6 +110,7 @@ class Employee extends AbstractBaseModel
 
     /**
      * Regresa la nacionalidad relacionada con el empleado.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function nationality()
@@ -115,6 +120,7 @@ class Employee extends AbstractBaseModel
 
     /**
      * Regresa el genero relacionado con el empleado.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function gender()
@@ -124,6 +130,7 @@ class Employee extends AbstractBaseModel
 
     /**
      * Regresa la direccion relacionada con el empleado.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function address()
@@ -134,6 +141,7 @@ class Employee extends AbstractBaseModel
     /**
      * Genera los nombres en formato legible para
      * ser consumido por alguna vista.
+     *
      * @param boolean $everything chequea si se trae los nombres secundarios.
      * @return string
      */
@@ -154,6 +162,7 @@ class Employee extends AbstractBaseModel
 
     /**
      * Genera los nombres en formato legible con los nombres y apellidos.
+     *
      * @param string $firstSurname El primer apellido.
      * @param string $firstName El primer nombre.
      * @return string los apellidos, nombres.

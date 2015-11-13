@@ -34,12 +34,14 @@ class Position extends AbstractBaseModel implements SluggableInterface
 
     /**
      * The attributes that are mass assignable.
+     *
      * @var array
      */
     protected $fillable = ['desc'];
 
     /**
      * Los datos necesarios para generarar un slug en el modelo.
+     *
      * @var array
      */
     protected $sluggable = [
@@ -49,6 +51,7 @@ class Position extends AbstractBaseModel implements SluggableInterface
 
     /**
      * Regresa una coleccion de datos laborales asociados.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\hasMany
      */
     public function workDetails()

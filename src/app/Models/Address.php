@@ -36,6 +36,7 @@ class Address extends AbstractBaseModel
     /**
      * The attributes that are mass assignable.
      * Parroquina no tiene problema.
+     *
      * @var string[]
      */
     protected $fillable = [
@@ -52,6 +53,7 @@ class Address extends AbstractBaseModel
     /**
      * Regresa una cadena de texto
      * formateada de forma agradable para la vista.
+     *
      * @return string
      */
     public function getFormattedDetailsAttribute()
@@ -75,6 +77,7 @@ class Address extends AbstractBaseModel
 
     /**
      * Regresa un string con 'Edf./Qta./Blq. {$this->building}' o nulo.
+     *
      * @return string|null
      */
     public function formattedBuilding()
@@ -86,6 +89,7 @@ class Address extends AbstractBaseModel
 
     /**
      * (q . !k . !l) === !(!q + k + l)
+     *
      * @param string $attr el atributo a validar
      * @return bool
      */
@@ -96,6 +100,7 @@ class Address extends AbstractBaseModel
 
     /**
      * Regresa un string con 'Calle(s) {$this->street}' o nulo.
+     *
      * @return string|null
      */
     public function formattedStreet()
@@ -107,6 +112,7 @@ class Address extends AbstractBaseModel
 
     /**
      * Regresa un string con 'Av. {$this->av}' o nulo.
+     *
      * @return string|null
      */
     public function formattedAv()
@@ -118,6 +124,7 @@ class Address extends AbstractBaseModel
 
     /**
      * Regresa la parroquia relacionada.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function parish()
@@ -127,6 +134,7 @@ class Address extends AbstractBaseModel
 
     /**
      * Regresa una coleccion de empleados relacionados.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function employee()
@@ -136,6 +144,7 @@ class Address extends AbstractBaseModel
 
     /**
      * Regresa el edificio en formato legible.
+     *
      * @param string $value El atributo interno a devolver.
      * @return string
      */
@@ -150,6 +159,7 @@ class Address extends AbstractBaseModel
      * Si la cadena de texto tiene un punto al final, lo elimina.
      * Esto se debe a que cuando se formatea el texto,
      * nos conviene que no tenga el punto.
+     *
      * @param string $value La cadena de texto a comprobar.
      * @return string|null
      */
@@ -173,6 +183,7 @@ class Address extends AbstractBaseModel
 
     /**
      * Devuelve la primera letra del string en mayuscula, con trim.
+     *
      * @param string $value el valor a manipular.
      * @return string
      */
@@ -183,6 +194,7 @@ class Address extends AbstractBaseModel
 
     /**
      * Regresa el edificio en formato legible.
+     *
      * @param string $value El atributo interno a devolver.
      * @return string
      */
@@ -195,6 +207,7 @@ class Address extends AbstractBaseModel
 
     /**
      * Regresa el edificio en formato legible.
+     *
      * @param string $value El atributo interno a devolver.
      * @return string
      */

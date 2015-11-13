@@ -85,6 +85,16 @@ $factory->defineAs(PCI\Models\Item::class, 'full', function () use ($factory) {
     ]);
 });
 
+$factory->define(PCI\Models\ItemMovement::class, function () {
+    return [
+        'item_id'       => factory(PCI\Models\Item::class)->create()->id,
+        'movement_id'   => factory(PCI\Models\Movement::class)->create()->id,
+        'stock_type_id' => factory(PCI\Models\StockType::class)->create()->id,
+        'quantity'      => 1,
+        'due'           => '1999-09-09',
+    ];
+});
+
 $factory->define(PCI\Models\ItemType::class, function () use ($faker) {
     return [
         'desc'       => $faker->text(40),
@@ -96,7 +106,6 @@ $factory->define(PCI\Models\Movement::class, function () use ($faker) {
     return [
         'movement_type_id' => 1,
         'note_id'          => factory(PCI\Models\Note::class)->create()->id,
-        'creation'         => $faker->dateTime,
     ];
 });
 
@@ -127,6 +136,22 @@ $factory->define(PCI\Models\Petition::class, function () use ($faker) {
         'request_date'     => $faker->dateTime,
         'comments'         => $faker->paragraph,
         'status'           => true,
+    ];
+});
+
+$factory->define(PCI\Models\Stock::class, function () {
+    return [
+        'depot_id'      => factory(\PCI\Models\Depot::class)->create()->id,
+        'item_id'       => factory(\PCI\Models\Item::class)->create()->id,
+        'stock_type_id' => factory(\PCI\Models\StockType::class)->create()->id,
+    ];
+});
+
+$factory->define(PCI\Models\StockDetail::class, function () {
+    return [
+        'stock_id' => factory(\PCI\Models\Stock::class)->create()->id,
+        'quantity' => rand(1, 10000),
+        'due'      => '1999-09-09',
     ];
 });
 

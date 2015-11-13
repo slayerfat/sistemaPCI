@@ -11,6 +11,8 @@ use PCI\Models\Depot;
 use PCI\Models\Item;
 use PCI\Models\ItemType;
 use PCI\Models\Maker;
+use PCI\Models\Stock;
+use PCI\Models\StockDetail;
 use PCI\Models\StockType;
 use PCI\Models\SubCategory;
 use Tests\Integration\User\AbstractUserIntegration;
@@ -31,13 +33,16 @@ class ItemIntegrationTest extends AbstractUserIntegration
     {
         $item = factory(Item::class, 'full')->create(['minimum' => 60]);
 
-        $depots = factory(Depot::class, 3)->create();
+        $stock = factory(Stock::class)->create([
+            'item_id'       => $item->id,
+            'stock_type_id' => 1,
+        ]);
 
-        foreach ($depots as $depot) {
-            $item->depots()->attach($depot->id, [
-                'quantity'      => 234,
-                'stock_type_id' => 1,
-            ]);
+        for ($i = 0; $i < 3; $i++) {
+            $stockDetails           = new StockDetail;
+            $stockDetails->quantity = 234;
+            $stockDetails->stock_id = $stock->id;
+            $stockDetails->save();
         }
 
         $this->actingAs($this->user)
@@ -54,14 +59,16 @@ class ItemIntegrationTest extends AbstractUserIntegration
             'stock_type_id' => 3,
         ]);
 
-        $depots = factory(Depot::class, 3)->create();
-        $id     = 2;
-
-        foreach ($depots as $depot) {
-            $item->depots()->attach($depot->id, [
-                'quantity'      => 1,
-                'stock_type_id' => $id++,
+        foreach (range(2, 4) as $id) {
+            $stock = factory(Stock::class)->create([
+                'item_id'       => $item->id,
+                'stock_type_id' => $id,
             ]);
+
+            $stockDetails           = new StockDetail;
+            $stockDetails->quantity = 1;
+            $stockDetails->stock_id = $stock->id;
+            $stockDetails->save();
         }
 
         $this->actingAs($this->user)
@@ -76,17 +83,24 @@ class ItemIntegrationTest extends AbstractUserIntegration
 
     public function testShowDepotDisplaysCorrectStockTypesAndAmounts()
     {
-        $item  = factory(Item::class, 'full')->create([
+        $item = factory(Item::class, 'full')->create([
             'minimum'       => 60,
             'stock_type_id' => 3,
         ]);
+
         $depot = factory(Depot::class)->create();
 
         foreach (range(2, 4) as $id) {
-            $item->depots()->attach($depot->id, [
-                'quantity'      => 1,
+            $stock = factory(Stock::class)->create([
+                'depot_id' => $depot->id,
+                'item_id'  => $item->id,
                 'stock_type_id' => $id,
             ]);
+
+            $stockDetails           = new StockDetail;
+            $stockDetails->quantity = 1;
+            $stockDetails->stock_id = $stock->id;
+            $stockDetails->save();
         }
 
         $this->actingAs($this->user)

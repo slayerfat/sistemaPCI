@@ -46,7 +46,7 @@ if (is_null($note->status)) {
                                         Almacén #{{ $depot->number }},
                                         Anaquel #{{ $depot->rack }},
                                         Alacena #{{ $depot->shelf }},
-                                        Contiene {{ $depot->items->count() }}
+                                        Contiene {{ $depot->stocks->count() }}
                                         Items.
                                     </option>
                                 @endforeach

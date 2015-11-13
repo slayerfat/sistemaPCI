@@ -27,6 +27,7 @@ class State extends AbstractPlacesModel
 
     /**
      * Regresa una coleccion de minucipios asociados.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\hasMany
      */
     public function towns()

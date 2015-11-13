@@ -2,8 +2,9 @@
 
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use PCI\Models\Depot;
 use PCI\Models\Item;
+use PCI\Models\Stock;
+use PCI\Models\StockDetail;
 use PCI\Models\StockType;
 use Tests\AbstractTestCase;
 
@@ -46,61 +47,78 @@ class ItemIntegrationTest extends AbstractTestCase
 
     public function testStockShouldReturnAValidNumber()
     {
-        $depots = factory(Depot::class, 3)->create();
+        $stocks = factory(Stock::class, 3)->create([
+            'item_id'       => $this->item->id,
+            'stock_type_id' => 1,
+        ]);
 
-        foreach ($depots as $depot) {
-            $this->item->depots()->attach($depot->id, [
-                'quantity'      => 10,
-                'stock_type_id' => 1,
+        $stocks->each(function ($stock) {
+            factory(StockDetail::class)->create([
+                'quantity' => 10,
+                'stock_id' => $stock->id,
             ]);
-        }
+        });
+
 
         $this->assertEquals(30, $this->item->stock());
         $this->assertEquals(50, $this->item->percentageStock());
     }
 
-    public function testFormattedStockShouldReturnValidNumbers()
+    public function testFormattedStockShouldReturnMoreThanOneNumber()
     {
-        $depots = factory(Depot::class, 3)->create();
+        $stocks = factory(Stock::class, 3)->create([
+            'item_id'       => $this->item->id,
+            'stock_type_id' => 1,
+        ]);
 
-        foreach ($depots as $depot) {
-            $this->item->depots()->attach($depot->id, [
-                'quantity'      => 12,
-                'stock_type_id' => 1,
+        $stocks->each(function ($stock) {
+            factory(StockDetail::class)->create([
+                'quantity' => 12,
+                'stock_id' => $stock->id,
             ]);
-        }
+        });
 
         $this->assertEquals('36 Unidades', $this->item->formattedStock());
+    }
 
-        foreach ($depots as $depot) {
-            $this->item->depots()->detach($depot->id);
-        }
+    public function testFormattedStockShouldReturnCeroNumbers()
+    {
+        $item = factory(Item::class, 'full')->create(['stock_type_id' => 1]);
 
-        $this->assertEquals('0 Unidades', $this->item->formattedStock());
+        $this->assertEquals('0 Unidades', $item->formattedStock());
+    }
 
-        $this->item->depots()->attach(
-            $depots->first()->id,
-            [
-                'quantity'      => 1,
-                'stock_type_id' => 1,
-            ]
-        );
+    public function testFormattedStockShouldReturnOneNumber()
+    {
+        $stock = factory(Stock::class)->create([
+            'item_id'       => $this->item->id,
+            'stock_type_id' => 1,
+        ]);
+
+        factory(StockDetail::class)->create([
+            'quantity' => 1,
+            'stock_id' => $stock->id,
+        ]);
 
         $this->assertEquals('1 Unidad', $this->item->formattedStock());
     }
 
     public function testFormattedStockShouldReturnCorrectType()
     {
-        $depots = factory(Depot::class, 2)->create();
-        $stock  = StockType::whereDesc('Tonelada')->first();
-        $item   = factory(Item::class)->create(['stock_type_id' => $stock->id]);
+        $stock = StockType::whereDesc('Tonelada')->first();
+        $item  = factory(Item::class)->create(['stock_type_id' => $stock->id]);
 
-        foreach ($depots as $depot) {
-            $item->depots()->attach($depot->id, [
-                'quantity'      => 12,
-                'stock_type_id' => $stock->id,
+        $stocks = factory(Stock::class, 2)->create([
+            'item_id'       => $item->id,
+            'stock_type_id' => $stock->id,
+        ]);
+
+        $stocks->each(function ($stock) {
+            factory(StockDetail::class)->create([
+                'quantity' => 12,
+                'stock_id' => $stock->id,
             ]);
-        }
+        });
 
         $this->assertEquals('24 Toneladas', $item->formattedStock());
     }
@@ -112,16 +130,19 @@ class ItemIntegrationTest extends AbstractTestCase
      */
     public function testItemShouldReturnCorrectStockConversion($id, $message)
     {
-        $depots = factory(Depot::class, 3)->create();
-        $i      = 2;
-        $item   = $this->item = factory(Item::class, 'full')->create(
+        $item = $this->item = factory(Item::class, 'full')->create(
             ['minimum' => 50, 'stock_type_id' => $id]
         );
 
-        foreach ($depots as $depot) {
-            $this->item->depots()->attach($depot->id, [
-                'quantity'      => 1,
-                'stock_type_id' => $i++,
+        for ($i = 2; $i <= 4; $i++) {
+            $stock = factory(Stock::class)->create([
+                'item_id'       => $item->id,
+                'stock_type_id' => $i,
+            ]);
+
+            factory(StockDetail::class)->create([
+                'quantity' => 1,
+                'stock_id' => $stock->id,
             ]);
         }
 
@@ -147,17 +168,21 @@ class ItemIntegrationTest extends AbstractTestCase
      */
     public function testItemShouldAllowReservedStock($id, $reserved, $message)
     {
-        $depots               = factory(Depot::class, 3)->create();
-        $i                    = 2;
-        $item                 = $this->item = factory(Item::class, 'full')->create(
+        $item = $this->item = factory(Item::class, 'full')->create(
             ['minimum' => 50, 'stock_type_id' => $id]
         );
+
         $this->item->reserved = $reserved;
 
-        foreach ($depots as $depot) {
-            $this->item->depots()->attach($depot->id, [
-                'quantity'      => 1,
-                'stock_type_id' => $i++,
+        for ($i = 2; $i <= 4; $i++) {
+            $stock = factory(Stock::class)->create([
+                'item_id'       => $item->id,
+                'stock_type_id' => $i,
+            ]);
+
+            factory(StockDetail::class)->create([
+                'quantity' => 1,
+                'stock_id' => $stock->id,
             ]);
         }
 

@@ -8,9 +8,10 @@ use PCI\Models\WorkDetail;
 
 /**
  * Class UserRelatedSeeder
+ *
  * @package PCI\Database
- * @author Alejandro Granadillo <slayerfat@gmail.com>
- * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
+ * @author  Alejandro Granadillo <slayerfat@gmail.com>
+ * @link    https://github.com/slayerfat/sistemaPCI Repositorio en linea.
  */
 class UserRelatedSeeder extends AbstractSeeder
 {
@@ -28,8 +29,8 @@ class UserRelatedSeeder extends AbstractSeeder
 
         // se crean usuarios adicionales para probar autenticacion y autorizacion.
         $user = factory(User::class)->create([
-            'profile_id'  => 2,
-            'password' => $password
+            'profile_id' => 2,
+            'password'   => $password,
         ]);
         $users->push($user);
 
@@ -38,10 +39,9 @@ class UserRelatedSeeder extends AbstractSeeder
         $this->command->info("creado Jefe de Alamacen");
 
 
-
         $user = factory(User::class)->create([
-            'profile_id'  => 3,
-            'password' => $password
+            'profile_id' => 3,
+            'password'   => $password,
         ]);
         $users->push($user);
 

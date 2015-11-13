@@ -89,7 +89,7 @@ class NoteTest extends AbstractTestCase
 
         $mock->shouldReceive('withPivot')
             ->once()
-            ->with('quantity', 'stock_type_id')
+            ->with('quantity', 'stock_type_id', 'due')
             ->andReturn('mocked');
 
         $this->assertEquals('mocked', $mock->items());

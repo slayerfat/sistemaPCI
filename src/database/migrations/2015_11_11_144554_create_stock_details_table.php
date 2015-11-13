@@ -1,9 +1,9 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
-class CreateMovementsTable extends Migration
+class CreateStockDetailsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,14 +12,12 @@ class CreateMovementsTable extends Migration
      */
     public function up()
     {
-        Schema::create('movements', function (Blueprint $table) {
+        Schema::create('stock_details', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('movement_type_id');
-            $table->foreign('movement_type_id')
-                ->references('id')
-                ->on('movement_types');
-            $table->unsignedInteger('note_id');
-            $table->foreign('note_id')->references('id')->on('notes');
+            $table->unsignedInteger('stock_id');
+            $table->foreign('stock_id')->references('id')->on('stocks');
+            $table->float('quantity', 16, 7)->nullable();
+            $table->date('due')->nullable()->index();
             $table->timestamps();
             $table->unsignedInteger('created_by');
             $table->foreign('created_by')->references('id')->on('users');
@@ -35,6 +33,6 @@ class CreateMovementsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('movements');
+        Schema::drop('stock_details');
     }
 }

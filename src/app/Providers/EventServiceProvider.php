@@ -46,6 +46,12 @@ class EventServiceProvider extends ServiceProvider
         'PCI\Events\Petition\UpdateItemReserved'       => [
             'PCI\Listeners\Item\ReserveItemStock',
         ],
+        'PCI\Events\Item\Stock\ItemStockDetailDeletion'  => [
+            'PCI\Listeners\Item\Stock\DeleteStockDetail',
+        ],
+        'PCI\Events\Item\Stock\ItemStockDetailChange'  => [
+            'PCI\Listeners\Item\Stock\ChangeStockDetail',
+        ],
     ];
 
     /**

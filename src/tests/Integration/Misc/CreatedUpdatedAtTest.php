@@ -8,6 +8,7 @@
  * AbstractUserIntegration -> AbstractGeneralIntegration o algo similar.
  */
 
+use Carbon\Carbon;
 use PCI\Models\Gender;
 use PCI\Models\User;
 use Tests\Integration\User\AbstractUserIntegration;
@@ -28,19 +29,20 @@ class CreatedUpdatedAtTest extends AbstractUserIntegration
 
     public function testModelShouldHaveValidUpdatedAtDates()
     {
+        $time               = Carbon::create(1999, 9, 9, 12, 0, 0);
+
+        /** @var Gender $gender */
         $gender       = Gender::find(1);
+        $gender->created_at = $time;
+        $gender->updated_at = $time;
         $gender->desc = 'abc';
         $gender->save();
-
-        $createdAt = Gender::find(1)->created_at;
-        $updatedAt = Gender::find(1)->updated_at;
+        $gender->fresh();
 
         $this->actingAs($this->user)
             ->visit(route('genders.show', $gender->id))
-            ->see($createdAt->diffForHumans())
-            ->see($updatedAt->diffForHumans());
-
-        $this->assertNotEquals(0, $createdAt->diffInSeconds($updatedAt));
+            ->see($gender->created_at->diffForHumans())
+            ->see($gender->updated_at->diffForHumans());
     }
 
     /**

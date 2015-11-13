@@ -20,6 +20,8 @@ use Illuminate\Database\Eloquent\Collection;
  * @property integer $created_by
  * @property integer $updated_by
  * @property-read \Illuminate\Database\Eloquent\Collection|Movement[] $movements
+ * @property-read \Illuminate\Database\Eloquent\Collection|NoteType[] $noteTypes
+ * @property-read \Illuminate\Database\Eloquent\Collection|PetitionType[] $petitionTypes
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\MovementType whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\MovementType whereDesc($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\MovementType whereSlug($value)
@@ -27,6 +29,9 @@ use Illuminate\Database\Eloquent\Collection;
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\MovementType whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\MovementType whereCreatedBy($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\MovementType whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\MovementType in()
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\MovementType out()
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\MovementType unknown()
  */
 class MovementType extends AbstractBaseModel implements SluggableInterface
 {
@@ -109,6 +114,7 @@ class MovementType extends AbstractBaseModel implements SluggableInterface
 
     /**
      * Determina si el tipo de movimiento es de salida
+     *
      * @return bool
      */
     public function isOut()
@@ -124,6 +130,7 @@ class MovementType extends AbstractBaseModel implements SluggableInterface
 
     /**
      * Determina si el tipo de movimiento es de entrada
+     *
      * @return bool
      */
     public function isIn()

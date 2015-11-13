@@ -2,20 +2,20 @@
 
 $array = [];
 
-foreach ($item->depots as $depot) {
-    // super mamarracho.
-    $number   = $depot->pivot->quantity;
-    $type     = \PCI\Models\StockType::whereId($depot->pivot->stock_type_id)->firstOrFail();
-    $quantity = $item->formattedQuantity($number, $type->desc);
+/** @var \PCI\Models\Item $item */
+foreach ($item->stocks as $stock) {
+// super mamarracho.
+    $number   = $stock->details->sum('quantity');
+    $type     = $stock->type->desc;
+    $quantity = $item->formattedQuantity($number, $type);
     $array[]  = [
-        'uid'      => $depot->id,
-        'Almacen'  => $depot->number,
-        'Anaquel'  => $depot->rack,
-        'Alacena'  => $depot->shelf,
+        'uid'      => $stock->depot->id,
+        'Almacen'  => $stock->depot->number,
+        'Anaquel'  => $stock->depot->rack,
+        'Alacena'  => $stock->depot->shelf,
         'Cantidad' => $quantity,
     ];
 }
-
 ?>
 
 <hr/>

@@ -8,10 +8,11 @@ use LogicException;
 
 /**
  * PCI\Models\AbstractBaseModel
- * @package PCI\Models
+ *
+*@package PCI\Models
  * @SuppressWarnings(PHPMD.NumberOfChildren)
  * Se suprime esta advertencia por ser todos los hijos
- * modelos eloquens que contienen el metodo boot igual.
+ * modelos Eloquent que contienen el metodo boot igual.
  * @author Alejandro Granadillo <slayerfat@gmail.com>
  * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
  * @property-read \Jenssegers\Date\Date $created_at

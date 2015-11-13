@@ -105,6 +105,7 @@ class NoteRepository extends AbstractRepository implements NoteRepositoryInterfa
             $note->items()->attach($id, [
                 'quantity'      => $data['amount'],
                 'stock_type_id' => $data['type'],
+                'due'           => $data['due'],
             ]);
         }
 

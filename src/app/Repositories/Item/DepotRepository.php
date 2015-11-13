@@ -162,7 +162,7 @@ class DepotRepository extends AbstractRepository implements DepotRepositoryInter
             'Numero'            => "#$model->number",
             'Anaquel'           => "#$model->rack",
             'Alacena'           => "#$model->shelf",
-            'Items Registrados' => "{$model->items->count()} Items"
+            'Items Registrados' => "{$model->stocks->count()} Items"
         ];
     }
 }
