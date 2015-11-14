@@ -1,6 +1,7 @@
 <?php namespace PCI\Events\Note;
 
 use Illuminate\Support\Collection;
+use InvalidArgumentException;
 use LogicException;
 use PCI\Models\Note;
 
@@ -72,8 +73,11 @@ class NewItemIngress extends NewNoteCreation
         }
 
         foreach ($data as $array) {
-            if (!array_key_exists('depot_id', $array) || !array_key_exists('due', $array)) {
-                throw new LogicException('El arreglo de datos, esta construido incorrectamente.');
+            $keys = ['item_id', 'depot_id', 'due', 'quantity'];
+            foreach ($keys as $key) {
+                if (!array_key_exists($key, $array)) {
+                    throw new InvalidArgumentException('El arreglo de datos, esta construido incorrectamente.');
+                }
             }
         }
     }
