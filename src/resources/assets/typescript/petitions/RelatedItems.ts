@@ -248,6 +248,8 @@ module Petition
             toggle.changeInputs();
 
             if (this.canAddDueDate()) {
+                this.makeDueDateButton($itemBag, stockTypes, toggle);
+
                 $('.' + classId).datepicker({
                     language: 'es',
                     format: 'yyyy-mm-dd',
@@ -317,10 +319,9 @@ module Petition
          * @returns {string}
          */
         private makeSelect(options, id): string {
-            var dateInput = '<input class="form-control help-block" ' +
+            var dateInput = '<input class="form-control help-block ' + id + '" ' +
                 'name="due-date-value-' + this.data.id + '"' +
-                'placeholder="Fecha de Vto."' +
-                'id="' + id + '">';
+                'placeholder="Fecha de Vto.">';
 
             var string = '<div class="col-sm-3">  <div class="input-group">' +
                 '<select class="form-control" name="stock-type-id-' +
@@ -337,6 +338,33 @@ module Petition
             }
 
             return string + '</div>';
+        }
+
+        /**
+         * Genera el boton necesario para clonar elementos
+         * con fechas diferentes pero del mismo item.
+         *
+         * @param $itemBag
+         * @param stockTypes
+         * @param toggle
+         */
+        private makeDueDateButton(
+            $itemBag: JQuery,
+            stockTypes: stockTypes,
+            toggle: MovementTypeToggle
+        ): void {
+            var button = '<div class="col-xs-5 col-xs-push-7"><button class="btn btn-default due-button">Añadir ' + this.data.desc + ' con otra fecha</button></div>';
+
+            $itemBag.append(button);
+
+            $('.due-button').click((evt: JQueryEventObject) => {
+                evt.preventDefault();
+                $(evt.target).closest('div').fadeOut(250, () => {
+                    $(evt.target).closest('div').remove();
+                    this.removeSelected(this.data.id);
+                    this.appendCorrectItem(stockTypes, $itemBag, toggle);
+                });
+            });
         }
 
         /**
