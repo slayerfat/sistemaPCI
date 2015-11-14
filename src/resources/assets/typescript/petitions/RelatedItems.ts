@@ -237,20 +237,18 @@ module Petition
             $itemBag: JQuery,
             toggle: MovementTypeToggle
         ): void {
-            var self = this;
             // como esta mamarrachada es muy grande, la
             // segmentamos para que pueda ser mas facil de digerir
             var itemInput = this.makeItemInput();
-            var options   = this.makeSelectOptions(stockTypes, self);
-
-            var id     = 'item-due-date-' + this.data.id;
-            var select = this.makeSelect(options, id);
+            var options = this.makeSelectOptions(stockTypes);
+            var classId = 'item-due-date-' + this.data.id;
+            var select  = this.makeSelect(options, classId);
 
             $itemBag.append(itemInput + select);
             toggle.changeInputs();
 
             if (this.canAddDueDate()) {
-                $('#' + id).datepicker({
+                $('.' + classId).datepicker({
                     language: 'es',
                     format: 'yyyy-mm-dd',
                     todayHighlight: true
@@ -296,15 +294,13 @@ module Petition
          * Determina cual es la opcion correcta que ira en el select.
          *
          * @param stockTypes
-         * @param self
          * @returns {string}
          */
-        private makeSelectOptions(stockTypes, self): string {
+        private makeSelectOptions(stockTypes: stockTypes): string {
             var options = '';
 
-            // generamos las opciones que van dentro del select
-            Object.keys(stockTypes.types).forEach(function (key) {
-                stockTypes.types[key].id == self.data.stock_type_id
+            Object.keys(stockTypes.types).forEach((key) => {
+                stockTypes.types[key].id == this.data.stock_type_id
                     ? options += '<option value="' + stockTypes.types[key].id + '" selected="selected">' + stockTypes.types[key].desc + '</option>'
                     : options += '<option value="' + stockTypes.types[key].id + '">' + stockTypes.types[key].desc + '</option>';
             });
