@@ -3,6 +3,7 @@
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use PCI\Events\Note\NewItemIngress;
+use PCI\Models\ItemMovement;
 use PCI\Models\Stock;
 use PCI\Models\StockDetail;
 
@@ -58,7 +59,7 @@ class GenerateItemIngress extends AbstractItemMovement
      */
     public function handle(NewItemIngress $event)
     {
-        $this->data = $event->data;
+        $this->data = $event->data->getCollection();
         $this->note = $event->note;
         $lastDate   = $lastId = null;
 
@@ -93,6 +94,12 @@ class GenerateItemIngress extends AbstractItemMovement
         }
     }
 
+    /**
+     * Chequea si se debe o no crear un stock junto a
+     * sus detalles y genera un movimiento.
+     *
+     * @return void
+     */
     private function getStockCollection()
     {
         $results = $this->sortCollection();
@@ -113,6 +120,7 @@ class GenerateItemIngress extends AbstractItemMovement
             $details = $this->getStockDetails($stock, $array);
 
             $stock->details()->save($details);
+            $this->makeItemMovement($array);
         }
     }
 
@@ -187,5 +195,19 @@ class GenerateItemIngress extends AbstractItemMovement
             ->get();
 
         return $details;
+    }
+
+    /**
+     * @param $array
+     */
+    private function makeItemMovement($array)
+    {
+        $mvt                = new ItemMovement;
+        $mvt->quantity      = $array['amount'];
+        $mvt->due           = $array['due'];
+        $mvt->item_id       = $array['item_id'];
+        $mvt->stock_type_id = $array['stock_type_id'];
+
+        $this->movement->itemMovements()->save($mvt);
     }
 }

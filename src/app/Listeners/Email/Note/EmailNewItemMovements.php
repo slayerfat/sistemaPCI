@@ -3,6 +3,7 @@
 use PCI\Events\Note\NewNoteCreation;
 use PCI\Listeners\Email\AbstractEmailListener;
 use PCI\Models\Depot;
+use PCI\Models\Note;
 use PCI\Models\User;
 
 /**
@@ -22,12 +23,11 @@ class EmailNewItemMovements extends AbstractEmailListener
      */
     public function handle(NewNoteCreation $event)
     {
-        $user     = $event->note->petition->user;
         $note     = $event->note;
+        $movement = $this->getMovement($note);
+        $user     = $event->note->petition->user;
         $petition = $event->note->petition;
-        $movement = $note->movements->last();
-
-        $emails = $this->findDepotOwnersEmail();
+        $emails   = $this->findDepotOwnersEmail();
 
         $this->mail->send(
             [
@@ -73,5 +73,20 @@ class EmailNewItemMovements extends AbstractEmailListener
         $owners = User::find($ids);
 
         return $owners;
+    }
+
+    /**
+     * @param Note $note
+     * @return mixed
+     */
+    private function getMovement(Note $note)
+    {
+        $movement = $note->movements->last();
+
+        if (is_null($movement)) {
+            throw new \LogicException('Movimiento inexistente');
+        }
+
+        return $movement;
     }
 }

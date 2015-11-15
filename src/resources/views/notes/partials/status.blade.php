@@ -38,7 +38,11 @@ if (is_null($note->status)) {
                         <div class="form-group">
                             <label
                                 for="item-depot-selection">{{ $item->desc }}</label>
-                            <select name="depot" data-item="{{ $item->id }}"
+                            <select name="depot"
+                                    data-item="{{ $item->id }}"
+                                    data-due="{{ $item->pivot->due }}"
+                                    data-amount="<?php echo (string)$item->pivot->quantity ?>"
+                                    data-stock_type_id="{{ $item->pivot->stock_type_id }}"
                                     id="item-depot-selection"
                                     class="form-control">
                                 @foreach($depots as $depot)
@@ -313,8 +317,11 @@ if (is_null($note->status)) {
 
                 $('#item-depot-selection-form').find(':input').each(function () {
                     values.push({
-                        item: $(this).data('item'),
-                        depot: $(this).val()
+                        item_id: $(this).data('item'),
+                        due: $(this).data('due'),
+                        amount: $(this).data('amount'),
+                        stock_type_id: $(this).data('stock_type_id'),
+                        depot_id: $(this).val()
                     });
                 });
 

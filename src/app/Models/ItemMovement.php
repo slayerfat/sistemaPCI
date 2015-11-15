@@ -9,7 +9,6 @@
  * @author  Alejandro Granadillo <slayerfat@gmail.com>
  * @link    https://github.com/slayerfat/sistemaPCI Repositorio en linea.
  * @property integer        $id
- * @property integer        $stock_id
  * @property integer        $item_id
  * @property integer        $movement_id
  * @property float          $quantity

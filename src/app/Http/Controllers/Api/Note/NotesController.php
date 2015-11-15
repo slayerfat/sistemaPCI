@@ -133,8 +133,12 @@ class NotesController extends Controller
 
         foreach ($data as $array) {
             $results
-                ->setItemId($array['item'])
-                ->setDepotId($array['depot'])->make();
+                ->setItemId($array['item_id'])
+                ->setDepotId($array['depot_id'])
+                ->setDue($array['due'])
+                ->setAmount($array['amount'])
+                ->setStockTypeId($array['stock_type_id'])
+                ->make();
         }
 
         return $results;
