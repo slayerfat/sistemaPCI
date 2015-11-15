@@ -24,15 +24,16 @@ class ItemCollection implements Countable, ArrayAccess, IteratorAggregate
 
     /**
      * los keys del arreglo que deben ser inspeccionados.
+     * en snake_case_only_plz
      *
      * @var array
      */
-    const DEFAULTS = ['item_id', 'depot_id', 'due', 'quantity'];
+    const DEFAULTS = ['item_id', 'depot_id', 'due', 'amount'];
 
     /**
      * @var \Illuminate\Support\Collection
      */
-    public $collection;
+    private $collection;
 
     /**
      * los keys del arreglo que deben ser inspeccionados.
@@ -52,6 +53,11 @@ class ItemCollection implements Countable, ArrayAccess, IteratorAggregate
      * @var int|string
      */
     private $itemId;
+
+    /**
+     * @var int|string
+     */
+    private $depotId;
 
     /**
      * @var number
@@ -152,7 +158,7 @@ class ItemCollection implements Countable, ArrayAccess, IteratorAggregate
             throw new LogicException('El arreglo de datos, debe contener el id del item y elementos asociados.');
         }
 
-        $rules = count($this->customRules) >= 1 ? $this->customRules : self::DEFAULTS;
+        $rules = $this->getRules();
 
         foreach ($this->collection as $array) {
             foreach ($rules as $key) {
@@ -163,6 +169,18 @@ class ItemCollection implements Countable, ArrayAccess, IteratorAggregate
         }
 
         $this->checked = true;
+    }
+
+    /**
+     * Determina las reglas a usar por esta clase.
+     *
+     * @return array
+     */
+    private function getRules()
+    {
+        return count($this->customRules) >= 1
+            ? $this->customRules
+            : self::DEFAULTS;
     }
 
     /**
@@ -182,6 +200,27 @@ class ItemCollection implements Countable, ArrayAccess, IteratorAggregate
         $data = $this->getSetData('itemId', $itemId);
 
         $this->itemId = $data;
+
+        return $this;
+    }
+
+    /**
+     * @return int|string
+     */
+    public function getDepotId()
+    {
+        return $this->itemId;
+    }
+
+    /**
+     * @param int|string $depotId
+     * @return $this
+     */
+    public function setDepotId($depotId)
+    {
+        $data = $this->getSetData('depotId', $depotId);
+
+        $this->depotId = $data;
 
         return $this;
     }
@@ -370,5 +409,28 @@ class ItemCollection implements Countable, ArrayAccess, IteratorAggregate
         $this->checkCollection();
 
         return $this->collection->groupBy('item_id');
+    }
+
+    /**
+     * Mete el array generado de los atributos de esta clase a la coleccion.
+     *
+     * @return $this
+     */
+    public function make()
+    {
+        $array = [];
+
+        $rules = $this->getRules();
+
+        foreach ($rules as $key) {
+            $attr = Str::camel($key);
+            if (isset($this->$attr)) {
+                $array[$key] = $this->$attr;
+            }
+        }
+
+        $this->collection->push($array);
+
+        return $this;
     }
 }

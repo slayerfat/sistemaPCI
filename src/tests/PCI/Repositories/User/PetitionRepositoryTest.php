@@ -84,8 +84,12 @@ class PetitionRepositoryTest extends AbstractRepositoryTestCase
                     'petition_type_id' => 1,
                     'request_date'     => '1999-09-09',
                     'items'            => [
-                        1 => ['amount' => 1, 'type' => 1],
-                        2 => ['amount' => 1, 'type' => 1],
+                        1234 => [
+                            1 => ['amount' => 1, 'stock_type_id' => 1],
+                        ],
+                        4321 => [
+                            2 => ['amount' => 1, 'stock_type_id' => 1],
+                        ],
                     ],
                 ],
                 'differentType' => [
@@ -93,8 +97,12 @@ class PetitionRepositoryTest extends AbstractRepositoryTestCase
                     'petition_type_id' => 1,
                     'request_date'     => '1999-09-09',
                     'items'            => [
-                        1 => ['amount' => 1, 'type' => 2],
-                        2 => ['amount' => 1, 'type' => 3],
+                        1234 => [
+                            1 => ['amount' => 1, 'stock_type_id' => 1],
+                        ],
+                        4321 => [
+                            2 => ['amount' => 1, 'stock_type_id' => 1],
+                        ],
                     ],
                 ],
             ],

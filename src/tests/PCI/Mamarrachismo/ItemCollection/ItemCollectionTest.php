@@ -85,6 +85,57 @@ class ItemCollectionTest extends AbstractPhpUnitTestCase
         ];
     }
 
+    /**
+     * @dataProvider rulesDataProvider
+     * @param $data
+     * @param $expecting
+     */
+    public function testRules($data, $expecting)
+    {
+        $this->obj->setRequiredFields($data);
+        $this->assertAttributeInternalType('array', 'customRules', $this->obj);
+        $this->assertAttributeContains($expecting, 'customRules', $this->obj);
+    }
+
+    public function rulesDataProvider()
+    {
+        return [
+            ['item_id', 'item_id'],
+            ['itemId', 'item_id'],
+            ['ItemId', 'item_id'],
+            [['itemId', 'algoAlgo', 'ayy'], 'item_id'],
+            [['itemId', 'algoAlgo', 'ayy'], 'algo_algo'],
+            [['itemId', 'algoAlgo', 'ayy'], 'ayy'],
+            [[null, 'algoAlgo', 'ayy'], 'ayy'],
+            [[null, null, 'ayy'], 'ayy'],
+            [[null, null, null], null],
+            [['itemId', null, 'ayy'], 'ayy'],
+        ];
+    }
+
+    public function testWillNotThrowException()
+    {
+        $this->obj->setItemId(1)->make()->setRequiredFields('itemId');
+        $this->assertNotEmpty($this->obj->getCollection());
+    }
+
+    /**
+     * @expectedException \LogicException
+     */
+    public function testWillThrowException()
+    {
+        $this->obj->getCollection();
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testWillThrowInvalidArgumentException()
+    {
+        $this->obj->setItemId(1)->make();
+        $this->obj->getCollection();
+    }
+
     protected function setUp()
     {
         parent::setUp();
