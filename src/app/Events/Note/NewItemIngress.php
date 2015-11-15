@@ -18,7 +18,7 @@ class NewItemIngress extends NewNoteCreation
      * La informacion necesaria para completar el nuevo ingreso al almacen.
      * continene una coleccion con arrays asociativos.
      *
-     * @var ItemCollection [item_id, depot_id, due]
+     * @var Collection [item_id, depot_id, due]
      */
     public $data;
 

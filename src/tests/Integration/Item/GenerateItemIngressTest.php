@@ -7,6 +7,7 @@ use PCI\Mamarrachismo\Converter\interfaces\StockTypeConverterInterface;
 use PCI\Models\Depot;
 use PCI\Models\Item;
 use PCI\Models\Movement;
+use PCI\Models\MovementType;
 use PCI\Models\Note;
 use PCI\Models\NoteType;
 use PCI\Models\StockType;
@@ -74,10 +75,11 @@ class GenerateItemIngressTest extends AbstractUserIntegration
                 ]);
 
                 $collection->push([
-                    'item_id'  => $this->item->id,
-                    'depot_id' => $id,
-                    'due'      => $data['due'],
-                    'amount' => $data['amount'],
+                    'item_id'       => $this->item->id,
+                    'depot_id'      => $id,
+                    'due'           => $data['due'],
+                    'amount'        => $data['amount'],
+                    'stock_type_id' => 1,
                 ]);
             }
         }
@@ -102,6 +104,9 @@ class GenerateItemIngressTest extends AbstractUserIntegration
                 } elseif (!is_null($amount)) {
                     $this->seeInDatabase('stocks', [
                         'depot_id' => $id,
+                        'item_id'  => $this->item->id,
+                    ]);
+                    $this->seeInDatabase('item_movements', [
                         'item_id'  => $this->item->id,
                     ]);
                     $this->seeInDatabase('stock_details', [
@@ -223,5 +228,6 @@ class GenerateItemIngressTest extends AbstractUserIntegration
         $this->item->type->perishable = true;
         $this->item->type->save();
         factory(NoteType::class)->create();
+        factory(MovementType::class)->create(['desc' => 'Entrada']);
     }
 }

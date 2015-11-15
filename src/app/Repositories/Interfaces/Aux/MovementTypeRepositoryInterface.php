@@ -21,4 +21,18 @@ use PCI\Repositories\Interfaces\Viewable\ViewableInterface;
 interface MovementTypeRepositoryInterface extends ModelRepositoryInterface, ViewableInterface, GetBySlugOrIdInterface
 {
 
+    /**
+     * @return \PCI\Models\MovementType
+     */
+    public function findIn();
+
+    /**
+     * @return \PCI\Models\MovementType
+     */
+    public function findOut();
+
+    /**
+     * @return \PCI\Models\MovementType
+     */
+    public function findUnknown();
 }

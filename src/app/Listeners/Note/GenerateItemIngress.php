@@ -4,6 +4,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use PCI\Events\Note\NewItemIngress;
 use PCI\Models\ItemMovement;
+use PCI\Models\MovementType;
 use PCI\Models\Stock;
 use PCI\Models\StockDetail;
 
@@ -59,9 +60,10 @@ class GenerateItemIngress extends AbstractItemMovement
      */
     public function handle(NewItemIngress $event)
     {
-        $this->data = $event->data->getCollection();
+        $this->data = $event->data;
         $this->note = $event->note;
         $lastDate   = $lastId = null;
+        $this->updateMovement();
 
         foreach ($event->items as $item) {
             $this->date = $item->type->perishable
@@ -208,6 +210,16 @@ class GenerateItemIngress extends AbstractItemMovement
         $mvt->item_id       = $array['item_id'];
         $mvt->stock_type_id = $array['stock_type_id'];
 
+        if (!$this->movement->exists()) {
+            $this->movement->save();
+        }
+
         $this->movement->itemMovements()->save($mvt);
+    }
+
+    private function updateMovement()
+    {
+        $this->movement->movement_type_id = MovementType::in()->first()->id;
+        $this->movement->note_id = $this->note->id;
     }
 }

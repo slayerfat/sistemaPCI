@@ -425,17 +425,16 @@ class ItemCollection implements Countable, ArrayAccess, IteratorAggregate
      * Busca en la coleccion y elimina los elementos duplicados,
      * es decir, solo mantiene los elementos unicos.
      *
-     * @return $this
+     * @return \Illuminate\Support\Collection
      */
     public function unique()
     {
-        foreach ($this->getCollection() as $id => $single) {
-            $this->offsetSet($id, $single->unique());
+        $collection = $this->getCollection();
+        foreach ($collection as $id => $single) {
+            $collection->offsetSet($id, $single->unique());
         }
 
-        $this->checked = false;
-
-        return $this;
+        return $collection;
     }
 
     /**
