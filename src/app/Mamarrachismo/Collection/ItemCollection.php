@@ -28,7 +28,7 @@ class ItemCollection implements Countable, ArrayAccess, IteratorAggregate
      *
      * @var array
      */
-    const DEFAULTS = ['item_id', 'depot_id', 'due', 'amount'];
+    private $defaults = ['item_id', 'depot_id', 'due', 'amount'];
 
     /**
      * @var \Illuminate\Support\Collection
@@ -129,7 +129,7 @@ class ItemCollection implements Countable, ArrayAccess, IteratorAggregate
     {
         return count($this->customRules) >= 1
             ? $this->customRules
-            : self::DEFAULTS;
+            : $this->defaults;
     }
 
     /**
