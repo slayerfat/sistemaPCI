@@ -42,7 +42,7 @@ class EmailNewItemMovements extends AbstractEmailListener
                     . trans('models.notes.singular')
                     . " #$note->id, "
                     . $note->items->count()
-                    . "Items en total."
+                    . " Items en total."
                 );
             }
         );
