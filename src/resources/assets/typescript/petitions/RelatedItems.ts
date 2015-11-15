@@ -44,6 +44,13 @@ module Petition
             formattedReal: string
         };
 
+        /**
+         * Tiene el proposito de ser el identificador unico para
+         * cuando se pretenda ducplicar algun input para
+         * cambiar las fechas de vencimiento.
+         */
+        private randomId:number;
+
         constructor(formType: string = null) {
             this.data = {
                 id: null,
@@ -67,6 +74,12 @@ module Petition
             this.selected = [];
 
             this.formType = formType;
+
+            this.setRandomId();
+        }
+
+        private setRandomId(number?:number): void{
+            this.randomId = number || Math.ceil(Math.random() * 100000);
         }
 
         /**
@@ -246,6 +259,7 @@ module Petition
 
             $itemBag.append(itemInput + select);
             toggle.changeInputs();
+            this.setRandomId();
 
             if (this.canAddDueDate()) {
                 this.makeDueDateButton($itemBag, stockTypes, toggle);
@@ -284,7 +298,7 @@ module Petition
                 + '</label>'
                 + '<div class="col-sm-2">' +
                 '<input class="form-control model-number-input" ' +
-                'name="item-id-' + this.data.id + '" ' +
+                'name="items['+this.randomId+'][' + this.data.id + '][amount]"' +
                 'type="number" ' +
                 'data-stock-plain="' + this.stock.plain + '"' +
                 'value="' + this.stock.plain + '">' +
@@ -320,12 +334,12 @@ module Petition
          */
         private makeSelect(options, id): string {
             var dateInput = '<input class="form-control help-block ' + id + '" ' +
-                'name="due-date-value-' + this.data.id + '"' +
+                'name="items['+this.randomId+'][' + this.data.id + '][due]"' +
                 'placeholder="Fecha de Vto.">';
 
             var string = '<div class="col-sm-3">  <div class="input-group">' +
-                '<select class="form-control" name="stock-type-id-' +
-                this.data.id + '">' + options + '</select>' +
+                '<select class="form-control" name="items['+this.randomId+'][' + this.data.id + '][stock_type_id]">' +
+                options + '</select>' +
                 '<span class="input-group-addon itemBag-remove-item" ' +
                 'data-id="' + this.data.id + '">' +
                 '<i class="fa fa-times"></i></span>' +
