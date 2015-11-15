@@ -101,12 +101,14 @@ class NoteRepository extends AbstractRepository implements NoteRepositoryInterfa
 
         // Añade los items solicitados y sus cantidades a la
         // tabla correspondiente en la base de datos.
-        foreach ($data['items'] as $id => $data) {
-            $note->items()->attach($id, [
-                'quantity'      => $data['amount'],
-                'stock_type_id' => $data['type'],
-                'due'           => $data['due'],
-            ]);
+        foreach ($data['itemCollection'] as $id => $data) {
+            foreach ($data as $details) {
+                $note->items()->attach($id, [
+                    'quantity'      => $details['amount'],
+                    'stock_type_id' => $details['stock_type_id'],
+                    'due'           => $details['due'],
+                ]);
+            }
         }
 
         return $note;

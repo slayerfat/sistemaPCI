@@ -147,7 +147,8 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
     /**
      * Chequea que los items solicitados sean adecuados.
      *
-     * @param ItemCollection                $items el request con el id del item, cantidad y tipo de stock.
+     * @param ItemCollection       $items el request con el id del item,
+     *                                    cantidad y tipo de stock.
      * @param \PCI\Models\Petition $petition
      * @return ItemCollection los items actualizados.
      */
@@ -236,24 +237,13 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
         $petition->petition_type_id = $data['petition_type_id'];
         $petition->request_date     = Carbon::now();
 
-        $items = $this->checkItems($data['items'], $petition);
+        $items = $this->checkItems($data['itemCollection'], $petition);
 
         // como posiblemente los items cambiaron, entonces
         // limpiamos la tabla para re-añadir los items.
         $petition->items()->sync([]);
 
-        // Añade los items solicitados y sus cantidades a la
-        // tabla correspondiente en la base de datos.
-        foreach ($items as $id => $data) {
-            $petition->items()->attach($id, [
-                'quantity'      => $data['amount'],
-                'stock_type_id' => $data['type'],
-            ]);
-        }
-
-        $petition->save();
-
-        return $petition;
+        return $this->attachItems($items, $petition);
     }
 
     /**
