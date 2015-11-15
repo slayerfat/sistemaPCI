@@ -2,6 +2,7 @@
 
 use ArrayAccess;
 use ArrayIterator;
+use Carbon\Carbon;
 use Countable;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
@@ -83,8 +84,32 @@ class ItemCollection implements Countable, ArrayAccess, IteratorAggregate
      */
     public function __set($name, $value)
     {
-        $this->$name   = $value;
+        $data = $this->getSetData($name, $value);
+
+        if (!is_null($data)) {
+            $this->$name = $data;
+        }
+    }
+
+    /**
+     * @param $name
+     * @param $value
+     * @return number
+     */
+    private function getSetData($name, $value)
+    {
         $this->checked = false;
+
+        if (is_array($value)) {
+            $key  = Str::snake($name);
+            $data = $value[$key];
+
+            return $data;
+        } elseif (is_numeric($value)) {
+            return $value <= 0 ? null : $value;
+        }
+
+        return null;
     }
 
     /**
@@ -154,7 +179,9 @@ class ItemCollection implements Countable, ArrayAccess, IteratorAggregate
      */
     public function setItemId($itemId)
     {
-        $this->itemId = $itemId;
+        $data = $this->getSetData('itemId', $itemId);
+
+        $this->itemId = $data;
 
         return $this;
     }
@@ -173,7 +200,9 @@ class ItemCollection implements Countable, ArrayAccess, IteratorAggregate
      */
     public function setAmount($amount)
     {
-        $this->amount = $amount;
+        $data = $this->getSetData('amount', $amount);
+
+        $this->amount = $data;
 
         return $this;
     }
@@ -192,7 +221,9 @@ class ItemCollection implements Countable, ArrayAccess, IteratorAggregate
      */
     public function setStockTypeId($stockTypeId)
     {
-        $this->stockTypeId = $stockTypeId;
+        $data = $this->getSetData('stockTypeId', $stockTypeId);
+
+        $this->stockTypeId = $data;
 
         return $this;
     }
@@ -211,7 +242,24 @@ class ItemCollection implements Countable, ArrayAccess, IteratorAggregate
      */
     public function setDue($due)
     {
-        $this->due = $due;
+        if (is_array($due)
+            || is_null($due)
+            || is_numeric($due)
+            || preg_match('/[0-9]{4}/', $due) !== 1
+        ) {
+            $this->due     = null;
+            $this->checked = false;
+
+            return $this;
+        }
+
+        try {
+            $this->due = Carbon::parse($due)->toDateTimeString();
+        } catch (\Exception $e) {
+            $this->due = null;
+        }
+
+        $this->checked = false;
 
         return $this;
     }
