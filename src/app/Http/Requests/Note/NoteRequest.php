@@ -59,9 +59,6 @@ class NoteRequest extends Request
      */
     public function rules()
     {
-        // ajustamos el request
-        $this->sanitizeRequest();
-
         $rules = [
             'comments'     => 'string|between:5,255',
             'note_type_id' => 'numeric|exists:petition_types,id',
