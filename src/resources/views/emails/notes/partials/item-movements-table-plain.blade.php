@@ -12,7 +12,7 @@ Fecha Vencimiento: {{ $pivot->due }}
 @if($movement->type->isIn())
 Cantidad: +{{ $pivot->quantity }}
 @else
-Cantidad: +{{ $pivot->quantity }}
+Cantidad: -{{ $pivot->quantity }}
 @endif
 Stock: {{ $details->item->formattedStock() }}
 ------------------------------------

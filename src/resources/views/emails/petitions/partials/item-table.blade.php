@@ -23,7 +23,11 @@
                 {!! link_to_route('items.show', $item->desc, $item->slug) !!}
             </td>
             <td style="border-width: 1px; padding: 8px; border-style: solid; border-color: #666666; background-color: #ffffff;">{{ $item->formattedStock() }}</td>
-            <td style="border-width: 1px; padding: 8px; border-style: solid; border-color: #666666; background-color: #ffffff;">{{ $item->pivot->quantity }}</td>
+            @if($petition->type->movementType->isIn())
+                <td style="border-width: 1px; padding: 8px; border-style: solid; border-color: #666666; background-color: #ffffff; color: #5CB85C;">+{{ $item->pivot->quantity }}</td>
+            @else
+                <td style="border-width: 1px; padding: 8px; border-style: solid; border-color: #666666; background-color: #ffffff; color: #D9534F;">-{{ $item->pivot->quantity }}</td>
+            @endif
         </tr>
     @endforeach
     </tbody>

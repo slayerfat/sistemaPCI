@@ -3,6 +3,10 @@
 #{{ $item->id }}
 Item: {{ $item->desc }}
 Stock: {{ $item->formattedStock() }}
-Cantidad: {{ $item->pivot->quantity }}
+@if($note->type->movementType->isIn())
+Cantidad: +{{ $item->pivot->quantity }}
+@else
+Cantidad: -{{ $item->pivot->quantity }}
+@endif
 ------------------------------------
 @endforeach
