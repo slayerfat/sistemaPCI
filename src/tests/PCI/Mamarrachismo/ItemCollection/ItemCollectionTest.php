@@ -1,5 +1,6 @@
 <?php namespace Tests\PCI\Mamarrachismo\ItemCollection;
 
+use Illuminate\Support\Collection;
 use PCI\Mamarrachismo\Collection\ItemCollection;
 use Tests\AbstractPhpUnitTestCase;
 
@@ -45,7 +46,7 @@ class ItemCollectionTest extends AbstractPhpUnitTestCase
             'string_negative' => [-1, null],
         ];
 
-        $methods = ['ItemId', 'Amount', 'StockTypeId'];
+        $methods = ['ItemId', 'Amount', 'StockTypeId', 'depotId'];
         foreach ($inputs as $data) {
             foreach ($methods as $method) {
                 $set       = $data;
@@ -113,6 +114,40 @@ class ItemCollectionTest extends AbstractPhpUnitTestCase
         ];
     }
 
+    public function testPushShouldNotAllowArrayWithKeyPairComboAndRules()
+    {
+        $collection = $this->obj
+            ->reset()
+            ->push(['item_id' => 1])
+            ->setRequiredFields('itemId')
+            ->getCollection();
+        $this->assertInstanceOf(Collection::class, $collection);
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testPushShouldNotAllowArrayWithKeyPairComboButWithoutRules()
+    {
+        $this->obj->reset()->push(['item_id' => 1])->getCollection();
+    }
+
+    /**
+     * @expectedException \LogicException
+     */
+    public function testPushShouldNotAllowArrayWithoutKeyPairCombo()
+    {
+        $this->obj->reset()->push([1])->getCollection();
+    }
+
+    /**
+     * @expectedException \LogicException
+     */
+    public function testPushShouldNotAllowEmptyArray()
+    {
+        $this->obj->reset()->push([])->getCollection();
+    }
+
     public function testWillNotThrowException()
     {
         $this->obj->setItemId(1)->make()->setRequiredFields('itemId');
@@ -134,6 +169,34 @@ class ItemCollectionTest extends AbstractPhpUnitTestCase
     {
         $this->obj->setItemId(1)->make();
         $this->obj->getCollection();
+    }
+
+    public function testToString()
+    {
+        $result = (string)$this->obj
+            ->setItemId(1)
+            ->make()
+            ->setRequiredFields('itemId');
+
+        $this->assertJson($result);
+    }
+
+    public function testArray()
+    {
+        $result = $this->obj
+            ->setItemId(['wat' => 1, 'ayy' => 2, 'item_id' => 3])
+            ->getItemId();
+
+        $this->assertEquals(3, $result);
+    }
+
+    public function testArrayShouldNotBleed()
+    {
+        $result = $this->obj
+            ->setItemId(['depot_id' => 1, 'ayy' => 2, 'item_id' => 3])
+            ->getDepotId();
+
+        $this->assertEquals(null, $result);
     }
 
     protected function setUp()

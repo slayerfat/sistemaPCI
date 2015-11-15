@@ -83,57 +83,6 @@ class ItemCollection implements Countable, ArrayAccess, IteratorAggregate
     }
 
     /**
-     * FIXME
-     *
-     * @param $name
-     * @param $value
-     */
-    public function __set($name, $value)
-    {
-        $data = $this->getSetData($name, $value);
-
-        if (!is_null($data)) {
-            $this->$name = $data;
-        }
-    }
-
-    /**
-     * @param $name
-     * @param $value
-     * @return number
-     */
-    private function getSetData($name, $value)
-    {
-        $this->checked = false;
-
-        if (is_array($value)) {
-            $key  = Str::snake($name);
-            $data = $value[$key];
-
-            return $data;
-        } elseif (is_numeric($value)) {
-            return $value <= 0 ? null : $value;
-        }
-
-        return null;
-    }
-
-    /**
-     * Basicamente duplica Collection, pero nos interesa
-     * resetear el flag, para que se chequee la coleccion.
-     *
-     * @param $items
-     * @return $this
-     */
-    public function push($items)
-    {
-        $this->collection->push($items);
-        $this->checked = false;
-
-        return $this;
-    }
-
-    /**
      * @return string
      */
     public function __toString()
@@ -205,11 +154,31 @@ class ItemCollection implements Countable, ArrayAccess, IteratorAggregate
     }
 
     /**
+     * @param $name
+     * @param $value
+     * @return number
+     */
+    private function getSetData($name, $value)
+    {
+        $this->checked = false;
+
+        if (is_array($value)) {
+            $key = Str::snake($name);
+
+            return isset($value[$key]) ? $value[$key] : null;
+        } elseif (is_numeric($value)) {
+            return $value <= 0 ? null : $value;
+        }
+
+        return null;
+    }
+
+    /**
      * @return int|string
      */
     public function getDepotId()
     {
-        return $this->itemId;
+        return $this->depotId;
     }
 
     /**
@@ -429,7 +398,34 @@ class ItemCollection implements Countable, ArrayAccess, IteratorAggregate
             }
         }
 
-        $this->collection->push($array);
+        $this->push($array);
+
+        return $this;
+    }
+
+    /**
+     * Basicamente duplica Collection, pero nos interesa
+     * resetear el flag, para que se chequee la coleccion.
+     *
+     * @param $items
+     * @return $this
+     */
+    public function push(array $items)
+    {
+        if (count($items) < 1) {
+            return $this;
+        }
+
+        $this->collection->push($items);
+        $this->checked = false;
+
+        return $this;
+    }
+
+    public function reset()
+    {
+        $this->collection  = new Collection;
+        $this->customRules = [];
 
         return $this;
     }
