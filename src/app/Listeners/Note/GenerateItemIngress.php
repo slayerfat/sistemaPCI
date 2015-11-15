@@ -141,7 +141,7 @@ class GenerateItemIngress extends AbstractItemMovement
     {
         if ($stock->details->isEmpty()) {
             return new StockDetail([
-                'quantity' => $array['quantity'],
+                'quantity' => $array['amount'],
                 'due'      => $array['due'],
             ]);
         }
@@ -149,7 +149,7 @@ class GenerateItemIngress extends AbstractItemMovement
         $details = $this->getDetails($stock, $array);
 
         if ($details->count() > 1) {
-            $total = $details->sum('quantity') + $array['quantity'];
+            $total = $details->sum('quantity') + $array['amount'];
 
             $details->each(function (StockDetail $detail) {
                 $detail->delete();
@@ -161,14 +161,14 @@ class GenerateItemIngress extends AbstractItemMovement
             ]);
         } elseif ($details->count() == 0) {
             return new StockDetail([
-                'quantity' => $array['quantity'],
+                'quantity' => $array['amount'],
                 'due'      => $array['due'],
             ]);
         }
 
         /** @var StockDetail $details */
         $details = $details->first();
-        $details->quantity += $array['quantity'];
+        $details->quantity += $array['amount'];
 
         return $details;
     }

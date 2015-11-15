@@ -332,20 +332,6 @@ class ItemCollection implements Countable, ArrayAccess, IteratorAggregate
     }
 
     /**
-     * Offset to set
-     *
-     * @link  http://php.net/manual/en/arrayaccess.offsetset.php
-     * @param mixed $offset
-     * @param mixed $value
-     * @return void
-     * @since 5.0.0
-     */
-    public function offsetSet($offset, $value)
-    {
-        $this->collection->offsetSet($offset, $value);
-    }
-
-    /**
      * Offset to unset
      *
      * @link  http://php.net/manual/en/arrayaccess.offsetunset.php
@@ -422,11 +408,47 @@ class ItemCollection implements Countable, ArrayAccess, IteratorAggregate
         return $this;
     }
 
+    /**
+     * Regresa a status quo
+     *
+     * @return $this
+     */
     public function reset()
     {
         $this->collection  = new Collection;
         $this->customRules = [];
 
         return $this;
+    }
+
+    /**
+     * Busca en la coleccion y elimina los elementos duplicados,
+     * es decir, solo mantiene los elementos unicos.
+     *
+     * @return $this
+     */
+    public function unique()
+    {
+        foreach ($this->getCollection() as $id => $single) {
+            $this->offsetSet($id, $single->unique());
+        }
+
+        $this->checked = false;
+
+        return $this;
+    }
+
+    /**
+     * Offset to set
+     *
+     * @link  http://php.net/manual/en/arrayaccess.offsetset.php
+     * @param mixed $offset
+     * @param mixed $value
+     * @return void
+     * @since 5.0.0
+     */
+    public function offsetSet($offset, $value)
+    {
+        $this->collection->offsetSet($offset, $value);
     }
 }

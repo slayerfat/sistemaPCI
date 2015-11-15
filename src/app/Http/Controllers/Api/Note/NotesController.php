@@ -9,6 +9,7 @@ use PCI\Http\Controllers\Controller;
 use PCI\Http\Controllers\Traits\Api\HasDefaultJsonMsg;
 use PCI\Http\Controllers\Traits\RespondsToChangeStatus;
 use PCI\Http\Requests;
+use PCI\Mamarrachismo\Collection\ItemCollection;
 use PCI\Models\Note;
 use PCI\Repositories\Interfaces\Aux\NoteTypeRepositoryInterface;
 use PCI\Repositories\Interfaces\Note\NoteRepositoryInterface;
@@ -109,20 +110,31 @@ class NotesController extends Controller
 
         // se dispara el evento apropiado
         $data = $this->makeDataArray($request->input('data'));
-        $this->fireEvent($note, $data);
+        try {
+            $this->fireEvent($note, $data);
+        } catch (\Exception $e) {
+            $this->changeToNull($id);
+            $class = class_basename($e);
+            $msg   = str_limit($e->getMessage(), 40);
+
+            return $this->jsonMsg(false, "Error fatal: [$class], $msg");
+        }
 
         return $response;
     }
 
     /**
      * @param array $data
-     * @return array
+     * @return ItemCollection
      */
     private function makeDataArray(array $data)
     {
-        $results = [];
+        $results = new ItemCollection;
+
         foreach ($data as $array) {
-            $results[$array['item']] = ['depot_id' => $array['depot']];
+            $results
+                ->setItemId($array['item'])
+                ->setDepotId($array['depot'])->make();
         }
 
         return $results;
@@ -133,10 +145,10 @@ class NotesController extends Controller
      * la nota segun su tipo (entrada/salida).
      *
      * @param \PCI\Models\Note $note
-     * @param array            $data
+     * @param ItemCollection   $data
      * @return array|null
      */
-    private function fireEvent(Note $note, array $data)
+    private function fireEvent(Note $note, ItemCollection $data)
     {
         if ($note->isMovementTypeIn()) {
             return Event::fire(new NewItemIngress($note, $data));

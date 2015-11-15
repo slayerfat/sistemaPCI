@@ -1,8 +1,7 @@
 <?php namespace PCI\Events\Note;
 
 use Illuminate\Support\Collection;
-use InvalidArgumentException;
-use LogicException;
+use PCI\Mamarrachismo\Collection\ItemCollection;
 use PCI\Models\Note;
 
 /**
@@ -28,9 +27,9 @@ class NewItemIngress extends NewNoteCreation
      * este construido correctamente o generara un error.
      *
      * @param \PCI\Models\Note $note
-     * @param Collection       $data [item_id, nota_id]
+     * @param ItemCollection   $data [item_id, nota_id]
      */
-    public function __construct(Note $note, Collection $data)
+    public function __construct(Note $note, ItemCollection $data)
     {
         parent::__construct($note);
 
@@ -46,39 +45,10 @@ class NewItemIngress extends NewNoteCreation
     }
 
     /**
-     * @param Collection $data
+     * @param ItemCollection $data
      */
-    public function setData(Collection $data)
+    public function setData(ItemCollection $data)
     {
-        $this->checkData($data);
-        $collection = collect();
-        $group      = $data->groupBy('item_id');
-
-        /** @var Collection $single */
-        foreach ($group as $id => $single) {
-            $collection->offsetSet($id, $single->unique());
-        }
-
-        $this->data = $collection;
-    }
-
-    /**
-     * @param Collection $data [item_id, depot_id]
-     * @return void
-     */
-    private function checkData(Collection $data)
-    {
-        if ($data->isEmpty()) {
-            throw new LogicException('El arreglo de datos, debe contener el id del item y elementos asociados.');
-        }
-
-        foreach ($data as $array) {
-            $keys = ['item_id', 'depot_id', 'due', 'quantity'];
-            foreach ($keys as $key) {
-                if (!array_key_exists($key, $array)) {
-                    throw new InvalidArgumentException('El arreglo de datos, esta construido incorrectamente.');
-                }
-            }
-        }
+        $this->data = $data->unique();
     }
 }

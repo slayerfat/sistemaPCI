@@ -2,6 +2,7 @@
 
 use PCI\Events\Note\NewItemIngress;
 use PCI\Listeners\Note\GenerateItemIngress;
+use PCI\Mamarrachismo\Collection\ItemCollection;
 use PCI\Mamarrachismo\Converter\interfaces\StockTypeConverterInterface;
 use PCI\Models\Depot;
 use PCI\Models\Item;
@@ -55,7 +56,7 @@ class GenerateItemIngressTest extends AbstractUserIntegration
         $this->item->stock_type_id = 1;
         $this->item->save();
         factory(Depot::class, 3)->create();
-        $collection = collect();
+        $collection = new ItemCollection;
 
         /** @var Note $note */
         $note = factory(Note::class)->create(['note_type_id' => 1]);
@@ -76,7 +77,7 @@ class GenerateItemIngressTest extends AbstractUserIntegration
                     'item_id'  => $this->item->id,
                     'depot_id' => $id,
                     'due'      => $data['due'],
-                    'quantity' => $data['amount'],
+                    'amount' => $data['amount'],
                 ]);
             }
         }
