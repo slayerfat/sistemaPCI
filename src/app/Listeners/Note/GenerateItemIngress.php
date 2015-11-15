@@ -66,8 +66,12 @@ class GenerateItemIngress extends AbstractItemMovement
         $this->updateMovement();
 
         foreach ($event->items as $item) {
+            // si el tipo es perecedero y este tiene fecha,
+            // entonces se genera la correcta, de lo contrario es null.
             $this->date = $item->type->perishable
                 ? $item->pivot->due
+                    ? Carbon::parse($item->pivot->due)->toDateTimeString()
+                    : null
                 : null;
             if ($lastId == $item->id && $lastDate == $this->date) {
                 continue;
@@ -210,7 +214,7 @@ class GenerateItemIngress extends AbstractItemMovement
         $mvt->item_id       = $array['item_id'];
         $mvt->stock_type_id = $array['stock_type_id'];
 
-        if (!$this->movement->exists()) {
+        if (is_null($this->movement->id)) {
             $this->movement->save();
         }
 

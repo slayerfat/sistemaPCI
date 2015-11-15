@@ -1,15 +1,20 @@
 {{--se hace sin identacion para que sea mostrado correctamente--}}
 @foreach($note->movements as $movement)
-@foreach($movement->items as $item)
+@foreach($movement->itemMovements as $details)
+<?php
+$pivot = $details->item->notes()->whereNoteId($note->id)->first()->pivot;
+?>
 ------------------------------------
-#{{ $item->id }}
-Item: {{ $item->desc }}
+#{{ $details->item->id }}
+Item: {{ $details->item->desc }}
+Fecha Vencimiento: {{ $pivot->due }}
+{{ Date::parse($pivot->due)->diffForHumans() }}
 @if($movement->type->isIn())
-Cantidad: +{{ $item->pivot->quantity }}
+Cantidad: +{{ $pivot->quantity }}
 @else
-Cantidad: +{{ $item->pivot->quantity }}
+Cantidad: +{{ $pivot->quantity }}
 @endif
-Stock: {{ $item->formattedStock() }}
+Stock: {{ $details->item->formattedStock() }}
 ------------------------------------
 @endforeach
 @endforeach

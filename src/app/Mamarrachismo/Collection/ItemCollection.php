@@ -121,6 +121,34 @@ class ItemCollection implements Countable, ArrayAccess, IteratorAggregate
     }
 
     /**
+     * Añade reglas adicionales a la clase
+     * @param $rules
+     * @return $this
+     */
+    public function addRule($rules)
+    {
+        $array = is_array($rules) ? $rules : func_get_args();
+
+        $results = [];
+        foreach ($array as $rule) {
+            $results[] = Str::snake($rule);
+        }
+
+        if (count($this->customRules) >= 1) {
+            $this->customRules[] = $results;
+
+            return $this;
+        }
+
+        $this->customRules = $this->defaults;
+        foreach ($results as $rule) {
+            $this->customRules[] = $rule;
+        }
+
+        return $this;
+    }
+
+    /**
      * Determina las reglas a usar por esta clase.
      *
      * @return array

@@ -130,6 +130,7 @@ class NotesController extends Controller
     private function makeDataArray(array $data)
     {
         $results = new ItemCollection;
+        $results->addRule('stockTypeId');
 
         foreach ($data as $array) {
             $results
