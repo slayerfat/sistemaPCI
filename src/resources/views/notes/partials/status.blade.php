@@ -300,8 +300,11 @@ if (is_null($note->status)) {
 
                 // el api necesita un array con la data del objeto creado aqui
                 status.change(url, true, [{
-                    item: null,
-                    depot: null
+                    item_id: null,
+                    due: null,
+                    amount: null,
+                    stock_type_id: null,
+                    depot_id: null
                 }]);
             });
 

@@ -275,14 +275,16 @@ module Petition
             var itemInput = this.makeItemInput();
             var options   = this.makeSelectOptions(stockTypes);
             var classId   = 'item-due-date-' + this.data.id;
-            var select    = this.makeSelect(options, classId);
+            var select    = this.makeSelect(options, classId, toggle);
 
             $itemBag.append(itemInput + select);
             toggle.changeInputs();
             this.setRandomId();
 
             if (this.canAddDueDate()) {
-                this.makeDueDateButton($itemBag, stockTypes, toggle);
+                if (toggle.isModelIngress()) {
+                    this.makeDueDateButton($itemBag, stockTypes, toggle);
+                }
 
                 $('.' + classId).datepicker({
                     language: 'es',
@@ -353,9 +355,10 @@ module Petition
          *
          * @param options
          * @param id
+         * @param toggle
          * @returns {string}
          */
-        private makeSelect(options, id): string {
+        private makeSelect(options, id, toggle): string {
             var dateInput = '<input class="form-control help-block ' + id + '" ' +
                 'name="items[' + this.randomId + '][' + this.data.id + '][due]"' +
                 'placeholder="Fecha de Vto.">';
@@ -371,7 +374,11 @@ module Petition
             // necesitamos saber si el item es perecedero
             // para poner o no la seleccion de fecha de vencimiento.
             if (this.canAddDueDate()) {
-                return string + dateInput + '</div></div>';
+                if (toggle.isModelIngress()) {
+                    return string + dateInput + '</div></div>';
+                }
+
+                return string + '</div></div>';
             }
 
             // div 1 es itemBag, div 2 es col-xs-12
