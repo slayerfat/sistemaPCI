@@ -53,6 +53,21 @@ class ItemMovement extends AbstractBaseModel
     protected $dates = ['due'];
 
     /**
+     * Cuando se pide la fecha de created_at se devuelve una
+     * instancia de Date en vez de Carbon\Carbon
+     * @param string $value
+     * @return \Jenssegers\Date\Date
+     */
+    public function getDueAttribute($value)
+    {
+        if (is_null($value)) {
+            return null;
+        }
+
+        return $this->getDateInstance($value);
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function movement()

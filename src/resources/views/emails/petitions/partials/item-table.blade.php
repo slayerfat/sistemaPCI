@@ -8,10 +8,10 @@
             Item
         </th>
         <th style=" border-width: 1px; padding: 8px; border-style: solid; border-color: #666666; background-color: #dedede;">
-            Stock
+            Cantidad
         </th>
         <th style=" border-width: 1px; padding: 8px; border-style: solid; border-color: #666666; background-color: #dedede;">
-            Cantidad
+            Stock
         </th>
     </tr>
     </thead>
@@ -22,12 +22,12 @@
             <td style="border-width: 1px; padding: 8px; border-style: solid; border-color: #666666; background-color: #ffffff;">
                 {!! link_to_route('items.show', $item->desc, $item->slug) !!}
             </td>
-            <td style="border-width: 1px; padding: 8px; border-style: solid; border-color: #666666; background-color: #ffffff;">{{ $item->formattedStock() }}</td>
             @if($petition->type->movementType->isIn())
                 <td style="border-width: 1px; padding: 8px; border-style: solid; border-color: #666666; background-color: #ffffff; color: #5CB85C;">+{{ $item->pivot->quantity }}</td>
             @else
                 <td style="border-width: 1px; padding: 8px; border-style: solid; border-color: #666666; background-color: #ffffff; color: #D9534F;">-{{ $item->pivot->quantity }}</td>
             @endif
+            <td style="border-width: 1px; padding: 8px; border-style: solid; border-color: #666666; background-color: #ffffff;">{{ $item->formattedStock() }}</td>
         </tr>
     @endforeach
     </tbody>
