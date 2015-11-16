@@ -37,7 +37,10 @@ if (is_null($note->status)) {
                     @foreach($note->items as $item)
                         <div class="form-group">
                             <label
-                                for="item-depot-selection">{{ $item->desc }}</label>
+                                for="item-depot-selection">
+                                {{ $item->desc }}
+                                <small>{{ $item->pivot->due ? 'Fecha de Vto. ' . $item->pivot->due : null }}</small>
+                            </label>
                             <select name="depot"
                                     data-item="{{ $item->id }}"
                                     data-due="{{ $item->pivot->due }}"
