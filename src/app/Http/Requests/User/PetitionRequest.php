@@ -65,4 +65,18 @@ class PetitionRequest extends Request
 
         return $rules;
     }
+
+    /**
+     * regresa un array con los campos necesarios para la coleccion.
+     *
+     * @return array
+     */
+    protected function itemCollectionRules()
+    {
+        return [
+            'item_id',
+            'stock_type_id',
+            'amount',
+        ];
+    }
 }

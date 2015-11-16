@@ -15,6 +15,13 @@ trait SanitizeItemsRequestTrait
 {
 
     /**
+     * regresa un array con los campos necesarios para la coleccion.
+     *
+     * @return array
+     */
+    protected abstract function itemCollectionRules();
+
+    /**
      * Genera reglas y la coleccion de items asociados al request.
      *
      * @param array $rules
@@ -24,7 +31,7 @@ trait SanitizeItemsRequestTrait
         // debemos chequear que exista al menos un item seleccionado.
         $data       = $this->request->get('items');
         $collection = new ItemCollection;
-        $collection->setRequiredFields('item_id', 'stock_type_id', 'amount');
+        $collection->setRequiredFields($this->itemCollectionRules());
 
         if (count($data) < 1) {
             $rules['items'] = 'required';
