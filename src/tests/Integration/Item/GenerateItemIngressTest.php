@@ -58,6 +58,7 @@ class GenerateItemIngressTest extends AbstractUserIntegration
         $this->item->save();
         factory(Depot::class, 3)->create();
         $collection = new ItemCollection;
+        $collection->addRule('stockTypeId');
 
         /** @var Note $note */
         $note = factory(Note::class)->create(['note_type_id' => 1]);

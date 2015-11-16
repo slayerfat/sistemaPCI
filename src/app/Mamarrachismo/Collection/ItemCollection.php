@@ -122,17 +122,13 @@ class ItemCollection implements Countable, ArrayAccess, IteratorAggregate
 
     /**
      * Añade reglas adicionales a la clase
+     *
      * @param $rules
      * @return $this
      */
     public function addRule($rules)
     {
-        $array = is_array($rules) ? $rules : func_get_args();
-
-        $results = [];
-        foreach ($array as $rule) {
-            $results[] = Str::snake($rule);
-        }
+        $results = $this->getRuleArgs($rules);
 
         if (count($this->customRules) >= 1) {
             $this->customRules[] = $results;
@@ -143,6 +139,30 @@ class ItemCollection implements Countable, ArrayAccess, IteratorAggregate
         $this->customRules = $this->defaults;
         foreach ($results as $rule) {
             $this->customRules[] = $rule;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Remueve algun elemento dentro del arreglo de reglas.
+     *
+     * @param $rules
+     * @return $this
+     */
+    public function removeRules($rules)
+    {
+        $results = $this->getRuleArgs($rules);
+
+        if (count($this->customRules) < 1) {
+            $this->customRules = $this->defaults;
+        }
+
+        foreach ($results as $term) {
+            $key = array_search($term, $this->customRules);
+            if ($key) {
+                unset($this->customRules[$key]);
+            }
         }
 
         return $this;
@@ -405,21 +425,22 @@ class ItemCollection implements Countable, ArrayAccess, IteratorAggregate
 
         $rules = $this->getRules();
 
+        // debemos asegurarnos que las reglas se cumplan
         foreach ($rules as $key) {
             $attr = Str::camel($key);
-            if (isset($this->$attr)) {
+            if (isset($this->$attr) || $attr === "due") {
                 $array[$key] = $this->$attr;
             }
         }
 
-        $this->push($array);
+        $this->pushToCollection($array);
 
         return $this;
     }
 
     /**
-     * Basicamente duplica Collection, pero nos interesa
-     * resetear el flag, para que se chequee la coleccion.
+     * Permite agregar arreglos directamente a la coleccion
+     * de esta clase sin necesidad de usar los atributos de esta.
      *
      * @param $items
      * @return $this
@@ -430,10 +451,35 @@ class ItemCollection implements Countable, ArrayAccess, IteratorAggregate
             return $this;
         }
 
-        $this->collection->push($items);
-        $this->checked = false;
+        // nos interesa determinar si los elementos son
+        // validos para ser agregados a la coleccion.
+        foreach ($items as $key => $value) {
+            $attr   = Str::studly($key);
+            $method = "set$attr";
+
+            // si existe el metodo para agregar el nuevo elemento,
+            // se ejecuta, de lo contrario bota una exception.
+            if (!method_exists($this, $method)) {
+                throw new LogicException("Elemento [$key] no puede ser incorporado.");
+            }
+
+            call_user_func([$this, $method], $value);
+        }
+
+        $this->make();
 
         return $this;
+    }
+
+    /**
+     * Agrega un array a la coleccion existente.
+     *
+     * @param array $items
+     */
+    private function pushToCollection(array $items)
+    {
+        $this->collection->push($items);
+        $this->checked = false;
     }
 
     /**
@@ -477,5 +523,21 @@ class ItemCollection implements Countable, ArrayAccess, IteratorAggregate
     public function offsetSet($offset, $value)
     {
         $this->collection->offsetSet($offset, $value);
+    }
+
+    /**
+     * @param $rules
+     * @return array
+     */
+    private function getRuleArgs($rules)
+    {
+        $array = is_array($rules) ? $rules : func_get_args();
+
+        $results = [];
+        foreach ($array as $rule) {
+            $results[] = Str::snake($rule);
+        }
+
+        return $results;
     }
 }
