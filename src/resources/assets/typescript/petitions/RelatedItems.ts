@@ -267,7 +267,9 @@ module Petition
                 $('.' + classId).datepicker({
                     language: 'es',
                     format: 'yyyy-mm-dd',
-                    todayHighlight: true
+                    todayHighlight: true,
+                    autoclose: true,
+                    startDate: "-10d"
                 });
             }
         }
@@ -292,7 +294,8 @@ module Petition
          * @returns {string}
          */
         private makeItemInput(): string {
-            return '<div class="itemBag-item" data-id="' + this.data.id + '">'
+            return '<div class="row itemBag-item" data-id="' + this.data.id + '">'
+                + '<div class="col-xs-12">'
                 + '<label for="itemBag" class="control-label col-sm-7">'
                 + this.data.desc
                 + '</label>'
@@ -348,10 +351,12 @@ module Petition
             // necesitamos saber si el item es perecedero
             // para poner o no la seleccion de fecha de vencimiento.
             if (this.canAddDueDate()) {
-                return string + dateInput + '</div>';
+                return string + dateInput + '</div></div>';
             }
 
-            return string + '</div>';
+            // div 1 es itemBag, div 2 es col-xs-12
+            // HTML ES DIVERTIDO Y MUY CHEVERE Y EMOCIONANTE Y SUPER MODERNO.
+            return string + '</div></div>';
         }
 
         /**
@@ -367,7 +372,12 @@ module Petition
             stockTypes: stockTypes,
             toggle: MovementTypeToggle
         ): void {
-            var button = '<div class="col-xs-5 col-xs-push-7"><button class="btn btn-default due-button">Añadir ' + this.data.desc + ' con otra fecha</button></div>';
+            // .due-button tiene css extra, no alterar.
+            // HTML + CSS ES CHEVERE Y EMOCIONANTE Y DIVERTIDO Y GENIAL.
+            var button = '<div class="col-xs-5 col-xs-push-7">' +
+                '<button class="btn btn-default due-button">' +
+                'Añadir Item con fecha' +
+                '</button></div>';
 
             $itemBag.append(button);
 
