@@ -14,6 +14,8 @@ module Petition
          */
         public data: Item;
 
+        private items: Item[] = [];
+
         /**
          * el arreglo de Ids de los items seleccionados.
          */
@@ -49,7 +51,7 @@ module Petition
          * cuando se pretenda ducplicar algun input para
          * cambiar las fechas de vencimiento.
          */
-        private randomId:number;
+        private randomId: number;
 
         constructor(formType: string = null) {
             this.data = {
@@ -78,7 +80,7 @@ module Petition
             this.setRandomId();
         }
 
-        private setRandomId(number?:number): void{
+        private setRandomId(number?: number): void {
             this.randomId = number || Math.ceil(Math.random() * 100000);
         }
 
@@ -86,11 +88,29 @@ module Petition
          * Añade algun item a la data y busca su stock.
          * @param data
          */
-        public setItem(data): Petition.RelatedItems {
+        public setItem(data: Item): Petition.RelatedItems {
             this.data = data;
+            this.items.push(data);
             this.grabItemStock(this.data);
 
             return this;
+        }
+
+        /**
+         * busca y regresa algun item con el id especificado.
+         * @param id
+         * @returns Item|null
+         */
+        private findItemById(id: number): Item {
+            var element = null;
+
+            this.items.forEach((item, key) => {
+                if (item.id == id) {
+                    return element = this.items[key];
+                }
+            });
+
+            return element;
         }
 
         /**
@@ -253,9 +273,9 @@ module Petition
             // como esta mamarrachada es muy grande, la
             // segmentamos para que pueda ser mas facil de digerir
             var itemInput = this.makeItemInput();
-            var options = this.makeSelectOptions(stockTypes);
-            var classId = 'item-due-date-' + this.data.id;
-            var select  = this.makeSelect(options, classId);
+            var options   = this.makeSelectOptions(stockTypes);
+            var classId   = 'item-due-date-' + this.data.id;
+            var select    = this.makeSelect(options, classId);
 
             $itemBag.append(itemInput + select);
             toggle.changeInputs();
@@ -301,7 +321,7 @@ module Petition
                 + '</label>'
                 + '<div class="col-sm-2">' +
                 '<input class="form-control model-number-input" ' +
-                'name="items['+this.randomId+'][' + this.data.id + '][amount]"' +
+                'name="items[' + this.randomId + '][' + this.data.id + '][amount]"' +
                 'type="number" ' +
                 'data-stock-plain="' + this.stock.plain + '"' +
                 'value="' + this.stock.plain + '">' +
@@ -337,11 +357,11 @@ module Petition
          */
         private makeSelect(options, id): string {
             var dateInput = '<input class="form-control help-block ' + id + '" ' +
-                'name="items['+this.randomId+'][' + this.data.id + '][due]"' +
+                'name="items[' + this.randomId + '][' + this.data.id + '][due]"' +
                 'placeholder="Fecha de Vto.">';
 
             var string = '<div class="col-sm-3">  <div class="input-group">' +
-                '<select class="form-control" name="items['+this.randomId+'][' + this.data.id + '][stock_type_id]">' +
+                '<select class="form-control" name="items[' + this.randomId + '][' + this.data.id + '][stock_type_id]">' +
                 options + '</select>' +
                 '<span class="input-group-addon itemBag-remove-item" ' +
                 'data-id="' + this.data.id + '">' +
@@ -374,9 +394,10 @@ module Petition
         ): void {
             // .due-button tiene css extra, no alterar.
             // HTML + CSS ES CHEVERE Y EMOCIONANTE Y DIVERTIDO Y GENIAL.
-            var button = '<div class="col-xs-5 col-xs-push-7">' +
-                '<button class="btn btn-default due-button">' +
-                'Añadir Item con fecha' +
+            var button = '<div class="col-sm-10 col-sm-push-2">' +
+                '<button class="btn btn-success btn-block due-button" ' +
+                'data-item-id="' + this.data.id + '">' +
+                'Añadir ' + this.data.desc + ' con otra fecha' +
                 '</button></div>';
 
             $itemBag.append(button);
@@ -385,7 +406,8 @@ module Petition
                 evt.preventDefault();
                 $(evt.target).closest('div').fadeOut(250, () => {
                     $(evt.target).closest('div').remove();
-                    this.removeSelected(this.data.id);
+                    this.removeSelected($(evt.target).data('item-id'));
+                    this.data = this.findItemById($(evt.target).data('item-id'));
                     this.appendCorrectItem(stockTypes, $itemBag, toggle);
                 });
             });

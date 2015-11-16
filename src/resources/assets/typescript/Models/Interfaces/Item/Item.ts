@@ -6,7 +6,7 @@ module Models.Interfaces
 
     export interface Item
     {
-        id: boolean;
+        id: number;
         desc: string;
         quantity: number;
         stock_type_id: number;
