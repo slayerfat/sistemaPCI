@@ -4,6 +4,10 @@ Todos los cambios significativos en este proyecto estaran documentados en este a
 
 ## [En Desarrollo][unrele]
 
+---
+
+## [v0.4.3] - 2015-11-18
+
 ### Añadido
 
 - Refinado stock de items, ver cambios de estructuras.
