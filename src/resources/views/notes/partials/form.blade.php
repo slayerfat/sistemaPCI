@@ -96,8 +96,6 @@ ControlGroup::generate(
                         id: $formData.data('petition-items-id')
                     },
                     success: function (data) {
-                        var self = this;
-
                         ajaxSpinner.cleanSpinner();
 
                         Object.keys(data).forEach(function (key) {
@@ -109,19 +107,6 @@ ControlGroup::generate(
 
                             item.params.data = data[key];
                             items.appendItem(item, stockTypes, toggle);
-                        });
-
-                        $('.itemBag-remove-item').click(function () {
-                            self.removeItem($(this))
-                        });
-                    },
-                    removeItem: function ($element) {
-                        var $item = $element.closest('.itemBag-item');
-                        var id = $item.data('id');
-
-                        $item.fadeToggle(function () {
-                            items.removeSelected(id);
-                            $item.remove()
                         });
                     }
                 })

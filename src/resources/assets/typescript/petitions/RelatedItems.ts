@@ -281,6 +281,10 @@ module Petition
             toggle.changeInputs();
             this.setRandomId();
 
+            $('.itemBag-remove-item').click((evt: JQueryEventObject) => {
+                this.removeItem($(evt.target))
+            });
+
             if (this.canAddDueDate()) {
                 if (toggle.isModelIngress()) {
                     this.makeDueDateButton($itemBag, stockTypes, toggle);
@@ -294,6 +298,28 @@ module Petition
                     startDate: "-10d"
                 });
             }
+        }
+
+        /**
+         * Remueve el input y sus elementos relacionados del formulario donde
+         * se encuentra y adiconalmente elimina el boton
+         * @param $element
+         */
+        private removeItem($element: JQuery): void {
+            var $item   = $element.closest('.itemBag-item');
+            var id      = $item.data('id');
+            var $button = $('button[data-item-id="' + id + '"]');
+
+            $item.fadeToggle(() => {
+                if ($button !== undefined) {
+                    $button.fadeOut(function () {
+                        $button.closest('div').remove();
+                    });
+                }
+
+                this.removeSelected(id);
+                $item.remove()
+            });
         }
 
         /**
