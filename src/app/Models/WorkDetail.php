@@ -38,13 +38,14 @@ class WorkDetail extends AbstractBaseModel
     /**
      * The attributes that are mass assignable.
      * el caso de departamento y cargo, no hay problema.
+     *
      * @var array
      */
     protected $fillable = [
         'department_id',
         'position_id',
         'join_date',
-        'departure_date'
+        'departure_date',
     ];
 
     /**
@@ -52,6 +53,7 @@ class WorkDetail extends AbstractBaseModel
      * dates se refiere a Carbon\Carbon dates.
      * En otras palabras, genera una instancia
      * de Carbon\Carbon para cada campo.
+     *
      * @var array
      */
     protected $dates = ['join_date', 'departure_date'];
@@ -59,6 +61,7 @@ class WorkDetail extends AbstractBaseModel
     /**
      * Cuando se pide la fecha de join_date se devuelve una
      * instancia de Date en vez de Carbon\Carbon
+     *
      * @param string $value
      * @return \Jenssegers\Date\Date
      */
@@ -70,6 +73,7 @@ class WorkDetail extends AbstractBaseModel
     /**
      * Cuando se pide la fecha de departure_date se devuelve una
      * instancia de Date en vez de Carbon\Carbon
+     *
      * @param string $value
      * @return \Jenssegers\Date\Date
      */
@@ -80,6 +84,7 @@ class WorkDetail extends AbstractBaseModel
 
     /**
      * Regresa al empleado relacionado.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
     public function employee()
@@ -89,6 +94,7 @@ class WorkDetail extends AbstractBaseModel
 
     /**
      * Regresa el cargo relacionado.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
     public function position()
@@ -98,6 +104,7 @@ class WorkDetail extends AbstractBaseModel
 
     /**
      * Regresa el departamento relacionado.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
     public function department()

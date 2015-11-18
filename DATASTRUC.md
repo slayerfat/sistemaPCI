@@ -2,6 +2,14 @@
 
 En este documento se pretende mantener la bitacora de cambios significativos en la estructura de datos del sistema.
 
+## v0.4.3
+
+- Las notas e items poseen fecha de vencimiento.
+- almacen_item refinado a entidad Stock (almacen -> stock, stock -> itemMovimiento)
+- el total del stock de un item fue refinado a la entidad detalles de stock.
+- item_movimento refinado a entidad ItemMovimiento (item -> itemMovimiento, movimiento -> itemMovimiento)
+- Añadido campo perecible para determinar programaticamente si el tipo de item es perecedero o no.
+
 ## v0.4.2
 
 Añadida relacion entre tipo de pedido/nota y tipo de movimiento para determinar programaticamente los movimientos que deben hacerse en notas.

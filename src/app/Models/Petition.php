@@ -22,11 +22,12 @@ use PCI\Models\Traits\HasTernaryStatusAttribute;
  * @property \Carbon\Carbon $updated_at
  * @property integer $created_by
  * @property integer $updated_by
+ * @property-read int $item_count
  * @property-read PetitionType $type
  * @property-read User $user
- * @property-read string $formatted_status
  * @property-read \Illuminate\Database\Eloquent\Collection|Item[] $items
  * @property-read \Illuminate\Database\Eloquent\Collection|Note[] $notes
+ * @property-read mixed $formatted_status
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Petition whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Petition whereUserId($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Petition wherePetitionTypeId($value)
@@ -37,6 +38,7 @@ use PCI\Models\Traits\HasTernaryStatusAttribute;
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Petition whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Petition whereCreatedBy($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Petition whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Petition latest()
  */
 class Petition extends AbstractBaseModel
 {

@@ -18,7 +18,7 @@
  * @property integer $created_by
  * @property integer $updated_by
  * @property-read User $owner
- * @property-read \Illuminate\Database\Eloquent\Collection|Item[] $items
+ * @property-read \Illuminate\Database\Eloquent\Collection|Stock[] $stocks
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Depot whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Depot whereUserId($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Depot whereNumber($value)
@@ -58,13 +58,11 @@ class Depot extends AbstractBaseModel
     /**
      * Regresa una coleccion de items existentes en el almacen.
      *
-     * @see  v0.3.2 #35
-     * @link https://github.com/slayerfat/sistemaPCI/issues/35
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @see  v0.4.4
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
      */
-    public function items()
+    public function stocks()
     {
-        return $this->belongsToMany(Item::class)
-            ->withPivot('quantity', 'stock_type_id');
+        return $this->hasMany(Stock::class);
     }
 }

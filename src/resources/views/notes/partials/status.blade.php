@@ -37,8 +37,15 @@ if (is_null($note->status)) {
                     @foreach($note->items as $item)
                         <div class="form-group">
                             <label
-                                for="item-depot-selection">{{ $item->desc }}</label>
-                            <select name="depot" data-item="{{ $item->id }}"
+                                for="item-depot-selection">
+                                {{ $item->desc }}
+                                <small>{{ $item->pivot->due ? 'Fecha de Vto. ' . $item->pivot->due : null }}</small>
+                            </label>
+                            <select name="depot"
+                                    data-item="{{ $item->id }}"
+                                    data-due="{{ $item->pivot->due }}"
+                                    data-amount="<?php echo (string)$item->pivot->quantity ?>"
+                                    data-stock_type_id="{{ $item->pivot->stock_type_id }}"
                                     id="item-depot-selection"
                                     class="form-control">
                                 @foreach($depots as $depot)
@@ -46,7 +53,7 @@ if (is_null($note->status)) {
                                         Almacén #{{ $depot->number }},
                                         Anaquel #{{ $depot->rack }},
                                         Alacena #{{ $depot->shelf }},
-                                        Contiene {{ $depot->items->count() }}
+                                        Contiene {{ $depot->stocks->count() }}
                                         Items.
                                     </option>
                                 @endforeach
@@ -296,8 +303,11 @@ if (is_null($note->status)) {
 
                 // el api necesita un array con la data del objeto creado aqui
                 status.change(url, true, [{
-                    item: null,
-                    depot: null
+                    item_id: null,
+                    due: null,
+                    amount: null,
+                    stock_type_id: null,
+                    depot_id: null
                 }]);
             });
 
@@ -313,8 +323,11 @@ if (is_null($note->status)) {
 
                 $('#item-depot-selection-form').find(':input').each(function () {
                     values.push({
-                        item: $(this).data('item'),
-                        depot: $(this).val()
+                        item_id: $(this).data('item'),
+                        due: $(this).data('due'),
+                        amount: $(this).data('amount'),
+                        stock_type_id: $(this).data('stock_type_id'),
+                        depot_id: $(this).val()
                     });
                 });
 

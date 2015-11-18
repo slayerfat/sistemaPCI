@@ -9,6 +9,7 @@ use Response;
  * @package PCI\Http\Controllers\Traits
  * @author  Alejandro Granadillo <slayerfat@gmail.com>
  * @link    https://github.com/slayerfat/sistemaPCI Repositorio en linea.
+ * @property-read \PCI\Repositories\Note\NoteRepository $repo
  */
 trait RespondsToChangeStatus
 {
@@ -16,8 +17,8 @@ trait RespondsToChangeStatus
     /**
      * Cambia el estatus de algun modelo.
      *
-     * @param int     $id
-     * @param Request $request
+     * @param int|string $id
+     * @param Request    $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function changeStatus($id, Request $request)
@@ -32,7 +33,24 @@ trait RespondsToChangeStatus
     }
 
     /**
+     * Cambia el estatus de a nulo modelo.
+     *
+     * @param int|string $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function changeToNull($id)
+    {
+        /** @var \PCI\Models\Note $model */
+        $model         = $this->repo->find($id);
+        $model->status = null;
+        $model->save();
+
+        return $model;
+    }
+
+    /**
      * Chequea que el valor sea booleano o equivalente y regresa su valor
+     *
      * @param $status
      * @return bool
      */

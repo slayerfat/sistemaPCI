@@ -1,10 +1,8 @@
 <?php namespace PCI\Listeners\Note;
 
-use Date;
+use Illuminate\Support\Collection;
 use PCI\Mamarrachismo\Converter\interfaces\StockTypeConverterInterface;
-use PCI\Models\Item;
 use PCI\Models\Movement;
-use PCI\Models\Note;
 
 /**
  * Class AbstractItemMovement
@@ -24,67 +22,29 @@ abstract class AbstractItemMovement
     protected $converter;
 
     /**
+     * @var \PCI\Models\Movement
+     */
+    protected $movement;
+
+    /**
+     * @var Collection|\PCI\Models\ItemMovement[]
+     */
+    protected $itemMovements;
+
+    /**
      * Esta clase necesita el convertidor para generar las cantidades.
      *
-     * @param StockTypeConverterInterface $converter
+     * @param StockTypeConverterInterface           $converter
+     * @param \PCI\Models\Movement                  $movement
+     * @param Collection|\PCI\Models\ItemMovement[] $itemMovements
      */
-    public function __construct(StockTypeConverterInterface $converter)
-    {
-        $this->converter = $converter;
-    }
-
-    /**
-     * Ajusta en la base de datos el stock de los items en los almacenes.
-     *
-     * @param \PCI\Models\Item $item
-     * @param  array           $depotsWithStock
-     * @return void
-     */
-    protected function reattachDepots(Item $item, array $depotsWithStock)
-    {
-        $item->depots()->sync([]);
-
-        $this->attachDepots($item, $depotsWithStock);
-    }
-
-    /**
-     * Ajusta en la base de datos el stock de los items en los almacenes.
-     *
-     * @param \PCI\Models\Item $item
-     * @param  array           $depotsWithStock
-     * @return void
-     */
-    protected function attachDepots(Item $item, array $depotsWithStock)
-    {
-        foreach ($depotsWithStock as $id => $details) {
-            $item->depots()->attach($id, $details);
-        }
-    }
-
-    /**
-     * Crea los movimientos relacionados con Los items en la nota.
-     *
-     * @param \PCI\Models\Note $note
-     * @param array            $data [ID][cantidad,tipo]
-     * @return bool
-     */
-    protected function setMovement(Note $note, array $data)
-    {
-        if (count($data) == 0) {
-            return false;
-        }
-
-        // TODO: repo
-        $movement = new Movement;
-
-        $movement->movement_type_id = $note->type->movement_type_id;
-        $movement->creation         = Date::now();
-        $note->movements()->save($movement);
-
-        foreach ($data as $id => $array) {
-            $movement->items()->attach($id, $array);
-        }
-
-        return true;
+    public function __construct(
+        StockTypeConverterInterface $converter,
+        Movement $movement,
+        Collection $itemMovements
+    ) {
+        $this->converter     = $converter;
+        $this->movement      = $movement;
+        $this->itemMovements = $itemMovements;
     }
 }

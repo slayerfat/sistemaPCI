@@ -1,19 +1,21 @@
-@unless($depot->items->isEmpty())
+@unless($depot->stocks->isEmpty())
     <?php
 
     // TODO: sacar de la vista para ViewComposer
 
     $array = [];
 
-    foreach ($depot->items as $item) {
+    foreach ($depot->stocks as $stock) {
+        /** @var PCI\Models\Stock $stock */
+        $item = $stock->item;
         // super mamarracho.
-        $number   = $item->pivot->quantity;
-        $desc     = \PCI\Models\StockType::findOrFail($item->pivot->stock_type_id)->desc;
-        $quantity = $item->formattedQuantity($number, $desc);
+        $number   = $stock->details->sum('quantity');
+        $type     = $stock->type->desc;
+        $quantity = $item->formattedQuantity($number, $type);
         $array[]  = [
             'uid'         => $item->id,
             'Descripción' => $item->desc,
-            'Cantidad' => $quantity,
+            'Cantidad'    => $quantity,
         ];
     }
 

@@ -12,6 +12,7 @@ use Cviebrock\EloquentSluggable\SluggableTrait;
  * @author Alejandro Granadillo <slayerfat@gmail.com>
  * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
  * @property integer $id
+ * @property integer $movement_type_id
  * @property string $desc
  * @property string $slug
  * @property \Carbon\Carbon $created_at
@@ -19,7 +20,9 @@ use Cviebrock\EloquentSluggable\SluggableTrait;
  * @property integer $created_by
  * @property integer $updated_by
  * @property-read \Illuminate\Database\Eloquent\Collection|Petition[] $petitions
+ * @property-read MovementType $movementType
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\PetitionType whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\PetitionType whereMovementTypeId($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\PetitionType whereDesc($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\PetitionType whereSlug($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\PetitionType whereCreatedAt($value)

@@ -5,6 +5,7 @@ use DB;
 
 class DatabaseSeeder extends AbstractTableSeeder
 {
+
     /**
      * Run the database seeds.
      *
@@ -31,8 +32,11 @@ class DatabaseSeeder extends AbstractTableSeeder
     }
 
     /**
-     * Genera un truncamiento (eliminacion de datos) en todas las tablas
-     * de la base de datos del sistema exceptuando las especificadas en el switche
+     * Genera un truncamiento en todas las tablas de la
+     * base de datos del sistema exceptuando las
+     * especificadas en el switche.
+     *
+     * @return void
      */
     protected function truncateDb()
     {

@@ -37,12 +37,14 @@ class SubCategory extends AbstractBaseModel implements SluggableInterface
 
     /**
      * The attributes that are mass assignable.
+     *
      * @var array
      */
     protected $fillable = ['desc'];
 
     /**
      * Los datos necesarios para generarar un slug en el modelo.
+     *
      * @var array
      */
     protected $sluggable = [
@@ -52,6 +54,7 @@ class SubCategory extends AbstractBaseModel implements SluggableInterface
 
     /**
      * Regresa la categoria asociada al rubro.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
     public function category()
@@ -61,6 +64,7 @@ class SubCategory extends AbstractBaseModel implements SluggableInterface
 
     /**
      * Regresa una coleccion de items asociados.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\hasMany
      */
     public function items()

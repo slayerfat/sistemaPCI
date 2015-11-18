@@ -1,7 +1,10 @@
 <?php namespace PCI\Repositories\Note;
 
 use Date;
+use Exception;
+use PCI\Mamarrachismo\Collection\ItemCollection;
 use PCI\Models\AbstractBaseModel;
+use PCI\Models\Note;
 use PCI\Repositories\AbstractRepository;
 use PCI\Repositories\Interfaces\Note\NoteRepositoryInterface;
 use PCI\Repositories\Traits\CanChangeStatus;
@@ -99,16 +102,33 @@ class NoteRepository extends AbstractRepository implements NoteRepositoryInterfa
         // asociamos la peticion al usuario en linea.
         $this->getCurrentUser()->notes()->save($note);
 
-        // Añade los items solicitados y sus cantidades a la
-        // tabla correspondiente en la base de datos.
-        foreach ($data['items'] as $id => $data) {
-            $note->items()->attach($id, [
-                'quantity'      => $data['amount'],
-                'stock_type_id' => $data['type'],
-            ]);
+        try {
+            // Añade los items solicitados y sus cantidades a la
+            // tabla correspondiente en la base de datos.
+            $this->attachDetails($data['itemCollection'], $note);
+        } catch (Exception $e) {
+            $note->status = false;
+            $note->save();
         }
 
         return $note;
+    }
+
+    /**
+     * @param ItemCollection $items
+     * @param Note      $note
+     */
+    private function attachDetails(ItemCollection $items, Note $note)
+    {
+        foreach ($items as $id => $data) {
+            foreach ($data as $details) {
+                $note->items()->attach($id, [
+                    'quantity'      => $details['amount'],
+                    'stock_type_id' => $details['stock_type_id'],
+                    'due'           => $details['due'],
+                ]);
+            }
+        }
     }
 
     /**

@@ -22,4 +22,10 @@ ControlGroup::generate(
     !!}
 @endif
 
+@if($variables->hasFields())
+    @foreach ($variables->getFields() as $field)
+        {!! $field !!}
+    @endforeach
+@endif
+
 {!! Button::primary($btnMsg)->block()->submit() !!}

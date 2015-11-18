@@ -6,6 +6,18 @@ Todos los cambios significativos en este proyecto estaran documentados en este a
 
 ---
 
+## [v0.4.3] - 2015-11-18
+
+### Añadido
+
+- Refinado stock de items, ver cambios de estructuras.
+- Tipo de items poseen atributo por defecto no perecedero (es necesario para determinar si un item es o no perecedero si el usuario crea tipo de items adicionales).
+- Fecha de vencimiento relacionada con items en notas (y en movimientos).
+
+### Cambiado
+
+- Las notas e items poseen fecha de vencimiento.
+
 ## [v0.4.2] - 2015-11-07
 
 ### Añadido
@@ -49,7 +61,6 @@ Todos los cambios significativos en este proyecto estaran documentados en este a
 
 - Pivote de Pedido no tenia tipo de stock.
 - Añadido trans en algunas vistas.
-
 
 ## [v0.3.5] - 2015-10-03
 

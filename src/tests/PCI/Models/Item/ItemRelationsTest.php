@@ -3,9 +3,9 @@
 use Mockery;
 use PCI\Models\Depot;
 use PCI\Models\Item;
+use PCI\Models\ItemMovement;
 use PCI\Models\ItemType;
 use PCI\Models\Maker;
-use PCI\Models\Movement;
 use PCI\Models\Note;
 use PCI\Models\Petition;
 use PCI\Models\SubCategory;
@@ -99,19 +99,12 @@ class ItemRelationsTest extends AbstractTestCase
 
     public function testMovements()
     {
-        $mock = Mockery::mock(Item::class)->makePartial();
-
-        $mock->shouldReceive('belongsToMany')
-            ->once()
-            ->with(Movement::class)
-            ->andReturnSelf();
-
-        $mock->shouldReceive('withPivot')
-            ->once()
-            ->with('quantity', 'due')
-            ->andReturn('mocked');
-
-        $this->assertEquals('mocked', $mock->movements());
+        $this->mockBasicModelRelation(
+            Item::class,
+            'movements',
+            'hasMany',
+            ItemMovement::class
+        );
     }
 
     public function testNotes()
@@ -125,7 +118,7 @@ class ItemRelationsTest extends AbstractTestCase
 
         $mock->shouldReceive('withPivot')
             ->once()
-            ->with('quantity', 'stock_type_id')
+            ->with('quantity', 'stock_type_id', 'due')
             ->andReturn('mocked');
 
         $this->assertEquals('mocked', $mock->notes());

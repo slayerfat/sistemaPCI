@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
 class CreateMovementsTable extends Migration
 {
@@ -20,7 +20,6 @@ class CreateMovementsTable extends Migration
                 ->on('movement_types');
             $table->unsignedInteger('note_id');
             $table->foreign('note_id')->references('id')->on('notes');
-            $table->date('creation');
             $table->timestamps();
             $table->unsignedInteger('created_by');
             $table->foreign('created_by')->references('id')->on('users');

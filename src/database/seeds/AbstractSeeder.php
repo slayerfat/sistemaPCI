@@ -6,9 +6,10 @@ use Storage;
 
 /**
  * Class AbstractSeeder
+ *
  * @package PCI\Database
- * @author Alejandro Granadillo <slayerfat@gmail.com>
- * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
+ * @author  Alejandro Granadillo <slayerfat@gmail.com>
+ * @link    https://github.com/slayerfat/sistemaPCI Repositorio en linea.
  */
 abstract class AbstractSeeder extends Seeder
 {
@@ -32,6 +33,7 @@ abstract class AbstractSeeder extends Seeder
      * Obtiene al usuario principal para el seeding,
      * usualmente el tester o lo que sea que este
      * dentro de el archivo .env
+     *
      * @return User
      */
     protected function getUser()
@@ -46,6 +48,7 @@ abstract class AbstractSeeder extends Seeder
     /**
      * Crea un directorio en la carpeta publica
      * relacionada con el modelo.
+     *
      * @param $class
      */
     protected function createDirectory($class)

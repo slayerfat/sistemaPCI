@@ -71,7 +71,7 @@ class PetitionsController extends Controller
         $petition = $this->repo->newInstance();
 
         // todo: segun perfil, usuario no hace entrada
-        $types = PetitionType::lists('desc', 'id');
+        $types = PetitionType::orderBy('id', 'asc')->lists('desc', 'id');
 
         return $this->view->make('petitions.create', compact('petition', 'types'));
     }
@@ -130,7 +130,7 @@ class PetitionsController extends Controller
         }
 
         // todo: segun perfil, usuario no hace entrada
-        $types = PetitionType::lists('desc', 'id');
+        $types = PetitionType::orderBy('id', 'asc')->lists('desc', 'id');
 
         return $this->view->make('petitions.edit', compact('petition', 'types'));
     }

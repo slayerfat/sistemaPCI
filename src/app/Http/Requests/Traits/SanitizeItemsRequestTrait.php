@@ -1,86 +1,106 @@
 <?php namespace PCI\Http\Requests\Traits;
 
+use LogicException;
+use PCI\Mamarrachismo\Collection\ItemCollection;
+
+/**
+ * Trait SanitizeItemsRequestTrait
+ *
+ * @package PCI\Http\Requests\Traits
+ * @author  Alejandro Granadillo <slayerfat@gmail.com>
+ * @link    https://github.com/slayerfat/sistemaPCI Repositorio en linea.
+ * @property \Symfony\Component\HttpFoundation\ParameterBag $request
+ */
 trait SanitizeItemsRequestTrait
 {
 
     /**
-     * Crea un array asociativo apropiado para este request.
+     * regresa un array con los campos necesarios para la coleccion.
      *
-     * @return void
+     * @return array
      */
-    private function sanitizeRequest()
-    {
-        // 'limpiamos' los items
-        $items = $this->sanitizeItemBag($this->request->all());
-
-        // remplazamos el request por uno a nuestra conveniencia.
-        $this->request->add([
-            'items'    => $items,
-        ]);
-    }
+    protected abstract function itemCollectionRules();
 
     /**
-     * Como el id del item viene de forma irregular del formulario,
-     * se manipula y regresa un array asociativo con id => catidad.
-     *
-     * @param array $data
-     * @return array[] Array de [item_id => [cantidad, tipo]]
-     */
-    private function sanitizeItemBag(array $data)
-    {
-        $results = [];
-
-        foreach ($data as $key => $value) {
-            // si por alguna razon no hay monto o el
-            // monto es menor a uno, se ignora este item.
-            if ($value < 1) {
-                continue;
-            }
-
-            // debido a que el key viene en el formato item-id-numero,
-            // debemos explotarlo para obtener el id como tal.
-            // (ver si se puede mejorar)
-            $id = explode('-', $key);
-
-            // si el id no exploto, entonces estamos
-            // lidiando con un key desconocido.
-            if (count($id) <= 1) {
-                continue;
-            }
-
-            // como esta llegando en este array el tipo de stock,
-            // debemos chequear que estamos manipulando
-            // el item y no el tipo de stock.
-            if ($id[0] == 'item') {
-                $results[$id[2]] = [
-                    'amount' => $value,
-                ];
-
-                continue;
-            }
-
-            // como existe la posibilidad que la cantidad sea menor a
-            // 1 debemos chequear si el key con el id existe,
-            // entonces se asigna el tipo, de lo
-            // contrario se ignora.
-            if (isset($results[$id[3]])) {
-                $results[$id[3]]['type'] = $value;
-            }
-        }
-
-        return $results;
-    }
-
-    /**
-     * Chequea que los items en el request sea al menos 1
+     * Genera reglas y la coleccion de items asociados al request.
      *
      * @param array $rules
      */
     private function checkItems(array &$rules)
     {
         // debemos chequear que exista al menos un item seleccionado.
-        if (count($this->request->get('items')) < 1) {
+        $data       = $this->request->get('items');
+        $collection = new ItemCollection;
+        $collection->setRequiredFields($this->itemCollectionRules());
+
+        if (count($data) < 1) {
             $rules['items'] = 'required';
+
+            return;
         }
+
+        // como el input viene como un array multidimensional,
+        // debemos iterar a travez de el para generar
+        // la coleccion que necesita el repositorio.
+        $customRules = $this->makeCustomRules($data, $collection);
+
+        // se guarda un nuevo parametro al request
+        $this->request->add([
+            'itemCollection' => $collection,
+        ]);
+
+        $rules = array_merge($rules, $customRules);
+    }
+
+    /**
+     * Genera reglas segun cada item dentro del request.
+     *
+     * @param array          $data [random_id => [item_id => datos]]
+     * @param ItemCollection $collection
+     * @return array
+     */
+    private function makeCustomRules(array $data, ItemCollection $collection)
+    {
+        $customRules = [];
+
+        foreach ($data as $randomId => $array) {
+            foreach ($array as $itemId => $details) {
+                $newData            = $details;
+                $newData['item_id'] = $itemId;
+                $collection->push($newData);
+
+                foreach (array_keys($details) as $key) {
+                    $customRules["items.$randomId.$itemId.$key"] = $this->makeMsgRules($key);
+                }
+            }
+        }
+
+        return $customRules;
+    }
+
+    /**
+     * Genera una regla relevante segun el tipo de parametro del request.
+     *
+     * @param $key
+     * @return string
+     */
+    private function makeMsgRules($key)
+    {
+        switch ($key) {
+            case 'amount':
+            case 'stock_type_id':
+                $msg = 'numeric';
+                break;
+
+            case 'due':
+                $msg = 'date';
+                break;
+
+            default:
+                throw new LogicException("Elemento [$key] desconocido.");
+                break;
+        }
+
+        return 'required|' . $msg;
     }
 }

@@ -1,8 +1,7 @@
 <meta name="form-data"
       data-petition-items-url="{{ route('api.petitions.items') }}"
       data-model-movement-type-url="{{ route('api.notes.movementTypes') }}"
-      data-petition-items-id="{{ $petitions->first()->id }}"
-      data-editing="{{ $petitions->first()->id ? "true" : "false" }}">
+      data-petition-items-id="{{ $petitions->first()->id }}">
 
 {!!
 
@@ -57,6 +56,9 @@ ControlGroup::generate(
 @stop
 
 @section('form-js')
+    <script type="text/javascript" src="{!! elixir('js/datepicker.js') !!}">
+    </script>
+
     <script>
         // necesitamos configurar ajax primero.
         var ajaxSetup = new Forms.AjaxSetup('{{ csrf_token() }}');
@@ -71,17 +73,14 @@ ControlGroup::generate(
         var commentToggle = new Forms.ToggleComments($('#comments'));
         var toggle = new Petition.MovementTypeToggle($select.val(), url);
         var stockTypes = new Petition.stockTypes();
-        var items = new Petition.RelatedItems();
+        var items = new Petition.RelatedItems('note');
         var ajaxSpinner = new Forms.AjaxSpinner($('#itemBag'));
 
         // operaciones iniciales
-        toggle.selectWatcher($select);
+        toggle.selectWatcher($select, $('#petition_id'));
         ajaxSpinner.appendSpinner();
 
         $(function () {
-            // si no se esta editando, entonces no ocurre nada aca.
-            if (!$formData.data('editing')) return;
-
             $('#petition_id').change(function () {
                 $formData.data('petition-items-id', $(this).val());
                 items.resetSelected();
@@ -97,8 +96,6 @@ ControlGroup::generate(
                         id: $formData.data('petition-items-id')
                     },
                     success: function (data) {
-                        var self = this;
-
                         ajaxSpinner.cleanSpinner();
 
                         Object.keys(data).forEach(function (key) {
@@ -110,19 +107,6 @@ ControlGroup::generate(
 
                             item.params.data = data[key];
                             items.appendItem(item, stockTypes, toggle);
-                        });
-
-                        $('.itemBag-remove-item').click(function () {
-                            self.removeItem($(this))
-                        });
-                    },
-                    removeItem: function ($element) {
-                        var $item = $element.closest('.itemBag-item');
-                        var id = $item.data('id');
-
-                        $item.toggle(function () {
-                            items.removeSelected(id);
-                            $item.remove()
                         });
                     }
                 })

@@ -4,9 +4,10 @@ use DB;
 
 /**
  * Class TownSeeder
+ *
  * @package PCI\Database
- * @author Alejandro Granadillo <slayerfat@gmail.com>
- * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
+ * @author  Alejandro Granadillo <slayerfat@gmail.com>
+ * @link    https://github.com/slayerfat/sistemaPCI Repositorio en linea.
  */
 class TownSeeder extends AbstractSeeder
 {

@@ -95,7 +95,7 @@ class NotesController extends Controller
         }
 
         // TODO: repo
-        $types = NoteType::lists('desc', 'id');
+        $types = NoteType::orderBy('id', 'asc')->lists('desc', 'id');
         $petitions = $this->petitionRepo->findWithoutNotes();
         $list  = $this->makePetitionsList($petitions);
         $users = $this->makeUsersList();

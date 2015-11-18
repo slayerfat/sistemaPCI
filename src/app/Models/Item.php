@@ -24,20 +24,21 @@ use PCI\Mamarrachismo\Converter\StockTypeConverter;
  * @property string $desc
  * @property string $slug
  * @property integer $minimum
+ * @property float   $reserved
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property integer $created_by
  * @property integer $updated_by
- * @property-read int $stock
- * @property-read \Illuminate\Database\Eloquent\Collection|\PCI\Models\Depot[] $depots
  * @property-read \PCI\Models\SubCategory $subCategory
  * @property-read \PCI\Models\Maker $maker
  * @property-read \PCI\Models\ItemType $type
  * @property-read \PCI\Models\StockType $stockType
  * @property-read \Illuminate\Database\Eloquent\Collection|Item[] $dependsOn
  * @property-read \Illuminate\Database\Eloquent\Collection|\PCI\Models\Petition[] $petitions
- * @property-read \Illuminate\Database\Eloquent\Collection|\PCI\Models\Movement[] $movements
+ * @property-read \Illuminate\Database\Eloquent\Collection|\PCI\Models\ItemMovement[] $movements
  * @property-read \Illuminate\Database\Eloquent\Collection|\PCI\Models\Note[] $notes
+ * @property-read \Illuminate\Database\Eloquent\Collection|\PCI\Models\Depot[] $depots
+ * @property-read \Illuminate\Database\Eloquent\Collection|\PCI\Models\Stock[] $stocks
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Item whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Item whereItemTypeId($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Item whereMakerId($value)
@@ -48,6 +49,7 @@ use PCI\Mamarrachismo\Converter\StockTypeConverter;
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Item whereDesc($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Item whereSlug($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Item whereMinimum($value)
+ * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Item whereReserved($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Item whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Item whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\Item whereCreatedBy($value)
@@ -181,12 +183,11 @@ class Item extends AbstractBaseModel implements SluggableInterface
     /**
      * Regresa una coleccion de movimientos relacionadas con el item.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
      */
     public function movements()
     {
-        return $this->belongsToMany('PCI\Models\Movement')
-            ->withPivot('quantity', 'due');
+        return $this->hasMany('PCI\Models\ItemMovement');
     }
 
     /**
@@ -197,7 +198,7 @@ class Item extends AbstractBaseModel implements SluggableInterface
     public function notes()
     {
         return $this->belongsToMany('PCI\Models\Note')
-            ->withPivot('quantity', 'stock_type_id');
+            ->withPivot('quantity', 'stock_type_id', 'due');
     }
 
     /**
@@ -239,9 +240,12 @@ class Item extends AbstractBaseModel implements SluggableInterface
 
         // si el stock no es convertible, entonces se devuelve
         // la suma del stock en todos los almacenes.
-        return $this->depots()
-            ->withPivot('quantity')
-            ->sum('quantity');
+        $i = 0;
+        foreach ($this->stocks as $stock) {
+            $i += $stock->details->sum('quantity');
+        }
+
+        return $i;
     }
 
     /**
@@ -253,19 +257,18 @@ class Item extends AbstractBaseModel implements SluggableInterface
      */
     protected function convertStock(StockTypeConverterInterface $converter)
     {
-        $stock  = 0;
-        $depots = $this->depots()
-            ->withPivot('quantity', 'stock_type_id')
-            ->get();
+        $amount  = 0;
 
-        foreach ($depots as $depot) {
-            $stock += $converter->convert(
-                $depot->pivot->stock_type_id,
-                $depot->pivot->quantity
-            );
+        foreach ($this->stocks as $stock) {
+            foreach ($stock->details as $details) {
+                $amount += $converter->convert(
+                    $stock->stock_type_id,
+                    $details->quantity
+                );
+            }
         }
 
-        return $stock;
+        return $amount;
     }
 
     /**
@@ -279,6 +282,16 @@ class Item extends AbstractBaseModel implements SluggableInterface
     {
         return $this->belongsToMany('PCI\Models\Depot')
             ->withPivot('quantity', 'stock_type_id');
+    }
+
+    /**
+     * La serie de stock existente en los almacenes.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany|\Illuminate\Database\Eloquent\Builder
+     */
+    public function stocks()
+    {
+        return $this->hasMany('PCI\Models\Stock');
     }
 
     /**

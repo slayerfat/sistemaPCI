@@ -12,6 +12,11 @@ class MovementTypeRepository extends AbstractAuxRepository implements MovementTy
 {
 
     /**
+     * @var \PCI\Models\MovementType
+     */
+    protected $model;
+
+    /**
      * Elimina a este modelo del sistema.
      * @param int $id El identificador unico.
      * @return boolean|\PCI\Models\AbstractBaseModel
@@ -79,5 +84,29 @@ class MovementTypeRepository extends AbstractAuxRepository implements MovementTy
         $dept = $this->getBySlugOrId($id);
 
         return $this->generateViewVariable($dept, 'movementTypes');
+    }
+
+    /**
+     * @return \PCI\Models\MovementType
+     */
+    public function findIn()
+    {
+        return $this->model->in()->first();
+    }
+
+    /**
+     * @return \PCI\Models\MovementType
+     */
+    public function findOut()
+    {
+        return $this->model->out()->first();
+    }
+
+    /**
+     * @return \PCI\Models\MovementType
+     */
+    public function findUnknown()
+    {
+        return $this->model->unknown()->first();
     }
 }

@@ -17,7 +17,7 @@
         </h1>
 
         <h2>
-            Este {{ trans('models.notes.singular') }}
+            Esta {{ trans('models.notes.singular') }}
             es de tipo {{ $note->type->desc }}.
         </h2>
 

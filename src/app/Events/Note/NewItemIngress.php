@@ -1,6 +1,7 @@
 <?php namespace PCI\Events\Note;
 
-use LogicException;
+use Illuminate\Support\Collection;
+use PCI\Mamarrachismo\Collection\ItemCollection;
 use PCI\Models\Note;
 
 /**
@@ -15,8 +16,9 @@ class NewItemIngress extends NewNoteCreation
 
     /**
      * La informacion necesaria para completar el nuevo ingreso al almacen.
+     * continene una coleccion con arrays asociativos.
      *
-     * @var array este array es asociativo [item, nota]
+     * @var Collection [item_id, depot_id, due]
      */
     public $data;
 
@@ -25,36 +27,17 @@ class NewItemIngress extends NewNoteCreation
      * este construido correctamente o generara un error.
      *
      * @param \PCI\Models\Note $note
-     * @param array            $data este array es asociativo [item, nota]
+     * @param ItemCollection   $data [item_id, nota_id]
      */
-    public function __construct(Note $note, array $data)
+    public function __construct(Note $note, ItemCollection $data)
     {
         parent::__construct($note);
 
-        $this->checkDataArray($data);
-
-        $this->data = $data;
+        $this->setData($data);
     }
 
     /**
-     * @param array $data
-     * @return void
-     */
-    private function checkDataArray(array $data)
-    {
-        if (count($data) == 0) {
-            throw new LogicException('El arreglo de datos, esta construido incorrectamente.');
-        }
-
-        foreach ($data as $array) {
-            if (!isset($array['depot_id'])) {
-                throw new LogicException('El arreglo de datos, esta construido incorrectamente.');
-            }
-        }
-    }
-
-    /**
-     * @return array
+     * @return Collection
      */
     public function getData()
     {
@@ -62,12 +45,10 @@ class NewItemIngress extends NewNoteCreation
     }
 
     /**
-     * @param array $data
+     * @param ItemCollection $data
      */
-    public function setData(array $data)
+    public function setData(ItemCollection $data)
     {
-        $this->checkDataArray($data);
-
-        $this->data = $data;
+        $this->data = $data->unique();
     }
 }

@@ -59,9 +59,6 @@ class NoteRequest extends Request
      */
     public function rules()
     {
-        // ajustamos el request
-        $this->sanitizeRequest();
-
         $rules = [
             'comments'     => 'string|between:5,255',
             'note_type_id' => 'numeric|exists:petition_types,id',
@@ -70,5 +67,20 @@ class NoteRequest extends Request
         $this->checkItems($rules);
 
         return $rules;
+    }
+
+    /**
+     * regresa un array con los campos necesarios para la coleccion.
+     *
+     * @return array
+     */
+    protected function itemCollectionRules()
+    {
+        return [
+            'item_id',
+            'stock_type_id',
+            'amount',
+            'due'
+        ];
     }
 }

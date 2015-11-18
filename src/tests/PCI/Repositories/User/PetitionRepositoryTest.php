@@ -1,5 +1,6 @@
 <?php namespace Tests\PCI\Repositories\User;
 
+use PCI\Mamarrachismo\Collection\ItemCollection;
 use PCI\Mamarrachismo\Converter\StockTypeConverter;
 use PCI\Models\Category;
 use PCI\Models\Item;
@@ -77,25 +78,37 @@ class PetitionRepositoryTest extends AbstractRepositoryTestCase
 
     public function createDataProvider()
     {
+        $collection = new ItemCollection;
+        $collection->setRequiredFields('itemId', 'amount', 'stockTypeId')
+            ->setAmount(1)
+            ->setStockTypeId(1)
+            ->setItemId(1)
+            ->make()
+            ->setItemId(2)
+            ->make();
+
+        $another = new ItemCollection;
+        $another->setRequiredFields('itemId', 'amount', 'stockTypeId')
+            ->setAmount(1)
+            ->setStockTypeId(1)
+            ->setItemId(1)
+            ->make()
+            ->setStockTypeId(2)
+            ->make();
+
         return [
             [
                 'sameType'      => [
                     'comments'         => 'testing comment',
                     'petition_type_id' => 1,
                     'request_date'     => '1999-09-09',
-                    'items'            => [
-                        1 => ['amount' => 1, 'type' => 1],
-                        2 => ['amount' => 1, 'type' => 1],
-                    ],
+                    'itemCollection' => $collection,
                 ],
                 'differentType' => [
                     'comments'         => 'testing comment',
                     'petition_type_id' => 1,
                     'request_date'     => '1999-09-09',
-                    'items'            => [
-                        1 => ['amount' => 1, 'type' => 2],
-                        2 => ['amount' => 1, 'type' => 3],
-                    ],
+                    'itemCollection' => $another,
                 ],
             ],
         ];

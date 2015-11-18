@@ -3,6 +3,7 @@
 use Carbon\Carbon;
 use Gate;
 use Illuminate\Support\Collection;
+use PCI\Mamarrachismo\Collection\ItemCollection;
 use PCI\Mamarrachismo\Converter\interfaces\StockTypeConverterInterface;
 use PCI\Models\AbstractBaseModel;
 use PCI\Models\Petition;
@@ -135,7 +136,7 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
         $petition->petition_type_id = $data['petition_type_id'];
         $petition->request_date     = Carbon::now();
 
-        $items = $this->checkItems($data['items'], $petition);
+        $items = $this->checkItems($data['itemCollection'], $petition);
 
         // asociamos la peticion al usuario en linea.
         $this->getCurrentUser()->petitions()->save($petition);
@@ -146,40 +147,42 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
     /**
      * Chequea que los items solicitados sean adecuados.
      *
-     * @param array                $items el request con el id del item,
+     * @param ItemCollection       $items el request con el id del item,
      *                                    cantidad y tipo de stock.
      * @param \PCI\Models\Petition $petition
-     * @return array los items actualizados.
+     * @return ItemCollection los items actualizados.
      */
-    private function checkItems(array $items, Petition &$petition)
+    private function checkItems(ItemCollection $items, Petition &$petition)
     {
         // por cada item dentro de los items, lo asociamos
         // con el modelo en la base de datos.
-        foreach ($items as $id => $data) {
+        foreach ($items as $id => $array) {
             /** @var \PCI\Models\Item $item */
             $item = $this->itemRepo->getById($id);
             $this->converter->setItem($item);
 
-            // debemos chequear que los items tengan
-            // los tipos y cantidades correctos.
-            if (Gate::denies('addItem', [
-                $petition,
-                $this->converter,
-                $data['amount'],
-                $data['type'],
-            ])
-            ) {
-                $petition->comments .= sizeof($petition->comments) <= 1 ? "" : "\r\n";
+            foreach ($array as $data) {
+                // debemos chequear que los items tengan
+                // los tipos y cantidades correctos.
+                if (Gate::denies('addItem', [
+                    $petition,
+                    $this->converter,
+                    $data['amount'],
+                    $data['stock_type_id'],
+                ])
+                ) {
+                    $petition->comments .= sizeof($petition->comments) <= 1 ? "" : "\r\n";
 
-                $petition->comments .= "El usuario {$this->getCurrentUser()->name} "
-                    . "solicito {$data['amount']} ({$data['amount']}:{$data['type']}) "
-                    . "y existe un stock de {$item->formattedStock()} "
-                    . "({$item->stock()}:{$item->stock_type_id}) "
-                    . "disponibles del Item {$item->desc}\r\n";
+                    $petition->comments .= "El usuario {$this->getCurrentUser()->name} "
+                        . "solicito {$data['amount']} ({$data['amount']}:{$data['stock_type_id']}) "
+                        . "y existe un stock de {$item->formattedStock()} "
+                        . "({$item->stock()}:{$item->stock_type_id}) "
+                        . "disponibles del Item {$item->desc}\r\n";
 
-                unset($items[$id]);
+                    $items->offsetUnset($id);
 
-                continue;
+                    continue;
+                }
             }
         }
 
@@ -187,11 +190,11 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
     }
 
     /**
-     * @param array                $items
+     * @param ItemCollection       $items
      * @param \PCI\Models\Petition $petition
      * @return \PCI\Models\Petition
      */
-    protected function attachItems(array $items, Petition $petition)
+    protected function attachItems(ItemCollection $items, Petition $petition)
     {
         // si no hay items que incluir por alguna
         // razon, entonces rechazamos el pedido.
@@ -204,11 +207,13 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
 
         // Añade los items solicitados y sus cantidades a la
         // tabla correspondiente en la base de datos.
-        foreach ($items as $id => $data) {
-            $petition->items()->attach($id, [
-                'quantity'      => $data['amount'],
-                'stock_type_id' => $data['type'],
-            ]);
+        foreach ($items as $id => $array) {
+            foreach ($array as $data) {
+                $petition->items()->attach($id, [
+                    'quantity'      => $data['amount'],
+                    'stock_type_id' => $data['stock_type_id'],
+                ]);
+            }
         }
 
         return $petition;
@@ -232,24 +237,13 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
         $petition->petition_type_id = $data['petition_type_id'];
         $petition->request_date     = Carbon::now();
 
-        $items = $this->checkItems($data['items'], $petition);
+        $items = $this->checkItems($data['itemCollection'], $petition);
 
         // como posiblemente los items cambiaron, entonces
         // limpiamos la tabla para re-añadir los items.
         $petition->items()->sync([]);
 
-        // Añade los items solicitados y sus cantidades a la
-        // tabla correspondiente en la base de datos.
-        foreach ($items as $id => $data) {
-            $petition->items()->attach($id, [
-                'quantity'      => $data['amount'],
-                'stock_type_id' => $data['type'],
-            ]);
-        }
-
-        $petition->save();
-
-        return $petition;
+        return $this->attachItems($items, $petition);
     }
 
     /**
@@ -288,11 +282,16 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
         $items->each(function ($item) use (&$results) {
             /** @var \PCI\Models\Item $item */
             $results->push([
-                'id'            => $item->id,
-                'desc'          => $item->desc,
-                'stock'         => $item->formattedStock(),
-                'quantity'      => $item->pivot->quantity,
-                'stock_type_id' => $item->pivot->stock_type_id,
+                'id'                 => $item->id,
+                'desc'               => $item->desc,
+                'stock'              => $item->formattedStock(),
+                'percentageStock'    => $item->percentageStock(),
+                'formattedReserved'  => $item->formattedReserved(),
+                'percentageReserved' => $item->percentageReserved(),
+                'due'                => $item->type->perishable,
+                'quantity'           => $item->pivot->quantity,
+                'stock_type_id'      => $item->pivot->stock_type_id,
+                'type'               => $item->type,
             ]);
         });
 

@@ -30,6 +30,7 @@ class Parish extends AbstractPlacesModel
 
     /**
      * Regresa el municipio asociado.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function town()
@@ -39,6 +40,7 @@ class Parish extends AbstractPlacesModel
 
     /**
      * Regresa una coleccion de direcciones asociadaos.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\hasMany
      */
     public function addresses()

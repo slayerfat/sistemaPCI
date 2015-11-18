@@ -1,11 +1,13 @@
 /// <reference path="../../../../../typings/tsd.d.ts" />
 
-module Petition {
-    export class stockTypes {
+module Petition
+{
+    export class stockTypes
+    {
         /**
          * tipos es un array de objetos.
          */
-        public types:Array<{}>;
+        public types: Array<{}>;
 
         constructor() {
             this.checkApi();
@@ -15,7 +17,7 @@ module Petition {
          * Chequea que los tipos esten o no vacios
          * @returns {boolean}
          */
-        public isEmpty():boolean {
+        public isEmpty(): boolean {
             if (this.types === undefined) {
                 return true;
             }
@@ -27,14 +29,14 @@ module Petition {
          * Chequea que los tipos esten o no vacios
          * @returns {boolean}
          */
-        public isNotEmpty():boolean {
+        public isNotEmpty(): boolean {
             return !this.isEmpty();
         }
 
         /**
          * Chequea los tipos en el servidor
          */
-        public checkApi():void {
+        public checkApi(): void {
             var self = this;
             // necesitamos los tipos de stock para generar el select
             $(function () {

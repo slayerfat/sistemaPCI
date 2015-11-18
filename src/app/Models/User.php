@@ -26,7 +26,7 @@ use Illuminate\Foundation\Auth\Access\Authorizable;
  * @property \Carbon\Carbon $updated_at
  * @property integer $created_by
  * @property integer $updated_by
- * @property-read \PCI\Models\Address $address
+ * @property-read mixed $address
  * @property-read Employee $employee
  * @property-read Attendant $attendant
  * @property-read \Illuminate\Database\Eloquent\Collection|Note[] $notes
@@ -55,30 +55,35 @@ class User extends AbstractBaseModel implements
 
     /**
      * Id del perfil Administrador del sistema
+     *
      * @var int
      */
     const ADMIN_ID = Profile::ADMIN_ID;
 
     /**
      * Id del perfil Usuario del sistema
+     *
      * @var int
      */
     const USER_ID = Profile::USER_ID;
 
     /**
      * Id del perfil Usuario desactivado
+     *
      * @var int
      */
     const DISABLED_ID = Profile::DISABLED_ID;
 
     /**
      * The database table used by the model.
+     *
      * @var string
      */
     protected $table = 'users';
 
     /**
      * The attributes that are mass assignable.
+     *
      * @var array
      */
     protected $fillable = [
@@ -86,11 +91,12 @@ class User extends AbstractBaseModel implements
         'email',
         'password',
         'status',
-        'confirmation_code'
+        'confirmation_code',
     ];
 
     /**
      * The attributes excluded from the model's JSON form.
+     *
      * @var array
      */
     protected $hidden = [
@@ -100,12 +106,13 @@ class User extends AbstractBaseModel implements
         'updated_at',
         'password',
         'remember_token',
-        'confirmation_code'
+        'confirmation_code',
     ];
 
     /**
      * Regresa mamarrachamente a la direccion relacionada
      * al usuario por medio del empleado.
+     *
      * @return \PCI\Models\Address
      */
     public function getAddressAttribute()
@@ -115,6 +122,7 @@ class User extends AbstractBaseModel implements
 
     /**
      * Regresa la informacion de empleado relacionado al usuario.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\hasOne
      */
     public function employee()
@@ -124,6 +132,7 @@ class User extends AbstractBaseModel implements
 
     /**
      * Regresa informacion de encargado de almacen, si este posee.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\hasOne
      */
     public function attendant()
@@ -133,6 +142,7 @@ class User extends AbstractBaseModel implements
 
     /**
      * Regresa una coleccion de notas asociadas.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
      */
     public function notes()
@@ -142,6 +152,7 @@ class User extends AbstractBaseModel implements
 
     /**
      * Regresa una coleccion de pedidos asociados.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\hasMany
      */
     public function petitions()
@@ -153,6 +164,7 @@ class User extends AbstractBaseModel implements
      * Regresa una coleccion de almacenes que maneja.
      * Esta relacion se refiere al Jefe de
      * Almacen administra/maneja almacen.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\hasMany
      */
     public function manages()
@@ -162,6 +174,7 @@ class User extends AbstractBaseModel implements
 
     /**
      * Regresa el perfil asociado.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
     public function profile()
@@ -172,6 +185,7 @@ class User extends AbstractBaseModel implements
     /**
      * Determina si el usuario es de perfil
      * usuario activo en el sistema.
+     *
      * @return boolean
      */
     public function isUser()
@@ -182,6 +196,7 @@ class User extends AbstractBaseModel implements
     /**
      * Determina si el usuario no es de perfil
      * desactivado activo en el sistema.
+     *
      * @return boolean
      */
     public function isActive()
@@ -192,6 +207,7 @@ class User extends AbstractBaseModel implements
     /**
      * Determina si el usuario es de perfil
      * usuario activo en el sistema.
+     *
      * @return boolean
      */
     public function isDisabled()
@@ -203,6 +219,7 @@ class User extends AbstractBaseModel implements
      * Determina si el usuario tiene codigo de
      * verificacion en el sistema, es decir,
      * No ha sido verificado.
+     *
      * @return boolean
      */
     public function isUnverified()
@@ -214,6 +231,7 @@ class User extends AbstractBaseModel implements
      * Determina si el usuario no tiene codigo
      * de verificacion en el sistema,
      * es decir, ha sido verificado.
+     *
      * @return boolean
      */
     public function isVerified()
@@ -223,6 +241,7 @@ class User extends AbstractBaseModel implements
 
     /**
      * helper para ver si es admin o si puede manipular algun recurso.
+     *
      * @param int $id el foreign key del recurso.
      * @return boolean
      */
@@ -233,6 +252,7 @@ class User extends AbstractBaseModel implements
 
     /**
      * Determina si el usuario es administrador del sistema.
+     *
      * @return boolean
      */
     public function isAdmin()
@@ -244,6 +264,7 @@ class User extends AbstractBaseModel implements
      * chequea si el id del foreign key del recurso es igual al id del usuario,
      * en otras palabras, verific que el usuario pueda modificar algun recurso
      * viendo si le pertenece o no.
+     *
      * @param int $id el foreign key del recurso.
      * @return boolean
      */
