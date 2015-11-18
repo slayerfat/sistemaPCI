@@ -2,6 +2,10 @@
 if (!isset($delete)) {
     $delete = false;
 }
+
+if (!isset($edit)) {
+    $edit = false;
+}
 ?>
 
 @if($data && !$data->getModel()->isEmpty())
@@ -12,7 +16,7 @@ if (!isset($delete)) {
 
         Table::withContents($data->getModel()->getCollection()->toArray())
             ->ignore(['uid'])
-            ->striped()->callback('Acciones', function ($id, $row) use ($data, $delete) {
+            ->striped()->callback('Acciones', function ($id, $row) use ($data, $delete, $edit) {
 
                 $showButton = Button::link()
                                     ->asLinkTo(route($data->getRoutes()->show, $row['uid']))
@@ -23,15 +27,19 @@ if (!isset($delete)) {
                                         'title' => 'Consultar'
                                     ])->extraSmall();
 
-                $editButton = Button::link()
-                                    ->asLinkTo(route($data->getRoutes()->edit, $row['uid']))
-                                    ->withIcon(Icon::create('edit'))
-                                    ->withAttributes([
-                                        'data-toggle' => 'tooltip',
-                                        'title' => 'Editar'
-                                    ])->extraSmall();
+                if ($edit === true) {
+                    $editButton = Button::link()
+                                        ->asLinkTo(route($data->getRoutes()->edit, $row['uid']))
+                                        ->withIcon(Icon::create('edit'))
+                                        ->withAttributes([
+                                            'data-toggle' => 'tooltip',
+                                            'title' => 'Editar'
+                                        ])->extraSmall();
 
-                $buttons = $showButton . $editButton;
+                    $buttons = $showButton . $editButton;
+                } elseif ($edit === false) {
+                    $buttons = $showButton;
+                }
 
                 if ($delete === true) {
                     $deleteButton = Button::link()

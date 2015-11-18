@@ -4,7 +4,9 @@ Todos los cambios significativos en este proyecto estaran documentados en este a
 
 ## [En Desarrollo][unrele]
 
----
+### Arreglado
+
+- Listado de items y pedidos traen informacion correcta segun perfil de usuario.
 
 ## [v0.4.3] - 2015-11-18
 
