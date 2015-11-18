@@ -40,8 +40,8 @@ $factory->define(PCI\Models\Depot::class, function () use ($faker) {
     return [
         'user_id' => 1,
         'number'  => rand(1, 2),
-        'rack'    => rand(1, 5),
-        'shelf'   => rand(1, 10),
+        'rack'  => rand(1, 65534),
+        'shelf' => rand(1, 65534),
     ];
 });
 

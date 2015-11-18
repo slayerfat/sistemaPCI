@@ -25,7 +25,7 @@ class DepotRequest extends Request
     public function rules()
     {
         return [
-            'number' => 'required|between:1,2|integer',
+            'number' => 'required|between:1,2|integer|unique_with:depots,rack,shelf',
             'user_id' => 'required|integer|exists:users,id',
             'rack'   => 'required|integer|min:1',
             'shelf'  => 'required|integer|min:1',

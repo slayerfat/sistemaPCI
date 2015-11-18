@@ -21,6 +21,7 @@ class CreateDepotsTable extends Migration
             $table->unsignedTinyInteger('number');
             $table->unsignedSmallInteger('rack');
             $table->unsignedSmallInteger('shelf');
+            $table->unique(['number', 'rack', 'shelf']);
             $table->timestamps();
             $table->unsignedInteger('created_by');
             $table->foreign('created_by')->references('id')->on('users');
