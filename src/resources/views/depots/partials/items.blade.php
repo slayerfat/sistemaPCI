@@ -1,4 +1,4 @@
-@unless($depot->stocks->isEmpty())
+@if(!$depot->stocks->isEmpty())
     <?php
 
     // TODO: sacar de la vista para ViewComposer
@@ -30,4 +30,6 @@
             . trans('models.depots.singular'),
         'resource' => 'items',
     ])
-@endunless
+@else
+    @include('partials.tables.empty-data-set', ['empty' => ['Información' => 'este Almacén no tiene Items asociados.']])
+@endif
