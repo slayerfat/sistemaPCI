@@ -280,4 +280,14 @@ class User extends AbstractBaseModel implements
 
         return false;
     }
+
+    /**
+     * Determina cual es el identificador que utilizara el controlador
+     *
+     * @return int|string
+     */
+    public function controllerUID()
+    {
+        return $this->name;
+    }
 }

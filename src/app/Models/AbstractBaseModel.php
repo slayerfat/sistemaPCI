@@ -87,6 +87,13 @@ abstract class AbstractBaseModel extends Eloquent
     }
 
     /**
+     * Determina cual es el identificador que utilizara el controlador
+     *
+     * @return int|string
+     */
+    abstract public function controllerUID();
+
+    /**
      * Cuando se pide la fecha de created_at se devuelve una
      * instancia de Date en vez de Carbon\Carbon
      * @param string $value

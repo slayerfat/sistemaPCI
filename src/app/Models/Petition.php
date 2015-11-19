@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Query\Builder;
 use PCI\Models\Traits\HasCommentsAttribute;
+use PCI\Models\Traits\HasIdUID;
 use PCI\Models\Traits\HasTernaryStatusAttribute;
 
 /** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
@@ -43,7 +44,7 @@ use PCI\Models\Traits\HasTernaryStatusAttribute;
 class Petition extends AbstractBaseModel
 {
 
-    use HasTernaryStatusAttribute, HasCommentsAttribute;
+    use HasTernaryStatusAttribute, HasCommentsAttribute, HasIdUID;
 
     /**
      * The attributes that are mass assignable.

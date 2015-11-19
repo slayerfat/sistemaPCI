@@ -1,6 +1,7 @@
 <?php namespace PCI\Models;
 
 use PCI\Models\Traits\HasCommentsAttribute;
+use PCI\Models\Traits\HasIdUID;
 use PCI\Models\Traits\HasTernaryStatusAttribute;
 
 /** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
@@ -49,7 +50,7 @@ use PCI\Models\Traits\HasTernaryStatusAttribute;
 class Note extends AbstractBaseModel
 {
 
-    use HasTernaryStatusAttribute, HasCommentsAttribute;
+    use HasTernaryStatusAttribute, HasCommentsAttribute, HasIdUID;
 
     /**
      * The attributes that are mass assignable.

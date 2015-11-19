@@ -2,6 +2,7 @@
 
 use Cviebrock\EloquentSluggable\SluggableInterface;
 use Cviebrock\EloquentSluggable\SluggableTrait;
+use PCI\Models\Traits\HasSlugUID;
 
 /** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
 
@@ -30,7 +31,7 @@ use Cviebrock\EloquentSluggable\SluggableTrait;
 class Category extends AbstractBaseModel implements SluggableInterface
 {
 
-    use SluggableTrait;
+    use SluggableTrait, HasSlugUID;
 
     /**
      * The attributes that are mass assignable.

@@ -1,6 +1,8 @@
 <?php namespace PCI\Models;
 
-    /** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
+use PCI\Models\Traits\HasIdUID;
+
+/** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
 
 /**
  * PCI\Models\ItemMovement
@@ -33,6 +35,8 @@
  */
 class ItemMovement extends AbstractBaseModel
 {
+
+    use HasIdUID;
 
     /**
      * The attributes that are mass assignable.

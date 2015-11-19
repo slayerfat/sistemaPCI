@@ -1,5 +1,7 @@
 <?php namespace PCI\Models;
 
+use PCI\Models\Traits\HasIdUID;
+
 /** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
 
 /**
@@ -29,6 +31,8 @@
  */
 class Attendant extends AbstractBaseModel
 {
+
+    use HasIdUID;
 
     /**
      * The attributes that are mass assignable.

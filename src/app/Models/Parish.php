@@ -1,5 +1,7 @@
 <?php namespace PCI\Models;
 
+use PCI\Models\Traits\HasIdUID;
+
 /** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
 
 /**
@@ -27,6 +29,8 @@
  */
 class Parish extends AbstractPlacesModel
 {
+
+    use HasIdUID;
 
     /**
      * Regresa el municipio asociado.
