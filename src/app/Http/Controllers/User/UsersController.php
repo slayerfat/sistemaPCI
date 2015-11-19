@@ -83,6 +83,7 @@ class UsersController extends Controller
      */
     public function store(UserRequest $request)
     {
+        /** @var \PCI\Models\User $user */
         $user = $this->userRepo->create($request->all());
 
         // cuando un usuario es creado y guardado,
@@ -90,7 +91,7 @@ class UsersController extends Controller
         // relacionada con un nuevo usuario en el sistema.
         Event::fire(new NewUserRegistration($user));
 
-        Flash::success(trans('models.users.create.success') . ' Correo electrónico de confirmacion enviado.');
+        Flash::success(trans('models.users.store.create') . ' Correo electrónico de confirmacion enviado.');
 
         return Redirect::route('users.show', $user->name);
     }
