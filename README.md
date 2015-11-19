@@ -43,6 +43,7 @@ Misión Alma Mater, Programa Nacional de Formación: Informática, Trayecto 3, I
     - [Migraciones](https://github.com/slayerfat/sistemaPCI#migraciones)
 - [Homestead](https://github.com/slayerfat/sistemaPCI#homestead)
 - [Arbol de Directorios](https://github.com/slayerfat/sistemaPCI#arbol-de-directorios-simplificado)
+- [Diccionario](https://github.com/slayerfat/sistemaPCI#diccionario)
 - [Libreria PHP3D](https://github.com/slayerfat/sistemaPCI#php3d-technology-required)
 - [Caimaneitor](https://github.com/slayerfat/sistemaPCI#caimaneitorcaimanais)
 - [Estatus Bio-Psico-Social](https://github.com/slayerfat/sistemaPCI#situacion-bio-psico-social)
@@ -311,6 +312,16 @@ sistemaPCI
         └── vendor
             └── [Dependencias en Composer]
 ```
+
+## Diccionario
+
+1. La Existencia son las unidades como tal en inventario.
+1. Las Reservas es lo que se aparta de las Existencias.
+1. Stock se refiere a las unidades en Existencia menos las Reservaciones.
+1. En los Almacenes hay Anaqueles, los Anaqueles tienen Alacenas.
+1. Los Articulos en general son Items
+1. Los Items tienen Existencia en algun Alacena de algun Anaquel de algun Almacen.
+1. Los Items tienen Rubros, los Rubros pertenecen a una Categoria.
 
 ## PHP3D Technology Required
 
