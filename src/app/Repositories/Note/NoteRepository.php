@@ -64,7 +64,7 @@ class NoteRepository extends AbstractRepository implements NoteRepositoryInterfa
     {
         $user = $this->getCurrentUser();
 
-        if (!$user->isAdmin()) {
+        if ($user->isAdmin()) {
             return $this->model->all();
         }
 

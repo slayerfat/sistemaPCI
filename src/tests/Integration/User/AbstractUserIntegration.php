@@ -32,9 +32,6 @@ abstract class AbstractUserIntegration extends AbstractIntegration
 
     public function getGenericAdmin()
     {
-        return factory(User::class)->create([
-            'profile_id'        => User::ADMIN_ID,
-            'confirmation_code' => null,
-        ]);
+        return factory(User::class, 'admin')->create();
     }
 }
