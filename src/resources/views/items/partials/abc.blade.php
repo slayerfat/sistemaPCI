@@ -16,7 +16,5 @@
 
     <hr/>
 
-    <section class="item-priority">
-        {!!ProgressBar::normal($item->priority)->visible('Prioridad de %s%%')!!}
-    </section>
+    @include('items.partials.priority-progressbar')
 @endif

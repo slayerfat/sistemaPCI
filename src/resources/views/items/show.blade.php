@@ -49,6 +49,8 @@
         @include('items.partials.reserved-progressbar', [
             'title' => 'Existencia vs Reservaciones'
         ])
+
+        @include('items.partials.abc')
     </div>
 
     <div class="col-sm-4">
@@ -58,23 +60,14 @@
 </div>
 
 <div class="container">
-    <div class="col-xs-8">
+    <div class="col-xs-12">
         @include('items.partials.depots')
-
-        @include('items.partials.abc')
 
         @include('partials.admins.show-basic-audit', [
             'model'    => $item,
             'created'  => trans('models.items.singular') . ' creado',
             'updated'  => trans('models.items.singular') . ' actualizado',
         ])
-    </div>
-
-    <div class="col-xs-4">
-        <section class="item-historial well">
-            <h1>historial</h1>
-            <?php //TODO: historial items ?>
-        </section>
     </div>
 </div>
 @stop

@@ -11,6 +11,10 @@ if (!isset($title)) {
     $title = false;
 }
 
+if (!isset($empty)) {
+    $empty = ['Información' => 'No hay información que mostrar.'];
+}
+
 if (isset($total) && isset($data)) {
     // se determina el col con el tamaño del array
     // -2 por el uid
@@ -35,6 +39,7 @@ $html = $title ? "<h1>{$title}</h1>" : '';
 
 {!! $html !!}
 
+@if (count($data) > 1)
 {!!
 Table::withContents($data)->withFooter($footer)
     ->ignore(['uid'])
@@ -88,3 +93,11 @@ Table::withContents($data)->withFooter($footer)
     })
     ->striped()
 !!}
+@else
+    {!!
+
+    Table::withContents([$empty])
+        ->striped()
+
+    !!}
+@endif
