@@ -71,9 +71,9 @@ ControlGroup::generate(
 
         // las clases varias a iniciar
         var commentToggle = new Forms.ToggleComments($('#comments'));
-        var toggle = new Petition.MovementTypeToggle($select.val(), url);
+        var toggle = new Note.MovementTypeToggle($select.val(), url);
         var stockTypes = new Petition.stockTypes();
-        var items = new Petition.RelatedItems('note');
+        var items = new Note.RelatedItems();
         var ajaxSpinner = new Forms.AjaxSpinner($('#itemBag'));
 
         // operaciones iniciales

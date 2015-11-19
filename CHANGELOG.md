@@ -4,9 +4,15 @@ Todos los cambios significativos en este proyecto estaran documentados en este a
 
 ## [En Desarrollo][unrele]
 
+### Añadido
+
+- Item puede ser eliminado con softDelete.
+
 ### Arreglado
 
 - Listado de items y pedidos traen informacion correcta segun perfil de usuario.
+- items pueden ser eliminados.
+- Nota puede seleccionar valores incluyendo la reserva
 
 ## [v0.4.3] - 2015-11-18
 

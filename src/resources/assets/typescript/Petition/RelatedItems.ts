@@ -14,18 +14,17 @@ module Petition
          */
         public data: Item;
 
+        /**
+         * El arreglo de items en algun pedido/nota.
+         *
+         * @type {Array}
+         */
         private items: Item[] = [];
 
         /**
          * el arreglo de Ids de los items seleccionados.
          */
         public selected: number[];
-
-        /**
-         * Necesario para saber que tipo de
-         * formulario esta asociado a esta clase.
-         */
-        public formType: string;
 
         /**
          * Usado para determinar si algun tipo de movimiento fue cambiado o no
@@ -51,9 +50,9 @@ module Petition
          * cuando se pretenda ducplicar algun input para
          * cambiar las fechas de vencimiento.
          */
-        private randomId: number;
+        protected randomId: number;
 
-        constructor(formType: string = null) {
+        constructor() {
             this.data = {
                 id: null,
                 desc: '',
@@ -74,8 +73,6 @@ module Petition
             };
 
             this.selected = [];
-
-            this.formType = formType;
 
             this.setRandomId();
         }
@@ -243,9 +240,10 @@ module Petition
             toggle: MovementTypeToggle
         ): void {
             var $itemBag = $('#itemBag');
+            var stock    = this.getValidStock();
 
             // chequeamos que el stock no sea 0
-            if (this.stock.plain <= 0 && toggle.isModelEgress()) {
+            if (stock <= 0 && toggle.isModelEgress()) {
                 return this.appendErrorMsg($itemBag);
             }
 
@@ -257,6 +255,15 @@ module Petition
             this.appendCorrectItem(stockTypes, $itemBag, toggle);
 
             this.addSelected(this.data.id);
+        }
+
+        /**
+         * Necesario para determinar el stock correcto segun el tipo de formulario.
+         *
+         * @returns {number}
+         */
+        protected getValidStock(): number {
+            return this.stock.plain;
         }
 
         /**
@@ -327,13 +334,8 @@ module Petition
          *
          * @returns {boolean}
          */
-        private canAddDueDate(): boolean {
-            if (this.formType === null || this.formType === undefined) {
-                return false;
-            }
-
-            return this.data.type.perishable
-                && this.formType.toLowerCase() == 'note';
+        protected canAddDueDate(): boolean {
+            return null;
         }
 
         /**
@@ -341,7 +343,7 @@ module Petition
          *
          * @returns {string}
          */
-        private makeItemInput(): string {
+        protected makeItemInput(): string {
             return '<div class="row itemBag-item" data-id="' + this.data.id + '">'
                 + '<div class="col-xs-12">'
                 + '<label for="itemBag" class="control-label col-sm-7">'
@@ -352,6 +354,7 @@ module Petition
                 'name="items[' + this.randomId + '][' + this.data.id + '][amount]"' +
                 'type="number" ' +
                 'data-stock-plain="' + this.stock.plain + '"' +
+                'data-stock-real="' + this.stock.real + '"' +
                 'value="' + this.stock.plain + '">' +
                 '<span class="help-block">' + this.stock.formatted + ' en total.' + '</span>' +
                 '</div>';
