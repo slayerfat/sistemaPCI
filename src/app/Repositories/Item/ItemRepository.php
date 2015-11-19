@@ -82,17 +82,6 @@ class ItemRepository extends AbstractRepository implements ItemRepositoryInterfa
     }
 
     /**
-     * Busca algun Elemento segun Id u otra regla.
-     *
-     * @param  string|int $id El identificador unico (slug|name|etc|id).
-     * @return \PCI\Models\AbstractBaseModel
-     */
-    public function find($id)
-    {
-        return $this->getBySlugOrId($id);
-    }
-
-    /**
      * Persiste informacion referente a una entidad.
      *
      * @param array $data El array con informacion del modelo.
@@ -130,11 +119,33 @@ class ItemRepository extends AbstractRepository implements ItemRepositoryInterfa
      * Elimina del sistema un modelo.
      *
      * @param int $id El identificador unico.
-     * @return boolean|\PCI\Models\AbstractBaseModel
+     * @return boolean|\PCI\Models\Item
      */
     public function delete($id)
     {
+        $item = $this->find($id)->load('stocks', 'movements');
+
+        if (!$item->stocks->isEmpty() || !$item->movements->isEmpty()) {
+            $mvt = trans('models.movements.plural');
+            $stock = trans('models.stocks.singular');
+
+            flash()->error("No deben haber {$mvt} y/o {$stock} asociados.");
+
+            return $item;
+        }
+
         return $this->executeDelete($id);
+    }
+
+    /**
+     * Busca algun Elemento segun Id u otra regla.
+     *
+     * @param  string|int $id El identificador unico (slug|name|etc|id).
+     * @return \PCI\Models\AbstractBaseModel|\PCI\Models\Item
+     */
+    public function find($id)
+    {
+        return $this->getBySlugOrId($id);
     }
 
     /**

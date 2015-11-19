@@ -193,7 +193,8 @@ class ItemIntegrationTest extends AbstractUserIntegration
             ->delete(route('items.destroy', 1))
             ->assertResponseStatus(302); //302 redirect
 
-        $this->notSeeInDatabase('items', ['id' => 1]);
+        // softDeletes
+        $this->notSeeInDatabase('items', ['id' => 1, 'deleted_at' => null]);
     }
 
     /**
