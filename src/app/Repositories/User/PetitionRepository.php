@@ -314,15 +314,26 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
     }
 
     /**
-     * Regresa una coleccion de pedidos sin notas asociadas.
+     * Regresa una coleccion de pedidos sin notas asociadas
+     * o con notas rechazadas o por aprobar.
      *
      * @return \Illuminate\Support\Collection
      */
     public function findWithoutNotes()
     {
-        // http://laravel.com/docs/5.1/collections#method-reject
-        return $this->getAll()->reject(function ($petition) {
-            if ($petition->notes->isEmpty()) {
+        $petitions = $this->getAll()->load('notes');
+        http://laravel.com/docs/5.1/collections#method-reject
+        return $petitions->reject(function (Petition $petition) {
+            $status = false;
+            // nos interesa saber si existen notas
+            // que esten rechazadas o por aprobar
+            foreach ($petition->notes as $note) {
+                if ($note->status != true) {
+                    $status = true;
+                }
+            }
+
+            if ($petition->notes->isEmpty() || $status) {
                 // solo nos interesan los pedidos que hayan
                 // sido aprobados y que tengan items.
                 return !($petition->status && $petition->itemCount > 0);
