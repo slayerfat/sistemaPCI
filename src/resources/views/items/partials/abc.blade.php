@@ -13,8 +13,4 @@
                 class="item-asoc-c {{$item->asoc == 'c' ?: 'item-asoc-c-disabled'}}">C</span>
         </div>
     </div>
-
-    <hr/>
-
-    @include('items.partials.priority-progressbar')
 @endif

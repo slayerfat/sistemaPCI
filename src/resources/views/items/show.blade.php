@@ -50,6 +50,10 @@
             'title' => 'Existencia vs Reservaciones'
         ])
 
+        <hr/>
+
+        @include('items.partials.priority-progressbar')
+
         @include('items.partials.abc')
     </div>
 
