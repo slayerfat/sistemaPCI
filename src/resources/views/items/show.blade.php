@@ -21,27 +21,7 @@
             {!!link_to_route('subCats.show', $item->subCategory->desc, $item->subCategory->slug)!!}
         </h2>
 
-        <div class="row">
-            <div class="col-xs-6">
-                <h4>
-                    Tipo:
-                </h4>
-
-                <p>
-                    {!!link_to_route('itemTypes.show', $item->type->desc, $item->type->slug)!!}
-                </p>
-            </div>
-
-            <div class="col-xs-6">
-                <h4>
-                    {{trans('models.makers.singular')}}:
-                </h4>
-
-                <p>
-                    {!!link_to_route('makers.show', $item->maker->desc, $item->maker->slug)!!}
-                </p>
-            </div>
-        </div>
+        @include('items.partials.types-makers')
 
         <hr/>
 
