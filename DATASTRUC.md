@@ -2,6 +2,11 @@
 
 En este documento se pretende mantener la bitacora de cambios significativos en la estructura de datos del sistema.
 
+## v0.4.4
+
+- Depots poseen campos unicos, numero, anaquel, alacena.
+- Items poseen campos unicos, tipo de item, fabricante, descripcion.
+
 ## v0.4.3
 
 - Las notas e items poseen fecha de vencimiento.

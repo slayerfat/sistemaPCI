@@ -38,6 +38,7 @@ class CreateItemsTable extends Migration
             $table->unsignedInteger('minimum'); // stock minimo
             $table->float('reserved', 16, 7)->default(0); // cantidad reservada
             $table->timestamps();
+            $table->unique(['maker_id', 'item_type_id', 'desc']);
             $table->unsignedInteger('created_by');
             $table->foreign('created_by')->references('id')->on('users');
             $table->unsignedInteger('updated_by');

@@ -106,5 +106,7 @@ return [
         'minimum'          => 'Mínimo',
         'comments'         => 'Comentarios',
         'perishable'       => 'Perecible',
+        'item_type_id'     => 'Tipo de Item',
+        'maker_id'         => 'Fabricante',
     ],
 ];
