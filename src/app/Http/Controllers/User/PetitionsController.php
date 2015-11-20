@@ -165,11 +165,17 @@ class PetitionsController extends Controller
      */
     public function destroy($id)
     {
+        $petition = trans('models.petitions.singular');
+        $items    = trans('models.items.plural');
+        $mvt      = trans('models.movements.plural');
+
         return $this->checkDestroyStatus(
             $this->repo->delete($id),
             'petitions',
-            'Para eliminar un ' . trans('models.petitions.singular')
-            . ', este no debe estar asociado a otros recursos y debe estar en estado de por aprobar.'
+            "Para eliminar un $petition este no debe "
+            . "estar asociado a otros $items y/o $mvt, "
+            . "además, este NO debe estar en algún "
+            . "estado de Aprobado o No Aprobado."
         );
     }
 }

@@ -12,7 +12,8 @@ Todos los cambios significativos en este proyecto estaran documentados en este a
 
 - Listado de items y pedidos traen informacion correcta segun perfil de usuario.
 - items pueden ser eliminados.
-- Nota puede seleccionar valores incluyendo la reserva
+- Nota puede seleccionar valores incluyendo la reserva.
+- Pedidos pueden ser eliminados correctamente.
 
 ## [v0.4.3] - 2015-11-18
 

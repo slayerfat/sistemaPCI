@@ -102,13 +102,13 @@ class PetitionRepositoryTest extends AbstractRepositoryTestCase
                     'comments'         => 'testing comment',
                     'petition_type_id' => 1,
                     'request_date'     => '1999-09-09',
-                    'itemCollection' => $collection,
+                    'itemCollection'   => $collection,
                 ],
                 'differentType' => [
                     'comments'         => 'testing comment',
                     'petition_type_id' => 1,
                     'request_date'     => '1999-09-09',
-                    'itemCollection' => $another,
+                    'itemCollection'   => $another,
                 ],
             ],
         ];
@@ -116,7 +116,8 @@ class PetitionRepositoryTest extends AbstractRepositoryTestCase
 
     public function testDeleteShouldReturnBoolean()
     {
-        $this->assertTrue(is_bool($this->repo->delete(1)));
+        $petition = factory(Petition::class)->create(['status' => null]);
+        $this->assertTrue(is_bool($this->repo->delete($petition->id)));
     }
 
     /**
