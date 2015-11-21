@@ -179,7 +179,7 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
                         . "({$item->stock()}:{$item->stock_type_id}) "
                         . "disponibles del Item {$item->desc}\r\n";
 
-                    $items->offsetUnset($id);
+                    $items->remove($id);
 
                     continue;
                 }
@@ -198,7 +198,7 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
     {
         // si no hay items que incluir por alguna
         // razon, entonces rechazamos el pedido.
-        if (count($items) < 1) {
+        if ($items->count() < 1) {
             $petition->status = false;
             $petition->save();
 
