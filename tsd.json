@@ -6,7 +6,10 @@
   "bundle": "typings/tsd.d.ts",
   "installed": {
     "jquery/jquery.d.ts": {
-      "commit": "62eedc3121a5e28c50473d2e4a9cefbcb9c3957f"
+      "commit": "16134c168d021351acb1673ee9659644fc58c424"
+    },
+    "bootstrap.datepicker/bootstrap.datepicker.d.ts": {
+      "commit": "16134c168d021351acb1673ee9659644fc58c424"
     }
   }
 }
