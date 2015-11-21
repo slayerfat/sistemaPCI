@@ -37,17 +37,16 @@ module Petition
          * Chequea los tipos en el servidor
          */
         public checkApi(): void {
-            var self = this;
             // necesitamos los tipos de stock para generar el select
-            $(function () {
+            $(() => {
                 $.ajax({
                     url: '/api/tipos-cantidad',
                     dataType: 'json',
                     success: function (data) {
-                        self.types = data;
+                        this.types = data;
                     },
                     error: function () {
-                        console.error('No se pudo contactar al servidor, tipos de stock desconocidos.');
+                        throw new Error('No se pudo contactar al servidor, tipos de stock desconocidos.');
                     }
                 });
             });
