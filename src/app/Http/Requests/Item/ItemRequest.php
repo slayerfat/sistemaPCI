@@ -39,7 +39,7 @@ class ItemRequest extends Request
                     'stock_type_id'   => 'required|numeric',
                     'asoc'            => 'regex:/^[abc]+$/',
                     'priority'        => 'numeric|between:1,100',
-                    'desc'            => 'required|string|between:3,255|unique_with:items,item_type_id,maker_id'
+                    'desc'            => 'required|string|between:3,255|unique_with:items,item_type_id,maker_id,'
                         . (int)$this->route('items'),
                     'minimum'         => 'required|numeric|min:0',
                 ];
