@@ -5,10 +5,12 @@
 
     $array = [];
 
+    /** @var \PCI\Models\Item $item */
     foreach ($petition->items as $item) {
         // super mamarracho.
-        $number = $item->pivot->quantity;
-        $desc = \PCI\Models\StockType::findOrFail($item->pivot->stock_type_id)->desc;
+        $number   = $item->pivot->quantity;
+        $id       = $item->pivot->stock_type_id;
+        $desc     = \PCI\Models\StockType::findOrFail($id, ['desc'])->desc;
         $quantity = $item->formattedQuantity($number, $desc);
 
         $array[] = [
@@ -23,8 +25,8 @@
 
     if (isset($title)) {
         $title = trans('models.items.plural')
-        . ' registrados en el '
-        . trans('models.petitions.singular');
+            . ' registrados en el '
+            . trans('models.petitions.singular');
     } else {
         $title = null;
     }

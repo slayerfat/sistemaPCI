@@ -7,7 +7,9 @@
     foreach ($note->items as $item) {
         // super mamarracho.
         $number   = $item->pivot->quantity;
-        $quantity = $item->formattedQuantity($number);
+        $id       = $item->pivot->stock_type_id;
+        $type     = \PCI\Models\StockType::findOrFail($id, ['desc'])->desc;
+        $quantity = $item->formattedQuantity($number, $type);
         $array[]  = [
             'uid'         => $item->id,
             'Descripción' => $item->desc,
