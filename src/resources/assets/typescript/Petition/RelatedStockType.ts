@@ -42,7 +42,7 @@ module Petition
                 $.ajax({
                     url: '/api/tipos-cantidad',
                     dataType: 'json',
-                    success: function (data) {
+                    success: (data) => {
                         this.types = data;
                     },
                     error: function () {
