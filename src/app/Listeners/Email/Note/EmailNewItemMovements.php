@@ -1,7 +1,7 @@
 <?php namespace PCI\Listeners\Email\Note;
 
 use PCI\Events\Note\NewNoteCreation;
-use PCI\Listeners\Email\AbstractEmailListener;
+use PCI\Listeners\Email\AbstractItemEmail;
 use PCI\Models\Note;
 
 /**
@@ -11,7 +11,7 @@ use PCI\Models\Note;
  * @author  Alejandro Granadillo <slayerfat@gmail.com>
  * @link    https://github.com/slayerfat/sistemaPCI Repositorio en linea.
  */
-class EmailNewItemMovements extends AbstractEmailListener
+class EmailNewItemMovements extends AbstractItemEmail
 {
 
     /**
@@ -25,7 +25,6 @@ class EmailNewItemMovements extends AbstractEmailListener
         $movement = $this->getMovement($note);
         $user     = $event->note->petition->user;
         $petition = $event->note->petition;
-        $emails   = $this->findDepotOwnersEmail();
 
         $this->mail->send(
             [
@@ -33,15 +32,18 @@ class EmailNewItemMovements extends AbstractEmailListener
                 'emails.notes.item-movements-plain',
             ],
             compact('user', 'petition', 'note', 'movement'),
-            function ($message) use ($user, $note, $petition, $emails) {
+            function ($message) use ($user, $note, $petition) {
                 /** @var \Illuminate\Mail\Message $message */
-                $message->to($user->email)->bcc($emails)->subject(
-                    "sistemaPCI: Nuevos Movimientos relacionados con  "
-                    . trans('models.notes.singular')
-                    . " #$note->id, "
-                    . $note->items->count()
-                    . " Items en total."
-                );
+                $message
+                    ->to($user->email)
+                    ->cc($this->toCc)
+                    ->subject(
+                        "sistemaPCI: Nuevos Movimientos relacionados con  "
+                        . trans('models.notes.singular')
+                        . " #$note->id, "
+                        . $note->items->count()
+                        . " Items en total."
+                    );
             }
         );
     }
@@ -63,6 +65,6 @@ class EmailNewItemMovements extends AbstractEmailListener
 
     protected function makeEmails()
     {
-        // TODO: Implement makeEmails() method.
+        $this->findDepotOwnersEmail();
     }
 }
