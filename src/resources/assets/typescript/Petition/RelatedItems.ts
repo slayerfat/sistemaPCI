@@ -342,19 +342,58 @@ module Petition
         /**
          * Determina cual es la opcion correcta que ira en el select.
          *
+         * @link https://github.com/slayerfat/sistemaPCI/issues/84
          * @param stockTypes
          * @returns {string}
          */
         private makeSelectOptions(stockTypes: stockTypes): string {
+            // desde v0.4.4
+            var id      = this.data.stock_type_id;
             var options = '';
 
+            if (id >= 2 && id <= 4) {
+                Object.keys(stockTypes.types).forEach((key) => {
+                    var typeId = stockTypes.types[key].id;
+                    var desc   = stockTypes.types[key].desc;
+                    if (typeId < 2 || typeId > 4) {
+                        return;
+                    }
+
+                    typeId == id
+                        ? options += this.makeOption(typeId, desc, true)
+                        : options += this.makeOption(typeId, desc);
+                });
+
+                return options;
+            }
+
             Object.keys(stockTypes.types).forEach((key) => {
-                stockTypes.types[key].id == this.data.stock_type_id
-                    ? options += '<option value="' + stockTypes.types[key].id + '" selected="selected">' + stockTypes.types[key].desc + '</option>'
-                    : options += '<option value="' + stockTypes.types[key].id + '">' + stockTypes.types[key].desc + '</option>';
+                var typeId = stockTypes.types[key].id;
+                var desc   = stockTypes.types[key].desc;
+                if (typeId == id) {
+                    return options += this.makeOption(typeId, desc, true);
+                }
             });
 
             return options;
+        }
+
+        /**
+         * Crea la opcion que ira dentro del select.
+         *
+         * @param typeId
+         * @param desc
+         * @param selected
+         * @returns {string}
+         */
+        private makeOption(
+            typeId: number,
+            desc: string,
+            selected = false
+        ): string {
+            return selected
+                ? '<option value="' + typeId + '" selected="selected">' + desc + '</option>'
+                : '<option value="' + typeId + '">' + desc + '</option>';
         }
 
         /**
