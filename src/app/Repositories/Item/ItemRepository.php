@@ -172,7 +172,7 @@ class ItemRepository extends AbstractRepository implements ItemRepositoryInterfa
     public function getIndexJsonWithSearch(array $data, $amount = 10)
     {
         return $this->model
-            ->with('maker', 'subCategory', 'type')
+            ->with('maker', 'subCategory', 'type', 'stocks', 'stocks.details')
             ->where('desc', 'like', "%{$data['term']}%")
             ->paginate($amount);
     }

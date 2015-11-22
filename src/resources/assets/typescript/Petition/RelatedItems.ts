@@ -12,7 +12,7 @@ module Petition
          * La informacion relacionada con UN item en
          * particular (el que se esta manipulando)
          */
-        public data: Item;
+        public data: Item = null;
 
         /**
          * El arreglo de items en algun pedido/nota.
@@ -24,7 +24,7 @@ module Petition
         /**
          * el arreglo de Ids de los items seleccionados.
          */
-        public selected: number[];
+        public selected: number[] = [];
 
         /**
          * Usado para determinar si algun tipo de movimiento fue cambiado o no
@@ -53,27 +53,6 @@ module Petition
         protected randomId: number;
 
         constructor() {
-            this.data = {
-                id: null,
-                desc: '',
-                quantity: null,
-                stock_type_id: null,
-                type: {
-                    id: null,
-                    desc: null,
-                    slug: null,
-                    perishable: null
-                }
-            };
-
-            this.checkSelected = {
-                lastSelected: null,
-                selected: null,
-                didNotChange: null
-            };
-
-            this.selected = [];
-
             this.setRandomId();
         }
 
