@@ -3,8 +3,6 @@
 use Date;
 use Illuminate\Mail\Message;
 use PCI\Events\Petition\NewPetitionCreation;
-use PCI\Models\Attendant;
-use PCI\Models\Depot;
 
 /**
  * Class EmailPetitionEventToAttendants
@@ -13,7 +11,7 @@ use PCI\Models\Depot;
  * @author  Alejandro Granadillo <slayerfat@gmail.com>
  * @link    https://github.com/slayerfat/sistemaPCI Repositorio en linea.
  */
-class EmailPetitionEventToAttendants extends AbstractEmailListener
+class EmailPetitionEventToAttendants extends AbstractItemEmail
 {
 
     /**
@@ -24,11 +22,9 @@ class EmailPetitionEventToAttendants extends AbstractEmailListener
      */
     public function handle(NewPetitionCreation $event)
     {
-        $petition             = $event->petition;
-        $user                 = $event->user;
-        $date                 = Date::now();
-        $emails['attendants'] = $this->getAttendantsEmail();
-        $emails['owner']      = $this->getOwnerEmail();
+        $petition = $event->petition;
+        $user     = $event->user;
+        $date     = Date::now();
 
         $this->mail->send(
             [
@@ -36,10 +32,11 @@ class EmailPetitionEventToAttendants extends AbstractEmailListener
                 'emails.petitions.created-attendants-plain',
             ],
             compact('user', 'petition'),
-            function ($message) use ($emails, $user, $petition, $date) {
+            function ($message) use ($user, $petition, $date) {
                 /** @var Message $message */
-                $message->to($emails['attendants'])
-                    ->bcc($emails['owner'])
+                $message
+                    ->to($this->emails->all())
+                    ->cc($this->toCc->all())
                     ->subject(
                         "sistemaPCI: Nuevo "
                         . trans('models.petitions.singular')
@@ -51,32 +48,9 @@ class EmailPetitionEventToAttendants extends AbstractEmailListener
         );
     }
 
-    /**
-     * Busca los correos de los encargados de almacen en el sistema.
-     *
-     * @return array
-     */
-    protected function getAttendantsEmail()
+    protected function makeEmails()
     {
-        $emails = [];
-
-        // TODO: repo
-        Attendant::all()->load('user')
-            ->each(function ($attendant) use (&$emails) {
-                $emails[] = $attendant->user->email;
-            });
-
-        return $emails;
-    }
-
-    /**
-     * Regresa el correo del jefe de almacen.
-     *
-     * @return string
-     */
-    protected function getOwnerEmail()
-    {
-        // TODO: repo
-        return Depot::first()->owner->email;
+        $this->findDepotOwnersEmail();
+        $this->getAttendantsEmail();
     }
 }

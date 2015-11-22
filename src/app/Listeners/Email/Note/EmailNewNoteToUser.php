@@ -36,10 +36,15 @@ class EmailNewNoteToUser extends AbstractEmailListener
                     "sistemaPCI: La "
                     . trans('models.notes.singular')
                     . " #$note->id" . " Relacionada con "
-                    . trans('models.notes.singular')
+                    . trans('models.petitions.singular')
                     . " #$petition->id, creada exitosamente."
                 );
             }
         );
+    }
+
+    protected function makeEmails()
+    {
+        //
     }
 }

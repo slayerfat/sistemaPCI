@@ -2,9 +2,7 @@
 
 use PCI\Events\Note\NewNoteCreation;
 use PCI\Listeners\Email\AbstractEmailListener;
-use PCI\Models\Depot;
 use PCI\Models\Note;
-use PCI\Models\User;
 
 /**
  * Class EmailNewItemMovements
@@ -49,33 +47,6 @@ class EmailNewItemMovements extends AbstractEmailListener
     }
 
     /**
-     * @return array
-     */
-    private function findDepotOwnersEmail()
-    {
-        $emails = [];
-
-        $owners = $this->findDepotOwners();
-
-        foreach ($owners as $owner) {
-            $emails[] = $owner->email;
-        }
-
-        return $emails;
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
-    private function findDepotOwners()
-    {
-        $ids    = Depot::groupBy('user_id')->lists('user_id')->toArray();
-        $owners = User::find($ids);
-
-        return $owners;
-    }
-
-    /**
      * @param Note $note
      * @return mixed
      */
@@ -88,5 +59,10 @@ class EmailNewItemMovements extends AbstractEmailListener
         }
 
         return $movement;
+    }
+
+    protected function makeEmails()
+    {
+        // TODO: Implement makeEmails() method.
     }
 }

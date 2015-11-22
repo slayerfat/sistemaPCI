@@ -52,4 +52,9 @@ class ChangeStockDetail extends AbstractEmailListener
 
         return $stockDetails;
     }
+
+    protected function makeEmails()
+    {
+        // TODO: Implement makeEmails() method.
+    }
 }

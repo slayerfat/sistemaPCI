@@ -34,4 +34,9 @@ class DeleteStockDetail extends AbstractEmailListener
 
         $stockDetail->delete();
     }
+
+    protected function makeEmails()
+    {
+        // TODO: Implement makeEmails() method.
+    }
 }

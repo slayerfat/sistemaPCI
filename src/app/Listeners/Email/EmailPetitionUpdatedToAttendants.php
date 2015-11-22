@@ -21,7 +21,6 @@ class EmailPetitionUpdatedToAttendants extends EmailPetitionEventToAttendants
     {
         $petition             = $event->petition;
         $user                 = $event->user;
-        $emails['attendants'] = $this->getAttendantsEmail();
 
         $this->mail->send(
             [
@@ -29,9 +28,9 @@ class EmailPetitionUpdatedToAttendants extends EmailPetitionEventToAttendants
                 'emails.petitions.updated-by-creator-attendants-plain',
             ],
             compact('user', 'petition'),
-            function ($message) use ($emails, $user, $petition) {
+            function ($message) use ($user, $petition) {
                 /** @var \Illuminate\Mail\Message $message */
-                $message->to($emails['attendants'])->subject(
+                $message->to($this->emails->all())->subject(
                     "sistemaPCI: El usuario " . $user->name
                     . " ha actualizado el "
                     . trans('models.petitions.singular')
