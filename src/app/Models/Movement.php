@@ -1,5 +1,7 @@
 <?php namespace PCI\Models;
 
+use PCI\Models\Traits\HasIdUID;
+
 /** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
 
 /**
@@ -30,6 +32,8 @@
  */
 class Movement extends AbstractBaseModel
 {
+
+    use HasIdUID;
 
     /**
      * Regresa el tipo de movimiento relacionado.

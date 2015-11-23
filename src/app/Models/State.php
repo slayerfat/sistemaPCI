@@ -1,5 +1,7 @@
 <?php namespace PCI\Models;
 
+use PCI\Models\Traits\HasIdUID;
+
 /** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
 
 /**
@@ -24,6 +26,8 @@
  */
 class State extends AbstractPlacesModel
 {
+
+    use HasIdUID;
 
     /**
      * Regresa una coleccion de minucipios asociados.

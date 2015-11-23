@@ -3,8 +3,10 @@
 use Cviebrock\EloquentSluggable\SluggableInterface;
 use Cviebrock\EloquentSluggable\SluggableTrait;
 use ICanBoogie\Inflector;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use PCI\Mamarrachismo\Converter\interfaces\StockTypeConverterInterface;
 use PCI\Mamarrachismo\Converter\StockTypeConverter;
+use PCI\Models\Traits\HasSlugUID;
 
 /** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
 
@@ -58,7 +60,7 @@ use PCI\Mamarrachismo\Converter\StockTypeConverter;
 class Item extends AbstractBaseModel implements SluggableInterface
 {
 
-    use SluggableTrait;
+    use SluggableTrait, SoftDeletes, HasSlugUID;
 
     /**
      * The attributes that are mass assignable.
@@ -110,7 +112,7 @@ class Item extends AbstractBaseModel implements SluggableInterface
      *
      * @var array
      */
-    protected $dates = ['due'];
+    protected $dates = ['due', 'deleted_at'];
 
     /**
      * Regresa el rubro asociado al item.

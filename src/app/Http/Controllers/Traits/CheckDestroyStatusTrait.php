@@ -31,6 +31,6 @@ trait CheckDestroyStatusTrait
             flash()->error($message);
         }
 
-        return Redirect::route("{$resource}.show", $result->name);
+        return Redirect::route("{$resource}.show", $result->controllerUID());
     }
 }

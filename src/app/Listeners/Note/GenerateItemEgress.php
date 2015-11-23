@@ -44,7 +44,8 @@ class GenerateItemEgress extends AbstractItemMovement
                 $event->note->comments .= sizeof($event->note->comments) <= 1 ? "" : "\r\n";
                 $event->note->comments .= "Item {$item->id}, posee cantidad de "
                     . "{$quantity} pero la conversion es {$noteAmount}, "
-                    . "el stock es {$stock}. tipos incompatibles.";
+                    . "el stock es {$stock}. "
+                    . "tipos incompatibles. [$type:$item->item_type_id]";
                 $event->note->save();
                 // ignora item en movimientos
                 continue;

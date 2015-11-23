@@ -6,6 +6,18 @@ En este archivo estaran los cambios pertinentes en el DED y el Documento de Espe
 
 Detalles, observaciones u otros:
 
+#### 19-11-15
+
+Aclaratoria de terminologia usada en el sistema:
+
+1. La Existencia son las unidades como tal en inventario.
+1. Las Reservas es lo que se aparta de las Existencias.
+1. Stock se refiere a las unidades en Existencia menos las Reservaciones.
+1. En los Almacenes hay Anaqueles, los Anaqueles tienen Alacenas.
+1. Los Articulos en general son Items
+1. Los Items tienen Existencia en algun Alacena de algun Anaquel de algun Almacen.
+1. Los Items tienen Rubros, los Rubros pertenecen a una Categoria.
+
 #### 17-10-15
 
 Notas tiene el campo encargado repetido, en otras palabras parece ser redundante con el campo solicitado por.

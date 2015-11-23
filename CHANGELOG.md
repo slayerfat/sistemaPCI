@@ -6,6 +6,21 @@ Todos los cambios significativos en este proyecto estaran documentados en este a
 
 ---
 
+## [v0.4.4] - 2015-11-23
+
+### Añadido
+
+- Item puede ser eliminado con softDelete.
+
+### Arreglado
+
+- Listado de items y pedidos traen informacion correcta segun perfil de usuario.
+- items pueden ser eliminados.
+- Nota puede seleccionar valores incluyendo la reserva.
+- Pedidos pueden ser eliminados correctamente.
+- Envio de correos duplicados al mismo usuario.
+- Nota y Pedido no poseen campo de fechas redundante.
+
 ## [v0.4.3] - 2015-11-18
 
 ### Añadido
@@ -299,7 +314,7 @@ Se crearon documentacion segun aspectos clave del sistema, para ser referenciado
   - `replace.php` deberia funcionar correctamente.
   - cypher deberia funcionar por cambio de strings de tamaño 32.
 
-[unrele]: https://github.com/slayerfat/sistemaPCI/compare/v0.4.5...develop
+[unrele]: https://github.com/slayerfat/sistemaPCI/compare/master...develop
 [v0.4.5]: https://github.com/slayerfat/sistemaPCI/compare/v0.4.4...v0.4.5
 [v0.4.4]: https://github.com/slayerfat/sistemaPCI/compare/v0.4.3...v0.4.4
 [v0.4.3]: https://github.com/slayerfat/sistemaPCI/compare/v0.4.2...v0.4.3

@@ -109,6 +109,7 @@ module Petition
 
             if (this.isModelIngress()) {
                 $element
+                    .attr('value', 0)
                     .attr('min', 1)
                     .attr('max', null)
                     .attr('step', null);
@@ -138,14 +139,10 @@ module Petition
 
             $element.each((key, HTMLElement) => {
                 var $input        = $(HTMLElement);
-                var originalStock = $input.data('stock-plain');
-
-                if (originalStock === undefined) {
-                    return console.error('No se conoce el stock del articulo para continuar.')
-                }
+                var stock = this.getOriginalStock($input);
 
                 // chequeamos que el stock no sea 0
-                if (originalStock <= 0) {
+                if (stock <= 0) {
                     i++;
                     removedItems = true;
 
@@ -160,15 +157,15 @@ module Petition
                 // ajustamos el valor del input al original, para
                 // eliminar lo que sea que haya puesto el
                 // usuario (cambio de entrada a salida)
-                $input.val(originalStock);
+                this.setInputStockValue($input, stock);
 
-                var min = originalStock > 1
+                var min = stock > 1
                     ? 1
-                    : this.findInputMinimum(originalStock);
+                    : this.findInputMinimum(stock);
 
                 $input.attr('min', min)
                     .attr('max', $input.val())
-                    .attr('step', this.findOptimalStep(originalStock));
+                    .attr('step', this.findOptimalStep(stock));
             });
 
             if (removedItems) {
@@ -188,6 +185,32 @@ module Petition
                     });
                 });
             }
+        }
+
+        protected setInputStockValue($input:JQuery, stock:number):void {
+            if (this.isModelEgress()) {
+                $input.val(stock.toString());
+
+                return;
+            }
+
+            $input.val("0");
+        }
+
+        /**
+         * Identifica cual es el stock del articulo
+         * para saber si este esta o no en existencia.
+         *
+         * @param $input
+         */
+        protected getOriginalStock($input:JQuery):number {
+            var stock = $input.data('stock-plain');
+
+            if (stock === undefined) {
+                throw new Error('No se conoce el stock del articulo para continuar.')
+            }
+
+            return stock;
         }
 
         /**

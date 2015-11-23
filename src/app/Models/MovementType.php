@@ -3,6 +3,7 @@
 use Cviebrock\EloquentSluggable\SluggableInterface;
 use Cviebrock\EloquentSluggable\SluggableTrait;
 use Illuminate\Database\Eloquent\Collection;
+use PCI\Models\Traits\HasSlugUID;
 
 /** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
 
@@ -36,7 +37,7 @@ use Illuminate\Database\Eloquent\Collection;
 class MovementType extends AbstractBaseModel implements SluggableInterface
 {
 
-    use SluggableTrait;
+    use SluggableTrait, HasSlugUID;
 
     /**
      * The attributes that are mass assignable.

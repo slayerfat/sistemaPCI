@@ -1,5 +1,7 @@
 <?php namespace PCI\Models;
 
+use PCI\Models\Traits\HasIdUID;
+
 /** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
 
 /**
@@ -25,6 +27,8 @@
  */
 class StockDetail extends AbstractBaseModel
 {
+
+    use HasIdUID;
 
     /**
      * The attributes that are mass assignable.

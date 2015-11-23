@@ -46,4 +46,9 @@ class EmailPetitionEventToCreator extends AbstractEmailListener
             }
         );
     }
+
+    protected function makeEmails()
+    {
+        //
+    }
 }

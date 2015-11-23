@@ -40,8 +40,8 @@ $factory->define(PCI\Models\Depot::class, function () use ($faker) {
     return [
         'user_id' => 1,
         'number'  => rand(1, 2),
-        'rack'    => rand(1, 5),
-        'shelf'   => rand(1, 10),
+        'rack'  => rand(1, 65534),
+        'shelf' => rand(1, 65534),
     ];
 });
 
@@ -116,7 +116,6 @@ $factory->define(PCI\Models\Note::class, function () use ($faker) {
         'note_type_id' => factory(PCI\Models\NoteType::class)->create()->id,
         'attendant_id' => factory(PCI\Models\Attendant::class)->create()->id,
         'petition_id'  => factory(PCI\Models\Petition::class)->create()->id,
-        'creation'     => $faker->dateTime,
         'comments'     => $faker->paragraph,
         'status'       => true,
     ];
@@ -133,7 +132,6 @@ $factory->define(PCI\Models\Petition::class, function () use ($faker) {
     return [
         'user_id'          => 1,
         'petition_type_id' => factory(\PCI\Models\PetitionType::class)->create()->id,
-        'request_date'     => $faker->dateTime,
         'comments'         => $faker->paragraph,
         'status'           => true,
     ];
@@ -185,7 +183,7 @@ $factory->define(PCI\Models\Town::class, function () use ($faker) {
 
 $factory->define(PCI\Models\User::class, function () use ($faker) {
     return [
-        'profile_id'        => 2,
+        'profile_id' => \PCI\Models\Profile::USER_ID,
         'name'              => $faker->userName,
         'email'             => $faker->email,
         'password'          => bcrypt(str_random(10)),
@@ -199,6 +197,14 @@ $factory->defineAs(PCI\Models\User::class, 'admin', function () use ($factory) {
 
     return array_merge($item, [
         'profile_id'        => PCI\Models\User::ADMIN_ID,
+        'confirmation_code' => null,
+    ]);
+});
+
+$factory->defineAs(PCI\Models\User::class, 'user', function () use ($factory) {
+    $item = $factory->raw(PCI\Models\User::class);
+
+    return array_merge($item, [
         'confirmation_code' => null,
     ]);
 });

@@ -190,7 +190,7 @@ class User extends AbstractBaseModel implements
      */
     public function isUser()
     {
-        return $this->attributes['profile_id'] == self::USER_ID;
+        return $this->profile_id == self::USER_ID;
     }
 
     /**
@@ -212,7 +212,7 @@ class User extends AbstractBaseModel implements
      */
     public function isDisabled()
     {
-        return $this->attributes['profile_id'] == self::DISABLED_ID;
+        return $this->profile_id == self::DISABLED_ID;
     }
 
     /**
@@ -257,7 +257,7 @@ class User extends AbstractBaseModel implements
      */
     public function isAdmin()
     {
-        return $this->attributes['profile_id'] == self::ADMIN_ID;
+        return $this->profile_id == self::ADMIN_ID;
     }
 
     /**
@@ -279,5 +279,15 @@ class User extends AbstractBaseModel implements
         }
 
         return false;
+    }
+
+    /**
+     * Determina cual es el identificador que utilizara el controlador
+     *
+     * @return int|string
+     */
+    public function controllerUID()
+    {
+        return $this->name;
     }
 }

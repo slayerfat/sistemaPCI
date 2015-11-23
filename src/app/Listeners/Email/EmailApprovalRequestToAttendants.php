@@ -19,10 +19,11 @@ class EmailApprovalRequestToAttendants extends EmailPetitionEventToAttendants
      */
     public function handle(PetitionApprovalRequest $event)
     {
-        $petition             = $event->petition;
-        $user                 = $event->user;
-        $emails['attendants'] = $this->getAttendantsEmail();
-        $emails['owner']      = $this->getOwnerEmail();
+        $petition = $event->petition;
+        $user     = $event->user;
+
+        // debemos obviar a este correo si es encargado o jefe de almacen.
+        $this->purgeEmails($user->email);
 
         $this->mail->send(
             [
@@ -30,14 +31,17 @@ class EmailApprovalRequestToAttendants extends EmailPetitionEventToAttendants
                 'emails.petitions.approval-request-attendants-plain',
             ],
             compact('user', 'petition'),
-            function ($message) use ($emails, $user, $petition) {
+            function ($message) use ($user, $petition) {
                 /** @var \Illuminate\Mail\Message $message */
-                $message->to($emails['attendants'])->bcc($emails['owner'])->subject(
-                    "sistemaPCI: Usuario " . $user->name
-                    . " ha solicitado la aprobación del "
-                    . trans('models.petitions.singular')
-                    . " #$petition->id"
-                );
+                $message
+                    ->to($this->emails->all())
+                    ->cc($this->toCc)
+                    ->subject(
+                        "sistemaPCI: Usuario " . $user->name
+                        . " ha solicitado la aprobación del "
+                        . trans('models.petitions.singular')
+                        . " #$petition->id"
+                    );
             }
         );
     }

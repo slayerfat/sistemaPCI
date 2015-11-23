@@ -1,6 +1,7 @@
 <?php namespace PCI\Models;
 
 use PCI\Models\Traits\HasCommentsAttribute;
+use PCI\Models\Traits\HasIdUID;
 use PCI\Models\Traits\HasTernaryStatusAttribute;
 
 /** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
@@ -49,7 +50,7 @@ use PCI\Models\Traits\HasTernaryStatusAttribute;
 class Note extends AbstractBaseModel
 {
 
-    use HasTernaryStatusAttribute, HasCommentsAttribute;
+    use HasTernaryStatusAttribute, HasCommentsAttribute, HasIdUID;
 
     /**
      * The attributes that are mass assignable.
@@ -57,20 +58,9 @@ class Note extends AbstractBaseModel
      * @var array
      */
     protected $fillable = [
-        'creation',
         'comments',
         'status',
     ];
-
-    /**
-     * Atributos que deben ser mutados a dates.
-     * dates se refiere a Carbon\Carbon dates.
-     * En otras palabras, genera una instancia
-     * de Carbon\Carbon para cada campo.
-     *
-     * @var array
-     */
-    protected $dates = ['creation'];
 
     /**
      * The attributes that should be casted to native types.

@@ -158,6 +158,19 @@ return [
     'itemTypes.store.success'      => 'Tipo de Item creado exitosamente.',
     'itemTypes.update.success'     => 'Tipo de Item actualizado exitosamente.',
     /**
+     * Stock
+     */
+    'stocks.index'                 => 'Ver Stocks',
+    'stocks.show'                  => 'Ver Stock',
+    'stocks.create'                => 'Crear Stock',
+    'stocks.edit'                  => 'Editar Stock',
+    'stocks.destroy'               => 'Eliminar Stock',
+    'stocks.plural'                => 'Stocks',
+    'stocks.singular'              => 'Stock',
+    'stocks.fa-icon'               => 'asterisk',
+    'stocks.store.success'         => 'Stock creado exitosamente.',
+    'stocks.update.success'        => 'Stock actualizado exitosamente.',
+    /**
      * Tipos de Cantidad
      */
     'stockTypes.index'             => 'Ver Tipos de Cantidad',
@@ -246,7 +259,7 @@ return [
     'users.plural'                 => 'Cuentas',
     'users.singular'               => 'Cuenta',
     'users.fa-icon'                => 'users',
-    'users.store.create' => 'Cuenta creada exitosamente.',
+    'users.store.create'           => 'Cuenta creada exitosamente.',
     'users.store.success'          => 'Cuenta creada exitosamente.',
     'users.update.success'         => 'Cuenta actualizada exitosamente.',
     /**

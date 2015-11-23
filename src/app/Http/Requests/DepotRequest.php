@@ -2,15 +2,17 @@
 
 /**
  * Class DepotRequest
+ *
  * @package PCI\Http\Requests
- * @author Alejandro Granadillo <slayerfat@gmail.com>
- * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
+ * @author  Alejandro Granadillo <slayerfat@gmail.com>
+ * @link    https://github.com/slayerfat/sistemaPCI Repositorio en linea.
  */
 class DepotRequest extends Request
 {
 
     /**
      * Determine if the user is authorized to make this request.
+     *
      * @return bool
      */
     public function authorize()
@@ -20,15 +22,29 @@ class DepotRequest extends Request
 
     /**
      * Get the validation rules that apply to the request.
+     *
      * @return array
      */
     public function rules()
     {
-        return [
-            'number' => 'required|between:1,2|integer',
-            'user_id' => 'required|integer|exists:users,id',
-            'rack'   => 'required|integer|min:1',
-            'shelf'  => 'required|integer|min:1',
-        ];
+        switch ($this->method()) {
+            case 'PUT':
+            case 'PATCH':
+                return [
+                    'number'  => 'required|between:1,2|integer|unique_with:depots,rack,shelf,'
+                        . (int)$this->route('depots'),
+                    'user_id' => 'required|integer|exists:users,id',
+                    'rack'    => 'required|integer|min:1',
+                    'shelf'   => 'required|integer|min:1',
+                ];
+
+            default:
+                return [
+                    'number'  => 'required|between:1,2|integer|unique_with:depots,rack,shelf',
+                    'user_id' => 'required|integer|exists:users,id',
+                    'rack'    => 'required|integer|min:1',
+                    'shelf'   => 'required|integer|min:1',
+                ];
+        }
     }
 }

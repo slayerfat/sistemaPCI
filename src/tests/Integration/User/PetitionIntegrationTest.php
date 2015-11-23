@@ -23,6 +23,11 @@ use PCI\Models\User;
 class PetitionIntegrationTest extends AbstractUserIntegration
 {
 
+    /**
+     * @var Petition[]|\Illuminate\Support\Collection
+     */
+    public $petition;
+
     public function testIndexShouldHaveTableWIthData()
     {
         $petition = Petition::first();
@@ -70,6 +75,35 @@ class PetitionIntegrationTest extends AbstractUserIntegration
             ->visit(route('petitions.index'))
             ->click(trans('models.petitions.create'))
             ->seePageIs(route('petitions.create'));
+    }
+
+    public function testIndexReturnsCorrectAmountIfAdmin()
+    {
+        foreach (range(1, 5) as $index) {
+            $this->petition[] = factory(Petition::class)
+                ->create(['comments' => "mocked_[$index]"]);
+        }
+
+        foreach ($this->petition as $petition) {
+            $this->actingAs($this->user)
+                ->visit(route('petitions.index'))
+                ->see($petition->user->email);
+        }
+    }
+
+    public function testIndexReturnsCeroNotesIfNotAdmin()
+    {
+        $user = factory(User::class, 'user')->create();
+        foreach (range(1, 5) as $index) {
+            $this->petition[] = factory(Petition::class)
+                ->create(['comments' => "mocked_[$index]"]);
+        }
+
+        foreach ($this->petition as $petition) {
+            $this->actingAs($user)
+                ->visit(route('petitions.index'))
+                ->dontSee($petition->user->email);
+        }
     }
 
     public function testPetitionCantCreateWithoutItems()
@@ -135,7 +169,7 @@ class PetitionIntegrationTest extends AbstractUserIntegration
      */
     protected function getUser()
     {
-        return factory(User::class, 'admin')->create();
+        return $this->getGenericAdmin();
     }
 
     /**

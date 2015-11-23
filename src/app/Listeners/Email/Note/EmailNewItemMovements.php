@@ -1,10 +1,9 @@
 <?php namespace PCI\Listeners\Email\Note;
 
+use LogicException;
 use PCI\Events\Note\NewNoteCreation;
-use PCI\Listeners\Email\AbstractEmailListener;
-use PCI\Models\Depot;
+use PCI\Listeners\Email\AbstractItemEmail;
 use PCI\Models\Note;
-use PCI\Models\User;
 
 /**
  * Class EmailNewItemMovements
@@ -13,7 +12,7 @@ use PCI\Models\User;
  * @author  Alejandro Granadillo <slayerfat@gmail.com>
  * @link    https://github.com/slayerfat/sistemaPCI Repositorio en linea.
  */
-class EmailNewItemMovements extends AbstractEmailListener
+class EmailNewItemMovements extends AbstractItemEmail
 {
 
     /**
@@ -27,7 +26,6 @@ class EmailNewItemMovements extends AbstractEmailListener
         $movement = $this->getMovement($note);
         $user     = $event->note->petition->user;
         $petition = $event->note->petition;
-        $emails   = $this->findDepotOwnersEmail();
 
         $this->mail->send(
             [
@@ -35,44 +33,20 @@ class EmailNewItemMovements extends AbstractEmailListener
                 'emails.notes.item-movements-plain',
             ],
             compact('user', 'petition', 'note', 'movement'),
-            function ($message) use ($user, $note, $petition, $emails) {
+            function ($message) use ($user, $note, $petition) {
                 /** @var \Illuminate\Mail\Message $message */
-                $message->to($user->email)->bcc($emails)->subject(
-                    "sistemaPCI: Nuevos Movimientos relacionados con  "
-                    . trans('models.notes.singular')
-                    . " #$note->id, "
-                    . $note->items->count()
-                    . " Items en total."
-                );
+                $message
+                    ->to($user->email)
+                    ->cc($this->toCc->all())
+                    ->subject(
+                        "sistemaPCI: Nuevos Movimientos relacionados con  "
+                        . trans('models.notes.singular')
+                        . " #$note->id, "
+                        . $note->items->count()
+                        . " Items en total."
+                    );
             }
         );
-    }
-
-    /**
-     * @return array
-     */
-    private function findDepotOwnersEmail()
-    {
-        $emails = [];
-
-        $owners = $this->findDepotOwners();
-
-        foreach ($owners as $owner) {
-            $emails[] = $owner->email;
-        }
-
-        return $emails;
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
-    private function findDepotOwners()
-    {
-        $ids    = Depot::groupBy('user_id')->lists('user_id')->toArray();
-        $owners = User::find($ids);
-
-        return $owners;
     }
 
     /**
@@ -84,9 +58,14 @@ class EmailNewItemMovements extends AbstractEmailListener
         $movement = $note->movements->last();
 
         if (is_null($movement)) {
-            throw new \LogicException('Movimiento inexistente');
+            throw new LogicException('Movimiento inexistente');
         }
 
         return $movement;
+    }
+
+    protected function makeEmails()
+    {
+        $this->findDepotOwnersEmail();
     }
 }

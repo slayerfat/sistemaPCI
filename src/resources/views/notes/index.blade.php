@@ -5,7 +5,7 @@
 @include('partials.genericTable', [
     'data' => $notes,
     'title' => trans('models.notes.plural'),
-    'delete' => true
+    'delete' => false
 ])
 
 @stop

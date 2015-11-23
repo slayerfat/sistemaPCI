@@ -13,10 +13,4 @@
                 class="item-asoc-c {{$item->asoc == 'c' ?: 'item-asoc-c-disabled'}}">C</span>
         </div>
     </div>
-
-    <hr/>
-
-    <section class="item-priority">
-        {!!ProgressBar::normal($item->priority)->visible('Prioridad de %s%%')!!}
-    </section>
 @endif

@@ -42,7 +42,7 @@ ControlGroup::generate(
 
 !!}
 
-@if(Auth::user()->isAdmin())
+@if(Auth::user()->isAdmin() and $user->id != Auth::id() and !$user->isAdmin())
 
     {!!
 

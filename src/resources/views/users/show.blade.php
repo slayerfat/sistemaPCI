@@ -6,7 +6,7 @@
             @include('users.partials.sidebar', ['active' => '.show'])
 
             {{-- user info --}}
-            <div class="col-sm-6">
+            <div class="{{ $user->petitions->isEmpty() ? 'col-sm-10' : 'col-sm-4'}}">
                 <h1>
                     {{$user->name}}
 
@@ -26,20 +26,11 @@
                 @include('users.partials.showWorkDetail')
             </div>
 
-            {{-- pedidos --}}
-            <div class="col-sm-4">
-                <h1>Últimos Pedidos</h1>
-                @foreach($user->petitions()->latest() as $petition)
-                    <section class="user-petitions">
-                        <h1>
-                            <a href="{{ route('petitions.show', $petition->id) }}">
-                                Nº {{ $petition->id }} | {{ $petition->formattedStatus }}
-                            </a>
-                        </h1>
-                        @include('petitions.partials.items')
-                    </section>
-                @endforeach
-            </div>
+            @if (!$user->petitions->isEmpty())
+                <div class="col-sm-6">
+                    @include('users.partials.petitions-table')
+                </div>
+            @endif
         </div>
     </div>
 @stop

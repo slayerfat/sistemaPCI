@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
 class CreatePetitionsTable extends Migration
 {
@@ -22,7 +22,6 @@ class CreatePetitionsTable extends Migration
             $table->foreign('petition_type_id')
                 ->references('id')
                 ->on('petition_types');
-            $table->date('request_date');
             $table->string('comments')->nullable();
             $table->boolean('status')->nullable();
             $table->timestamps();

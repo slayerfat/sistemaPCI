@@ -1,5 +1,7 @@
 <?php namespace PCI\Models;
 
+use PCI\Models\Traits\HasIdUID;
+
 /** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
 
 /**
@@ -33,6 +35,8 @@
 class Address extends AbstractBaseModel
 {
 
+    use HasIdUID;
+
     /**
      * The attributes that are mass assignable.
      * Parroquina no tiene problema.
@@ -45,10 +49,6 @@ class Address extends AbstractBaseModel
         'street',
         'av',
     ];
-
-    // -------------------------------------------------------------------------
-    // Accesors
-    // -------------------------------------------------------------------------
 
     /**
      * Regresa una cadena de texto

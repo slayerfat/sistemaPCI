@@ -1,6 +1,5 @@
 <?php namespace PCI\Repositories\User;
 
-use Carbon\Carbon;
 use Gate;
 use Illuminate\Support\Collection;
 use PCI\Mamarrachismo\Collection\ItemCollection;
@@ -134,7 +133,6 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
         // momento de crear los items asociados.
         $petition->comments         = $data['comments'];
         $petition->petition_type_id = $data['petition_type_id'];
-        $petition->request_date     = Carbon::now();
 
         $items = $this->checkItems($data['itemCollection'], $petition);
 
@@ -179,7 +177,7 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
                         . "({$item->stock()}:{$item->stock_type_id}) "
                         . "disponibles del Item {$item->desc}\r\n";
 
-                    $items->offsetUnset($id);
+                    $items->remove($id);
 
                     continue;
                 }
@@ -198,7 +196,7 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
     {
         // si no hay items que incluir por alguna
         // razon, entonces rechazamos el pedido.
-        if (count($items) < 1) {
+        if ($items->count() < 1) {
             $petition->status = false;
             $petition->save();
 
@@ -235,7 +233,6 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
         // momento de crear los items asociados.
         $petition->comments         = $data['comments'];
         $petition->petition_type_id = $data['petition_type_id'];
-        $petition->request_date     = Carbon::now();
 
         $items = $this->checkItems($data['itemCollection'], $petition);
 
@@ -265,7 +262,22 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
      */
     public function delete($id)
     {
-        return $this->executeDelete($id, trans('models.petitions.plural'), trans('models.items.plural'));
+        /** @var \PCI\Models\Petition $petition */
+        $petition = $this->find($id)->load('items');
+
+        if (is_null($petition->status)) {
+            if (!$petition->items->isEmpty()) {
+                $petition->items()->sync([]);
+            }
+
+            return $this->executeDelete(
+                $id,
+                trans('models.petitions.plural'),
+                trans('models.items.plural')
+            );
+        }
+
+        return $petition;
     }
 
     /**
@@ -299,15 +311,26 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
     }
 
     /**
-     * Regresa una coleccion de pedidos sin notas asociadas.
+     * Regresa una coleccion de pedidos sin notas asociadas
+     * o con notas rechazadas o por aprobar.
      *
      * @return \Illuminate\Support\Collection
      */
     public function findWithoutNotes()
     {
-        // http://laravel.com/docs/5.1/collections#method-reject
-        return $this->getAll()->reject(function ($petition) {
-            if ($petition->notes->isEmpty()) {
+        $petitions = $this->getAll()->load('notes');
+        http://laravel.com/docs/5.1/collections#method-reject
+        return $petitions->reject(function (Petition $petition) {
+            $status = false;
+            // nos interesa saber si existen notas
+            // que esten rechazadas o por aprobar
+            foreach ($petition->notes as $note) {
+                if ($note->status != true) {
+                    $status = true;
+                }
+            }
+
+            if ($petition->notes->isEmpty() || $status) {
                 // solo nos interesan los pedidos que hayan
                 // sido aprobados y que tengan items.
                 return !($petition->status && $petition->itemCount > 0);
@@ -337,7 +360,7 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
             'Numero'             => $model->id,
             'Usuario'            => $model->user->name . ' ' . $model->user->email,
             'Tipo'               => $model->type->desc,
-            'Fecha de solicitud' => $model->request_date->diffForHumans(),
+            'Fecha de solicitud' => $model->created_at->diffForHumans(),
             'Status'             => $model->formattedStatus,
         ];
     }

@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Query\Builder;
 use PCI\Models\Traits\HasCommentsAttribute;
+use PCI\Models\Traits\HasIdUID;
 use PCI\Models\Traits\HasTernaryStatusAttribute;
 
 /** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
@@ -43,7 +44,7 @@ use PCI\Models\Traits\HasTernaryStatusAttribute;
 class Petition extends AbstractBaseModel
 {
 
-    use HasTernaryStatusAttribute, HasCommentsAttribute;
+    use HasTernaryStatusAttribute, HasCommentsAttribute, HasIdUID;
 
     /**
      * The attributes that are mass assignable.
@@ -51,20 +52,9 @@ class Petition extends AbstractBaseModel
      * @var array
      */
     protected $fillable = [
-        'request_date',
         'comments',
         'status',
     ];
-
-    /**
-     * Atributos que deben ser mutados a dates, dates
-     * se refiere a Carbon\Carbon dates.
-     * En otras palabras, genera una instancia
-     * de Carbon\Carbon para cada campo.
-     *
-     * @var array
-     */
-    protected $dates = ['request_date'];
 
     /**
      * The attributes that should be casted to native types.

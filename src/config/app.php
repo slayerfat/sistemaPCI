@@ -101,7 +101,6 @@ return [
     */
 
     'providers'       => [
-
         /*
          * Laravel Framework Service Providers...
          */
@@ -139,6 +138,7 @@ return [
         Bootstrapper\BootstrapperL5ServiceProvider::class,
         Jenssegers\Date\DateServiceProvider::class,
         Cviebrock\EloquentSluggable\SluggableServiceProvider::class,
+        Felixkiss\UniqueWithValidator\UniqueWithValidatorServiceProvider::class,
         /*
          * Application Service Providers...
          */

@@ -121,6 +121,18 @@ class ItemCollection implements Countable, ArrayAccess, IteratorAggregate
     }
 
     /**
+     * Determina las reglas a usar por esta clase.
+     *
+     * @return array
+     */
+    private function getRules()
+    {
+        return count($this->customRules) >= 1
+            ? $this->customRules
+            : $this->defaults;
+    }
+
+    /**
      * Añade reglas adicionales a la clase
      *
      * @param $rules
@@ -145,6 +157,22 @@ class ItemCollection implements Countable, ArrayAccess, IteratorAggregate
     }
 
     /**
+     * @param $rules
+     * @return array
+     */
+    private function getRuleArgs($rules)
+    {
+        $array = is_array($rules) ? $rules : func_get_args();
+
+        $results = [];
+        foreach ($array as $rule) {
+            $results[] = Str::snake($rule);
+        }
+
+        return $results;
+    }
+
+    /**
      * Remueve algun elemento dentro del arreglo de reglas.
      *
      * @param $rules
@@ -166,18 +194,6 @@ class ItemCollection implements Countable, ArrayAccess, IteratorAggregate
         }
 
         return $this;
-    }
-
-    /**
-     * Determina las reglas a usar por esta clase.
-     *
-     * @return array
-     */
-    private function getRules()
-    {
-        return count($this->customRules) >= 1
-            ? $this->customRules
-            : $this->defaults;
     }
 
     /**
@@ -415,30 +431,6 @@ class ItemCollection implements Countable, ArrayAccess, IteratorAggregate
     }
 
     /**
-     * Mete el array generado de los atributos de esta clase a la coleccion.
-     *
-     * @return $this
-     */
-    public function make()
-    {
-        $array = [];
-
-        $rules = $this->getRules();
-
-        // debemos asegurarnos que las reglas se cumplan
-        foreach ($rules as $key) {
-            $attr = Str::camel($key);
-            if (isset($this->$attr) || $attr === "due") {
-                $array[$key] = $this->$attr;
-            }
-        }
-
-        $this->pushToCollection($array);
-
-        return $this;
-    }
-
-    /**
      * Permite agregar arreglos directamente a la coleccion
      * de esta clase sin necesidad de usar los atributos de esta.
      *
@@ -467,6 +459,30 @@ class ItemCollection implements Countable, ArrayAccess, IteratorAggregate
         }
 
         $this->make();
+
+        return $this;
+    }
+
+    /**
+     * Mete el array generado de los atributos de esta clase a la coleccion.
+     *
+     * @return $this
+     */
+    public function make()
+    {
+        $array = [];
+
+        $rules = $this->getRules();
+
+        // debemos asegurarnos que las reglas se cumplan
+        foreach ($rules as $key) {
+            $attr = Str::camel($key);
+            if (isset($this->$attr) || $attr === "due") {
+                $array[$key] = $this->$attr;
+            }
+        }
+
+        $this->pushToCollection($array);
 
         return $this;
     }
@@ -526,18 +542,24 @@ class ItemCollection implements Countable, ArrayAccess, IteratorAggregate
     }
 
     /**
-     * @param $rules
-     * @return array
+     * Remueve una serie de elementos que tengan el id especificado.
+     *
+     * @param int|string $id  representa el valor del elemento a filtrar
+     * @param string     $key el nombre del campo a comparar
+     * @return $this
      */
-    private function getRuleArgs($rules)
+    public function remove($id, $key = 'item_id')
     {
-        $array = is_array($rules) ? $rules : func_get_args();
+        $filtered = $this->collection->filter(function ($element) use (
+            $id,
+            $key
+        ) {
+            return $element[$key] != $id;
+        });
 
-        $results = [];
-        foreach ($array as $rule) {
-            $results[] = Str::snake($rule);
-        }
+        $this->collection = $filtered;
+        $this->checked    = false;
 
-        return $results;
+        return $this;
     }
 }

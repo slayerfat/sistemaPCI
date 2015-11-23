@@ -12,20 +12,19 @@ module Petition
          * La informacion relacionada con UN item en
          * particular (el que se esta manipulando)
          */
-        public data: Item;
+        public data: Item = null;
 
+        /**
+         * El arreglo de items en algun pedido/nota.
+         *
+         * @type {Array}
+         */
         private items: Item[] = [];
 
         /**
          * el arreglo de Ids de los items seleccionados.
          */
-        public selected: number[];
-
-        /**
-         * Necesario para saber que tipo de
-         * formulario esta asociado a esta clase.
-         */
-        public formType: string;
+        public selected: number[] = [];
 
         /**
          * Usado para determinar si algun tipo de movimiento fue cambiado o no
@@ -51,32 +50,9 @@ module Petition
          * cuando se pretenda ducplicar algun input para
          * cambiar las fechas de vencimiento.
          */
-        private randomId: number;
+        protected randomId: number;
 
-        constructor(formType: string = null) {
-            this.data = {
-                id: null,
-                desc: '',
-                quantity: null,
-                stock_type_id: null,
-                type: {
-                    id: null,
-                    desc: null,
-                    slug: null,
-                    perishable: null
-                }
-            };
-
-            this.checkSelected = {
-                lastSelected: null,
-                selected: null,
-                didNotChange: null
-            };
-
-            this.selected = [];
-
-            this.formType = formType;
-
+        constructor() {
             this.setRandomId();
         }
 
@@ -243,9 +219,10 @@ module Petition
             toggle: MovementTypeToggle
         ): void {
             var $itemBag = $('#itemBag');
+            var stock    = this.getValidStock();
 
             // chequeamos que el stock no sea 0
-            if (this.stock.plain <= 0 && toggle.isModelEgress()) {
+            if (stock <= 0 && toggle.isModelEgress()) {
                 return this.appendErrorMsg($itemBag);
             }
 
@@ -257,6 +234,15 @@ module Petition
             this.appendCorrectItem(stockTypes, $itemBag, toggle);
 
             this.addSelected(this.data.id);
+        }
+
+        /**
+         * Necesario para determinar el stock correcto segun el tipo de formulario.
+         *
+         * @returns {number}
+         */
+        protected getValidStock(): number {
+            return this.stock.plain;
         }
 
         /**
@@ -327,13 +313,8 @@ module Petition
          *
          * @returns {boolean}
          */
-        private canAddDueDate(): boolean {
-            if (this.formType === null || this.formType === undefined) {
-                return false;
-            }
-
-            return this.data.type.perishable
-                && this.formType.toLowerCase() == 'note';
+        protected canAddDueDate(): boolean {
+            return null;
         }
 
         /**
@@ -341,7 +322,7 @@ module Petition
          *
          * @returns {string}
          */
-        private makeItemInput(): string {
+        protected makeItemInput(): string {
             return '<div class="row itemBag-item" data-id="' + this.data.id + '">'
                 + '<div class="col-xs-12">'
                 + '<label for="itemBag" class="control-label col-sm-7">'
@@ -352,6 +333,7 @@ module Petition
                 'name="items[' + this.randomId + '][' + this.data.id + '][amount]"' +
                 'type="number" ' +
                 'data-stock-plain="' + this.stock.plain + '"' +
+                'data-stock-real="' + this.stock.real + '"' +
                 'value="' + this.stock.plain + '">' +
                 '<span class="help-block">' + this.stock.formatted + ' en total.' + '</span>' +
                 '</div>';
@@ -360,19 +342,58 @@ module Petition
         /**
          * Determina cual es la opcion correcta que ira en el select.
          *
+         * @link https://github.com/slayerfat/sistemaPCI/issues/84
          * @param stockTypes
          * @returns {string}
          */
         private makeSelectOptions(stockTypes: stockTypes): string {
+            // desde v0.4.4
+            var id      = this.data.stock_type_id;
             var options = '';
 
+            if (id >= 2 && id <= 4) {
+                Object.keys(stockTypes.types).forEach((key) => {
+                    var typeId = stockTypes.types[key].id;
+                    var desc   = stockTypes.types[key].desc;
+                    if (typeId < 2 || typeId > 4) {
+                        return;
+                    }
+
+                    typeId == id
+                        ? options += this.makeOption(typeId, desc, true)
+                        : options += this.makeOption(typeId, desc);
+                });
+
+                return options;
+            }
+
             Object.keys(stockTypes.types).forEach((key) => {
-                stockTypes.types[key].id == this.data.stock_type_id
-                    ? options += '<option value="' + stockTypes.types[key].id + '" selected="selected">' + stockTypes.types[key].desc + '</option>'
-                    : options += '<option value="' + stockTypes.types[key].id + '">' + stockTypes.types[key].desc + '</option>';
+                var typeId = stockTypes.types[key].id;
+                var desc   = stockTypes.types[key].desc;
+                if (typeId == id) {
+                    return options += this.makeOption(typeId, desc, true);
+                }
             });
 
             return options;
+        }
+
+        /**
+         * Crea la opcion que ira dentro del select.
+         *
+         * @param typeId
+         * @param desc
+         * @param selected
+         * @returns {string}
+         */
+        private makeOption(
+            typeId: number,
+            desc: string,
+            selected = false
+        ): string {
+            return selected
+                ? '<option value="' + typeId + '" selected="selected">' + desc + '</option>'
+                : '<option value="' + typeId + '">' + desc + '</option>';
         }
 
         /**

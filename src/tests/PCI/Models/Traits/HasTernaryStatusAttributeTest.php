@@ -30,7 +30,6 @@ class HasTernaryStatusAttributeTest extends AbstractTestCase
         $petition = new Petition();
 
         $petition->status           = false;
-        $petition->request_date     = '1999-09-09';
         $petition->user_id          = $user->id;
         $petition->petition_type_id = $petType;
         $petition->save();

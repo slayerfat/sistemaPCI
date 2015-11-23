@@ -24,7 +24,8 @@ foreach ($item->stocks as $stock) {
     'data' => $array,
     'title' => 'Existencias en los Almacenes',
     'resource' => 'depots',
-    'total' => $item->formattedRealStock()
+    'total' => $item->formattedRealStock(),
+    'empty' => ['Información' => 'Este Item está sin existencia.']
 ])
 
 

@@ -1,6 +1,5 @@
 <?php namespace PCI\Repositories\Note;
 
-use Date;
 use Exception;
 use PCI\Mamarrachismo\Collection\ItemCollection;
 use PCI\Models\AbstractBaseModel;
@@ -64,7 +63,7 @@ class NoteRepository extends AbstractRepository implements NoteRepositoryInterfa
     {
         $user = $this->getCurrentUser();
 
-        if (!$user->isAdmin()) {
+        if ($user->isAdmin()) {
             return $this->model->all();
         }
 
@@ -97,7 +96,6 @@ class NoteRepository extends AbstractRepository implements NoteRepositoryInterfa
         $note->comments     = $data['comments'];
         $note->petition_id  = $data['petition_id'];
         $note->note_type_id = $data['note_type_id'];
-        $note->creation     = Date::now();
 
         // asociamos la peticion al usuario en linea.
         $this->getCurrentUser()->notes()->save($note);

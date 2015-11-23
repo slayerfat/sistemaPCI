@@ -39,4 +39,9 @@ class EmailUserConfirmation extends AbstractEmailListener implements ShouldQueue
                 ->subject('sistemaPCI: por favor verifique su cuenta.');
         });
     }
+
+    protected function makeEmails()
+    {
+        //
+    }
 }

@@ -35,6 +35,7 @@ $html = $title ? "<h1>{$title}</h1>" : '';
 
 {!! $html !!}
 
+@if (count($data) > 0)
 {!!
 Table::withContents($data)->withFooter($footer)
     ->ignore(['uid'])
@@ -88,3 +89,6 @@ Table::withContents($data)->withFooter($footer)
     })
     ->striped()
 !!}
+@else
+    @include('partials.tables.empty-data-set')
+@endif
