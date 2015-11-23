@@ -1,5 +1,6 @@
 <?php namespace PCI\Listeners\Email\Note;
 
+use LogicException;
 use PCI\Events\Note\NewNoteCreation;
 use PCI\Listeners\Email\AbstractItemEmail;
 use PCI\Models\Note;
@@ -36,7 +37,7 @@ class EmailNewItemMovements extends AbstractItemEmail
                 /** @var \Illuminate\Mail\Message $message */
                 $message
                     ->to($user->email)
-                    ->cc($this->toCc)
+                    ->cc($this->toCc->all())
                     ->subject(
                         "sistemaPCI: Nuevos Movimientos relacionados con  "
                         . trans('models.notes.singular')
@@ -57,7 +58,7 @@ class EmailNewItemMovements extends AbstractItemEmail
         $movement = $note->movements->last();
 
         if (is_null($movement)) {
-            throw new \LogicException('Movimiento inexistente');
+            throw new LogicException('Movimiento inexistente');
         }
 
         return $movement;

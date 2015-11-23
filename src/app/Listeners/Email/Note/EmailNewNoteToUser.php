@@ -20,7 +20,14 @@ class EmailNewNoteToUser extends AbstractEmailListener
      */
     public function handle(NewNoteCreation $event)
     {
-        $user     = $event->note->petition->user;
+        $user = $event->note->petition->user;
+
+        // si el creador de la nota es el mismo que creo el pedido,
+        // entonces no es necesario enviar algun correo
+        if ($user->id = $event->note->user->id) {
+            return;
+        }
+
         $note     = $event->note;
         $petition = $event->note->petition;
 
@@ -35,9 +42,9 @@ class EmailNewNoteToUser extends AbstractEmailListener
                 $message->to($user->email)->subject(
                     "sistemaPCI: La "
                     . trans('models.notes.singular')
-                    . " #$note->id" . " Relacionada con "
+                    . " #$note->id Relacionada con "
                     . trans('models.petitions.singular')
-                    . " #$petition->id, creada exitosamente."
+                    . " #$petition->id, fue creada exitosamente."
                 );
             }
         );

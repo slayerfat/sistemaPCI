@@ -33,11 +33,11 @@ class EmailNewNoteToCreator extends AbstractEmailListener
             function ($message) use ($user, $note, $petition) {
                 /** @var \Illuminate\Mail\Message $message */
                 $message->to($user->email)->subject(
-                    "sistemaPCI: La "
+                    "sistemaPCI: Su "
                     . trans('models.notes.singular')
                     . " #$note->id" . " Relacionada con "
                     . trans('models.petitions.singular')
-                    . " #$petition->id, creada exitosamente."
+                    . " #$petition->id, fue creada exitosamente."
                 );
             }
         );

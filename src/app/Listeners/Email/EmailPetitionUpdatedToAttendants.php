@@ -22,6 +22,9 @@ class EmailPetitionUpdatedToAttendants extends EmailPetitionEventToAttendants
         $petition             = $event->petition;
         $user                 = $event->user;
 
+        // debemos obviar a este correo si es encargado o jefe de almacen.
+        $this->purgeEmails($user->email);
+
         $this->mail->send(
             [
                 'emails.petitions.updated-by-creator-attendants',
@@ -31,7 +34,7 @@ class EmailPetitionUpdatedToAttendants extends EmailPetitionEventToAttendants
             function ($message) use ($user, $petition) {
                 /** @var \Illuminate\Mail\Message $message */
                 $message->to($this->emails->all())->subject(
-                    "sistemaPCI: El usuario " . $user->name
+                    "sistemaPCI: El usuario $user->name ($user->email)"
                     . " ha actualizado el "
                     . trans('models.petitions.singular')
                     . " #$petition->id"

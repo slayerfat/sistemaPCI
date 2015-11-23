@@ -26,6 +26,9 @@ class EmailPetitionEventToAttendants extends AbstractItemEmail
         $user     = $event->user;
         $date     = Date::now();
 
+        // debemos obviar a este correo si es encargado o jefe de almacen.
+        $this->purgeEmails($user->email);
+
         $this->mail->send(
             [
                 'emails.petitions.created-attendants',
@@ -41,11 +44,34 @@ class EmailPetitionEventToAttendants extends AbstractItemEmail
                         "sistemaPCI: Nuevo "
                         . trans('models.petitions.singular')
                         . " #" . $petition->id
-                        . " ha sido creado por " . $user->email
+                        . " ha sido creado por Usuario "
+                        . "$user->name ($user->email)"
                         . " con fecha de " . $date . "."
                     );
             }
         );
+    }
+
+    /**
+     * Elimina de los correos principales alguno que
+     * exista en los CC para no enviarlo dos veces.
+     *
+     * @param string $email
+     *
+     * @return void
+     */
+    protected function purgeEmails($email)
+    {
+        $data = [$this->emails, $this->toCc];
+
+        foreach ($data as $i => $collection) {
+            foreach ($collection as $key => $value) {
+                if ($value == $email) {
+                    $attr = $i == 0 ? 'emails' : 'toCc';
+                    $this->$attr->forget($key);
+                }
+            }
+        }
     }
 
     protected function makeEmails()

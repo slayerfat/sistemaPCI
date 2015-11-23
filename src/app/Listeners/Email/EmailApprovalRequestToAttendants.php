@@ -22,6 +22,9 @@ class EmailApprovalRequestToAttendants extends EmailPetitionEventToAttendants
         $petition = $event->petition;
         $user     = $event->user;
 
+        // debemos obviar a este correo si es encargado o jefe de almacen.
+        $this->purgeEmails($user->email);
+
         $this->mail->send(
             [
                 'emails.petitions.approval-request-attendants',
