@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
 class CreateMovementTypesTable extends Migration
 {
@@ -13,7 +13,7 @@ class CreateMovementTypesTable extends Migration
     public function up()
     {
         Schema::create('movement_types', function (Blueprint $table) {
-            $table->increments('id');
+            $table->unsignedTinyInteger('id', true);
             $table->string('desc', 30)->unique();
             $table->string('slug', 30)->unique();
             $table->timestamps();

@@ -163,14 +163,14 @@ $factory->define(PCI\Models\SubCategory::class, function () use ($faker) {
 $factory->define(PCI\Models\NoteType::class, function () use ($faker) {
     return [
         'desc'             => $faker->text(40),
-        'movement_type_id' => factory(\PCI\Models\MovementType::class)->create()->id,
+        'movement_type_id' => rand(1, 2),
     ];
 });
 
 $factory->define(PCI\Models\PetitionType::class, function () use ($faker) {
     return [
         'desc'             => $faker->text(40),
-        'movement_type_id' => factory(\PCI\Models\MovementType::class)->create()->id,
+        'movement_type_id' => rand(1, 2),
     ];
 });
 

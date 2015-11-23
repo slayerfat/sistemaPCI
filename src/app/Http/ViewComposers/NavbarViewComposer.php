@@ -292,7 +292,6 @@ class NavbarViewComposer
                 $this->plainLink('stockTypes'),
                 'divider',
                 $this->plainLink('makers'),
-                $this->plainLink('movementTypes'),
                 $this->plainLink('noteTypes'),
                 $this->plainLink('petitionTypes'),
             ]
