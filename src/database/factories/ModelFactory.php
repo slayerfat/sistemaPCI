@@ -116,7 +116,6 @@ $factory->define(PCI\Models\Note::class, function () use ($faker) {
         'note_type_id' => factory(PCI\Models\NoteType::class)->create()->id,
         'attendant_id' => factory(PCI\Models\Attendant::class)->create()->id,
         'petition_id'  => factory(PCI\Models\Petition::class)->create()->id,
-        'creation'     => $faker->dateTime,
         'comments'     => $faker->paragraph,
         'status'       => true,
     ];
@@ -133,7 +132,6 @@ $factory->define(PCI\Models\Petition::class, function () use ($faker) {
     return [
         'user_id'          => 1,
         'petition_type_id' => factory(\PCI\Models\PetitionType::class)->create()->id,
-        'request_date'     => $faker->dateTime,
         'comments'         => $faker->paragraph,
         'status'           => true,
     ];

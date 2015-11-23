@@ -1,6 +1,5 @@
 <?php namespace PCI\Repositories\User;
 
-use Carbon\Carbon;
 use Gate;
 use Illuminate\Support\Collection;
 use PCI\Mamarrachismo\Collection\ItemCollection;
@@ -134,7 +133,6 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
         // momento de crear los items asociados.
         $petition->comments         = $data['comments'];
         $petition->petition_type_id = $data['petition_type_id'];
-        $petition->request_date     = Carbon::now();
 
         $items = $this->checkItems($data['itemCollection'], $petition);
 
@@ -235,7 +233,6 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
         // momento de crear los items asociados.
         $petition->comments         = $data['comments'];
         $petition->petition_type_id = $data['petition_type_id'];
-        $petition->request_date     = Carbon::now();
 
         $items = $this->checkItems($data['itemCollection'], $petition);
 
@@ -363,7 +360,7 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
             'Numero'             => $model->id,
             'Usuario'            => $model->user->name . ' ' . $model->user->email,
             'Tipo'               => $model->type->desc,
-            'Fecha de solicitud' => $model->request_date->diffForHumans(),
+            'Fecha de solicitud' => $model->created_at->diffForHumans(),
             'Status'             => $model->formattedStatus,
         ];
     }

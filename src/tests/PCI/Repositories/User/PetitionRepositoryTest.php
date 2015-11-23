@@ -73,7 +73,7 @@ class PetitionRepositoryTest extends AbstractRepositoryTestCase
             $petition = $this->repo->create($data)
         );
 
-        $this->seeInDatabase('petitions', ['request_date' => $petition->request_date]);
+        $this->seeInDatabase('petitions', ['created_at' => $petition->created_at]);
     }
 
     public function createDataProvider()
@@ -101,13 +101,11 @@ class PetitionRepositoryTest extends AbstractRepositoryTestCase
                 'sameType'      => [
                     'comments'         => 'testing comment',
                     'petition_type_id' => 1,
-                    'request_date'     => '1999-09-09',
                     'itemCollection'   => $collection,
                 ],
                 'differentType' => [
                     'comments'         => 'testing comment',
                     'petition_type_id' => 1,
-                    'request_date'     => '1999-09-09',
                     'itemCollection'   => $another,
                 ],
             ],

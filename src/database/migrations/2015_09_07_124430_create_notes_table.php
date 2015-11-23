@@ -24,7 +24,6 @@ class CreateNotesTable extends Migration
             $table->foreign('note_type_id')->references('id')->on('note_types');
             $table->unsignedInteger('petition_id');
             $table->foreign('petition_id')->references('id')->on('petitions');
-            $table->date('creation');
             $table->string('comments');
             $table->boolean('status')->nullable();
             $table->timestamps();
