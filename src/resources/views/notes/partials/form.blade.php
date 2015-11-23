@@ -30,7 +30,7 @@ ControlGroup::generate(
 ControlGroup::generate(
     BSForm::label('petition_id', 'Pedido Asociado'),
     BSForm::select('petition_id', $list),
-    BSForm::help('&nbsp;'),
+    null,
     2
 )
 
@@ -83,15 +83,27 @@ ControlGroup::generate(
         ajaxSpinner.appendSpinner();
 
         $(function () {
-            $('.petition-table').addClass('hidden').first().removeClass('hidden');
+            $('.petition-table')
+                .addClass('hidden')
+                .first()
+                .removeClass('hidden')
+                .addClass('showing-table');
             $('#petition_id').change(function () {
                 var id = $(this).val();
 
-                $('.petition-table').addClass('hidden');
-                $('.petition-table[data-petition-id="' + id + '"]').removeClass('hidden');
+                $('.petition-table').addClass('hidden').removeClass('showing-table');
+                $('.petition-table[data-petition-id="' + id + '"]')
+                    .removeClass('hidden')
+                    .addClass('showing-table');
                 $formData.data('petition-items-id', id);
                 items.resetSelected();
                 startAjax();
+            });
+
+            $('.petition-table-show-button').click(function (evt)
+            {
+                evt.preventDefault();
+                $('.showing-table').addClass('hidden').removeClass('showing-table');
             });
 
             function startAjax() {
