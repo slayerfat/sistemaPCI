@@ -36,6 +36,8 @@ ControlGroup::generate(
 
 !!}
 
+@include('notes.partials.form-items-table')
+
 <div class="form-group" id="itemBag"></div>
 
 {!!
@@ -81,8 +83,13 @@ ControlGroup::generate(
         ajaxSpinner.appendSpinner();
 
         $(function () {
+            $('.petition-table').addClass('hidden').first().removeClass('hidden');
             $('#petition_id').change(function () {
-                $formData.data('petition-items-id', $(this).val());
+                var id = $(this).val();
+
+                $('.petition-table').addClass('hidden');
+                $('.petition-table[data-petition-id="' + id + '"]').removeClass('hidden');
+                $formData.data('petition-items-id', id);
                 items.resetSelected();
                 startAjax();
             });
