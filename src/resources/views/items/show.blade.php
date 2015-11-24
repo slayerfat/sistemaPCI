@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <div class="col-sm-8">
+    <div class="col-sm-7">
         <h1>
             {{$item->desc}}
 
@@ -37,7 +37,7 @@
         @include('items.partials.abc')
     </div>
 
-    <div class="col-sm-4">
+    <div class="col-sm-5">
         @include('items.partials.movements-table')
     </div>
 </div>
