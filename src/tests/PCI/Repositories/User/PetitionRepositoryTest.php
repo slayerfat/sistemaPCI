@@ -9,6 +9,8 @@ use PCI\Models\Petition;
 use PCI\Models\StockType;
 use PCI\Models\User;
 use PCI\Repositories\Aux\CategoryRepository;
+use PCI\Repositories\Aux\PetitionTypeRepository;
+use PCI\Repositories\Interfaces\Aux\PetitionTypeRepositoryInterface;
 use PCI\Repositories\Item\ItemRepository;
 use PCI\Repositories\User\PetitionRepository;
 use Tests\PCI\Repositories\AbstractRepositoryTestCase;
@@ -154,10 +156,14 @@ class PetitionRepositoryTest extends AbstractRepositoryTestCase
             new CategoryRepository(new Category())
         );
 
+        /** @var PetitionTypeRepository $typeRepo */
+        $typeRepo = $this->app[PetitionTypeRepositoryInterface::class];
+
         return new PetitionRepository(
             new Petition,
             $itemRepo,
-            new StockTypeConverter
+            new StockTypeConverter,
+            $typeRepo
         );
     }
 

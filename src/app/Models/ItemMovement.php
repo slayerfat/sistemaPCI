@@ -22,6 +22,7 @@ use PCI\Models\Traits\HasIdUID;
  * @property integer        $updated_by
  * @property-read Movement  $movement
  * @property-read Item      $item
+ * @property-read StockType $stockType
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\ItemMovement whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\ItemMovement whereItemId($value)
  * @method static \Illuminate\Database\Query\Builder|\PCI\Models\ItemMovement whereMovementId($value)
@@ -85,5 +86,15 @@ class ItemMovement extends AbstractBaseModel
     public function item()
     {
         return $this->belongsTo(Item::class);
+    }
+
+    /**
+     * Regresa el tipo de item.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
+     */
+    public function stockType()
+    {
+        return $this->belongsTo('PCI\Models\StockType', 'stock_type_id');
     }
 }

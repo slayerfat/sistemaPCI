@@ -74,4 +74,24 @@ class StockType extends AbstractBaseModel implements SluggableInterface
     {
         return $this->hasMany('PCI\Models\Item');
     }
+
+    /**
+     * Los items que estan asociados a esta entidad.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function stocks()
+    {
+        return $this->hasMany('PCI\Models\Stock');
+    }
+
+    /**
+     * Los items que estan asociados a esta entidad.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function itemMovements()
+    {
+        return $this->hasMany('PCI\Models\itemMovement');
+    }
 }
