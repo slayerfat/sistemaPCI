@@ -7,6 +7,7 @@ use PCI\Mamarrachismo\Converter\interfaces\StockTypeConverterInterface;
 use PCI\Models\AbstractBaseModel;
 use PCI\Models\Petition;
 use PCI\Repositories\AbstractRepository;
+use PCI\Repositories\Interfaces\Aux\PetitionTypeRepositoryInterface;
 use PCI\Repositories\Interfaces\Item\ItemRepositoryInterface;
 use PCI\Repositories\Interfaces\User\PetitionRepositoryInterface;
 use PCI\Repositories\Traits\CanChangeStatus;
@@ -47,21 +48,29 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
     private $converter;
 
     /**
+     * @var \PCI\Repositories\Interfaces\Aux\PetitionTypeRepositoryInterface
+     */
+    private $typeRepo;
+
+    /**
      * Genera una nueva instancia de este repositorio
      *
-     * @param \PCI\Models\AbstractBaseModel                             $model
-     * @param \PCI\Repositories\Interfaces\Item\ItemRepositoryInterface $itemRepo
-     * @param StockTypeConverterInterface                               $converter
+     * @param \PCI\Models\AbstractBaseModel   $model
+     * @param ItemRepositoryInterface         $itemRepo
+     * @param StockTypeConverterInterface     $converter
+     * @param PetitionTypeRepositoryInterface $typeRepo
      */
     public function __construct(
         AbstractBaseModel $model,
         ItemRepositoryInterface $itemRepo,
-        StockTypeConverterInterface $converter
+        StockTypeConverterInterface $converter,
+        PetitionTypeRepositoryInterface $typeRepo
     ) {
         parent::__construct($model);
 
         $this->itemRepo  = $itemRepo;
         $this->converter = $converter;
+        $this->typeRepo = $typeRepo;
     }
 
     /**
@@ -338,6 +347,16 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
 
             return true;
         });
+    }
+
+    /**
+     * Collection de tipos segun el perfil del usuario.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function typeList()
+    {
+        return $this->typeRepo->lists();
     }
 
     /**

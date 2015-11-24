@@ -58,4 +58,11 @@ interface PetitionRepositoryInterface extends
      * @return \Illuminate\Support\Collection
      */
     public function findWithoutNotes();
+
+    /**
+     * Collection de tipos segun el perfil del usuario.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function typeList();
 }

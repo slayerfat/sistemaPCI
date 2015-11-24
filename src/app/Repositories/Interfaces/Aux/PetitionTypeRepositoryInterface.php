@@ -21,4 +21,10 @@ use PCI\Repositories\Interfaces\Viewable\ViewableInterface;
 interface PetitionTypeRepositoryInterface extends ModelRepositoryInterface, ViewableInterface, GetBySlugOrIdInterface
 {
 
+    /**
+     * Genera una collection de tipos segun el perfil del usuario.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function lists();
 }

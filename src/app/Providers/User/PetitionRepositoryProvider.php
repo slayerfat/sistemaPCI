@@ -3,6 +3,7 @@
 use Illuminate\Support\ServiceProvider;
 use PCI\Mamarrachismo\Converter\interfaces\StockTypeConverterInterface;
 use PCI\Models\Petition;
+use PCI\Repositories\Interfaces\Aux\PetitionTypeRepositoryInterface;
 use PCI\Repositories\Interfaces\Item\ItemRepositoryInterface;
 use PCI\Repositories\Interfaces\User\PetitionRepositoryInterface;
 use PCI\Repositories\User\PetitionRepository;
@@ -26,7 +27,8 @@ class PetitionRepositoryProvider extends ServiceProvider
             return new PetitionRepository(
                 $app[Petition::class],
                 $app[ItemRepositoryInterface::class],
-                $app[StockTypeConverterInterface::class]
+                $app[StockTypeConverterInterface::class],
+                $app[PetitionTypeRepositoryInterface::class]
             );
         });
     }

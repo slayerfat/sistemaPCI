@@ -1,14 +1,16 @@
 <?php namespace PCI\Repositories\Aux;
 
 use PCI\Models\AbstractBaseModel;
+use PCI\Models\MovementType;
 use PCI\Repositories\Interfaces\Aux\PetitionTypeRepositoryInterface;
 use PCI\Repositories\ViewVariable\PetitionTypeViewModelVariable;
 
 /**
  * Class PetitionTypeRepository
+ *
  * @package PCI\Repositories\Aux
- * @author Alejandro Granadillo <slayerfat@gmail.com>
- * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
+ * @author  Alejandro Granadillo <slayerfat@gmail.com>
+ * @link    https://github.com/slayerfat/sistemaPCI Repositorio en linea.
  */
 class PetitionTypeRepository extends AbstractAuxRepository implements PetitionTypeRepositoryInterface
 {
@@ -32,6 +34,7 @@ class PetitionTypeRepository extends AbstractAuxRepository implements PetitionTy
 
     /**
      * Elimina a este modelo del sistema.
+     *
      * @param int $id El identificador unico.
      * @return boolean|\PCI\Models\AbstractBaseModel
      */
@@ -43,6 +46,7 @@ class PetitionTypeRepository extends AbstractAuxRepository implements PetitionTy
     /**
      * Regresa variable con una coleccion y datos
      * adicionales necesarios para generar la vista.
+     *
      * @return \PCI\Repositories\ViewVariable\ViewPaginatorVariable
      */
     public function getIndexViewVariables()
@@ -57,6 +61,7 @@ class PetitionTypeRepository extends AbstractAuxRepository implements PetitionTy
     /**
      * Regresa variable con un modelo y datos
      * adicionales necesarios para generar la vista.
+     *
      * @param string|int $id El identificador unico, slug o id.
      * @return \PCI\Repositories\ViewVariable\ViewModelVariable
      */
@@ -90,6 +95,7 @@ class PetitionTypeRepository extends AbstractAuxRepository implements PetitionTy
      * regresa la informacion necesaria para generar la vista.
      * esta necesita el destino y el nombre de
      * la variable para el Model Binding.
+     *
      * @return \PCI\Repositories\ViewVariable\ViewModelVariable
      */
     public function getCreateViewVariables()
@@ -106,6 +112,7 @@ class PetitionTypeRepository extends AbstractAuxRepository implements PetitionTy
      * Regresa variable con un modelo y datos
      * adicionales necesarios para generar la
      * vista con el proposito de Model Binding.
+     *
      * @param string|int $id El identificador unico, slug o id.
      * @return \PCI\Repositories\ViewVariable\ViewModelVariable
      */
@@ -114,5 +121,21 @@ class PetitionTypeRepository extends AbstractAuxRepository implements PetitionTy
         $dept = $this->getBySlugOrId($id);
 
         return $this->generateViewVariable($dept, 'petitionTypes');
+    }
+
+    /**
+     * Genera una collection de tipos segun el perfil del usuario.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function lists()
+    {
+        if ($this->getCurrentUser()->isAdmin()) {
+            return $this->model->orderBy('id', 'asc')->lists('desc', 'id');
+        }
+
+        $id = MovementType::out()->first()->id;
+
+        return $this->model->where('movement_type_id', $id)->lists('desc', 'id');
     }
 }
