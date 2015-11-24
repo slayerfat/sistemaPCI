@@ -75,15 +75,6 @@ class MovementType extends AbstractBaseModel implements SluggableInterface
     }
 
     /**
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeUnknown($query)
-    {
-        return $query->where('desc', 'Otro');
-    }
-
-    /**
      * Regresa una coleccion de movimientos asociados.
      *
      * @return Collection
