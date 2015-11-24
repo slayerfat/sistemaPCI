@@ -93,7 +93,7 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
      */
     public function getTablePaginator($quantity = 25)
     {
-        $results = $this->getAll()->load('type', 'user');
+        $results = $this->getAll()->load('type', 'user')->sortByDesc('updated_at');
 
         return $this->generatePaginator($results, $quantity);
     }
@@ -373,12 +373,11 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
      */
     protected function makePaginatorData(AbstractBaseModel $model)
     {
-        // por ahora no necesitamos datos de forma condicional.
         return [
             'uid'                => $model->id,
             'Numero'             => $model->id,
-            'Usuario'            => $model->user->name . ' ' . $model->user->email,
-            'Tipo'               => $model->type->desc,
+            'Usuario'            => link_to_route('users.show', $model->user->name, $model->user->name),
+            'Tipo'               => link_to_route('petitionTypes.show', $model->type->desc, $model->type->slug),
             'Fecha de solicitud' => $model->created_at->diffForHumans(),
             'Status'             => $model->formattedStatus,
         ];
