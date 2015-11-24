@@ -1,6 +1,7 @@
 <?php namespace PCI\Repositories\Aux;
 
 use PCI\Models\AbstractBaseModel;
+use PCI\Models\MovementType;
 use PCI\Repositories\Interfaces\Aux\NoteTypeRepositoryInterface;
 use PCI\Repositories\ViewVariable\NoteTypeViewModelVariable;
 
@@ -120,5 +121,21 @@ class NoteTypeRepository extends AbstractAuxRepository implements NoteTypeReposi
         $dept = $this->getBySlugOrId($id);
 
         return $this->generateViewVariable($dept, 'noteTypes');
+    }
+
+    /**
+     * Genera una collection de tipos segun el perfil del usuario.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function lists()
+    {
+        if ($this->getCurrentUser()->isAdmin()) {
+            return $this->model->orderBy('id', 'asc')->lists('desc', 'id');
+        }
+
+        $id = MovementType::out()->first()->id;
+
+        return $this->model->where('movement_type_id', $id)->lists('desc', 'id');
     }
 }

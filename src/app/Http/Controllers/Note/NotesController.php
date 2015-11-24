@@ -8,7 +8,6 @@ use PCI\Events\Note\NewNoteCreation;
 use PCI\Http\Controllers\Controller;
 use PCI\Http\Requests\Note\NoteRequest;
 use PCI\Models\Depot;
-use PCI\Models\NoteType;
 use PCI\Repositories\Interfaces\Note\NoteRepositoryInterface;
 use PCI\Repositories\Interfaces\User\PetitionRepositoryInterface;
 use PCI\Repositories\Interfaces\User\UserRepositoryInterface;
@@ -94,8 +93,7 @@ class NotesController extends Controller
             );
         }
 
-        // TODO: repo
-        $types = NoteType::orderBy('id', 'asc')->lists('desc', 'id');
+        $types = $this->repo->typeList();
         $petitions = $this->petitionRepo->findWithoutNotes();
         $list  = $this->makePetitionsList($petitions);
         $users = $this->makeUsersList();
@@ -136,7 +134,6 @@ class NotesController extends Controller
     private function makeUsersList()
     {
         $list = [];
-
         $users = $this->userRepo->usersList();
 
         $users->each(function ($user) use (&$list) {

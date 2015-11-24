@@ -5,6 +5,7 @@ use PCI\Mamarrachismo\Collection\ItemCollection;
 use PCI\Models\AbstractBaseModel;
 use PCI\Models\Note;
 use PCI\Repositories\AbstractRepository;
+use PCI\Repositories\Interfaces\Aux\NoteTypeRepositoryInterface;
 use PCI\Repositories\Interfaces\Note\NoteRepositoryInterface;
 use PCI\Repositories\Traits\CanChangeStatus;
 use PCI\Repositories\ViewVariable\ViewPaginatorVariable;
@@ -27,6 +28,26 @@ class NoteRepository extends AbstractRepository implements NoteRepositoryInterfa
      * @var \PCI\Models\Note
      */
     protected $model;
+
+    /**
+     * @var \PCI\Repositories\Interfaces\Aux\NoteTypeRepositoryInterface
+     */
+    private $typeRepo;
+
+    /**
+     * Genera una nueva instancia de este repositorio
+     *
+     * @param \PCI\Models\AbstractBaseModel $model
+     * @param NoteTypeRepositoryInterface   $typeRepo
+     */
+    public function __construct(
+        AbstractBaseModel $model,
+        NoteTypeRepositoryInterface $typeRepo
+    ) {
+        parent::__construct($model);
+
+        $this->typeRepo = $typeRepo;
+    }
 
     /**
      * Regresa variable con una coleccion y datos
@@ -114,7 +135,7 @@ class NoteRepository extends AbstractRepository implements NoteRepositoryInterfa
 
     /**
      * @param ItemCollection $items
-     * @param Note      $note
+     * @param Note           $note
      */
     private function attachDetails(ItemCollection $items, Note $note)
     {
@@ -151,6 +172,16 @@ class NoteRepository extends AbstractRepository implements NoteRepositoryInterfa
     public function delete($id)
     {
         // TODO: Implement delete() method.
+    }
+
+    /**
+     * Collection de tipos segun el perfil del usuario.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function typeList()
+    {
+        return $this->typeRepo->lists();
     }
 
     /**
