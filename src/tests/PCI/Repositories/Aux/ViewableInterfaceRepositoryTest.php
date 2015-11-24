@@ -7,7 +7,6 @@ use PCI\Models\Department;
 use PCI\Models\Gender;
 use PCI\Models\ItemType;
 use PCI\Models\Maker;
-use PCI\Models\MovementType;
 use PCI\Models\Nationality;
 use PCI\Models\NoteType;
 use PCI\Models\PetitionType;
@@ -18,7 +17,6 @@ use PCI\Repositories\Aux\DepartmentRepository;
 use PCI\Repositories\Aux\GenderRepository;
 use PCI\Repositories\Aux\ItemTypesRepository;
 use PCI\Repositories\Aux\MakerRepository;
-use PCI\Repositories\Aux\MovementTypeRepository;
 use PCI\Repositories\Aux\NationalityRepository;
 use PCI\Repositories\Aux\NoteTypeRepository;
 use PCI\Repositories\Aux\PetitionTypeRepository;
@@ -40,10 +38,6 @@ class ViewableInterfaceRepositoryTest extends AbstractTestCase
             'gender'        => [GenderRepository::class, Gender::class],
             'itemTypes'     => [ItemTypesRepository::class, ItemType::class],
             'maker'         => [MakerRepository::class, Maker::class],
-            'movementTypes' => [
-                MovementTypeRepository::class,
-                MovementType::class
-            ],
             'nationality'   => [
                 NationalityRepository::class,
                 Nationality::class

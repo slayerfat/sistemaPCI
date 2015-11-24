@@ -4,7 +4,6 @@ use PCI\Models\Category;
 use PCI\Models\Department;
 use PCI\Models\Gender;
 use PCI\Models\Maker;
-use PCI\Models\MovementType;
 use PCI\Models\Nationality;
 use PCI\Models\Position;
 use PCI\Models\StockType;
@@ -41,11 +40,6 @@ class AuxIntegrationTest extends AbstractAuxIntegration
                 'fabricantes',
                 'makers',
                 Maker::class,
-            ],
-            'test_movementTypes' => [
-                'tipos-movimiento',
-                'movementTypes',
-                MovementType::class,
             ],
             'test_nats'          => [
                 'nacionalidades',
