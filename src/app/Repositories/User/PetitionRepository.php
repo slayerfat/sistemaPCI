@@ -330,12 +330,12 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
         $petitions = $this->getAll()->load('notes');
         http://laravel.com/docs/5.1/collections#method-reject
         return $petitions->reject(function (Petition $petition) {
-            $status = false;
+            $status = true;
             // nos interesa saber si existen notas
             // que esten rechazadas o por aprobar
             foreach ($petition->notes as $note) {
-                if ($note->status != true) {
-                    $status = true;
+                if ($note->status == true) {
+                    $status = false;
                 }
             }
 
