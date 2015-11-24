@@ -36,7 +36,6 @@ class PetitionIntegrationTest extends AbstractUserIntegration
             ->visit(route('petitions.index'))
             ->seePageIs(route('petitions.index'))
             ->see($petition->user->name)
-            ->see($petition->user->email)
             ->see($petition->formattedStatus)
             ->see(trans('models.petitions.create'))
             ->see(trans('models.petitions.plural'));
@@ -87,7 +86,7 @@ class PetitionIntegrationTest extends AbstractUserIntegration
         foreach ($this->petition as $petition) {
             $this->actingAs($this->user)
                 ->visit(route('petitions.index'))
-                ->see($petition->user->email);
+                ->see($petition->user->name);
         }
     }
 
