@@ -14,7 +14,7 @@ foreach ($item->movements()->latest()->take(20)->get() as $movement) {
         'uid'            => $movement->movement->id,
         '#'              => $movement->movement->id,
         'Cantidad'       => $quantity,
-        'Fecha Vto.'     => $movement->due ? $movement->due : '-',
+        'Fecha Vto.'     => $movement->due ? $movement->due->toDateString() : '-',
         'Fecha Creación' => $movement->created_at->diffForHumans()
     ];
 }
