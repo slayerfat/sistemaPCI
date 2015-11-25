@@ -84,7 +84,12 @@ class PetitionsController extends Controller
 
         $response = self::changePrototype($id, $request);
 
-        $this->fireEvent($petition);
+        // debemos determinar si el status es falso para denegar reserva.
+        $parseStatus = $this->parseStatus($request->input('status'));
+
+        if ($parseStatus != false) {
+            $this->fireEvent($petition);
+        }
 
         return $response;
     }
