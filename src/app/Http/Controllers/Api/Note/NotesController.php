@@ -65,10 +65,10 @@ class NotesController extends Controller
     }
 
     /**
-     * Genera un nuevo PDF relacionada con la nota.
+     * Genera un nuevo PDF relacionado con la nota.
      *
      * @param string|int $id
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\Response
      */
     public function makeNewPdf($id)
     {
