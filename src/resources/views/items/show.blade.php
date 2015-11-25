@@ -8,10 +8,7 @@
 
             <hr/>
 
-            @include(
-                'partials.buttons.edit-delete',
-                ['resource' => 'items', 'id' => $item->id]
-            )
+            @include('items.partials.buttons')
         </h1>
 
         <hr/>
