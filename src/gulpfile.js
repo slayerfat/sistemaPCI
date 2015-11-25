@@ -82,6 +82,7 @@ elixir(function (mix) {
     mix
         .task('compile-ts')
         .sass('app.sass')
+        .sass('pdf.sass')
         // copiamos los fonts de bootstrap para que no se queje.
         // otra opcion seria un symlink o algo asi.
         .copy(paths.bootstrap + 'fonts/bootstrap/**', paths.public + '/fonts')
