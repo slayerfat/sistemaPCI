@@ -3,7 +3,7 @@
 Button::withValue('Editar')
     ->asLinkTo(route("{$resource}.edit", $id))
     ->withIcon(Icon::create('edit'))
-    ->withAttributes(['id' => "model-edit-{$id}"])
+    ->withAttributes(['id' => "model-edit-{$id}", 'class' => 'btn-info'])
 
 !!}
 
