@@ -12,6 +12,8 @@
     </p>
 
     <p>
+        Stock mínimo:
+        {{ $item->formattedQuantity($item->minimum, $item->stockType->desc) }}
         Stock:
         {{
         $item->percentageStock() > 100
