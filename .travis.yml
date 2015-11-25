@@ -17,14 +17,12 @@ before_script:
   - npm install -g npm@3
   - npm install -g bower
   - (cd src/ && npm install && bower install && gulp)
-  - pyrus install pear/PHP_CodeSniffer
-  - phpenv rehash
   - wget https://gist.githubusercontent.com/slayerfat/2b3cc4faf94d2863b505/raw/5229a520c69010c6c13fd9a66d14309c214c241a/phpmd-ruleset.xml
   - wget -c http://static.phpmd.org/php/latest/phpmd.phar
 
 script:
   - phpunit
-  - phpcs -p --colors --standard=PSR2 --ignore=src/vendor/ src/app src/database/seeds/ src/config/
+  - src/vendor/bin/phpcs -p --colors --standard=PSR2 --ignore=src/vendor/ src/app src/database/seeds/ src/config/
   - if [ -e phpmd-ruleset.xml ]; then php phpmd.phar src/app/ text phpmd-ruleset.xml; php phpmd.phar src/database/seeds/ text phpmd-ruleset.xml; php phpmd.phar src/config/ text phpmd-ruleset.xml; fi
   #- phpunit --coverage-clover=coverage.clover 45min de run, lol
   # - if [ $TRAVIS_PHP_VERSION != '7' ]; then phpcs -p --colors --standard=PSR2 --ignore=src/vendor/ src/app src/database/seeds/ src/config/; fi
