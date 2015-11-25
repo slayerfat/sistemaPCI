@@ -164,7 +164,7 @@ module Petition
                     : this.findInputMinimum(stock);
 
                 $input.attr('min', min)
-                    .attr('max', $input.val());
+                    .attr('max', null);
             });
 
             if (removedItems) {
