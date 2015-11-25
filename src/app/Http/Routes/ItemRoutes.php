@@ -75,6 +75,30 @@ class ItemRoutes extends AbstractPciRoutes
                 'as'   => 'api.items.stock',
             ]
         ],
+        [
+            'method' => 'get',
+            'url'    => 'api/items/pdf/single/{items}',
+            'data'   => [
+                'uses' => 'Api\Item\ItemsController@singlePdf',
+                'as'   => 'api.items.pdf.single',
+            ],
+        ],
+        [
+            'method' => 'get',
+            'url'    => 'api/items/pdf/stock/{items}',
+            'data'   => [
+                'uses' => 'Api\Item\ItemsController@stockPdf',
+                'as'   => 'api.items.pdf.stock',
+            ],
+        ],
+        [
+            'method' => 'get',
+            'url'    => 'api/items/pdf/movements/{items}',
+            'data'   => [
+                'uses' => 'Api\Item\ItemsController@movementsPdf',
+                'as'   => 'api.items.pdf.movements',
+            ],
+        ],
     ];
 
     /**

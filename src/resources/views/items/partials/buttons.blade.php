@@ -1,7 +1,7 @@
 {!!
 
 Button::withValue('Reporte General')
-    ->asLinkTo(route("items.edit", $item->id))
+    ->asLinkTo(route("api.items.pdf.single", $item->id))
     ->withIcon(Icon::create('file-pdf-o'))
     ->withAttributes(['id' => "item-report-{$item->id}"])
 
@@ -9,8 +9,8 @@ Button::withValue('Reporte General')
 
 {!!
 
-Button::withValue('Existencias')
-    ->asLinkTo(route("items.edit", $item->id))
+Button::withValue('Stock')
+    ->asLinkTo(route("api.items.pdf.stock", $item->id))
     ->withIcon(Icon::create('file-pdf-o'))
     ->withAttributes(['id' => "item-stock-{$item->id}"])
 
@@ -19,7 +19,7 @@ Button::withValue('Existencias')
 {!!
 
 Button::withValue('Movimientos')
-    ->asLinkTo(route("items.edit", $item->id))
+    ->asLinkTo(route("api.items.pdf.movements", $item->id))
     ->withIcon(Icon::create('file-pdf-o'))
     ->withAttributes(['id' => "item-movements-{$item->id}"])
 
