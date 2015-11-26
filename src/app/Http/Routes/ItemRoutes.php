@@ -99,6 +99,14 @@ class ItemRoutes extends AbstractPciRoutes
                 'as'   => 'api.items.pdf.movements',
             ],
         ],
+        [
+            'method' => 'get',
+            'url'    => 'api/almacenes/pdf/single/{depots}',
+            'data'   => [
+                'uses' => 'Api\Item\DepotsController@singlePdf',
+                'as'   => 'api.depots.pdf.single',
+            ],
+        ],
     ];
 
     /**

@@ -5,14 +5,11 @@
         <h1>
             {{trans('models.depots.singular')}} {{$depot->number}}
 
-            @include(
-                'partials.buttons.edit-delete',
-                ['resource' => 'depots', 'id' => $depot->id]
-            )
+            @include('depots.partials.show-buttons')
         </h1>
 
         <h2>
-            Administrador por
+            Administrado por
             <a href="{{route('users.show', $depot->owner->name)}}">
                 {{$depot->owner->name}},
             </a>
