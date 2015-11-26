@@ -1,10 +1,12 @@
 <?php namespace PCI\Http\Controllers\Api\Item;
 
 use App;
+use Illuminate\Http\Request;
 use Input;
 use PCI\Http\Controllers\Controller;
 use PCI\Repositories\Interfaces\Item\ItemRepositoryInterface;
 use Response;
+use View;
 
 /**
  * Class ItemsController
@@ -55,6 +57,21 @@ class ItemsController extends Controller
         $data = Input::only('term');
 
         return $this->itemRepo->getIndexJsonWithSearch($data);
+    }
+
+    /**
+     * Regresa una coleccion con paginador.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function search(Request $request)
+    {
+        $data = $request->input('data');
+
+        $results = $this->itemRepo->getIndexJsonWithSearch($data, 0);
+
+        return View::make('items.search', compact('results'));
     }
 
     /**

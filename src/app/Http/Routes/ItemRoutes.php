@@ -60,6 +60,14 @@ class ItemRoutes extends AbstractPciRoutes
             ]
         ],
         [
+            'method' => 'any',
+            'url'    => 'api/items/search-test/',
+            'data'   => [
+                'uses' => 'Api\Item\ItemsController@search',
+                'as'   => 'api.items.search',
+            ],
+        ],
+        [
             'method' => 'get',
             'url'    => 'api/items/search/{term}',
             'data'   => [

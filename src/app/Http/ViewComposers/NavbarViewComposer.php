@@ -6,21 +6,24 @@ use PCI\Mamarrachismo\Bootstrapper\IconPCI;
 
 /**
  * Class NavbarViewComposer
+ *
  * @package PCI\Http\ViewComposers
- * @author Alejandro Granadillo <slayerfat@gmail.com>
- * @link https://github.com/slayerfat/sistemaPCI Repositorio en linea.
+ * @author  Alejandro Granadillo <slayerfat@gmail.com>
+ * @link    https://github.com/slayerfat/sistemaPCI Repositorio en linea.
  */
 class NavbarViewComposer
 {
 
     /**
      * El usuario actualmente en el sistema.
+     *
      * @var \PCI\Models\User
      */
     private $user;
 
     /**
      * El IconPCI que genera los iconos para las vistas.
+     *
      * @var \PCI\Mamarrachismo\Bootstrapper\IconPCI
      */
     private $icon;
@@ -28,6 +31,7 @@ class NavbarViewComposer
     /**
      * Los enlaces en el navbar que contiene funcionalidad comun
      * para todos los usuarios independientemente del perfil.
+     *
      * @var array
      */
     private $basicLinks = ['petitions'];
@@ -36,6 +40,7 @@ class NavbarViewComposer
      * Los enlaces en navbar que contienen funcionalidad
      * completa solo para el administrador del sistema,
      * el resto de los usuarios lo veran incompleto.
+     *
      * @var array
      */
     private $augmentedLinks = ['notes', 'items', 'depots'];
@@ -43,6 +48,7 @@ class NavbarViewComposer
     /**
      * Genera una nueva instancia de este composer
      * con la implementacion de Guard.
+     *
      * @param Guard $auth
      */
     public function __construct(Guard $auth)
@@ -54,6 +60,7 @@ class NavbarViewComposer
     /**
      * Genera las variables necesarias para
      * la vista, en este caso el navbar.
+     *
      * @param \Illuminate\View\View $view
      * @return void
      */
@@ -77,6 +84,7 @@ class NavbarViewComposer
      * en el navbar excepto el lado derecho.
      * Al igual que self::getRightLinks, genera
      * un array asociativo con links y titulo.
+     *
      * @return array un array de arrays asociativos con link y titulo.
      */
     private function getLeftLinks()
@@ -107,6 +115,7 @@ class NavbarViewComposer
      * Genera los links que todos los perfiles del
      * sistema pueden manipular a plenitud, es
      * decir, pueden crear, consultar, etc.
+     *
      * @return array[]
      */
     private function makeBasicLinks()
@@ -125,6 +134,7 @@ class NavbarViewComposer
     /**
      * ESte arreglo genera todos los enlaces disponibles por
      * cada recurso, lo hace en forma de dropdown.
+     *
      * @param string $resource El recurso ej: 'users' o 'items'.
      * @return array<string, array>
      */
@@ -138,7 +148,7 @@ class NavbarViewComposer
                 $this->innerArrayIndex($resource),
                 'divider',
                 $this->innerArrayTodo($resource),
-            ]
+            ],
         ];
     }
 
@@ -147,6 +157,7 @@ class NavbarViewComposer
      * Genera un array con informacion valida para los enlaces de tipo
      * dropdown generados por esta clase, es decir el genera el
      * array interno que necesita el array padre.
+     *
      * @param string $resource El recurso ej: 'users' o 'items'.
      * @param string $icon El icono por defecto de este enlace.
      * @return array<string, string>
@@ -155,7 +166,7 @@ class NavbarViewComposer
     {
         return [
             'link'  => $this->getRoute("{$resource}.create"),
-            'title' => $this->icon->create($icon) . 'Crear'
+            'title' => $this->icon->create($icon) . 'Crear',
         ];
     }
 
@@ -166,6 +177,7 @@ class NavbarViewComposer
      * array interno que necesita el array padre.
      * Regresa el enlace generado por route().
      * Si falla atrapa la excepcion.
+     *
      * @param string $route la direccion: 'users.index'
      * @return string
      */
@@ -183,6 +195,7 @@ class NavbarViewComposer
      * Genera un array con informacion valida para los enlaces de tipo
      * dropdown generados por esta clase, es decir el genera el
      * array interno que necesita el array padre.
+     *
      * @param string $resource El recurso ej: 'users' o 'items'.
      * @param string $icon El icono por defecto de este enlace.
      * @return array<string, string>
@@ -191,7 +204,7 @@ class NavbarViewComposer
     {
         return [
             'link'  => $this->getRoute("{$resource}.index"),
-            'title' => $this->icon->create($icon) . 'Consultar'
+            'title' => $this->icon->create($icon) . 'Consultar',
         ];
     }
 
@@ -203,7 +216,7 @@ class NavbarViewComposer
     {
         return [
             'link'  => '#',
-            'title' => $this->icon->create('plus') . "... {$resource}"
+            'title' => $this->icon->create('plus') . "... {$resource}",
         ];
     }
 
@@ -211,6 +224,7 @@ class NavbarViewComposer
      * Solo los administradores tienen acceso a todas las
      * caracteristicas de estos enlaces, el resto de
      * los usuarios lo tienen de forma limitada.
+     *
      * @param array $links los links son array de arrays
      * @return array
      */
@@ -228,6 +242,7 @@ class NavbarViewComposer
 
     /**
      * Genera los links segun el perfil del usuario.
+     *
      * @param string $resource El recurso ej: 'users' o 'items'.
      * @return array
      */
@@ -245,6 +260,7 @@ class NavbarViewComposer
 
     /**
      * Chequea si el usuario es administrador.
+     *
      * @return bool
      */
     private function isUserAdmin()
@@ -255,6 +271,7 @@ class NavbarViewComposer
     /**
      * Genera un array que simboliza enlaces basicos en el navbar,
      * estos apuntan al index del recurso ej: 'users.index'
+     *
      * @param string $resource El recurso ej: 'users' o 'items'.
      * @return array<string, string>
      */
@@ -263,13 +280,14 @@ class NavbarViewComposer
         return [
             'link'  => $this->getRoute("{$resource}.index"),
             'title' => $this->icon->create(trans("models.{$resource}.fa-icon"))
-                . trans("models.{$resource}.index")
+                . trans("models.{$resource}.index"),
         ];
     }
 
     /**
      * Genera los enlaces de mantenimiento que solo
      * deberian ser vistos por el administrador.
+     *
      * @param array $links los enlaces previamente hechos para ser fusionados.
      * @return array un array de arrays asociativos con link y titulo.
      */
@@ -294,7 +312,7 @@ class NavbarViewComposer
                 $this->plainLink('makers'),
                 $this->plainLink('noteTypes'),
                 $this->plainLink('petitionTypes'),
-            ]
+            ],
         ];
 
         return $links;
@@ -305,6 +323,7 @@ class NavbarViewComposer
      * en el navbar del lado derecho.
      * Este array esta compuesto de arrays
      * asociativos con el link y titulo.
+     *
      * @return array un array de arrays asociativos con link y titulo.
      */
     private function getRightLinks()
@@ -315,11 +334,11 @@ class NavbarViewComposer
             return [
                 [
                     'link'  => route('auth.getLogin'),
-                    'title' => $this->icon->create('sign-in') . 'Entrar'
+                    'title' => $this->icon->create('sign-in') . 'Entrar',
                 ],
                 [
                     'link'  => route('auth.getRegister'),
-                    'title' => $this->icon->create('check-square-o') . 'Registrarse'
+                    'title' => $this->icon->create('check-square-o') . 'Registrarse',
                 ],
             ];
         }
@@ -332,19 +351,20 @@ class NavbarViewComposer
                 [
                     [
                         'link'  => route('users.show', $this->user->name),
-                        'title' => $this->icon->create('eye') . trans('models.users.show')
+                        'title' => $this->icon->create('eye') . trans('models.users.show'),
                     ],
                     [
                         'link'  => route('auth.getLogout'),
-                        'title' => $this->icon->create('sign-out') . 'Salir'
+                        'title' => $this->icon->create('sign-out') . 'Salir',
                     ],
-                ]
-            ]
+                ],
+            ],
         ];
     }
 
     /**
      * Regresa el formulario necesario para el navbar.
+     *
      * @return string el string con informacion HTML.
      */
     private function getSearchBox()
@@ -355,11 +375,16 @@ class NavbarViewComposer
             return '';
         }
 
-        return '<form class="navbar-form navbar-left hidden-sm" role="search">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Indique su busqueda">
-                    </div>
-                    <button type="submit" class="btn btn-default">Buscar</button>
-                </form>';
+        $route = route('api.items.search');
+        $value = csrf_token();
+        $input = '<input type="text" name="data[term]" class="form-control" placeholder="Indique su busqueda">';
+        $token = '<input name="_token" type="hidden" value="' . $value . '">';
+
+        return '<form method="POST" action="'
+        . $route . '" class="navbar-form navbar-left hidden-sm" role="search">'
+        . $token . '<div class="form-group">'
+        . $input . '</div>'
+        . '<button type="submit" class="btn btn-default">Buscar</button>'
+        . '</form>';
     }
 }
