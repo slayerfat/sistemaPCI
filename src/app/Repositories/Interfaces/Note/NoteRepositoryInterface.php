@@ -18,4 +18,11 @@ interface NoteRepositoryInterface extends
      * @return bool
      */
     public function changeStatus($id, $status);
+
+    /**
+     * Collection de tipos segun el perfil del usuario.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function typeList();
 }

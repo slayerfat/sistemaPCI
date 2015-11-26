@@ -74,7 +74,7 @@ class UserRelatedSeeder extends AbstractSeeder
     }
 
     /**
-     * @param User $user
+     * @param User    $user
      * @param Address $address
      * @return Employee
      */
@@ -82,11 +82,11 @@ class UserRelatedSeeder extends AbstractSeeder
     {
         $this->command->comment('Empezando ' . __METHOD__);
 
-        $employee = factory(Employee::class)->make();
-
-        $employee->nationality_id = 1;
-        $employee->address_id     = $address->id;
-        $employee->gender_id      = 1;
+        $employee = factory(Employee::class)->make([
+            'nationality_id' => 1,
+            'address_id'     => $address->id,
+            'gender_id'      => 1,
+        ]);
 
         $user->employee()->save($employee);
 
@@ -103,10 +103,10 @@ class UserRelatedSeeder extends AbstractSeeder
     {
         $this->command->comment('Empezando ' . __METHOD__);
 
-        $workDetails = factory(WorkDetail::class)->make();
-
-        $workDetails->position_id   = 1;
-        $workDetails->department_id = 1;
+        $workDetails = factory(WorkDetail::class)->make([
+            'position_id'   => 1,
+            'department_id' => 1,
+        ]);
 
         $employee->workDetails()->save($workDetails);
 

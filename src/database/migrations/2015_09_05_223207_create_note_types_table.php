@@ -14,7 +14,7 @@ class CreateNoteTypesTable extends Migration
     {
         Schema::create('note_types', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('movement_type_id'); // v0.4.2
+            $table->unsignedTinyInteger('movement_type_id'); // v0.4.2
             $table->foreign('movement_type_id')
                 ->references('id')
                 ->on('movement_types');

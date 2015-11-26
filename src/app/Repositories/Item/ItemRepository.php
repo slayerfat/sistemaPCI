@@ -1,6 +1,7 @@
 <?php namespace PCI\Repositories\Item;
 
 use PCI\Models\AbstractBaseModel;
+use PCI\Models\Item;
 use PCI\Repositories\AbstractRepository;
 use PCI\Repositories\Interfaces\Aux\CategoryRepositoryInterface;
 use PCI\Repositories\Interfaces\Item\ItemRepositoryInterface;
@@ -68,7 +69,14 @@ class ItemRepository extends AbstractRepository implements ItemRepositoryInterfa
      */
     public function getTablePaginator($quantity = 25)
     {
-        return $this->generatePaginator($this->getAll(), $quantity);
+        $items = $this
+            ->getAll()
+            ->load('stocks', 'stocks.details', 'maker', 'stockType', 'subCategory')
+            ->sortByDesc(function (Item $item) {
+                return $item->stock();
+            });
+
+        return $this->generatePaginator($items, $quantity);
     }
 
     /**
@@ -126,7 +134,7 @@ class ItemRepository extends AbstractRepository implements ItemRepositoryInterfa
         $item = $this->find($id)->load('stocks', 'movements');
 
         if (!$item->stocks->isEmpty() || !$item->movements->isEmpty()) {
-            $mvt = trans('models.movements.plural');
+            $mvt   = trans('models.movements.plural');
             $stock = trans('models.stocks.singular');
 
             flash()->error("No deben haber {$mvt} y/o {$stock} asociados.");
@@ -213,10 +221,10 @@ class ItemRepository extends AbstractRepository implements ItemRepositoryInterfa
         // por ahora no necesitamos datos de forma condicional.
         return [
             'uid'         => $model->id,
-            'Descripción' => $model->desc,
+            'Descripción' => link_to_route('items.show', $model->desc, $model->slug),
             'Stock'       => $model->formattedStock(),
-            'Rubro'       => $model->subCategory->desc,
-            'Fabricante'  => $model->maker->desc,
+            'Rubro'       => link_to_route('subCats.show', $model->subCategory->desc, $model->subCategory->slug),
+            'Fabricante'  => link_to_route('makers.show', $model->maker->desc, $model->maker->slug),
         ];
     }
 }

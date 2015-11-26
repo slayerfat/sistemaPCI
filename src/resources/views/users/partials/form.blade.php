@@ -20,27 +20,31 @@ ControlGroup::generate(
 
 !!}
 
-{!!
+@if($user->id == Auth::id() || !$user->isAdmin())
 
-ControlGroup::generate(
-    BSForm::label('password', 'Contraseña'),
-    BSForm::password('password'),
-    BSForm::help('Por favor la contraseña debe ser al menos 6 caracteres.'),
-    2
-)
+    {!!
 
-!!}
+    ControlGroup::generate(
+        BSForm::label('password', 'Contraseña'),
+        BSForm::password('password'),
+        BSForm::help('Por favor la contraseña debe ser al menos 6 caracteres.'),
+        2
+    )
 
-{!!
+    !!}
 
-ControlGroup::generate(
-    BSForm::label('password_confirmation', 'Confirmar Contraseña'),
-    BSForm::password('password_confirmation'),
-    BSForm::help('&nbsp;'),
-    2
-)
+    {!!
 
-!!}
+    ControlGroup::generate(
+        BSForm::label('password_confirmation', 'Confirmar Contraseña'),
+        BSForm::password('password_confirmation'),
+        BSForm::help('&nbsp;'),
+        2
+    )
+
+    !!}
+
+@endif
 
 @if(Auth::user()->isAdmin() and $user->id != Auth::id() and !$user->isAdmin())
 

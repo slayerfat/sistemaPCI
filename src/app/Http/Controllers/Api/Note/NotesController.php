@@ -1,5 +1,6 @@
 <?php namespace PCI\Http\Controllers\Api\Note;
 
+use App;
 use Event;
 use Illuminate\Http\Request;
 use PCI\Events\Note\NewItemEgress;
@@ -64,15 +65,20 @@ class NotesController extends Controller
     }
 
     /**
-     * Genera un nuevo PDF relacionada con la nota.
-     * TODO: implementar
+     * Genera un nuevo PDF relacionado con la nota.
      *
      * @param string|int $id
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\Response
      */
     public function makeNewPdf($id)
     {
-        return Response::json(['status' => $id]);
+        $note  = $this->repo->find($id);
+        $pdf   = App::make('dompdf.wrapper');
+        $title = "/ Reporte de " . trans('models.notes.singular');
+
+        $pdf->loadView('notes.pdf.singular', compact('note', 'title'));
+
+        return $pdf->setOrientation('landscape')->stream();
     }
 
     /**

@@ -7,6 +7,7 @@ use PCI\Mamarrachismo\Converter\interfaces\StockTypeConverterInterface;
 use PCI\Models\AbstractBaseModel;
 use PCI\Models\Petition;
 use PCI\Repositories\AbstractRepository;
+use PCI\Repositories\Interfaces\Aux\PetitionTypeRepositoryInterface;
 use PCI\Repositories\Interfaces\Item\ItemRepositoryInterface;
 use PCI\Repositories\Interfaces\User\PetitionRepositoryInterface;
 use PCI\Repositories\Traits\CanChangeStatus;
@@ -47,21 +48,29 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
     private $converter;
 
     /**
+     * @var \PCI\Repositories\Interfaces\Aux\PetitionTypeRepositoryInterface
+     */
+    private $typeRepo;
+
+    /**
      * Genera una nueva instancia de este repositorio
      *
-     * @param \PCI\Models\AbstractBaseModel                             $model
-     * @param \PCI\Repositories\Interfaces\Item\ItemRepositoryInterface $itemRepo
-     * @param StockTypeConverterInterface                               $converter
+     * @param \PCI\Models\AbstractBaseModel   $model
+     * @param ItemRepositoryInterface         $itemRepo
+     * @param StockTypeConverterInterface     $converter
+     * @param PetitionTypeRepositoryInterface $typeRepo
      */
     public function __construct(
         AbstractBaseModel $model,
         ItemRepositoryInterface $itemRepo,
-        StockTypeConverterInterface $converter
+        StockTypeConverterInterface $converter,
+        PetitionTypeRepositoryInterface $typeRepo
     ) {
         parent::__construct($model);
 
         $this->itemRepo  = $itemRepo;
         $this->converter = $converter;
+        $this->typeRepo = $typeRepo;
     }
 
     /**
@@ -84,7 +93,7 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
      */
     public function getTablePaginator($quantity = 25)
     {
-        $results = $this->getAll()->load('type', 'user');
+        $results = $this->getAll()->load('type', 'user')->sortByDesc('updated_at');
 
         return $this->generatePaginator($results, $quantity);
     }
@@ -321,12 +330,12 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
         $petitions = $this->getAll()->load('notes');
         http://laravel.com/docs/5.1/collections#method-reject
         return $petitions->reject(function (Petition $petition) {
-            $status = false;
+            $status = true;
             // nos interesa saber si existen notas
             // que esten rechazadas o por aprobar
             foreach ($petition->notes as $note) {
-                if ($note->status != true) {
-                    $status = true;
+                if ($note->status == true) {
+                    $status = false;
                 }
             }
 
@@ -338,6 +347,16 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
 
             return true;
         });
+    }
+
+    /**
+     * Collection de tipos segun el perfil del usuario.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function typeList()
+    {
+        return $this->typeRepo->lists();
     }
 
     /**
@@ -354,12 +373,11 @@ class PetitionRepository extends AbstractRepository implements PetitionRepositor
      */
     protected function makePaginatorData(AbstractBaseModel $model)
     {
-        // por ahora no necesitamos datos de forma condicional.
         return [
             'uid'                => $model->id,
             'Numero'             => $model->id,
-            'Usuario'            => $model->user->name . ' ' . $model->user->email,
-            'Tipo'               => $model->type->desc,
+            'Usuario'            => link_to_route('users.show', $model->user->name, $model->user->name),
+            'Tipo'               => link_to_route('petitionTypes.show', $model->type->desc, $model->type->slug),
             'Fecha de solicitud' => $model->created_at->diffForHumans(),
             'Status'             => $model->formattedStatus,
         ];

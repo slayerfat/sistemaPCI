@@ -2,6 +2,7 @@
 
 use Illuminate\Support\ServiceProvider;
 use PCI\Models\Note;
+use PCI\Repositories\Interfaces\Aux\NoteTypeRepositoryInterface;
 use PCI\Repositories\Interfaces\Note\NoteRepositoryInterface;
 use PCI\Repositories\Note\NoteRepository;
 
@@ -24,7 +25,8 @@ class NoteRepositoryProvider extends ServiceProvider
     {
         $this->app->bind(NoteRepositoryInterface::class, function ($app) {
             return new NoteRepository(
-                $app[Note::class]
+                $app[Note::class],
+                $app[NoteTypeRepositoryInterface::class]
             );
         });
     }

@@ -13,7 +13,6 @@ use PCI\Http\Controllers\Controller;
 use PCI\Http\Controllers\Traits\CheckDestroyStatusTrait;
 use PCI\Http\Requests;
 use PCI\Http\Requests\User\PetitionRequest;
-use PCI\Models\PetitionType;
 use PCI\Repositories\Interfaces\User\PetitionRepositoryInterface;
 use Redirect;
 
@@ -69,9 +68,7 @@ class PetitionsController extends Controller
     public function create()
     {
         $petition = $this->repo->newInstance();
-
-        // todo: segun perfil, usuario no hace entrada
-        $types = PetitionType::orderBy('id', 'asc')->lists('desc', 'id');
+        $types    = $this->repo->typeList();
 
         return $this->view->make('petitions.create', compact('petition', 'types'));
     }
@@ -129,8 +126,7 @@ class PetitionsController extends Controller
             );
         }
 
-        // todo: segun perfil, usuario no hace entrada
-        $types = PetitionType::orderBy('id', 'asc')->lists('desc', 'id');
+        $types = $this->repo->typeList();
 
         return $this->view->make('petitions.edit', compact('petition', 'types'));
     }

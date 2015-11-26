@@ -164,8 +164,7 @@ module Petition
                     : this.findInputMinimum(stock);
 
                 $input.attr('min', min)
-                    .attr('max', $input.val())
-                    .attr('step', this.findOptimalStep(stock));
+                    .attr('max', null);
             });
 
             if (removedItems) {
@@ -240,26 +239,6 @@ module Petition
             }
 
             return .001
-        }
-
-        /**
-         * Determina el multipo en que se incrementa el valor en el input
-         * @param value
-         * @returns {number}
-         */
-        private findOptimalStep(value: number): number {
-            var x = 10, i = -5;
-
-            for (i; i <= 12; i++) {
-                if (value < Math.pow(x, i)) {
-                    return i <= 0
-                        ? Math.pow(x, i - 1)
-                        : (Math.pow(x, i - 2)) / 2;
-                }
-            }
-
-            // el numero es muy grande
-            return 1;
         }
     }
 }

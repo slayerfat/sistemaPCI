@@ -2,16 +2,13 @@
 
 @section('content')
 <div class="container">
-    <div class="col-sm-8">
+    <div class="col-sm-7">
         <h1>
             {{$item->desc}}
 
             <hr/>
 
-            @include(
-                'partials.buttons.edit-delete',
-                ['resource' => 'items', 'id' => $item->id]
-            )
+            @include('items.partials.buttons')
         </h1>
 
         <hr/>
@@ -37,9 +34,8 @@
         @include('items.partials.abc')
     </div>
 
-    <div class="col-sm-4">
-        <h1>Ultimos Movimientos</h1>
-        <?php //TODO: movimientos en vista de item ?>
+    <div class="col-sm-5">
+        @include('items.partials.movements-table')
     </div>
 </div>
 

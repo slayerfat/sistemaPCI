@@ -15,7 +15,7 @@ Misión Alma Mater, Programa Nacional de Formación: Informática, Trayecto 3, I
 - [x] v0.3.x Item
 - [x] v0.3.x Otros
 - [x] v0.4 Pedidos
-- [ ] v0.4.x Notas
+- [x] v0.4.x Notas
 - [ ] v0.5 PDF
 - [ ] v0.6 Carpintería
 - [ ] v0.7 Eventos de negocio

@@ -223,7 +223,7 @@ class Item extends AbstractBaseModel implements SluggableInterface
     {
         $reserved = $this->reserved < 0 ? 0 : $this->reserved;
 
-        return $this->generateStock() - $reserved;
+        return $this->generateStock() - floatval($reserved);
     }
 
     /**
@@ -305,7 +305,9 @@ class Item extends AbstractBaseModel implements SluggableInterface
     {
         $stock = $this->realStock() <= 0 ? 1 : $this->realStock();
 
-        return ceil(($this->reserved * 100) / $stock);
+        $reserved = floatval($this->reserved);
+
+        return ceil(($reserved * 100) / $stock);
     }
 
     /**

@@ -48,8 +48,8 @@ $factory->define(PCI\Models\Depot::class, function () use ($faker) {
 $factory->define(PCI\Models\Employee::class, function () use ($faker) {
     return [
         'user_id'        => 1,
-        'nationality_id' => factory(PCI\Models\Nationality::class)->create()->id,
-        'gender_id'      => factory(PCI\Models\Gender::class)->create()->id,
+        'nationality_id' => 1,
+        'gender_id'      => 1,
         'address_id'     => factory(PCI\Models\Address::class)->create()->id,
         'ci'             => rand(999999, 99999999),
         'first_name'     => $faker->firstName,
@@ -163,14 +163,14 @@ $factory->define(PCI\Models\SubCategory::class, function () use ($faker) {
 $factory->define(PCI\Models\NoteType::class, function () use ($faker) {
     return [
         'desc'             => $faker->text(40),
-        'movement_type_id' => factory(\PCI\Models\MovementType::class)->create()->id,
+        'movement_type_id' => rand(1, 2),
     ];
 });
 
 $factory->define(PCI\Models\PetitionType::class, function () use ($faker) {
     return [
         'desc'             => $faker->text(40),
-        'movement_type_id' => factory(\PCI\Models\MovementType::class)->create()->id,
+        'movement_type_id' => rand(1, 2),
     ];
 });
 

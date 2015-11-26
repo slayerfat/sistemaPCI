@@ -14,7 +14,7 @@ class CreateMovementsTable extends Migration
     {
         Schema::create('movements', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('movement_type_id');
+            $table->unsignedTinyInteger('movement_type_id');
             $table->foreign('movement_type_id')
                 ->references('id')
                 ->on('movement_types');

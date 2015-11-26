@@ -1,5 +1,6 @@
 <?php namespace PCI\Repositories\User;
 
+use Html;
 use Illuminate\Pagination\LengthAwarePaginator;
 use PCI\Mamarrachismo\PhoneParser\PhoneParser;
 use PCI\Models\AbstractBaseModel;
@@ -182,8 +183,7 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
      */
     public function getTablePaginator($quantity = 25)
     {
-        $users = $this->getAll();
-        $users->load('profile', 'employee');
+        $users = $this->getAll()->load('profile', 'employee')->sortBy('name');
 
         return $this->generatePaginator($users, $quantity);
     }
@@ -238,9 +238,9 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
         // del usuario que nos interesa.
         $partial = [
             'uid'       => $user->name,
-            'Seudonimo' => $user->name,
-            'Email'     => $user->email,
-            'Perfil'    => $user->profile->desc,
+            'Seudónimo' => link_to_route('profiles.show', $user->name, $user->name),
+            'Email'     => Html::mailto($user->email),
+            'Perfil'    => link_to_route('profiles.show', $user->profile->desc, $user->profile->slug),
         ];
 
         // si el usuario tiene informacion de empleado
@@ -253,7 +253,7 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
             $employee = [
                 'Nombres'  => $user->employee->formattedNames(),
                 'C.I.'     => $user->employee->ci,
-                'Telefono' => $phone,
+                'Teléfono' => $phone,
             ];
 
             // una vez complado unimos los dos arreglos en uno solo
@@ -266,7 +266,7 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
         $defaults = [
             'Nombres'  => '-',
             'C.I.'     => '-',
-            'Telefono' => '-',
+            'Teléfono' => '-',
         ];
 
         return array_merge($partial, $defaults);

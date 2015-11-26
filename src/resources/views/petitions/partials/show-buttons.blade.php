@@ -1,5 +1,13 @@
-@if(auth()->user()->isAdmin())
-    <span style="float: right">
+<span style="float: right">
+    {!!
+
+    Button::withValue('Generar PDF')
+        ->asLinkTo(route('api.petitions.pdf.single', $petition->id))
+        ->withAttributes(['id' => 'petition-pdf',])
+        ->withIcon(Icon::create('file-pdf-o'))
+
+    !!}
+    @if(auth()->user()->isAdmin())
         @if (is_null($petition->status))
             {!!
 
@@ -16,8 +24,8 @@
                 ['resource' => 'petitions', 'id' => $petition->id]
             )
         @endif
-    </span>
-@endif
+    @endif
+</span>
 
 @section('js-show-buttons')
     <script type="text/javascript">

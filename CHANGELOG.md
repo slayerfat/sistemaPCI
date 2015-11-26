@@ -4,7 +4,13 @@ Todos los cambios significativos en este proyecto estaran documentados en este a
 
 ## [En Desarrollo][unrele]
 
+### Añadido
+
 ---
+
+### Arreglado
+
+- Solo dos tipos de Movimientos en el sistema, entrada y salida.
 
 ## [v0.4.4] - 2015-11-23
 

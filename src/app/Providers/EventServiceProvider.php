@@ -36,7 +36,6 @@ class EventServiceProvider extends ServiceProvider
             'PCI\Listeners\Email\Note\EmailNewItemMovements',
         ],
         'PCI\Events\Note\NewNoteCreation'              => [
-            'PCI\Listeners\Item\RollbackItemReservedAmount',
             'PCI\Listeners\Email\Note\EmailNewNoteToUser',
             'PCI\Listeners\Email\Note\EmailNewNoteToCreator',
         ],

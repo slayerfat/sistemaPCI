@@ -24,7 +24,6 @@ class DatabaseSeeder extends AbstractTableSeeder
         $this->call(TownSeeder::class);
         $this->call(ParishSeeder::class);
         $this->call(UserRelatedSeeder::class);
-        $this->call(ItemSeeder::class);
 
         $this->toggleModelGuard();
 

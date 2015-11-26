@@ -132,6 +132,7 @@ return [
          */
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
         Artesaos\SEOTools\Providers\SEOToolsServiceProvider::class,
         Laracasts\Flash\FlashServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
@@ -228,6 +229,7 @@ return [
         'Form'           => Collective\Html\FormFacade::class,
         'Html'           => Collective\Html\HtmlFacade::class,
         'SEO'            => Artesaos\SEOTools\Facades\SEOTools::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
         /**
          * Bootstrapper
          */

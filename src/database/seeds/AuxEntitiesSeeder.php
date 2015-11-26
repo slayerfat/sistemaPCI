@@ -67,7 +67,6 @@ class AuxEntitiesSeeder extends AbstractSeeder
             'PCI\Models\MovementType' => [
                 ['desc' => 'Entrada'],
                 ['desc' => 'Salida'],
-                ['desc' => 'Otro'],
             ],
             'PCI\Models\Nationality'  => [
                 ['desc' => 'Venezolano'],

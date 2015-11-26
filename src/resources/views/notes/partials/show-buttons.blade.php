@@ -2,12 +2,10 @@
     <span style="float: right">
         {!!
 
-        Button::withValue('Descargar PDF')
-            ->asLinkTo('#')
-            ->withAttributes([
-                'id'        => 'note-pdf',
-                'data-url'  => route('api.notes.pdf', $note->id),
-            ])->withIcon(Icon::create('file-pdf-o'))
+        Button::withValue('Generar PDF')
+            ->asLinkTo(route('api.notes.pdf', $note->id))
+            ->withAttributes(['id' => 'note-pdf',])
+            ->withIcon(Icon::create('file-pdf-o'))
 
         !!}
     </span>

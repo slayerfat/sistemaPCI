@@ -5,6 +5,7 @@ use PCI\Mamarrachismo\Collection\ItemCollection;
 use PCI\Models\AbstractBaseModel;
 use PCI\Models\Note;
 use PCI\Repositories\AbstractRepository;
+use PCI\Repositories\Interfaces\Aux\NoteTypeRepositoryInterface;
 use PCI\Repositories\Interfaces\Note\NoteRepositoryInterface;
 use PCI\Repositories\Traits\CanChangeStatus;
 use PCI\Repositories\ViewVariable\ViewPaginatorVariable;
@@ -29,6 +30,26 @@ class NoteRepository extends AbstractRepository implements NoteRepositoryInterfa
     protected $model;
 
     /**
+     * @var \PCI\Repositories\Interfaces\Aux\NoteTypeRepositoryInterface
+     */
+    private $typeRepo;
+
+    /**
+     * Genera una nueva instancia de este repositorio
+     *
+     * @param \PCI\Models\AbstractBaseModel $model
+     * @param NoteTypeRepositoryInterface   $typeRepo
+     */
+    public function __construct(
+        AbstractBaseModel $model,
+        NoteTypeRepositoryInterface $typeRepo
+    ) {
+        parent::__construct($model);
+
+        $this->typeRepo = $typeRepo;
+    }
+
+    /**
      * Regresa variable con una coleccion y datos
      * adicionales necesarios para generar la vista.
      *
@@ -49,7 +70,7 @@ class NoteRepository extends AbstractRepository implements NoteRepositoryInterfa
     public function getTablePaginator($quantity = 25)
     {
         // TODO: eager loading
-        $results = $this->getAll();
+        $results = $this->getAll()->sortByDesc('updated_at');
 
         return $this->generatePaginator($results, $quantity);
     }
@@ -84,6 +105,7 @@ class NoteRepository extends AbstractRepository implements NoteRepositoryInterfa
     /**
      * Persiste informacion referente a una entidad.
      *
+     * @link https://github.com/slayerfat/sistemaPCI/issues/63
      * @param array $data El array con informacion del modelo.
      * @return \PCI\Models\AbstractBaseModel
      */
@@ -91,7 +113,7 @@ class NoteRepository extends AbstractRepository implements NoteRepositoryInterfa
     {
         $note = $this->model->newInstance();
 
-        // FIXME: esperando por analisis
+        // ver #63
         $note->to_user_id   = $note->attendant_id = $data['to_user_id'];
         $note->comments     = $data['comments'];
         $note->petition_id  = $data['petition_id'];
@@ -114,7 +136,7 @@ class NoteRepository extends AbstractRepository implements NoteRepositoryInterfa
 
     /**
      * @param ItemCollection $items
-     * @param Note      $note
+     * @param Note           $note
      */
     private function attachDetails(ItemCollection $items, Note $note)
     {
@@ -139,7 +161,7 @@ class NoteRepository extends AbstractRepository implements NoteRepositoryInterfa
      */
     public function update($id, array $data)
     {
-        // TODO: Implement update() method.
+        // Notas no son Actualizadas.
     }
 
     /**
@@ -150,7 +172,17 @@ class NoteRepository extends AbstractRepository implements NoteRepositoryInterfa
      */
     public function delete($id)
     {
-        // TODO: Implement delete() method.
+        // Notas no son Eliminadas.
+    }
+
+    /**
+     * Collection de tipos segun el perfil del usuario.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function typeList()
+    {
+        return $this->typeRepo->lists();
     }
 
     /**
@@ -170,15 +202,21 @@ class NoteRepository extends AbstractRepository implements NoteRepositoryInterfa
         return [
             'uid'             => $model->id,
             '#'               => $model->id,
-            'Tipo'            => $model->type->desc,
-            'Pedido #'        => $model->id,
-            'Creador'         => $model->user->name
-                . ', '
-                . $model->user->email,
-            'Dirigido a'      => $model->toUser ? $model->toUser->name : '-',
-            'Encargado'       => $model->attendant->user->name
-                . ', '
-                . $model->attendant->user->email,
+            'Tipo'       => link_to_route('noteTypes.show', $model->type->desc, $model->type->slug),
+            'Pedido'     => link_to_route('petitions.show', $model->petition->id, $model->petition->id),
+            'Creador'    => link_to_route(
+                'users.show',
+                $model->user->name,
+                $model->user->name
+            ),
+            'Dirigido a' => $model->toUser
+                ? link_to_route('users.show', $model->toUser->name, $model->toUser->name)
+                : '-',
+            'Encargado'  => link_to_route(
+                'users.show',
+                $model->attendant->user->name,
+                $model->attendant->user->name
+            ),
             'Items asociados' => "{$model->items->count()} Items",
             'Estatus'         => $model->formattedStatus,
         ];

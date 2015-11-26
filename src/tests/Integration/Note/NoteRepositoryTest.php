@@ -42,7 +42,7 @@ class NoteRepositoryTest extends AbstractUserIntegration
         foreach ($this->notes as $note) {
             $this->actingAs($this->user)
                 ->visit(route('notes.index'))
-                ->see($note->user->email);
+                ->seeLink($note->user->name, route('users.show', $note->user->name, $note->user->name));
         }
     }
 

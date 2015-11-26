@@ -60,6 +60,14 @@ class ItemRoutes extends AbstractPciRoutes
             ]
         ],
         [
+            'method' => 'any',
+            'url'    => 'api/items/search-test/',
+            'data'   => [
+                'uses' => 'Api\Item\ItemsController@search',
+                'as'   => 'api.items.search',
+            ],
+        ],
+        [
             'method' => 'get',
             'url'    => 'api/items/search/{term}',
             'data'   => [
@@ -74,6 +82,38 @@ class ItemRoutes extends AbstractPciRoutes
                 'uses' => 'Api\Item\ItemsController@getStock',
                 'as'   => 'api.items.stock',
             ]
+        ],
+        [
+            'method' => 'get',
+            'url'    => 'api/items/pdf/single/{items}',
+            'data'   => [
+                'uses' => 'Api\Item\ItemsController@singlePdf',
+                'as'   => 'api.items.pdf.single',
+            ],
+        ],
+        [
+            'method' => 'get',
+            'url'    => 'api/items/pdf/stock/{items}',
+            'data'   => [
+                'uses' => 'Api\Item\ItemsController@stockPdf',
+                'as'   => 'api.items.pdf.stock',
+            ],
+        ],
+        [
+            'method' => 'get',
+            'url'    => 'api/items/pdf/movements/{items}',
+            'data'   => [
+                'uses' => 'Api\Item\ItemsController@movementsPdf',
+                'as'   => 'api.items.pdf.movements',
+            ],
+        ],
+        [
+            'method' => 'get',
+            'url'    => 'api/almacenes/pdf/single/{depots}',
+            'data'   => [
+                'uses' => 'Api\Item\DepotsController@singlePdf',
+                'as'   => 'api.depots.pdf.single',
+            ],
         ],
     ];
 
