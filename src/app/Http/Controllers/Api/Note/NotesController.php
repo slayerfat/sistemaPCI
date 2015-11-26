@@ -72,10 +72,11 @@ class NotesController extends Controller
      */
     public function makeNewPdf($id)
     {
-        $note = $this->repo->find($id);
-        $pdf  = App::make('dompdf.wrapper');
+        $note  = $this->repo->find($id);
+        $pdf   = App::make('dompdf.wrapper');
+        $title = "/ Reporte de " . trans('models.notes.singular');
 
-        $pdf->loadView('notes.pdf.singular', compact('note'));
+        $pdf->loadView('notes.pdf.singular', compact('note', 'title'));
 
         return $pdf->setOrientation('landscape')->stream();
     }

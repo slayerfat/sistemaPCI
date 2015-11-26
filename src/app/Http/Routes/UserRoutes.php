@@ -217,6 +217,14 @@ class UserRoutes extends AbstractPciRoutes
                 'as'   => 'api.notes.movementTypes',
             ],
         ],
+        [
+            'method' => 'get',
+            'url'    => 'api/pedidos/pdf/single/{items}',
+            'data'   => [
+                'uses' => 'Api\User\PetitionsController@singlePdf',
+                'as'   => 'api.petitions.pdf.single',
+            ],
+        ],
     ];
 
     /**

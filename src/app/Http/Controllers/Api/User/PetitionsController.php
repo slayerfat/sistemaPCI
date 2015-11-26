@@ -1,5 +1,6 @@
 <?php namespace PCI\Http\Controllers\Api\User;
 
+use App;
 use Auth;
 use Event;
 use Illuminate\Http\Request;
@@ -168,5 +169,22 @@ class PetitionsController extends Controller
             'model'   => $type,
             'ingress' => $type->movementType->isIn(),
         ]);
+    }
+
+    /**
+     * Genera un nuevo PDF relacionado con el item.
+     *
+     * @param string|int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function singlePdf($id)
+    {
+        $petition = $this->repo->find($id);
+        $pdf      = App::make('dompdf.wrapper');
+        $title    = "/ Reporte de " . trans('models.petitions.singular');
+
+        $pdf->loadView('petitions.pdf.single', compact('petition', 'title'));
+
+        return $pdf->stream();
     }
 }
