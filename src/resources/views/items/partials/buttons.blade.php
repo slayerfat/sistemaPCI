@@ -9,7 +9,7 @@ Button::withValue('Reporte General')
 
 {!!
 
-Button::withValue('Stock')
+Button::withValue('Existencias')
     ->asLinkTo(route("api.items.pdf.stock", $item->id))
     ->withIcon(Icon::create('file-pdf-o'))
     ->withAttributes(['id' => "item-stock-{$item->id}"])

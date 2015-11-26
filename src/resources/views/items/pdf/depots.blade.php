@@ -29,4 +29,3 @@ foreach ($item->stocks as $stock) {
 ])
 
 {{ 'Total: ' . $item->formattedRealStock() }}
-
