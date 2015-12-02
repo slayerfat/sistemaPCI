@@ -1,38 +1,38 @@
-<?php namespace PCI\Mamarrachismo\Converter;
+<?php namespace PCI\Mamarrachismo\Convertidor;
 
-use PCI\Mamarrachismo\Converter\interfaces\StockTypeConverterInterface;
-use PCI\Models\Item;
-use PCI\Models\StockType;
+use PCI\Mamarrachismo\Convertidor\interfaces\InterfaceStockTipoConvertidor;
+use PCI\Modelos\Item;
+use PCI\Modelos\StockTipo;
 
 /**
- * Class StockTypeConverter
+ * Class StockTipoConvertidor
  *
- * @package PCI\Mamarrachismo\Converter
+ * @package PCI\Mamarrachismo\Convertidor
  * @author  Alejandro Granadillo <slayerfat@gmail.com>
  * @link    https://github.com/slayerfat/sistemaPCI Repositorio en linea.
  */
-class StockTypeConverter implements StockTypeConverterInterface
+class StockTipoConvertidor implements InterfaceStockTipoConvertidor
 {
 
     /**
      * Id de gramos
      */
-    const G = StockType::GRAM_ID;
+    const G = StockTipo::GRAMO_ID;
 
     /**
      * Id de kilos
      */
-    const K = StockType::KILO_ID;
+    const K = StockTipo::KILO_ID;
 
     /**
      * Id de toneladas
      */
-    const T = StockType::TON_ID;
+    const T = StockTipo::TON_ID;
 
     /**
      * El modelo de item a manipular.
      *
-     * @var \PCI\Models\Item
+     * @var \PCI\Modelos\Item
      */
     private $item;
 
@@ -41,7 +41,7 @@ class StockTypeConverter implements StockTypeConverterInterface
      *
      * @var array
      */
-    private $convertibleTypes = [
+    private $convertibletipos = [
         self::G => [
             self::K => ['mul', 1000],
             self::T => ['mul', 1000000],
@@ -61,7 +61,7 @@ class StockTypeConverter implements StockTypeConverterInterface
      * esta hecho para convertir las cantidades
      * del tipo de stock de un item.
      *
-     * @param \PCI\Models\Item $item
+     * @param \PCI\Modelos\Item $item
      */
     public function __construct(Item $item = null)
     {
@@ -72,18 +72,18 @@ class StockTypeConverter implements StockTypeConverterInterface
      * Valida que la cantidad solicitada sea apropiada
      * al stock que posea determinado Item.
      *
-     * @param int $type El tipo stock/cantidad
+     * @param int $tipo El tipo stock/cantidad
      * @return bool
      */
-    public function validate($type)
+    public function validar($tipo)
     {
-        $itemType = $this->item->stock_type_id;
+        $itemtipo = $this->item->stock_tipo_id;
 
-        if ($type == $itemType) {
+        if ($tipo == $itemtipo) {
             return true;
         }
 
-        return $this->isConvertible() && $this->isKeyValid($type, $this->convertibleTypes);
+        return $this->esConvertible() && $this->esKeyValida($tipo, $this->convertibletipos);
     }
 
     /**
@@ -91,19 +91,22 @@ class StockTypeConverter implements StockTypeConverterInterface
      *
      * @return bool
      */
-    public function isConvertible()
+    public function esConvertible()
     {
-        $type = $this->item->stock_type_id;
+        $tipo = $this->item->stock_tipo_id;
 
-        return $this->isKeyValid($type, $this->convertibleTypes);
+        return $this->esKeyValida($tipo, $this->convertibletipos);
     }
 
     /**
+     * Determina si algun key existe en el array a buscar.
+     *
      * @param int   $key
      * @param array $search
+     *
      * @return bool
      */
-    private function isKeyValid($key, array $search)
+    private function esKeyValida($key, array $search)
     {
         return array_key_exists($key, $search);
     }
@@ -112,44 +115,44 @@ class StockTypeConverter implements StockTypeConverterInterface
      * Convierte o trasforma la cantidad solicitada a
      * una cantidad compatible con el tipo de stock.
      *
-     * @param int $type   El tipo stock/cantidad
-     * @param int $amount la cantidad del pedido/nota/movimiento
+     * @param int $tipo     El tipo stock/cantidad
+     * @param int $cantidad la cantidad del pedido/nota/movimiento
      * @return int el numero transformado
      */
-    public function convert($type, $amount)
+    public function convertir($tipo, $cantidad)
     {
         // si el tipo es igual a si mismo no se necesita convertir nada.
-        if ($type == $this->item->stock_type_id) {
-            return $amount;
+        if ($tipo == $this->item->stock_tipo_id) {
+            return $cantidad;
         }
 
-        if (!($this->isConvertible() && $this->isValidSubType($type))) {
+        if (!($this->esConvertible() && $this->isValidSubtipo($tipo))) {
             return 0;
         }
 
         // nos interesa buscar en el arreglo cual es
         // el que esta relacionado con el item actual.
-        $id    = $this->item->stock_type_id;
-        $array = $this->convertibleTypes[$id];
+        $id    = $this->item->stock_tipo_id;
+        $array = $this->convertibletipos[$id];
 
         // como ya sabemos en que array estamos, tenemos que saber
         // cual de los tipos disponibles es el compatible con la operacion.
-        $method  = $array[$type][0];
-        $operand = $array[$type][1];
+        $metodo   = $array[$tipo][0];
+        $operador = $array[$tipo][1];
 
-        return $this->$method($amount, $operand);
+        return call_user_func([$this, $metodo], $operador);
     }
 
     /**
-     * @param int $type
+     * @param int $tipo
      * @return bool
      */
-    private function isValidSubType($type)
+    private function isValidSubtipo($tipo)
     {
-        $key = $this->item->stock_type_id;
+        $key = $this->item->stock_tipo_id;
 
-        foreach (array_keys($this->convertibleTypes[$key]) as $allowedKey) {
-            if ($allowedKey == $type) {
+        foreach (array_keys($this->convertibletipos[$key]) as $tipoValido) {
+            if ($tipoValido == $tipo) {
                 return true;
             }
         }
@@ -160,7 +163,7 @@ class StockTypeConverter implements StockTypeConverterInterface
     /**
      * El modelo de item siendo manipulado.
      *
-     * @return \PCI\Models\Item
+     * @return \PCI\Modelos\Item
      */
     public function getItem()
     {
@@ -170,8 +173,8 @@ class StockTypeConverter implements StockTypeConverterInterface
     /**
      * El modelo del Item a manipular.
      *
-     * @param  \PCI\Models\Item $item
-     * @return \PCI\Models\Item
+     * @param  \PCI\Modelos\Item $item
+     * @return \PCI\Modelos\Item
      */
     public function setItem(Item $item)
     {
@@ -181,28 +184,28 @@ class StockTypeConverter implements StockTypeConverterInterface
     /**
      * Operacion basica de multiplicacion.
      *
-     * @param $amount
-     * @param $operand
+     * @param $cantidad
+     * @param $operador
      * @return int|float
      */
-    protected function mul($amount, $operand)
+    protected function mul($cantidad, $operador)
     {
-        return $amount * $operand;
+        return $cantidad * $operador;
     }
 
     /**
      * Operacion basica de division.
      *
-     * @param $amount
-     * @param $operand
+     * @param $cantidad
+     * @param $operador
      * @return int|float
      */
-    protected function div($amount, $operand)
+    protected function div($cantidad, $operador)
     {
-        if ($operand == 0) {
+        if ($operador == 0) {
             return 0;
         }
 
-        return $amount / $operand;
+        return $cantidad / $operador;
     }
 }
