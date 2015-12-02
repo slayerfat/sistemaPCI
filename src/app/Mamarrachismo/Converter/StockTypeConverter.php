@@ -125,8 +125,10 @@ class StockTipoConvertidor implements InterfaceStockTipoConvertidor
         if ($tipo == $this->item->stock_tipo_id) {
             return $cantidad;
         }
+        
+        $esSubtipoValido = $this->esSubtipoValidoValido($tipo);
 
-        if (!($this->esConvertible() && $this->subtipoValido($tipo))) {
+        if (!($this->esConvertible() && $esSubtipoValido)) {
             return 0;
         }
 
